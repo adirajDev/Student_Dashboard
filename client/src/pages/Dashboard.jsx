@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import apiClient from '../api/apiClient';
 import { useTheme } from '../context/ThemeContext';
@@ -32,11 +32,11 @@ const Dashboard = () => {
         }
     };
 
-    if (!user) return null; // Or a loader
+    if (!user) return null; // Or TODO: a loader(later)
 
     return (
         <div className="min-h-screen relative animate-fade-in bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-            {/* Header */}
+            {/* Header  // FIXME: make a component for header */}
             <header className="bg-[var(--card)] shadow-sm sticky top-0 z-10">
                 <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
                     <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">StudentPortal</h1>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import apiClient from '../api/apiClient';
 import { Settings, X, Loader2 } from 'lucide-react';
 
