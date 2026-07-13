@@ -1,3 +1,6 @@
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
+
 export const normalizeStudentPayload = ({ name, email, course, phone } = {}) => ({
     name: name?.trim(),
     email: email?.trim().toLowerCase(),
