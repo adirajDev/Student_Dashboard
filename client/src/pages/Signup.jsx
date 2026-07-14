@@ -10,7 +10,7 @@ const Signup = () => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
-        phoneNumber: '',
+        phone: '',
         course: 'BTech'
     });
     const [error, setError] = useState('');
@@ -56,7 +56,7 @@ const Signup = () => {
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Phone Number</label>
-                        <input type="tel" name="phoneNumber" required value={formData.phoneNumber} onChange={handleChange} className="input-field" placeholder="+1234567890" />
+                        <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} className="input-field" placeholder="+1234567890" />
                     </div>
                     <div>
                         <label className="block text-sm font-medium mb-1">Course</label>

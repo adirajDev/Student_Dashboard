@@ -13,15 +13,19 @@ const userSchema = new mongoose.Schema({
         trim: true,
         lowercase: true,
     },
-    phoneNumber: {
+    phone: {
         type: String,
         required: true,
         trim: true,
     },
     course: {
         type: String,
-        required: true,
         enum: ['BTech', 'BBA', 'Commerce', 'Management', 'Designing'],
+    },
+    role: {
+        type: String,
+        enum: ['admin', 'student'],
+        default: 'student',
     },
     password: {
         type: String,

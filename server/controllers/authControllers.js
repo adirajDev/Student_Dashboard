@@ -4,7 +4,10 @@ import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie.js';
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, phoneNumber, course } = req.body;
+        const { name, email, phone, course } = req.body;
+        if (!name || !email || !phone || !course) {
+            return res.status(400).json({ message: 'Name, email, phone number, and course are required.' });
+        }
 
         // Check if user exists
         const existingUser = await User.findOne({ email });
@@ -15,7 +18,7 @@ export const signup = async (req, res) => {
         const user = new User({
             name,
             email,
-            phoneNumber,
+            phone,
             course
         });
 

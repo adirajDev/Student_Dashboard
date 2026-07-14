@@ -67,7 +67,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         </div>
                         <div>
                             <span className="block font-medium text-[var(--foreground)]">Phone</span>
-                            {user.phoneNumber}
+                            {user.phone}
                         </div>
                     </div>
 

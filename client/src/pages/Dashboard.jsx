@@ -104,7 +104,7 @@ const Dashboard = () => {
                         <p className="text-xl font-semibold text-[var(--foreground)] truncate" title={user.email}>{user.email}</p>
                     </div>
 
-                    <div className="bg-[var(--card)] p-5 md:p-6 rounded-2xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all group">
+                    <div className="bg-[var(--card)] p-phone5 md:p-6 rounded-2xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all group">
                         <div className="flex items-center gap-3 mb-2 text-[var(--ring)] group-hover:text-[var(--foreground)] transition-colors">
                             <BookOpen className="w-5 h-5" />
                             <span className="text-sm font-medium">Enrolled Course</span>
@@ -117,7 +117,7 @@ const Dashboard = () => {
                             <Phone className="w-5 h-5" />
                             <span className="text-sm font-medium">Phone Number</span>
                         </div>
-                        <p className="text-xl font-semibold text-[var(--foreground)]">{user.phoneNumber}</p>
+                        <p className="text-xl font-semibold text-[var(--foreground)]">{user.phone}</p>
                     </div>
                 </div>
 
