@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap');
+
 @import "tailwindcss";
 
 /* Enable class-based dark mode for Tailwind v4 */
@@ -39,7 +41,8 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: 'Inter', system-ui, sans-serif;
+    font-family: 'Rubik', system-ui, sans-serif;
+    font-optical-sizing: auto;
     @apply transition-colors duration-300;
   }
 }

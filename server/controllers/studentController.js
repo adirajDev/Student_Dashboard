@@ -77,7 +77,7 @@ export const updateStudent = async (req, res, next) => {
         const student = await Student.findOneAndUpdate(
             { _id: studentId },
             payload,
-            { new: true, runValidators: true }
+            { returnDocument: 'after', runValidators: true }
         );
 
         if (!student) {
