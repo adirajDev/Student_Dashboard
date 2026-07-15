@@ -9,7 +9,6 @@ export const signup = async (req, res) => {
             return res.status(400).json({ message: 'Name, email, phone number, and course are required.' });
         }
 
-        // Check if user exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
             return res.status(400).json({ message: 'User with this email already exists' });
