@@ -1,36 +1,23 @@
-import { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
-import apiClient from '../api/apiClient';
-import Loading from '../utils/Loading';
+import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-    const [auth, setAuth] = useState({ isAuthenticated: false, role: null, loading: true });
+    // Receive the context (which includes user) from MainLayout
+    const context = useOutletContext();
+    const { user } = context || {};
 
-    useEffect(() => {
-        const verifyAuth = async () => {
-            try {
-                const res = await apiClient.get('/me');
-                setAuth({ isAuthenticated: true, role: res.data.role, loading: false });
-            } catch (error) {
-                setAuth({ isAuthenticated: false, role: null, loading: false });
-            }
-        };
-        verifyAuth();
-    }, []);
-
-    if (auth.loading) return <Loading />; 
-
-    if (!auth.isAuthenticated) {
+    // If somehow there is no user, redirect to signin
+    if (!user) {
         return <Navigate to="/signin" replace />;
     }
 
     // Check if route has role restrictions and user meets them
-    if (allowedRoles && !allowedRoles.includes(auth.role)) {
+    if (allowedRoles && !allowedRoles.includes(user.role)) {
         // Redirect students trying to access admin pages to their dashboard
         return <Navigate to="/dashboard" replace />;
     }
 
-    return <Outlet />; // Renders the nested routes
+    // Pass the context down to the actual dashboard components
+    return <Outlet context={context} />;
 };
 
 export default ProtectedRoute;
