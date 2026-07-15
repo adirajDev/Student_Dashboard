@@ -1,67 +1,23 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import apiClient from '../api/apiClient';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon, Loader2 } from 'lucide-react';
+import useSignin from '../hooks/useSignin';
 
 const Signin = () => {
-    const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [step, setStep] = useState(1); // 1: Email, 2: Password or Set Password
-    const [email, setEmail] = useState('');
-    const [hasPassword, setHasPassword] = useState(false);
-    const [passwordData, setPasswordData] = useState({ password: '', confirmPassword: '' });
-
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-
-    const handleCheckUser = async (e) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
-        try {
-            const res = await apiClient.post('/check-user', { email });
-            setHasPassword(res.data.hasPassword);
-            setStep(2);
-        } catch (err) {
-            setError(err.response?.data?.message || 'User not found');
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const handleAuth = async (e) => {
-        e.preventDefault();
-        setError('');
-        
-        if (!hasPassword && passwordData.password !== passwordData.confirmPassword) {
-            setError('Passwords do not match');
-            return;
-        }
-
-        setLoading(true);
-        try {
-            let res;
-            if (hasPassword) {
-                // Login normally
-                res = await apiClient.post('/signin', { email, password: passwordData.password });
-            } else {
-                // Set password for first time user
-                res = await apiClient.post('/set-password', { email, password: passwordData.password });
-            }
-
-            const userRole = res.data.user.role; 
-            if (userRole === 'admin' || userRole === 'editor') {
-                navigate('/admin/dashboard');
-            } else {
-                navigate('/dashboard');
-            }
-        } catch (err) {
-            setError(err.response?.data?.message || `Authentication failed due to: ${err}`);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const {
+        step,
+        setStep,
+        email,
+        setEmail,
+        hasPassword,
+        passwordData,
+        setPasswordData,
+        error,
+        loading,
+        handleCheckUser,
+        handleAuth
+    } = useSignin();
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-tr from-blue-100 to-[var(--primary-50)] dark:from-slate-800 dark:to-slate-900">

@@ -1,38 +1,11 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import apiClient from '../api/apiClient';
+import { Link } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { Sun, Moon, Loader2 } from 'lucide-react';
+import useSignup from '../hooks/useSignup';
 
 const Signup = () => {
-    const navigate = useNavigate();
     const { theme, toggleTheme } = useTheme();
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-        course: 'BTech'
-    });
-    const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
-
-    const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
-    };
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        setError('');
-        setLoading(true);
-        try {
-            await apiClient.post('/signup', formData);
-            navigate('/signin');
-        } catch (err) {
-            setError(err.response?.data?.message || `Failed to sign up due to: ${err.message}`);
-        } finally {
-            setLoading(false);
-        }
-    };
+    const { formData, handleChange, handleSubmit, error, loading } = useSignup();
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100 dark:from-slate-900 dark:to-slate-800">
