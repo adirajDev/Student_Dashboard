@@ -41,16 +41,23 @@ const Signin = () => {
 
         setLoading(true);
         try {
+            let res;
             if (hasPassword) {
                 // Login normally
-                await apiClient.post('/signin', { email, password: passwordData.password });
+                res = await apiClient.post('/signin', { email, password: passwordData.password });
             } else {
                 // Set password for first time user
-                await apiClient.post('/set-password', { email, password: passwordData.password });
+                res = await apiClient.post('/set-password', { email, password: passwordData.password });
             }
-            navigate('/');
+
+            const userRole = res.data.user.role; 
+            if (userRole === 'admin') {
+                navigate('/admin/dashboard');
+            } else {
+                navigate('/dashboard');
+            }
         } catch (err) {
-            setError(err.response?.data?.message || 'Authentication failed');
+            setError(err.response?.data?.message || `Authentication failed due to: ${err}`);
         } finally {
             setLoading(false);
         }

@@ -2,8 +2,10 @@ import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
-import Dashboard from './pages/Dashboard';
+import StudentDashboard from './pages/StudentDashboard';
 import ProtectedRoute from './components/ProtectedRoute';
+import AdminDashboard from './pages/AdminDashboard';
+import WrongUrl from './pages/WrongUrl';
 
 function App() {
   return (
@@ -12,13 +14,15 @@ function App() {
         <Routes>
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
-          <Route path="/" element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          } />
-          {/* Catch all redirect to Dashboard */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route element={<ProtectedRoute allowedRoles={['student', 'admin']} />}>
+                <Route path="/dashboard" element={<StudentDashboard />} />
+            </Route>
+            {/* Admin routes */}
+            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+                <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                {/* You can add more admin routes here later */}
+            </Route>
+          <Route path="*" element={<WrongUrl />} />
         </Routes>
       </div>
     </BrowserRouter>

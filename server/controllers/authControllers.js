@@ -65,7 +65,7 @@ export const setPassword = async (req, res) => {
         await user.save();
 
         generateTokenAndSetCookie(res, user._id);
-        res.json({ message: 'Password set successfully and logged in', user: { id: user._id, email: user.email, name: user.name } });
+        res.json({ message: 'Password set successfully and logged in', user: { id: user._id, email: user.email, name: user.name, role: user.role } });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }
@@ -90,7 +90,7 @@ export const signin = async (req, res) => {
         }
 
         generateTokenAndSetCookie(res, user._id);
-        res.json({ message: 'Logged in successfully', user: { id: user._id, email: user.email, name: user.name } });
+        res.json({ message: 'Logged in successfully', user: { id: user._id, email: user.email, name: user.name, role: user.role } });
     } catch (error) {
         res.status(500).json({ message: 'Server error', error: error.message });
     }

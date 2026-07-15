@@ -1,19 +1,18 @@
 import mongoose from 'mongoose';
-import Student from '../models/Student.js';
+import User from '../models/User.js';
 import { 
     normalizeStudentPayload, 
     validateStudentPayload 
 } from '../utils/studentUtils.js';
 
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
-
 const isDuplicateKeyError = (err) => err?.code === 11000;
 
-// Fetch all students
+// Fetch all students (users with role: 'student')
 export const getStudents = async (req, res, next) => {
     try {
-        const students = await Student.find().sort({ name: 1 });
+        const students = await User.find({ role: 'student' })
+            .select('-password')
+            .sort({ name: 1 });
         res.status(200).json(students);
     } catch (err) {
         next(err);
@@ -30,20 +29,27 @@ export const createStudent = async (req, res, next) => {
             return res.status(400).json({ error: validationError });
         }
 
-        const emailExists = await Student.exists({
+        const emailExists = await User.exists({
             email: payload.email,
         });
 
         if (emailExists) {
-            return res.status(409).json({ error: 'A student with this email already exists.' });
+            return res.status(409).json({ error: 'A user with this email already exists.' });
         }
 
-        const student = await Student.create(payload);
+        const student = await User.create({
+            ...payload,
+            role: 'student'
+        });
 
-        res.status(201).json(student);
+        // Omit password from response
+        const studentObj = student.toObject();
+        delete studentObj.password;
+
+        res.status(201).json(studentObj);
     } catch (err) {
         if (isDuplicateKeyError(err)) {
-            return res.status(409).json({ error: 'A student with this email already exists.' });
+            return res.status(409).json({ error: 'A user with this email already exists.' });
         }
 
         next(err);
@@ -65,29 +71,30 @@ export const updateStudent = async (req, res, next) => {
             return res.status(400).json({ error: validationError });
         }
 
-        const emailExists = await Student.exists({
+        const emailExists = await User.exists({
             email: payload.email,
             _id: { $ne: studentId },
         });
 
         if (emailExists) {
-            return res.status(409).json({ error: 'A student with this email already exists.' });
+            return res.status(409).json({ error: 'A user with this email already exists.' });
         }
 
-        const student = await Student.findOneAndUpdate(
-            { _id: studentId },
+        // Must include { role: 'student' } so admins can't edit other admins
+        const student = await User.findOneAndUpdate(
+            { _id: studentId, role: 'student' },
             payload,
             { returnDocument: 'after', runValidators: true }
-        );
+        ).select('-password');
 
         if (!student) {
-            return res.status(404).json({ error: 'Student not found.' });
+            return res.status(404).json({ error: 'Student not found or insufficient permissions.' });
         }
 
         res.status(200).json(student);
     } catch (err) {
         if (isDuplicateKeyError(err)) {
-            return res.status(409).json({ error: 'A student with this email already exists.' });
+            return res.status(409).json({ error: 'A user with this email already exists.' });
         }
 
         next(err);
@@ -103,12 +110,14 @@ export const deleteStudent = async (req, res, next) => {
             return res.status(404).json({ error: 'Student not found.' });
         }
 
-        const student = await Student.findOneAndDelete({
+        // Must include { role: 'student' } so admins can't delete other admins
+        const student = await User.findOneAndDelete({
             _id: studentId,
+            role: 'student'
         });
 
         if (!student) {
-            return res.status(404).json({ error: 'Student not found.' });
+            return res.status(404).json({ error: 'Student not found or insufficient permissions.' });
         }
 
         res.status(200).json({ message: 'Student deleted successfully.' });

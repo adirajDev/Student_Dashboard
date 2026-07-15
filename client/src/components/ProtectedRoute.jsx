@@ -1,32 +1,36 @@
 import { useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import apiClient from '../api/apiClient';
-import { Loader2 } from 'lucide-react';
+import Loading from '../utils/Loading';
 
-const ProtectedRoute = ({ children }) => {
-    const [isAuthenticated, setIsAuthenticated] = useState(null);
+const ProtectedRoute = ({ allowedRoles }) => {
+    const [auth, setAuth] = useState({ isAuthenticated: false, role: null, loading: true });
 
     useEffect(() => {
         const verifyAuth = async () => {
             try {
-                await apiClient.get('/me');
-                setIsAuthenticated(true);
+                const res = await apiClient.get('/me');
+                setAuth({ isAuthenticated: true, role: res.data.role, loading: false });
             } catch (error) {
-                setIsAuthenticated(false);
+                setAuth({ isAuthenticated: false, role: null, loading: false });
             }
         };
         verifyAuth();
     }, []);
 
-    if (isAuthenticated === null) {
-        return (
-            <div className="flex h-screen items-center justify-center">
-                <Loader2 className="animate-spin text-blue-500 w-12 h-12" />
-            </div>
-        );
+    if (auth.loading) return <Loading />; 
+
+    if (!auth.isAuthenticated) {
+        return <Navigate to="/signin" replace />;
     }
 
-    return isAuthenticated ? children : <Navigate to="/signin" replace />;
+    // Check if route has role restrictions and user meets them
+    if (allowedRoles && !allowedRoles.includes(auth.role)) {
+        // Redirect students trying to access admin pages to their dashboard
+        return <Navigate to="/dashboard" replace />;
+    }
+
+    return <Outlet />; // Renders the nested routes
 };
 
 export default ProtectedRoute;
