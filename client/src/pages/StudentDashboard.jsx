@@ -1,41 +1,18 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import apiClient from '../api/apiClient';
+import { useState } from 'react';
+import useAuth from '../hooks/useAuth';
 import SettingsModal from '../components/SettingsModal';
-import { User as UserIcon, BookOpen, Phone, Mail } from 'lucide-react';
 import Header from '../components/Header';
+import { User as UserIcon, BookOpen, Phone, Mail } from 'lucide-react';
 
 const StudentDashboard = () => {
-    const navigate = useNavigate();
-    const [user, setUser] = useState(null);
+    const { user, setUser, handleLogout } = useAuth();
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            try {
-                const res = await apiClient.get('/me');
-                setUser(res.data);
-            } catch (error) {
-                navigate('/signin');
-            }
-        };
-        fetchUser();
-    }, [navigate]);
-
-    const handleLogout = async () => {
-        try {
-            await apiClient.post('/logout');
-            navigate('/signin');
-        } catch (error) {
-            console.error('Logout failed', error);
-        }
-    };
-
-    if (!user) return null; // Or TODO: a loader(later)
+    if (!user) return null;
 
     return (
         <div className="min-h-screen relative animate-fade-in bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
-            <Header onSettingsOpen={() => setIsSettingsOpen(true)} onLogout={handleLogout}/>            
+            <Header onSettingsOpen={() => setIsSettingsOpen(true)} onLogout={handleLogout} />            
 
             {/* Main Content */}
             <main className="max-w-5xl mx-auto px-4 py-8">
@@ -61,7 +38,7 @@ const StudentDashboard = () => {
                         <p className="text-xl font-semibold text-[var(--foreground)] truncate" title={user.email}>{user.email}</p>
                     </div>
 
-                    <div className="bg-[var(--card)] p-phone5 md:p-6 rounded-2xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all group">
+                    <div className="bg-[var(--card)] p-5 md:p-6 rounded-2xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all group">
                         <div className="flex items-center gap-3 mb-2 text-[var(--ring)] group-hover:text-[var(--foreground)] transition-colors">
                             <BookOpen className="w-5 h-5" />
                             <span className="text-sm font-medium">Enrolled Course</span>
@@ -77,7 +54,6 @@ const StudentDashboard = () => {
                         <p className="text-xl font-semibold text-[var(--foreground)]">{user.phone}</p>
                     </div>
                 </div>
-
             </main>
 
             {isSettingsOpen && (
