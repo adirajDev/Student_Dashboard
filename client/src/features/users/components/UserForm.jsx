@@ -1,8 +1,9 @@
 import useUserForm from '../hooks/useUserForm';
 import FormField from '../../../components/common/FormField';
+import SearchableSelect from '../../../components/common/SearchableSelect';
 
 const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) => {
-    const { formData, validationError, handleChange, handleSubmit } = useUserForm(editingUser);
+    const { formData, validationError, handleChange, handleSubmit, colleges, courses } = useUserForm(editingUser);
 
     return (
         <form onSubmit={(e) => handleSubmit(e, onAdd, onUpdate, showCourse)} className="bg-[var(--card)] p-6 rounded-xl shadow-sm border border-[var(--border)]">
@@ -38,24 +39,55 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) =>
                 />
 
                 {showCourse && (
-                    <div>
-                        <label htmlFor="course" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-                            Course
-                        </label>
-                        <select
-                            id="course"
-                            value={formData.course}
-                            onChange={handleChange}
-                            className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
-                        >
-                            <option value="" disabled>Select a course</option>
-                            <option value="BTech">BTech</option>
-                            <option value="BBA">BBA</option>
-                            <option value="Commerce">Commerce</option>
-                            <option value="Management">Management</option>
-                            <option value="Designing">Designing</option>
-                        </select>
-                    </div>
+                    <>
+                        <div>
+                            <label htmlFor="course" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                                Course
+                            </label>
+                            <select
+                                id="course"
+                                value={formData.course}
+                                onChange={handleChange}
+                                className="w-full px-4 py-2.5 rounded-lg border border-[var(--border)] bg-[var(--background)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition-all"
+                            >
+                                <option value="" disabled>Select a course</option>
+                                {courses.map(c => (
+                                    <option key={c._id} value={c._id}>{c.name}</option>
+                                ))}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label htmlFor="college" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                                College
+                            </label>
+                            <SearchableSelect 
+                                name="college"
+                                options={colleges}
+                                value={formData.college}
+                                onChange={handleChange}
+                                placeholder="Search for a college..."
+                            />
+                        </div>
+
+                        {formData.college === 'others' && (
+                            <div className="animate-fade-in md:col-span-2 mt-2">
+                                <label htmlFor="customCollege" className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400">
+                                    College Name
+                                </label>
+                                <input 
+                                    type="text" 
+                                    id="customCollege"
+                                    name="customCollege" 
+                                    required 
+                                    value={formData.customCollege} 
+                                    onChange={handleChange} 
+                                    className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500" 
+                                    placeholder="Enter the college name" 
+                                />
+                            </div>
+                        )}
+                    </>
                 )}
 
                 <FormField

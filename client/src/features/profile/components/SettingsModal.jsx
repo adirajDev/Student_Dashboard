@@ -26,7 +26,13 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         {user.course && (
                             <div>
                                 <span className="block font-medium text-[var(--foreground)]">Course</span>
-                                {user.course}
+                                {user.course?.name || user.course}
+                            </div>
+                        )}
+                        {user.college && (
+                            <div>
+                                <span className="block font-medium text-[var(--foreground)]">College</span>
+                                {user.college?.name || user.college}
                             </div>
                         )}
                         <div>

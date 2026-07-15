@@ -3,9 +3,11 @@ import { useTheme } from '../../context/ThemeContext';
 import { Sun, Moon, Loader2 } from 'lucide-react';
 import useSignup from '../../features/auth/hooks/useSignup';
 
+import SearchableSelect from '../../components/common/SearchableSelect';
+
 const Signup = () => {
     const { theme, toggleTheme } = useTheme();
-    const { formData, handleChange, handleSubmit, error, loading } = useSignup();
+    const { formData, handleChange, handleSubmit, error, loading, colleges, courses } = useSignup();
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100 dark:from-slate-900 dark:to-slate-800">
@@ -34,11 +36,37 @@ const Signup = () => {
                     <div>
                         <label className="block text-sm font-medium mb-1">Course</label>
                         <select name="course" required value={formData.course} onChange={handleChange} className="input-field">
-                            {['BTech', 'BBA', 'Commerce', 'Management', 'Designing'].map(c => (
-                                <option key={c} value={c}>{c}</option>
+                            {courses.map(c => (
+                                <option key={c._id} value={c._id}>{c.name}</option>
                             ))}
                         </select>
                     </div>
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">College</label>
+                        <SearchableSelect 
+                            name="college"
+                            options={colleges}
+                            value={formData.college}
+                            onChange={handleChange}
+                            placeholder="Search for a college..."
+                        />
+                    </div>
+
+                    {formData.college === 'others' && (
+                        <div className="animate-fade-in">
+                            <label className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400">College Name</label>
+                            <input 
+                                type="text" 
+                                name="customCollege" 
+                                required 
+                                value={formData.customCollege} 
+                                onChange={handleChange} 
+                                className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500" 
+                                placeholder="Enter your college name" 
+                            />
+                        </div>
+                    )}
                     
                     <button type="submit" disabled={loading} className="btn-primary w-full flex justify-center items-center mt-6">
                         {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Sign Up'}

@@ -11,7 +11,7 @@ export const getEditors = async (req, res, next) => {
 export const createEditor = async (req, res, next) => {
     try {
         const payload = normalizeUserPayload(req.body);
-        const err = validateUserPayload(payload, 'editor'); // No course needed
+        const err = validateUserPayload(payload, 'editor'); 
         if (err) return res.status(400).json({ error: err });
 
         const editor = await createUserByRole(payload, 'editor');

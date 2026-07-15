@@ -11,7 +11,7 @@ export const getStudents = async (req, res, next) => {
 export const createStudent = async (req, res, next) => {
     try {
         const payload = normalizeUserPayload(req.body);
-        const err = validateUserPayload(payload, 'student', payload.course);
+        const err = validateUserPayload(payload, 'student');
         if (err) return res.status(400).json({ error: err });
 
         const student = await createUserByRole(payload, 'student');
@@ -26,7 +26,7 @@ export const createStudent = async (req, res, next) => {
 export const updateStudent = async (req, res, next) => {
     try {
         const payload = normalizeUserPayload(req.body);
-        const err = validateUserPayload(payload, 'student', payload.course);
+        const err = validateUserPayload(payload, 'student');
         if (err) return res.status(400).json({ error: err });
 
         const student = await updateUserByRole(req.params.id, payload, 'student');

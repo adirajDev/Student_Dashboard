@@ -9,11 +9,14 @@ const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
             </td>
             
             {showCourse && (
-                <td className="px-6 py-4">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 dark:bg-indigo-900/30 text-indigo-800 dark:text-indigo-300">
-                        {user.course}
-                    </span>
+                <>
+                <td className="px-6 py-4 text-[var(--ring)]">
+                    {user.course?.name || user.course || 'N/A'}
                 </td>
+                <td className="px-6 py-4 text-[var(--ring)]">
+                    {user.college?.name || user.college || 'N/A'}
+                </td>
+                </>
             )}
             
             <td className="px-6 py-4 text-[var(--ring)]">

@@ -1,12 +1,14 @@
+import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
+import College from "../models/College.js";
 import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie.js';
 
 export const signup = async (req, res) => {
     try {
-        const { name, email, phone, course } = req.body;
-        if (!name || !email || !phone || !course) {
-            return res.status(400).json({ message: 'Name, email, phone number, and course are required.' });
+        const { name, email, phone, course, college } = req.body;
+        if (!name || !email || !phone || !course || !college) {
+            return res.status(400).json({ message: 'Name, email, phone number, course, and college are required.' });
         }
 
         const existingUser = await User.findOne({ email });
@@ -14,11 +16,23 @@ export const signup = async (req, res) => {
             return res.status(400).json({ message: 'User with this email already exists' });
         }
 
+        let collegeId = college;
+        // If college is not a valid ObjectId, assume it's a new college name
+        if (!mongoose.Types.ObjectId.isValid(college)) {
+            const newCollege = new College({
+                name: college,
+                collegeID: `C-${Date.now()}`
+            });
+            await newCollege.save();
+            collegeId = newCollege._id;
+        }
+
         const user = new User({
             name,
             email,
             phone,
-            course
+            course,
+            college: collegeId
         });
 
         await user.save();

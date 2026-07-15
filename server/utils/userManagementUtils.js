@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export const isDuplicateKeyError = (err) => err?.code === 11000;
 
 export const getUsersByRole = async (role) => {
-    return await User.find({ role }).select('-password').sort({ name: 1 });
+    return await User.find({ role }).populate('course college').select('-password').sort({ name: 1 });
 };
 
 export const createUserByRole = async (payload, role) => {
@@ -12,9 +12,8 @@ export const createUserByRole = async (payload, role) => {
     if (emailExists) throw { status: 409, message: 'A user with this email already exists.' };
 
     const user = await User.create({ ...payload, role });
-    const userObj = user.toObject();
-    delete userObj.password;
-    return userObj;
+    const populatedUser = await User.findById(user._id).populate('course college').select('-password');
+    return populatedUser.toObject();
 };
 
 export const updateUserByRole = async (id, payload, role) => {
@@ -27,7 +26,7 @@ export const updateUserByRole = async (id, payload, role) => {
         { _id: id, role },
         payload,
         { returnDocument: 'after', runValidators: true }
-    ).select('-password');
+    ).populate('course college').select('-password');
 
     if (!user) throw { status: 404, message: 'User not found or insufficient permissions.' };
     return user;

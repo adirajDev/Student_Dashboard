@@ -8,7 +8,12 @@ const UserTableGrid = ({ users, onEdit, onDelete, showCourse }) => (
                     <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">Name</th>
                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">Email</th>
-                        {showCourse && <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">Course</th>}
+                        {showCourse && (
+                            <>
+                                <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">Course</th>
+                                <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">College</th>
+                            </>
+                        )}
                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">Phone</th>
                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">Actions</th>
                     </tr>

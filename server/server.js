@@ -10,6 +10,7 @@ import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
 import studentRoutes from './routes/studentRoutes.js';
 import editorRoutes from './routes/editorRoutes.js';
+import dataRoutes from './routes/dataRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,6 +30,7 @@ app.use(cors({
 }));
 
 // Routes
+app.use('/api/data', dataRoutes);
 app.use('/api', authRoutes);
 app.use('/api', userRoutes);
 app.use('/api/editors', editorRoutes);

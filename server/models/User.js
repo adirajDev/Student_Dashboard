@@ -19,8 +19,12 @@ const userSchema = new mongoose.Schema({
         trim: true,
     },
     course: {
-        type: String,
-        enum: ['BTech', 'BBA', 'Commerce', 'Management', 'Designing'],
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Course'
+    },
+    college: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'College'
     },
     role: {
         type: String,
