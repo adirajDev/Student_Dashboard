@@ -3,20 +3,20 @@ import Loading from "../utils/Loading";
 import EmptyTable from "../utils/EmptyTable";
 import NoResultsFound from "../utils/NoResultsFound";
 import Error from "../utils/Error";
-import useStudentSearch from "../hooks/useStudentSearch";
-import StudentTableGrid from "./StudentTableGrid";
+import useUserSearch from "../hooks/useUserSearch";
+import UserTableGrid from "./UserTableGrid";
 
-const StudentTable = ({ students, isLoading, error, onEdit, onDelete }) => {
-    const { searchTerm, setSearchTerm, filteredStudents } = useStudentSearch(students);
+const UserTable = ({ users, isLoading, error, onEdit, onDelete, showCourse }) => {
+    const { searchTerm, setSearchTerm, filteredUsers } = useUserSearch(users);
 
     // Loading
-    if (isLoading) return <Loading />
+    if (isLoading) return <Loading />;
 
     // Error getting data
-    if (error) return <Error error={error} />
+    if (error) return <Error error={error} />;
 
-    // UI State: No students at all
-    if (!students || students.length === 0) return <EmptyTable />
+    // UI State: No users at all
+    if (!users || users.length === 0) return <EmptyTable />;
 
     // UI State: Data Render
     return (
@@ -25,14 +25,15 @@ const StudentTable = ({ students, isLoading, error, onEdit, onDelete }) => {
                 value={searchTerm}
                 onChange={setSearchTerm}
                 onClear={() => setSearchTerm("")}
-                placeholder="Search by student name..."
+                placeholder="Search by name or email..."
             />
 
-            {filteredStudents.length === 0 ? (
+            {filteredUsers.length === 0 ? (
                 <NoResultsFound searchTerm={searchTerm} />
             ) : (
-                <StudentTableGrid
-                    students={filteredStudents}
+                <UserTableGrid
+                    users={filteredUsers}
+                    showCourse={showCourse}
                     onEdit={onEdit}
                     onDelete={onDelete}
                 />
@@ -41,4 +42,4 @@ const StudentTable = ({ students, isLoading, error, onEdit, onDelete }) => {
     );
 };
 
-export default StudentTable;
+export default UserTable;

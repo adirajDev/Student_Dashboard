@@ -51,7 +51,7 @@ const Signin = () => {
             }
 
             const userRole = res.data.user.role; 
-            if (userRole === 'admin') {
+            if (userRole === 'admin' || userRole === 'editor') {
                 navigate('/admin/dashboard');
             } else {
                 navigate('/dashboard');

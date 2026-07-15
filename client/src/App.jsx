@@ -1,5 +1,4 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signup from './pages/Signup';
 import Signin from './pages/Signin';
 import StudentDashboard from './pages/StudentDashboard';
@@ -17,10 +16,8 @@ function App() {
           <Route element={<ProtectedRoute allowedRoles={['student', 'admin']} />}>
                 <Route path="/dashboard" element={<StudentDashboard />} />
             </Route>
-            {/* Admin routes */}
-            <Route element={<ProtectedRoute allowedRoles={['admin']} />}>
+            <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                {/* You can add more admin routes here later */}
             </Route>
           <Route path="*" element={<WrongUrl />} />
         </Routes>
