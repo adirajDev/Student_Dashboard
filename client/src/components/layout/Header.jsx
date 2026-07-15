@@ -1,5 +1,5 @@
 import { Sun, Moon, Settings, LogOut } from 'lucide-react';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 
 const Header = ({ onSettingsOpen, onLogout }) => {
     const { theme, toggleTheme } = useTheme();

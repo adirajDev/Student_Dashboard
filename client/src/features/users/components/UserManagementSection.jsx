@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import UserTable from './UserTable';
 import UserFormModal from './UserFormModal';
-import DeleteConfirmModal from './DeleteConfirmModal';
+import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useUserManagement from '../hooks/useUserManagement';
 
 const UserManagementSection = ({ title, role, showCourse, canAdd, canDelete, shouldFetch }) => {

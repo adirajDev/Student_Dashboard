@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import apiClient from '../api/apiClient';
+import apiClient from '../../../services/apiClient';
 
 const useUserManagement = (role, shouldFetch = true) => {
     const [users, setUsers] = useState([]);

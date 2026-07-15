@@ -1,8 +1,8 @@
-import SearchBar from "./SearchBar";
-import Loading from "../utils/Loading";
-import EmptyTable from "../utils/EmptyTable";
-import NoResultsFound from "../utils/NoResultsFound";
-import Error from "../utils/Error";
+import SearchBar from "../../../components/common/SearchBar";
+import Loading from "../../../components/common/Loading";
+import EmptyTable from "../../../components/common/EmptyTable";
+import NoResultsFound from "../../../components/common/NoResultsFound";
+import Error from "../../../components/common/Error";
 import useUserSearch from "../hooks/useUserSearch";
 import UserTableGrid from "./UserTableGrid";
 

@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
+import useAuth from '../../features/auth/hooks/useAuth';
 import Header from './Header';
-import SettingsModal from './SettingsModal';
-import Loading from '../utils/Loading';
+import SettingsModal from '../../features/profile/components/SettingsModal';
+import Loading from '../common/Loading';
 
 const MainLayout = () => {
     const { user, setUser, handleLogout } = useAuth();

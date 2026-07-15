@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useTheme } from '../context/ThemeContext';
+import { useTheme } from '../../context/ThemeContext';
 import { Sun, Moon, Loader2 } from 'lucide-react';
-import useSignin from '../hooks/useSignin';
+import useSignin from '../../features/auth/hooks/useSignin';
 
 const Signin = () => {
     const { theme, toggleTheme } = useTheme();

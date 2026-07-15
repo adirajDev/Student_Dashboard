@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import UserManagementSection from '../components/UserManagementSection';
+import UserManagementSection from '../../features/users/components/UserManagementSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();

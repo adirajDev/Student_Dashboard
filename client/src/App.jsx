@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
-import Signup from './pages/Signup';
-import Signin from './pages/Signin';
-import StudentDashboard from './pages/StudentDashboard';
-import ProtectedRoute from './components/ProtectedRoute';
-import AdminDashboard from './pages/AdminDashboard';
-import WrongUrl from './pages/WrongUrl';
-import MainLayout from './components/MainLayout';
-import RootRedirect from './components/RootRedirect';
+import Signup from './pages/Auth/Signup';
+import Signin from './pages/Auth/Signin';
+import StudentDashboard from './pages/Dashboard/StudentDashboard';
+import ProtectedRoute from './routes/ProtectedRoute';
+import AdminDashboard from './pages/Dashboard/AdminDashboard';
+import WrongUrl from './pages/NotFound/WrongUrl';
+import MainLayout from './components/layout/MainLayout';
+import RootRedirect from './routes/RootRedirect';
 
 function App() {
   return (

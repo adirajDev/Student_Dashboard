@@ -1,5 +1,5 @@
 import useUserForm from '../hooks/useUserForm';
-import FormField from '../utils/FormField';
+import FormField from '../../../components/common/FormField';
 
 const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) => {
     const { formData, validationError, handleChange, handleSubmit } = useUserForm(editingUser);
