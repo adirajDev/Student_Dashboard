@@ -12,15 +12,6 @@ const AdminDashboard = () => {
                 <p className="text-[var(--ring)]">Here is an overview of your management portal.</p>
             </div>
 
-            <UserManagementSection
-                title="Student Directory"
-                role="student"
-                showCourse={true}
-                canAdd={isAdmin}
-                canDelete={isAdmin}
-                shouldFetch={true}
-            />
-
             <div className={isAdmin ? "mt-16" : ""}>
                 <UserManagementSection
                     title="Editor Directory"
@@ -31,6 +22,15 @@ const AdminDashboard = () => {
                     shouldFetch={isAdmin}
                 />
             </div>
+
+            <UserManagementSection
+                title="Student Directory"
+                role="student"
+                showCourse={true}
+                canAdd={isAdmin}
+                canDelete={isAdmin}
+                shouldFetch={true}
+            />
         </main>
     );
 };

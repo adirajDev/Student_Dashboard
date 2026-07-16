@@ -1,7 +1,8 @@
 import { AlertTriangle, X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 const DeleteConfirmModal = ({ studentName, onConfirm, onClose }) => {
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
             <div className="bg-[var(--card)] w-full max-w-sm rounded-2xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
@@ -41,7 +42,8 @@ const DeleteConfirmModal = ({ studentName, onConfirm, onClose }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 

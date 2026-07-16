@@ -1,10 +1,11 @@
 import { Settings, X, Loader2 } from 'lucide-react';
 import useSettings from '../hooks/useSettings';
+import { createPortal } from 'react-dom';
 
 const SettingsModal = ({ user, onClose, onUpdate }) => {
     const { formData, handleChange, handleSubmit, error, success, loading } = useSettings(user, onUpdate, onClose);
 
-    return (
+    return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
             <div className="bg-[var(--card)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
@@ -73,7 +74,8 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                     </form>
                 </div>
             </div>
-        </div>
+        </div>,
+        document.body
     );
 };
 
