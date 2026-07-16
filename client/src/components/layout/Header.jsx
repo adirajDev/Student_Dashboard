@@ -1,5 +1,6 @@
 import { Sun, Moon, Settings, LogOut } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
+import GlobalSearch from '../common/GlobalSearch';
 
 const Header = ({ onSettingsOpen, onLogout }) => {
     const { theme, toggleTheme } = useTheme();
@@ -7,8 +8,13 @@ const Header = ({ onSettingsOpen, onLogout }) => {
     return (
         <header className="bg-[var(--card)] shadow-sm sticky top-0 z-10">
             <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-                <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400">StudentPortal</h1>
-                <div className="flex items-center gap-4">
+                <h1 className="text-xl font-bold text-blue-600 dark:text-blue-400 flex-shrink-0 hidden sm:block">StudentPortal</h1>
+                
+                <div className="flex-1 flex justify-center sm:px-4 max-w-2xl">
+                    <GlobalSearch />
+                </div>
+
+                <div className="flex items-center gap-1 sm:gap-4 flex-shrink-0">
                     <button onClick={toggleTheme} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
                         {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5 text-yellow-400" />}
                     </button>
