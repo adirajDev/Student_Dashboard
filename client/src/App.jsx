@@ -7,6 +7,7 @@ import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import WrongUrl from './pages/NotFound/WrongUrl';
 import MainLayout from './components/layout/MainLayout';
 import RootRedirect from './routes/RootRedirect';
+import CollegeDetails from './pages/College/CollegeDetails';
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
             <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
+            
+            {/* General authenticated routes */}
+            <Route path="/college/:id" element={<CollegeDetails />} />
           </Route>
 
           {/* Fallback Route */}

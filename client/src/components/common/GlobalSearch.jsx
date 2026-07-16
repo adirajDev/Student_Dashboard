@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
 import { Search, MapPin, BookOpen, Loader2, X } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import useGlobalSearch from '../../hooks/useGlobalSearch';
 
 const GlobalSearch = () => {
     const { query, setQuery, results, isLoading, error, isOpen, setIsOpen } = useGlobalSearch();
     const searchRef = useRef(null);
+    const navigate = useNavigate();
 
     // Close on click outside
     useEffect(() => {
@@ -63,7 +65,26 @@ const GlobalSearch = () => {
                                 Matching Colleges
                             </div>
                             {results.map((college) => (
-                                <div key={college._id} className="px-4 py-3 border-b border-[var(--border)] last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+                                <div 
+                                    key={college._id} 
+                                    onClick={() => {
+                                        // Find if any course matched the query
+                                        const matchedCourse = college.availableCourses?.find(
+                                            course => course.name.toLowerCase().includes(query.toLowerCase())
+                                        );
+                                        
+                                        // Navigate to college page, with hash if course matched
+                                        if (matchedCourse) {
+                                            navigate(`/college/${college._id}#course-${matchedCourse._id}`);
+                                        } else {
+                                            navigate(`/college/${college._id}`);
+                                        }
+                                        
+                                        setIsOpen(false);
+                                        setQuery('');
+                                    }}
+                                    className="px-4 py-3 border-b border-[var(--border)] last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors cursor-pointer"
+                                >
                                     <h4 className="font-semibold text-[var(--foreground)]">{college.name}</h4>
                                     
                                     {college.location && (

@@ -10,6 +10,18 @@ export const getColleges = async (req, res) => {
     }
 };
 
+export const getCollegeById = async (req, res) => {
+    try {
+        const college = await College.findById(req.params.id).populate('availableCourses');
+        if (!college) {
+            return res.status(404).json({ message: 'College not found' });
+        }
+        res.json(college);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
 export const getCourses = async (req, res) => {
     try {
         const courses = await Course.find({}).sort({ name: 1 });
