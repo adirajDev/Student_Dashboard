@@ -1,4 +1,4 @@
-const FormField = ({ id, label, type = 'text', value, onChange, placeholder }) => (
+const FormField = ({ id, label, type = 'text', value, onChange, placeholder, error }) => (
     <div>
         <label htmlFor={id} className="block text-sm font-medium text-[var(--foreground)] mb-1">
             {label}

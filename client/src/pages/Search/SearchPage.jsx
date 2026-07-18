@@ -38,18 +38,36 @@ const SearchPage = () => {
 
     return (
         <main className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
+            <div className="relative flex items-center mb-10">
+                <Search className="absolute left-4 w-6 h-6 text-[var(--ring)] pointer-events-none" />
+                <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => {
+                        const newQuery = e.target.value;
+                        if (newQuery) {
+                            navigate(`/search?q=${encodeURIComponent(newQuery)}`, { replace: true });
+                        } else {
+                            navigate('/search', { replace: true });
+                        }
+                    }}
+                    placeholder="Search courses and colleges..."
+                    className="w-full pl-14 pr-6 py-4 rounded-full border-2 border-[var(--border)] bg-[var(--card)] text-lg text-[var(--foreground)] focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500 outline-none transition-all shadow-sm"
+                />
+            </div>
+
             {!query.trim() ? (
                 <div className="mt-8">
                     <h2 className="text-2xl font-semibold mb-6 text-[var(--foreground)]">Popular Searches</h2>
                     <div className="flex flex-wrap gap-3">
                         {POPULAR_SEARCHES.map((term, i) => (
-                            <Link
+                            <button
                                 key={i}
-                                to={`/search?q=${encodeURIComponent(term)}`}
+                                onClick={() => navigate(`/search?q=${encodeURIComponent(term)}`)}
                                 className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-2"
                             >
                                 {term}
-                            </Link>
+                            </button>
                         ))}
                     </div>
                 </div>
