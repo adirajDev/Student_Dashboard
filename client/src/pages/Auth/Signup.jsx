@@ -3,7 +3,7 @@ import { useTheme } from '../../context/ThemeContext';
 import { Sun, Moon, Loader2 } from 'lucide-react';
 import useSignup from '../../features/auth/hooks/useSignup';
 
-import SearchableSelect from '../../components/common/SearchableSelect';
+import SearchableSelect from '../../features/search/components/SearchableSelect';
 
 const Signup = () => {
     const { theme, toggleTheme } = useTheme();
@@ -41,6 +41,12 @@ const Signup = () => {
                             value={formData.college}
                             onChange={handleChange}
                             placeholder="Search for a college..."
+                            customOption={{
+                                value: 'others',
+                                label: 'Others (Type your college)',
+                                displayLabel: 'Others',
+                                subLabel: '(Type your college)'
+                            }}
                         />
                     </div>
 

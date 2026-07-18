@@ -1,40 +1,24 @@
-import { useState, useRef, useEffect } from 'react';
 import { ChevronDown, Search } from 'lucide-react';
+import useSearchableSelect from '../hooks/useSearchableSelect';
 
-const SearchableSelect = ({ options, value, onChange, name, placeholder = "Select an option..." }) => {
-    const [isOpen, setIsOpen] = useState(false);
-    const [searchTerm, setSearchTerm] = useState('');
-    const wrapperRef = useRef(null);
-
-    // Find the currently selected option's name for display when closed
-    const selectedOption = value === 'others' 
-        ? { name: 'Others (Type your college)' } 
-        : options.find(opt => opt._id === value);
-
-    const displayValue = isOpen ? searchTerm : (selectedOption?.name || '');
-
-    // Handle clicking outside to close dropdown
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-            if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
-                setIsOpen(false);
-                setSearchTerm(''); // Reset search term when closing
-            }
-        };
-        document.addEventListener('mousedown', handleClickOutside);
-        return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, []);
-
-    // Filter options based on search term
-    const filteredOptions = options.filter(opt => 
-        opt.name.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
-    const handleSelect = (selectedValue, optionName) => {
-        onChange({ target: { name, id: name, value: selectedValue } });
-        setSearchTerm('');
-        setIsOpen(false);
-    };
+const SearchableSelect = ({ 
+    options, 
+    value, 
+    onChange, 
+    name, 
+    placeholder = "Select an option...",
+    customOption = null
+}) => {
+    const {
+        isOpen,
+        setIsOpen,
+        searchTerm,
+        setSearchTerm,
+        wrapperRef,
+        displayValue,
+        filteredOptions,
+        handleSelect
+    } = useSearchableSelect({ options, value, customOption, onChange, name });
 
     return (
         <div ref={wrapperRef} className="relative w-full">
@@ -73,7 +57,7 @@ const SearchableSelect = ({ options, value, onChange, name, placeholder = "Selec
                         filteredOptions.map(opt => (
                             <div
                                 key={opt._id}
-                                onClick={() => handleSelect(opt._id, opt.name)}
+                                onClick={() => handleSelect(opt._id)}
                                 className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === opt._id ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
                             >
                                 {opt.name}
@@ -81,19 +65,24 @@ const SearchableSelect = ({ options, value, onChange, name, placeholder = "Selec
                         ))
                     ) : (
                         <div className="px-4 py-3 text-sm text-[var(--ring)] text-center">
-                            No matching colleges found.
+                            No options found.
                         </div>
                     )}
                     
-                    {/* Persistent 'Others' option */}
-                    <div className="border-t border-[var(--border)]">
-                        <div
-                            onClick={() => handleSelect('others', 'Others (Type your college)')}
-                            className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === 'others' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
-                        >
-                            Others <span className="text-xs text-[var(--ring)] ml-1">(Type your college)</span>
+                    {/* Optional Persistent Custom Option */}
+                    {customOption && (
+                        <div className="border-t border-[var(--border)]">
+                            <div
+                                onClick={() => handleSelect(customOption.value)}
+                                className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === customOption.value ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
+                            >
+                                {customOption.displayLabel || customOption.label} 
+                                {customOption.subLabel && (
+                                    <span className="text-xs text-[var(--ring)] ml-1">{customOption.subLabel}</span>
+                                )}
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
             )}
         </div>

@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signup from './pages/Auth/Signup';
 import Signin from './pages/Auth/Signin';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
@@ -24,7 +24,7 @@ function App() {
           
           {/* Protected Routes wrapped in MainLayout */}
           <Route element={<MainLayout />}>
-            <Route element={<ProtectedRoute allowedRoles={['student', 'admin']} />}>
+            <Route element={<ProtectedRoute allowedRoles={['student']} />}>
                 <Route path="/dashboard" element={<StudentDashboard />} />
             </Route>
             <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>

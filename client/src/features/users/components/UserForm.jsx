@@ -1,6 +1,6 @@
 import useUserForm from '../hooks/useUserForm';
 import FormField from '../../../components/common/FormField';
-import SearchableSelect from '../../../components/common/SearchableSelect';
+import SearchableSelect from '../../search/components/SearchableSelect';
 
 const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) => {
     const { formData, validationError, handleChange, handleSubmit, colleges, courses } = useUserForm(editingUser);

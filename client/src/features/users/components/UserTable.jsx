@@ -1,4 +1,4 @@
-import SearchBar from "../../../components/common/SearchBar";
+import SearchBar from "../../search/components/SearchBar";
 import Loading from "../../../components/common/Loading";
 import EmptyTable from "../../../components/common/EmptyTable";
 import NoResultsFound from "../../../components/common/NoResultsFound";
