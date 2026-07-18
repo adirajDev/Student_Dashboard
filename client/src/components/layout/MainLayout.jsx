@@ -15,7 +15,7 @@ const MainLayout = () => {
         <div className="flex h-screen overflow-hidden bg-[var(--background)] transition-colors duration-300">
             <Sidebar user={user} onSettingsOpen={() => setIsSettingsOpen(true)} onLogout={handleLogout} />
             
-            <main className="flex-1 overflow-y-auto">
+            <main className="flex-1 overflow-y-auto pt-20 md:pt-0">
                 <Outlet context={{ user, setUser, onSettingsOpen: () => setIsSettingsOpen(true), onLogout: handleLogout }} />
             </main>
 

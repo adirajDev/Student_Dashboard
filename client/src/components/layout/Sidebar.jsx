@@ -1,5 +1,6 @@
+import { useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search } from 'lucide-react';
+import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search, Menu, X } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const NavItem = ({ icon, label, isActive, onClick, hideActive, className = '' }) => {
@@ -25,6 +26,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
     const location = useLocation();
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
+    const [isMobileOpen, setIsMobileOpen] = useState(false);
 
     const isAdmin = user?.role === 'admin';
     const isEditor = user?.role === 'editor';
@@ -42,23 +44,59 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
 
     const handleNav = (path) => {
         navigate(path);
+        setIsMobileOpen(false);
     };
 
     return (
-        <aside 
-            className="w-64 transition-all duration-300 ease-in-out m-4 rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)] bg-gradient-to-b from-white/80 to-slate-50/60 dark:from-slate-900/80 dark:to-slate-800/60 backdrop-blur-md flex flex-col justify-between py-6 shrink-0 z-20"
-        >
-            {/* Top Section */}
-            <div className="flex flex-col gap-6 px-4">
-                {/* Logo */}
-                <div className="flex items-center justify-between px-2">
-                    <button 
-                        onClick={() => handleNav(isAdmin || isEditor ? '/admin/dashboard' : '/dashboard')} 
-                        className="cursor-pointer text-xl text-blue-600 dark:text-blue-400 hover:opacity-80 transition-opacity font-semibold"
-                    >
-                        {isAdmin || isEditor ? 'AdminPanel' : 'StudentPortal'}
-                    </button>
-                </div>
+        <>
+            {/* Mobile Toggle Button */}
+            <button 
+                onClick={() => setIsMobileOpen(true)}
+                className="md:hidden fixed top-4 left-4 z-30 p-3 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-md text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                title="Open Menu"
+            >
+                <Menu className="w-6 h-6" />
+            </button>
+
+            {/* Mobile Overlay */}
+            {isMobileOpen && (
+                <div 
+                    className="md:hidden fixed inset-0 bg-black/40 z-40 backdrop-blur-sm transition-opacity"
+                    onClick={() => setIsMobileOpen(false)}
+                />
+            )}
+
+            <aside 
+                className={`
+                    w-64 flex flex-col justify-between py-6 shrink-0 z-50
+                    transition-transform duration-300 ease-in-out
+                    rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)] bg-gradient-to-b from-white/80 to-slate-50/60 dark:from-slate-900/80 dark:to-slate-800/60 backdrop-blur-md
+                    
+                    /* Mobile styles */
+                    fixed inset-y-0 left-0 m-4
+                    ${isMobileOpen ? 'translate-x-0' : '-translate-x-[120%]'}
+                    
+                    /* Desktop styles */
+                    md:relative md:translate-x-0
+                `}
+            >
+                {/* Top Section */}
+                <div className="flex flex-col gap-6 px-4">
+                    {/* Logo & Close Button (Mobile) */}
+                    <div className="flex items-center justify-between px-2">
+                        <button 
+                            onClick={() => handleNav(isAdmin || isEditor ? '/admin/dashboard' : '/dashboard')} 
+                            className="cursor-pointer text-xl text-blue-600 dark:text-blue-400 hover:opacity-80 transition-opacity font-semibold"
+                        >
+                            {isAdmin || isEditor ? 'AdminPanel' : 'StudentPortal'}
+                        </button>
+                        <button 
+                            onClick={() => setIsMobileOpen(false)}
+                            className="md:hidden p-1.5 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 text-[var(--foreground)] transition-colors"
+                        >
+                            <X className="w-5 h-5" />
+                        </button>
+                    </div>
 
                 {/* Nav Links */}
                 <nav className="flex flex-col gap-2 mt-2">
@@ -124,12 +162,13 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                 <NavItem 
                     icon={<LogOut className="w-5 h-5" />} 
                     label="Logout" 
-                    onClick={onLogout}
+                    onClick={() => { onLogout(); setIsMobileOpen(false); }}
                     hideActive
                     className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
                 />
             </div>
         </aside>
+        </>
     );
 };
 
