@@ -34,15 +34,6 @@ const Signup = () => {
                         <input type="tel" name="phone" required value={formData.phone} onChange={handleChange} className="input-field" placeholder="+1234567890" />
                     </div>
                     <div>
-                        <label className="block text-sm font-medium mb-1">Course</label>
-                        <select name="course" required value={formData.course} onChange={handleChange} className="input-field">
-                            {courses.map(c => (
-                                <option key={c._id} value={c._id}>{c.name}</option>
-                            ))}
-                        </select>
-                    </div>
-
-                    <div>
                         <label className="block text-sm font-medium mb-1">College</label>
                         <SearchableSelect 
                             name="college"
@@ -67,6 +58,32 @@ const Signup = () => {
                             />
                         </div>
                     )}
+
+                    <div>
+                        <label className="block text-sm font-medium mb-1">Course</label>
+                        <select 
+                            name="course" 
+                            required 
+                            value={formData.course} 
+                            onChange={handleChange} 
+                            className="input-field disabled:opacity-50"
+                            disabled={!formData.college}
+                        >
+                            <option value="" disabled>Select a course...</option>
+                            {(() => {
+                                let displayedCourses = courses;
+                                if (formData.college && formData.college !== 'others') {
+                                    const selectedCollegeData = colleges.find(c => c._id === formData.college);
+                                    if (selectedCollegeData) {
+                                        displayedCourses = courses.filter(c => selectedCollegeData.availableCourses?.includes(c._id));
+                                    }
+                                }
+                                return displayedCourses.map(c => (
+                                    <option key={c._id} value={c._id}>{c.name}</option>
+                                ));
+                            })()}
+                        </select>
+                    </div>
                     
                     <button type="submit" disabled={loading} className="btn-primary rounded-full w-full py-3 mt-4 text-lg flex justify-center items-center">
                         {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Sign Up'}

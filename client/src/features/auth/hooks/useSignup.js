@@ -29,18 +29,43 @@ const useSignup = () => {
                 setCourses(courseRes.data);
                 
                 // Set defaults if available
-                if (courseRes.data.length > 0) {
-                    setFormData(prev => ({ ...prev, course: courseRes.data[0]._id }));
-                }
+                let defaultCollege = '';
+                let defaultCourse = '';
                 if (collegeRes.data.length > 0) {
-                    setFormData(prev => ({ ...prev, college: collegeRes.data[0]._id }));
+                    defaultCollege = collegeRes.data[0]._id;
+                    const availableCourses = courseRes.data.filter(c => collegeRes.data[0].availableCourses?.includes(c._id));
+                    if (availableCourses.length > 0) {
+                        defaultCourse = availableCourses[0]._id;
+                    }
                 }
+                setFormData(prev => ({ ...prev, college: defaultCollege, course: defaultCourse }));
             } catch (err) {
                 console.error("Failed to fetch colleges/courses", err);
             }
         };
         fetchData();
     }, []);
+
+    // Effect to handle resetting course when college changes
+    useEffect(() => {
+        if (colleges.length > 0 && courses.length > 0) {
+            if (formData.college && formData.college !== 'others') {
+                const selectedCollege = colleges.find(c => c._id === formData.college);
+                if (selectedCollege) {
+                    const availableCourses = courses.filter(c => selectedCollege.availableCourses?.includes(c._id));
+                    const isCurrentCourseValid = availableCourses.some(c => c._id === formData.course);
+                    if (!isCurrentCourseValid) {
+                        setFormData(prev => ({ ...prev, course: availableCourses.length > 0 ? availableCourses[0]._id : '' }));
+                    }
+                }
+            } else if (formData.college === 'others') {
+                const isCurrentCourseValid = courses.some(c => c._id === formData.course);
+                if (!isCurrentCourseValid) {
+                     setFormData(prev => ({ ...prev, course: courses.length > 0 ? courses[0]._id : '' }));
+                }
+            }
+        }
+    }, [formData.college, colleges, courses]);
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value});
