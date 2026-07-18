@@ -6,6 +6,12 @@ const courseSchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: true
+    },
+    level: {
+        type: String,
+        enum: ['diploma', 'bachelors', 'masters'],
+        required: true,
+        default: 'bachelors'
     }
 }, { timestamps: true });
 

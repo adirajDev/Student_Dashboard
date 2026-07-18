@@ -1,6 +1,7 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
 import UserManagementSection from '../../features/users/components/UserManagementSection';
+import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -46,6 +47,12 @@ const AdminDashboard = () => {
                         canDelete={isAdmin}
                         shouldFetch={true}
                     />
+                </div>
+            )}
+
+            {activeTab === 'courses' && isAdmin && (
+                <div className="animate-fade-in">
+                    <CourseManagementSection title="Course Directory" />
                 </div>
             )}
         </div>
