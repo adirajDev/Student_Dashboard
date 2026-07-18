@@ -8,6 +8,7 @@ import WrongUrl from './pages/NotFound/WrongUrl';
 import MainLayout from './components/layout/MainLayout';
 import RootRedirect from './routes/RootRedirect';
 import CollegeDetails from './pages/College/CollegeDetails';
+import SearchPage from './pages/Search/SearchPage';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
             
             {/* General authenticated routes */}
             <Route path="/college/:id" element={<CollegeDetails />} />
+            <Route path="/search" element={<SearchPage />} />
           </Route>
 
           {/* Fallback Route */}
