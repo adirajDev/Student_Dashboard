@@ -18,7 +18,7 @@ const Signup = () => {
             <div className="card w-full max-w-md">
                 <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">Create Account</h1>
                 
-                {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">{error}</div>}
+                {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-2xl text-sm text-center">{error}</div>}
                 
                 <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
@@ -62,13 +62,13 @@ const Signup = () => {
                                 required 
                                 value={formData.customCollege} 
                                 onChange={handleChange} 
-                                className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500" 
+                                className="input-field rounded-xl border-blue-300 dark:border-blue-700 focus:ring-blue-500" 
                                 placeholder="Enter your college name" 
                             />
                         </div>
                     )}
                     
-                    <button type="submit" disabled={loading} className="btn-primary w-full flex justify-center items-center mt-6">
+                    <button type="submit" disabled={loading} className="btn-primary rounded-full w-full py-3 mt-4 text-lg flex justify-center items-center">
                         {loading ? <Loader2 className="animate-spin w-5 h-5" /> : 'Sign Up'}
                     </button>
                 </form>

@@ -68,7 +68,7 @@ const SearchableSelect = ({ options, value, onChange, name, placeholder = "Selec
             </div>
 
             {isOpen && (
-                <div className="absolute z-50 w-full mt-1 bg-[var(--card)] border border-[var(--border)] rounded-lg shadow-xl max-h-60 overflow-y-auto animate-fade-in">
+                <div className="absolute z-50 w-full mt-1 bg-[var(--card)] border border-[var(--border)] rounded-2xl shadow-xl max-h-60 overflow-y-auto animate-fade-in">
                     {filteredOptions.length > 0 ? (
                         filteredOptions.map(opt => (
                             <div

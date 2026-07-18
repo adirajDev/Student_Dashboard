@@ -7,7 +7,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
 
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-            <div className="bg-[var(--card)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
+            <div className="bg-[var(--card)] w-full max-w-md rounded-3xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
                     <h2 className="text-xl flex items-center gap-2">
                         <Settings className="w-5 h-5 text-blue-500" />
@@ -42,8 +42,8 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         </div>
                     </div>
 
-                    {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm">{error}</div>}
-                    {success && <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-lg text-sm">{success}</div>}
+                    {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-2xl text-sm">{error}</div>}
+                    {success && <div className="mb-4 p-3 bg-green-100 text-green-700 rounded-2xl text-sm">{success}</div>}
                     
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div>

@@ -9,7 +9,7 @@ const FormField = ({ id, label, type = 'text', value, onChange, placeholder }) =
             name={id}
             value={value}
             onChange={onChange}
-            className="w-full px-4 py-2 bg-[var(--card)] border border-[var(--border)] rounded-lg text-[var(--foreground)] placeholder-[var(--ring)] focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition"
+            className={`input-field ${error ? 'border-red-500 focus:ring-red-500' : ''}`}
             placeholder={placeholder}
             required
         />

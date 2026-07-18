@@ -23,7 +23,7 @@ const UserManagementSection = ({ title, role, showCourse, canAdd, canDelete, sho
                             setEditingUser(null);
                             setShowFormModal(true);
                         }}
-                        className="flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+                        className="btn-primary flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
                         Add {role.charAt(0).toUpperCase() + role.slice(1)}

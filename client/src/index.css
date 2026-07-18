@@ -23,7 +23,7 @@
 
 @layer base {
   :root {
-    --background: #ffffff;
+    --background: #f8fafc;
     --foreground: #0f172a;
     --card: #ffffff;
     --card-foreground: #0f172a;
@@ -43,7 +43,7 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
-    font-family: "Manrope", sans-serif;
+    font-family: "Rubik", sans-serif;
     font-optical-sizing: auto;
     @apply transition-colors duration-300;
   }
@@ -56,19 +56,19 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-blue-600 text-white hover:bg-blue-700 px-4 py-2 rounded-lg font-medium transition-all shadow-md hover:shadow-lg active:scale-95;
+    @apply bg-blue-500 text-white hover:bg-blue-600 px-5 py-2.5 rounded-full font-medium transition-all shadow-sm hover:shadow-md active:scale-95;
   }
 
   .btn-secondary {
-    @apply bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100 hover:bg-slate-300 dark:hover:bg-slate-600 px-4 py-2 rounded-lg font-medium transition-all active:scale-95;
+    @apply bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200 hover:bg-slate-200 dark:hover:bg-slate-700 px-5 py-2.5 rounded-full font-medium transition-all active:scale-95;
   }
 
   .input-field {
-    @apply w-full px-4 py-2 rounded-lg border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-500 outline-none transition-all;
+    @apply w-full px-5 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-[var(--card)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-400/50 outline-none transition-all shadow-sm;
   }
 
   .card {
-    @apply bg-[var(--card)] text-[var(--card-foreground)] rounded-2xl shadow-xl border border-[var(--border)] p-6 md:p-8 backdrop-blur-sm;
+    @apply bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)] border border-slate-100 dark:border-slate-800 p-6 md:p-8 backdrop-blur-sm transition-all;
   }
 }
 

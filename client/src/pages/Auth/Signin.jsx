@@ -28,7 +28,7 @@ const Signin = () => {
             <div className="card w-full max-w-md">
                 <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">Welcome Back</h1>
                 
-                {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center animate-fade-in">{error}</div>}
+                {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-2xl text-sm text-center animate-fade-in">{error}</div>}
                 
                 {step === 1 ? (
                     <form onSubmit={handleCheckUser} className="space-y-4 animate-fade-in">
@@ -48,7 +48,7 @@ const Signin = () => {
                         </div>
                         
                         {!hasPassword && (
-                            <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-lg text-sm">
+                            <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-2xl text-sm">
                                 It looks like this is your first time signing in. Please set a password to continue.
                             </div>
                         )}

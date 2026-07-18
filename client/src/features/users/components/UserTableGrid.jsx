@@ -1,7 +1,7 @@
 import UserRow from './UserRow';
 
 const UserTableGrid = ({ users, onEdit, onDelete, showCourse }) => (
-    <div className="bg-[var(--card)] rounded-xl shadow-sm border border-[var(--border)] overflow-hidden">
+    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
         <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
                 <thead>

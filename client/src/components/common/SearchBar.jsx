@@ -16,7 +16,7 @@ const SearchBar = ({ value, onChange, placeholder = "Search...", onClear }) => {
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="w-full pl-11 pr-11 py-3 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-sm text-[var(--foreground)] placeholder-[var(--ring)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                className="w-full pl-11 pr-11 py-3 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] placeholder-[var(--ring)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
             />
 
             {value && (
