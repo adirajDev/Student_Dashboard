@@ -9,7 +9,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
             <div className="bg-[var(--card)] w-full max-w-md rounded-2xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
                 <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
-                    <h2 className="text-xl font-bold flex items-center gap-2">
+                    <h2 className="text-xl flex items-center gap-2">
                         <Settings className="w-5 h-5 text-blue-500" />
                         Settings
                     </h2>

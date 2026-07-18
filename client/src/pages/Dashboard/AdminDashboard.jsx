@@ -8,7 +8,7 @@ const AdminDashboard = () => {
     return (
         <main className="max-w-5xl mx-auto px-4 py-8">
             <div className="mb-8">
-                <h2 className="text-3xl font-bold mb-2">Welcome back, {user.name.split(' ')[0]}! 👋</h2>
+                <h2 className="text-3xl mb-2">Welcome back, {user.name.split(' ')[0]}! 👋</h2>
                 <p className="text-[var(--ring)]">Here is an overview of your management portal.</p>
             </div>
 

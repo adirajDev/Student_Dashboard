@@ -4,7 +4,7 @@ const CollegeHeader = ({ college }) => {
     return (
         <div className="card mb-8 relative overflow-hidden">
             <div className="relative z-10">
-                <h1 className="text-4xl font-bold text-[var(--foreground)] mb-2">{college.name}</h1>
+                <h1 className="text-4xl text-[var(--foreground)] mb-2">{college.name}</h1>
                 
                 <div className="flex flex-wrap items-center gap-4 text-[var(--ring)] mb-6">
                     {college.location && (

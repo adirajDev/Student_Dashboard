@@ -7,7 +7,7 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) =>
 
     return (
         <form onSubmit={(e) => handleSubmit(e, onAdd, onUpdate, showCourse)} className="bg-[var(--card)] p-6 rounded-xl shadow-sm border border-[var(--border)]">
-            <h3 className="text-xl font-bold mb-6 text-[var(--foreground)]">
+            <h3 className="text-xl mb-6 text-[var(--foreground)]">
                 {editingUser ? 'Edit User' : 'Add New User'}
             </h3>
 

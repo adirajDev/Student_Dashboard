@@ -6,7 +6,7 @@ const CourseList = ({ courses }) => {
         <div>
             <div className="flex items-center gap-2 mb-6">
                 <BookOpen className="w-6 h-6 text-blue-500" />
-                <h2 className="text-2xl font-bold text-[var(--foreground)]">
+                <h2 className="text-2xl text-[var(--foreground)]">
                     Offered Courses ({courses?.length || 0})
                 </h2>
             </div>

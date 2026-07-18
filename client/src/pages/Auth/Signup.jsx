@@ -16,7 +16,7 @@ const Signup = () => {
             </button>
             
             <div className="card w-full max-w-md">
-                <h1 className="text-3xl font-bold text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">Create Account</h1>
+                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">Create Account</h1>
                 
                 {error && <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-lg text-sm text-center">{error}</div>}
                 

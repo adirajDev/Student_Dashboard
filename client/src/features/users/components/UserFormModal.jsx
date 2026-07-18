@@ -7,7 +7,7 @@ const UserFormModal = ({ onAdd, onUpdate, editingUser, onClose, showCourse, titl
             <div className="relative w-full max-w-2xl bg-[var(--card)] rounded-xl shadow-2xl overflow-hidden animate-slide-up">
                 
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h2 className="text-xl font-bold text-[var(--foreground)]">{title}</h2>
+                    <h2 className="text-xl text-[var(--foreground)]">{title}</h2>
                     <button 
                         onClick={onClose}
                         className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-lg transition-colors"
