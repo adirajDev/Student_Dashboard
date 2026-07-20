@@ -1,5 +1,5 @@
 import Rating from "./rating.model.js";
-import { recalculateCollegeRating } from "../../../utils/ratingCalculator.js";
+import { recalculateCollegeRating } from "../../common/utils/rating.util.js";
 import AppError from '../../common/utils/AppError.js';
 
 export const addRating = async (studentId, data) => {

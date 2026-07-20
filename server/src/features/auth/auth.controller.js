@@ -1,6 +1,6 @@
 import * as authService from './auth.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
-import generateTokenAndSetCookie from '../../../utils/generateTokenAndSetCookie.js';
+import generateTokenAndSetCookie from '../../common/utils/token.util.js';
 
 export const signup = asyncHandler(async (req, res) => {
     const user = await authService.signup(req.body);

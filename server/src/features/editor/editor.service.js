@@ -1,5 +1,5 @@
-import { normalizeUserPayload, validateUserPayload } from '../../../utils/validationUtils.js';
-import { getUsersByRole, createUserByRole, updateUserByRole, deleteUserByRole, isDuplicateKeyError } from '../../../utils/userManagementUtils.js';
+import { normalizeUserPayload, validateUserPayload } from '../../common/utils/validation.util.js';
+import { getUsersByRole, createUserByRole, updateUserByRole, deleteUserByRole, isDuplicateKeyError } from '../../common/utils/user.util.js';
 import AppError from '../../common/utils/AppError.js';
 
 export const getEditors = async () => {
