@@ -13,7 +13,7 @@ import editorRoutes from '../routes/editorRoutes.js';
 import dataRoutes from '../routes/dataRoutes.js';
 import courseRoutes from '../routes/courseRoutes.js';
 import ratingRoutes from '../routes/ratingRoutes.js';
-import collegeRoutes from '../routes/collegeRoutes.js';
+
 
 import apiRoutes from './routes.js';
 import errorMiddleware from './common/middleware/error.middleware.js';
@@ -43,7 +43,7 @@ app.use('/api/editors', editorRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/courses', courseRoutes);
 app.use('/api/ratings', ratingRoutes);
-app.use('/api/colleges', collegeRoutes);
+
 
 app.use('/api', apiRoutes);
 

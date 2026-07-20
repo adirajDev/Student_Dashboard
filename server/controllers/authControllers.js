@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import bcrypt from "bcrypt";
 import User from "../models/User.js";
-import College from "../models/College.js";
+import College from "../src/features/college/college.model.js";
 import generateTokenAndSetCookie from '../utils/generateTokenAndSetCookie.js';
 
 export const signup = async (req, res) => {
