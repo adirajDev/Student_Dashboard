@@ -1,5 +1,7 @@
 import { normalizeUserPayload, validateUserPayload } from '../utils/validationUtils.js';
 import { getUsersByRole, createUserByRole, updateUserByRole, deleteUserByRole, isDuplicateKeyError } from '../utils/userManagementUtils.js';
+import Rating from '../models/Rating.js';
+import { recalculateCollegeRating } from '../utils/ratingCalculator.js';
 
 export const getStudents = async (req, res, next) => {
     try {
@@ -40,7 +42,18 @@ export const updateStudent = async (req, res, next) => {
 
 export const deleteStudent = async (req, res, next) => {
     try {
-        await deleteUserByRole(req.params.id, 'student');
+        const userId = req.params.id
+        
+        const userRatings = await Rating.find({student: userId});
+        const ratedCollegeIds = [...new Set(userRatings.map(r => r.college))];
+
+        await Rating.deleteMany({student: userId})
+
+        for (const collegeId of ratedCollegeIds) {
+            await recalculateCollegeRating(collegeId);
+        }
+
+        await deleteUserByRole(userId, 'student');
         res.status(200).json({ message: 'Student deleted successfully.' });
     } catch (err) {
         if (err.status) return res.status(err.status).json({ error: err.message });
