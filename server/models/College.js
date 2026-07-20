@@ -25,7 +25,17 @@ const collegeSchema = new mongoose.Schema({
     availableCourses: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Course'
-    }]
+    }],
+    averageRating: {
+        type: Number,
+        default: 0,
+        min: 0,
+        max: 5
+    },
+    totalRatings: {
+        type: Number,
+        default: 0
+    }
 }, { timestamps: true });
 
 const College = mongoose.model('College', collegeSchema);
