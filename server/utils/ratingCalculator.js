@@ -1,5 +1,5 @@
 import College from "../src/features/college/college.model.js";
-import Rating from "../models/Rating.js";
+import Rating from "../src/features/rating/rating.model.js";
 
 export const recalculateCollegeRating = async (collegeId) => {
     const stats = await Rating.aggregate([

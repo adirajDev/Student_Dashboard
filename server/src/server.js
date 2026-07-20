@@ -7,11 +7,8 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 
-import studentRoutes from '../routes/studentRoutes.js';
 import editorRoutes from '../routes/editorRoutes.js';
 import dataRoutes from '../routes/dataRoutes.js';
-import ratingRoutes from '../routes/ratingRoutes.js';
-
 
 import apiRoutes from './routes.js';
 import errorMiddleware from './common/middleware/error.middleware.js';
@@ -37,8 +34,6 @@ app.use(cors({
 app.use('/api/data', dataRoutes);
 
 app.use('/api/editors', editorRoutes);
-app.use('/api/students', studentRoutes);
-app.use('/api/ratings', ratingRoutes);
 
 
 app.use('/api', apiRoutes);

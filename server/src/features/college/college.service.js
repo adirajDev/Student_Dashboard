@@ -1,5 +1,5 @@
 import College from './college.model.js';
-import Rating from '../../../models/Rating.js';
+import Rating from '../rating/rating.model.js';
 import AppError from '../../common/utils/AppError.js';
 
 export const getColleges = async () => {
