@@ -37,6 +37,7 @@ const errorMiddleware = (err, req, res, next) => {
         res.status(error.statusCode).json({
             status: error.status,
             message: error.message,
+            error: error.message, // Included for frontend compatibility
         });
     } else {
         // Programming or other unknown error: don't leak error details
@@ -44,6 +45,7 @@ const errorMiddleware = (err, req, res, next) => {
         res.status(500).json({
             status: 'error',
             message: 'Something went very wrong!',
+            error: 'Something went very wrong!', // Included for frontend compatibility
         });
     }
 };

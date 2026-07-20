@@ -7,9 +7,6 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
 
-import editorRoutes from '../routes/editorRoutes.js';
-import dataRoutes from '../routes/dataRoutes.js';
-
 import apiRoutes from './routes.js';
 import errorMiddleware from './common/middleware/error.middleware.js';
 
@@ -31,9 +28,6 @@ app.use(cors({
 }));
 
 // Routes
-app.use('/api/data', dataRoutes);
-
-app.use('/api/editors', editorRoutes);
 
 
 app.use('/api', apiRoutes);
