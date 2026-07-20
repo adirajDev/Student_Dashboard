@@ -6,8 +6,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-import authRoutes from '../routes/authRoutes.js';
-import userRoutes from '../routes/userRoutes.js';
+
 import studentRoutes from '../routes/studentRoutes.js';
 import editorRoutes from '../routes/editorRoutes.js';
 import dataRoutes from '../routes/dataRoutes.js';
@@ -36,8 +35,7 @@ app.use(cors({
 
 // Routes
 app.use('/api/data', dataRoutes);
-app.use('/api', authRoutes);
-app.use('/api', userRoutes);
+
 app.use('/api/editors', editorRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/ratings', ratingRoutes);

@@ -19,8 +19,8 @@ const useUserForm = (editingUser) => {
         const fetchData = async () => {
             try {
                 const [collegeRes, courseRes] = await Promise.all([
-                    apiClient.get('/data/colleges'),
-                    apiClient.get('/data/courses')
+                    apiClient.get('/colleges'),
+                    apiClient.get('/courses')
                 ]);
                 setColleges(collegeRes.data);
                 setCourses(courseRes.data);

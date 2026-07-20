@@ -1,7 +1,7 @@
 import express from 'express';
 import { createCourse, updateCourse, deleteCourse, getCourses } from './course.controller.js';
-import { requireAuth } from '../../../middleware/auth.js';
-import { requireRole } from '../../../middleware/role.js';
+import { requireAuth } from '../../common/middleware/auth.middleware.js';
+import { requireRole } from '../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 router.get('/', getCourses);

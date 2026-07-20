@@ -1,4 +1,4 @@
-import User from '../models/User.js';
+import User from '../src/features/user/user.model.js';
 import mongoose from 'mongoose';
 
 export const isDuplicateKeyError = (err) => err?.code === 11000;

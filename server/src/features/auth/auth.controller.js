@@ -1,0 +1,30 @@
+import * as authService from './auth.service.js';
+import asyncHandler from '../../common/utils/asyncHandler.js';
+import generateTokenAndSetCookie from '../../../utils/generateTokenAndSetCookie.js';
+
+export const signup = asyncHandler(async (req, res) => {
+    const user = await authService.signup(req.body);
+    res.status(201).json({ message: 'User created successfully', user });
+});
+
+export const checkUserLoggedIn = asyncHandler(async (req, res) => {
+    const result = await authService.checkUserLoggedIn(req.body.email);
+    res.json(result);
+});
+
+export const setPassword = asyncHandler(async (req, res) => {
+    const user = await authService.setPassword(req.body.email, req.body.password);
+    generateTokenAndSetCookie(res, user._id);
+    res.json({ message: 'Password set successfully and logged in', user: { id: user._id, email: user.email, name: user.name, role: user.role } });
+});
+
+export const signin = asyncHandler(async (req, res) => {
+    const user = await authService.signin(req.body.email, req.body.password);
+    generateTokenAndSetCookie(res, user._id);
+    res.json({ message: 'Logged in successfully', user: { id: user._id, email: user.email, name: user.name, role: user.role } });
+});
+
+export const logout = (req, res) => {
+    res.cookie('jwt', '', { maxAge: 0 });
+    res.json({ message: 'Logged out successfully' });
+};
