@@ -64,16 +64,21 @@ export const updateRating = async(req, res) => {
     }
 }
 
-export const getMyRatings = async(req, res) => {
+export const deleteRating = async(req, res) => {
     try {
-        const studentId = req.user._id;
+        const studentId = req.user._id
+        const { ratingId } = req.params
 
-        const ratings = await Rating.find({student: studentId})
-            .populate('college', 'name location avgRating totalRatings')
-            .sort({ createdAt: -1 });
+        const rating = await Rating.findByIdAndDelete({_id: ratingId, student: studentId});
 
-        res.status(200).json(ratings);
+        if (!rating) {
+            return res.status(404).json({error: "Rating not found or unauthorized"})
+        }
+        
+        await recalculateCollegeRating(rating.college)
+
+        res.status(200).json({message: "Rating deleted successfully"})
     } catch (error) {
-        res.status(500).json({error: error.message});
+        res.status(500).json({error: error.message})
     }
 }
