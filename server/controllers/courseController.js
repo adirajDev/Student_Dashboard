@@ -1,6 +1,15 @@
 import Course from '../models/Course.js';
 import College from '../models/College.js';
 
+export const getCourses = async (req, res) => {
+    try {
+        const courses = await Course.find({}).sort({ name: 1 });
+        res.json(courses);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
 // Create a new course
 export const createCourse = async (req, res) => {
     try {

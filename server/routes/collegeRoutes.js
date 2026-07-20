@@ -1,11 +1,13 @@
 import express from 'express'
 import { requireAuth } from '../middleware/auth.js'
 import { requireRole } from '../middleware/role.js'
-import { createCollege, deleteCollege, updateCollege } from '../controllers/collegeControllers.js'
+import { createCollege, deleteCollege, getCollegeById, getColleges, updateCollege } from '../controllers/collegeControllers.js'
 
 const router = express.Router();
-router.use(requireAuth);
+router.get('/', getColleges);
+router.get('/:id', getCollegeById);
 
+router.use(requireAuth);
 router.use(requireRole('admin'))
 
 router.post('/create-college', createCollege)

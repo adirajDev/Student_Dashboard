@@ -1,6 +1,27 @@
 import College from "../models/College.js";
 import Rating from "../models/Rating.js";
 
+export const getColleges = async (req, res) => {
+    try {
+        const colleges = await College.find({}).sort({ name: 1 });
+        res.json(colleges);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
+export const getCollegeById = async (req, res) => {
+    try {
+        const college = await College.findById(req.params.id).populate('availableCourses');
+        if (!college) {
+            return res.status(404).json({ message: 'College not found' });
+        }
+        res.json(college);
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error: error.message });
+    }
+};
+
 export const createCollege = async (req, res) => {
     try {
         const { name, location, description, collegeId, availableCourses} = req.body;

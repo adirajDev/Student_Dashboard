@@ -12,7 +12,7 @@ const useCourseManagement = (shouldFetch) => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await apiClient.get('/data/courses');
+            const res = await apiClient.get('/courses');
             const sortedCourses = res.data.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
             setCourses(sortedCourses);
         } catch (err) {
