@@ -11,7 +11,7 @@ const useCollegeDetails = (id, locationHash) => {
         const fetchCollege = async () => {
             setIsLoading(true);
             try {
-                const response = await apiClient.get(`/data/colleges/${id}`);
+                const response = await apiClient.get(`/colleges/${id}`);
                 setCollege(response.data);
             } catch (err) {
                 console.error("Failed to fetch college:", err);

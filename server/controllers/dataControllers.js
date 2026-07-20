@@ -1,10 +1,6 @@
 import College from '../models/College.js';
 import Course from '../models/Course.js';
 
-
-
-
-
 export const globalSearch = async (req, res) => {
     try {
         const query = req.query.q;
