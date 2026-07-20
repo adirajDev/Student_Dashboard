@@ -12,7 +12,7 @@ const collegeSchema = new mongoose.Schema({
         trim: true,
         default: 'Unknown'
     },
-    collegeID: {
+    collegeId: {
         type: String,
         trim: true,
         sparse: true, // sparse unique index allows null/missing
