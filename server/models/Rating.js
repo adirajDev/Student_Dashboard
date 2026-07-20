@@ -1,1 +1,0 @@
-// Migrated to src/features/rating/rating.model.js

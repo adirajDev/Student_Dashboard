@@ -1,1 +1,0 @@
-// Migrated to src/features/editor/editor.routes.js

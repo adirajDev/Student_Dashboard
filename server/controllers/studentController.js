@@ -1,1 +1,0 @@
-// Migrated to src/features/student/student.controller.js

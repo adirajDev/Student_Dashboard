@@ -1,1 +1,0 @@
-// This file has been migrated to src/features/college/college.controller.js

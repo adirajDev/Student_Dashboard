@@ -1,1 +1,0 @@
-// Migrated to src/common/utils/rating.util.js
