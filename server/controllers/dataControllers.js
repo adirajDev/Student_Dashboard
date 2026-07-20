@@ -1,5 +1,5 @@
 import College from '../src/features/college/college.model.js';
-import Course from '../models/Course.js';
+import Course from '../src/features/course/course.model.js';
 
 export const globalSearch = async (req, res) => {
     try {

@@ -1,0 +1,16 @@
+import express from 'express';
+import { createCourse, updateCourse, deleteCourse, getCourses } from './course.controller.js';
+import { requireAuth } from '../../../middleware/auth.js';
+import { requireRole } from '../../../middleware/role.js';
+
+const router = express.Router();
+router.get('/', getCourses);
+
+router.use(requireAuth);
+router.use(requireRole('admin'));
+
+router.post('/create-course', createCourse);
+router.put('/update-course/:id', updateCourse);
+router.delete('/delete-course/:id', deleteCourse);
+
+export default router;
