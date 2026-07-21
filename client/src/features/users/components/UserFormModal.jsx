@@ -1,7 +1,7 @@
 import UserForm from './UserForm';
 import { createPortal } from 'react-dom';
 
-const UserFormModal = ({ onAdd, onUpdate, editingUser, onClose, showCourse, title }) => {
+const UserFormModal = ({ onAdd, onUpdate, editingUser, onClose, showCourse, showCollegeOnly, title }) => {
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="relative w-full max-w-2xl bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
@@ -22,6 +22,7 @@ const UserFormModal = ({ onAdd, onUpdate, editingUser, onClose, showCourse, titl
                     <UserForm
                         editingUser={editingUser}
                         showCourse={showCourse}
+                        showCollegeOnly={showCollegeOnly}
                         onAdd={async (data) => {
                             await onAdd(data);
                             onClose();

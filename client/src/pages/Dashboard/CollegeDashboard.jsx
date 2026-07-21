@@ -15,29 +15,6 @@ const CollegeDashboard = () => {
                 <p className="text-[var(--ring)]">Manage your college's information and view update history.</p>
             </div>
 
-            <div className="flex space-x-1 bg-[var(--card)] p-1 rounded-2xl border border-[var(--border)] mb-8 max-w-sm">
-                <button
-                    onClick={() => setSearchParams({ tab: 'edit' })}
-                    className={`flex-1 py-2 text-sm font-medium rounded-xl transition-all ${
-                        activeTab === 'edit'
-                            ? 'bg-blue-500 text-white shadow-sm'
-                            : 'text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800'
-                    }`}
-                >
-                    Edit College
-                </button>
-                <button
-                    onClick={() => setSearchParams({ tab: 'history' })}
-                    className={`flex-1 py-2 text-sm font-medium rounded-xl transition-all ${
-                        activeTab === 'history'
-                            ? 'bg-blue-500 text-white shadow-sm'
-                            : 'text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800'
-                    }`}
-                >
-                    Request History
-                </button>
-            </div>
-
             {activeTab === 'edit' && <EditCollegeTab user={user} />}
             {activeTab === 'history' && <UpdateHistoryTab />}
         </main>

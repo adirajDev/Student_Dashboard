@@ -5,7 +5,7 @@ import UserFormModal from './UserFormModal';
 import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useUserManagement from '../hooks/useUserManagement';
 
-const UserManagementSection = ({ title, role, showCourse, canAdd, canDelete, shouldFetch }) => {
+const UserManagementSection = ({ title, role, showCourse, showCollegeOnly, canAdd, canDelete, shouldFetch }) => {
     const { users, isLoading, error, addUser, updateUser, deleteUser } = useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
@@ -26,7 +26,7 @@ const UserManagementSection = ({ title, role, showCourse, canAdd, canDelete, sho
                         className="btn-primary flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
-                        Add {role.charAt(0).toUpperCase() + role.slice(1)}
+                        Add {role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}
                     </button>
                 )}
             </div>
@@ -47,8 +47,14 @@ const UserManagementSection = ({ title, role, showCourse, canAdd, canDelete, sho
                 <UserFormModal
                     editingUser={editingUser}
                     showCourse={showCourse}
-                    title={editingUser ? `Edit ${role.charAt(0).toUpperCase() + role.slice(1)}` : `Add New ${role.charAt(0).toUpperCase() + role.slice(1)}`}
-                    onAdd={addUser}
+                    showCollegeOnly={showCollegeOnly}
+                    title={editingUser ? `Edit ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}` : `Add New ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}`}
+                    onAdd={async (data) => {
+                        const newUser = await addUser(data);
+                        if (newUser?.generatedOtp) {
+                            alert(`COLLEGE USER CREATED!\n\nPlease securely share this One-Time Password with the user:\n\nOTP: ${newUser.generatedOtp}\n\nThey will need this to log in and set their actual password.`);
+                        }
+                    }}
                     onUpdate={updateUser}
                     onClose={() => {
                         setShowFormModal(false);

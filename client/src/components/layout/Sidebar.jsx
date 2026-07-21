@@ -172,6 +172,12 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                                 onClick={() => handleNav('/admin/dashboard?tab=colleges')}
                             />
                             <NavItem 
+                                icon={<Users className="w-5 h-5" />} 
+                                label="College Admins" 
+                                isActive={activeTab === 'collegeUsers'} 
+                                onClick={() => handleNav('/admin/dashboard?tab=collegeUsers')}
+                            />
+                            <NavItem 
                                 icon={<FileEdit className="w-5 h-5" />} 
                                 label="Approval Requests" 
                                 isActive={activeTab === 'approvals'} 

@@ -48,7 +48,9 @@ export const checkUserLoggedIn = async (email) => {
 
     return { 
         exists: true, 
-        hasPassword: !!user.password 
+        hasPassword: !!user.password,
+        role: user.role,
+        isFirstLogin: user.isFirstLogin
     };
 };
 
@@ -97,6 +99,29 @@ export const resetInitialPassword = async (userId, newPassword) => {
 
     if (!newPassword || newPassword.length < 6) {
         throw new AppError('Password must be at least 6 characters', 400);
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    user.isFirstLogin = false;
+    await user.save();
+
+    return user;
+};
+
+export const resetOtpPassword = async (email, otp, newPassword) => {
+    const user = await User.findOne({ email });
+    if (!user) {
+        throw new AppError('User not found', 404);
+    }
+
+    const isMatch = await bcrypt.compare(otp, user.password);
+    if (!isMatch) {
+        throw new AppError('Invalid OTP', 400);
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+        throw new AppError('New password must be at least 6 characters', 400);
     }
 
     const salt = await bcrypt.genSalt(10);

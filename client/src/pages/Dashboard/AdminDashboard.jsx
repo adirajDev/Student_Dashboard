@@ -64,6 +64,20 @@ const AdminDashboard = () => {
                 </div>
             )}
 
+            {activeTab === 'collegeUsers' && isAdmin && (
+                <div className="animate-fade-in">
+                    <UserManagementSection
+                        title="College Admins Directory"
+                        role="collegeUser"
+                        showCourse={false}
+                        showCollegeOnly={true}
+                        canAdd={isAdmin}
+                        canDelete={isAdmin}
+                        shouldFetch={isAdmin}
+                    />
+                </div>
+            )}
+
             {activeTab === 'approvals' && isAdmin && (
                 <div className="animate-fade-in">
                     <PendingUpdatesSection title="Approval Requests" />

@@ -3,7 +3,7 @@ import Signup from './pages/Auth/Signup';
 import Signin from './pages/Auth/Signin';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
 import ProtectedRoute from './routes/ProtectedRoute';
-import ForcePasswordReset from './pages/Auth/ForcePasswordReset';
+import ResetOtpPassword from './pages/Auth/ResetOtpPassword';
 import CollegeDashboard from './pages/Dashboard/CollegeDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import WrongUrl from './pages/NotFound/WrongUrl';
@@ -23,6 +23,7 @@ function App() {
           {/* Auth Routes */}
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
+          <Route path="/reset-otp-password" element={<ResetOtpPassword />} />
           
             {/* Protected Routes wrapped in MainLayout */}
             <Route element={<MainLayout />}>
@@ -30,7 +31,6 @@ function App() {
                   <Route path="/dashboard" element={<StudentDashboard />} />
               </Route>
               <Route element={<ProtectedRoute allowedRoles={['college']} />}>
-                  <Route path="/force-password-reset" element={<ForcePasswordReset />} />
                   <Route path="/college/dashboard" element={<CollegeDashboard />} />
               </Route>
             <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>

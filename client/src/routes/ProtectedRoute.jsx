@@ -16,10 +16,6 @@ const ProtectedRoute = ({ allowedRoles }) => {
         return <Navigate to="/dashboard" replace />;
     }
 
-    if (user.role === 'college' && user.isFirstLogin && window.location.pathname !== '/force-password-reset') {
-        return <Navigate to="/force-password-reset" replace />;
-    }
-
     // Pass the context down to the actual dashboard components
     return <Outlet context={context} />;
 };

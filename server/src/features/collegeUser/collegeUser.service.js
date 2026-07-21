@@ -1,5 +1,6 @@
 import User from '../user/user.model.js';
 import AppError from '../../common/utils/AppError.js';
+import bcrypt from "bcrypt";
 
 export const getCollegeUsers = async () => {
     return await User.find({ role: 'college' }).populate('college', 'name');
@@ -17,17 +18,25 @@ export const createCollegeUser = async (data) => {
         throw new AppError('College ID is required for a college user.', 400);
     }
 
+    const otp = Math.random().toString(36).slice(-6).toUpperCase();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(otp, salt);
+
     const newCollegeUser = new User({
         name,
         email,
         phone,
         college,
         role: 'college',
-        isFirstLogin: true // They must reset their password on first login
+        isFirstLogin: true, // They must reset their password on first login
+        password: hashedPassword
     });
 
     await newCollegeUser.save();
-    return await User.findById(newCollegeUser._id).populate('college', 'name');
+    
+    // Convert to plain object so we can attach the OTP to the response
+    const populatedUser = await User.findById(newCollegeUser._id).populate('college', 'name').lean();
+    return { ...populatedUser, generatedOtp: otp };
 };
 
 export const updateCollegeUser = async (id, data) => {

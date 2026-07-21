@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../../../../services/apiClient';
+import apiClient from '../../../services/apiClient';
 import useCollegeUpdates from './useCollegeUpdates';
 
 const useEditCollegeForm = (user) => {
@@ -26,7 +26,7 @@ const useEditCollegeForm = (user) => {
                     setError('No college assigned to this user.');
                     return;
                 }
-                const res = await apiClient.get(`/colleges/get-college/${collegeId}`);
+                const res = await apiClient.get(`/colleges/${collegeId}`);
                 const data = res.data;
                 setCollege(data);
                 

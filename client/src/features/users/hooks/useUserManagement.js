@@ -27,6 +27,7 @@ const useUserManagement = (role, shouldFetch = true) => {
     const addUser = async (userData) => {
         const res = await apiClient.post(`/${role}s/create-${role}`, userData);
         setUsers((prev) => [...prev, res.data].sort((a, b) => a.name.localeCompare(b.name)));
+        return res.data;
     };
 
     const updateUser = async (id, userData) => {

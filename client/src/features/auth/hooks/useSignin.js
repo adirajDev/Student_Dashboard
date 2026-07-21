@@ -18,6 +18,13 @@ const useSignin = () => {
         setLoading(true);
         try {
             const res = await apiClient.post('/check-user', { email });
+            
+            if (res.data.role === 'college' && res.data.isFirstLogin) {
+                setError('First time login detected. Please set your password using OTP.');
+                setTimeout(() => navigate('/reset-otp-password', { state: { email } }), 1500);
+                return;
+            }
+
             setHasPassword(res.data.hasPassword);
             setStep(2);
         } catch (err) {
@@ -48,10 +55,6 @@ const useSignin = () => {
             const user = res.data.user;
             const userRole = user.role; 
             
-            if (userRole === 'college' && user.isFirstLogin) {
-                navigate('/force-password-reset');
-                return;
-            }
 
             if (userRole === 'admin' || userRole === 'editor') {
                 navigate('/admin/dashboard');

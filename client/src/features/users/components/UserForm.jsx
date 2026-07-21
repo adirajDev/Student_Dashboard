@@ -2,7 +2,7 @@ import useUserForm from '../hooks/useUserForm';
 import FormField from '../../../components/common/FormField';
 import SearchableSelect from '../../search/components/SearchableSelect';
 
-const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) => {
+const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, showCollegeOnly }) => {
     const { formData, validationError, handleChange, handleSubmit, colleges, courses } = useUserForm(editingUser);
 
     return (
@@ -88,6 +88,21 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse }) =>
                             </div>
                         )}
                     </>
+                )}
+
+                {showCollegeOnly && !showCourse && (
+                    <div className="md:col-span-2">
+                        <label htmlFor="college" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                            Assigned College
+                        </label>
+                        <SearchableSelect 
+                            name="college"
+                            options={colleges}
+                            value={formData.college}
+                            onChange={handleChange}
+                            placeholder="Search for a college to assign..."
+                        />
+                    </div>
                 )}
 
                 <FormField
