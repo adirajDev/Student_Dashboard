@@ -2,6 +2,7 @@ import { useOutletContext, useSearchParams } from 'react-router-dom';
 import { LayoutDashboard } from 'lucide-react';
 import UserManagementSection from '../../features/users/components/UserManagementSection';
 import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
+import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -53,6 +54,12 @@ const AdminDashboard = () => {
             {activeTab === 'courses' && isAdmin && (
                 <div className="animate-fade-in">
                     <CourseManagementSection title="Course Directory" />
+                </div>
+            )}
+
+            {activeTab === 'colleges' && isAdmin && (
+                <div className="animate-fade-in">
+                    <CollegeManagementSection title="College Directory" />
                 </div>
             )}
         </div>

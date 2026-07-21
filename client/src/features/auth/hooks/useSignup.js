@@ -33,7 +33,7 @@ const useSignup = () => {
                 let defaultCourse = '';
                 if (collegeRes.data.length > 0) {
                     defaultCollege = collegeRes.data[0]._id;
-                    const availableCourses = courseRes.data.filter(c => collegeRes.data[0].availableCourses?.includes(c._id));
+                    const availableCourses = courseRes.data.filter(c => collegeRes.data[0].availableCourses?.some(ac => (ac._id || ac) === c._id));
                     if (availableCourses.length > 0) {
                         defaultCourse = availableCourses[0]._id;
                     }
@@ -52,7 +52,7 @@ const useSignup = () => {
             if (formData.college && formData.college !== 'others') {
                 const selectedCollege = colleges.find(c => c._id === formData.college);
                 if (selectedCollege) {
-                    const availableCourses = courses.filter(c => selectedCollege.availableCourses?.includes(c._id));
+                    const availableCourses = courses.filter(c => selectedCollege.availableCourses?.some(ac => (ac._id || ac) === c._id));
                     const isCurrentCourseValid = availableCourses.some(c => c._id === formData.course);
                     if (!isCurrentCourseValid) {
                         setFormData(prev => ({ ...prev, course: availableCourses.length > 0 ? availableCourses[0]._id : '' }));

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search, Menu, X, BookOpen } from 'lucide-react';
+import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search, Menu, X, BookOpen, Library } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const NavItem = ({ icon, label, isActive, onClick, hideActive, className = '' }) => {
@@ -149,6 +149,15 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                             label="Courses" 
                             isActive={activeTab === 'courses'} 
                             onClick={() => handleNav('/admin/dashboard?tab=courses')}
+                        />
+                    )}
+
+                    {isAdmin && (
+                        <NavItem 
+                            icon={<Library className="w-5 h-5" />} 
+                            label="Colleges" 
+                            isActive={activeTab === 'colleges'} 
+                            onClick={() => handleNav('/admin/dashboard?tab=colleges')}
                         />
                     )}
                 </nav>

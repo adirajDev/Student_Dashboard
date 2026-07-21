@@ -3,7 +3,7 @@ import Rating from '../rating/rating.model.js';
 import AppError from '../../common/utils/AppError.js';
 
 export const getColleges = async () => {
-    return await College.find({}).sort({ name: 1 });
+    return await College.find({}).populate('availableCourses', 'name level').sort({ name: 1 });
 };
 
 export const getCollegeById = async (id) => {
