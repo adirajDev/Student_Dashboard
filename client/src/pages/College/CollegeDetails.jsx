@@ -1,15 +1,17 @@
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Loading from '../../components/common/Loading';
 import Error from '../../components/common/Error';
 import useCollegeDetails from '../../features/college/hooks/useCollegeDetails';
 import CollegeHeader from '../../features/college/components/CollegeHeader';
 import CourseList from '../../features/college/components/CourseList';
+import RatingList from '../../features/rating/components/RatingList';
 
 const CollegeDetails = () => {
     const { id } = useParams();
     const location = useLocation();
     const navigate = useNavigate();
+    const { user } = useOutletContext();
     
     const { college, isLoading, error } = useCollegeDetails(id, location.hash);
 
@@ -29,6 +31,7 @@ const CollegeDetails = () => {
 
             <CollegeHeader college={college} />
             <CourseList courses={college.availableCourses} />
+            <RatingList collegeId={college._id} currentUser={user} />
         </div>
     );
 };

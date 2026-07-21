@@ -2,18 +2,18 @@ import Rating from "./rating.model.js";
 import { recalculateCollegeRating } from "../../common/utils/rating.util.js";
 import AppError from '../../common/utils/AppError.js';
 
-export const addRating = async (studentId, data) => {
+export const addRating = async (user, data) => {
     const { collegeId, stars, comment } = data;
-
-    // check if user already rated 3 colleges
-    const ratingCount = await Rating.countDocuments({ student: studentId });
-    if (ratingCount >= 3) {
-        throw new AppError('You can rate only 3 colleges in total!', 403);
+    
+    // Check if the user is currently in the college they are trying to rate
+    const userCollegeId = user.college?._id?.toString() || user.college?.toString();
+    if (userCollegeId !== collegeId) {
+        throw new AppError('You can only rate the college you are currently enrolled in.', 403);
     }
 
     try {
         const rating = await Rating.create({
-            student: studentId,
+            student: user._id, 
             college: collegeId,
             stars,
             comment
@@ -28,6 +28,18 @@ export const addRating = async (studentId, data) => {
         }
         throw error;
     }
+};
+
+export const getRatingsByCollege = async (collegeId) => {
+    return await Rating.find({ college: collegeId })
+        .populate('student', 'name')
+        .sort({ createdAt: -1 });
+};
+
+export const getMyRatings = async (studentId) => {
+    return await Rating.find({ student: studentId })
+        .populate('college', 'name location')
+        .sort({ createdAt: -1 });
 };
 
 export const updateRating = async (studentId, ratingId, data) => {

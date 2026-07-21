@@ -1,9 +1,10 @@
+import mongoose from 'mongoose';
 import College from "../../features/college/college.model.js";
 import Rating from "../../features/rating/rating.model.js";
 
 export const recalculateCollegeRating = async (collegeId) => {
     const stats = await Rating.aggregate([
-        {$match: {college: collegeId}},
+        {$match: {college: new mongoose.Types.ObjectId(collegeId)}},
         {
             $group: {
                 _id: '$college',

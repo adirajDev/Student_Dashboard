@@ -2,8 +2,18 @@ import * as ratingService from './rating.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
 
 export const addRating = asyncHandler(async (req, res) => {
-    const rating = await ratingService.addRating(req.user._id, req.body);
+    const rating = await ratingService.addRating(req.user, req.body);
     res.status(201).json(rating);
+});
+
+export const getRatingsByCollege = asyncHandler(async (req, res) => {
+    const ratings = await ratingService.getRatingsByCollege(req.params.collegeId);
+    res.status(200).json(ratings);
+});
+
+export const getMyRatings = asyncHandler(async (req, res) => {
+    const ratings = await ratingService.getMyRatings(req.user._id);
+    res.status(200).json(ratings);
 });
 
 export const updateRating = asyncHandler(async (req, res) => {

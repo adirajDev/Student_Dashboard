@@ -1,4 +1,5 @@
 import { useState, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { Pencil, Trash2, Star, MapPin } from 'lucide-react';
 import SearchBar from "../../search/components/SearchBar";
 import Loading from "../../../components/common/Loading";
@@ -79,7 +80,9 @@ const CollegeTable = ({ colleges, isLoading, error, onEdit, onDelete }) => {
                                 {filteredColleges.map((college) => (
                                     <tr key={college._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group">
                                         <td className="px-6 py-4">
-                                            <div className="font-medium text-[var(--foreground)]">{college.name}</div>
+                                            <Link to={`/college/${college._id}`} className="font-medium text-blue-600 dark:text-blue-400 hover:underline">
+                                                {college.name}
+                                            </Link>
                                             {college.collegeId && (
                                                 <div className="text-xs text-[var(--ring)] mt-1">ID: {college.collegeId}</div>
                                             )}

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
-import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search, Menu, X, BookOpen, Library } from 'lucide-react';
+import { Users, GraduationCap, LayoutDashboard, Settings, LogOut, Sun, Moon, Search, Menu, X, BookOpen, Library, Star } from 'lucide-react';
 import { useTheme } from '../../context/ThemeContext';
 
 const NavItem = ({ icon, label, isActive, onClick, hideActive, className = '' }) => {
@@ -37,7 +37,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
     if (location.pathname === '/search') {
         activeTab = 'search';
     } else if (location.pathname === '/dashboard') {
-        activeTab = 'dashboard';
+        activeTab = searchParams.get('tab') || 'overview';
     } else if (location.pathname.startsWith('/admin')) {
         activeTab = searchParams.get('tab') || 'overview';
     }
@@ -108,12 +108,20 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                     />
 
                     {isStudent && (
-                        <NavItem 
-                            icon={<LayoutDashboard className="w-5 h-5" />} 
-                            label="Dashboard" 
-                            isActive={activeTab === 'dashboard'} 
-                            onClick={() => handleNav('/dashboard')}
-                        />
+                        <>
+                            <NavItem 
+                                icon={<LayoutDashboard className="w-5 h-5" />} 
+                                label="Dashboard" 
+                                isActive={activeTab === 'overview'} 
+                                onClick={() => handleNav('/dashboard?tab=overview')}
+                            />
+                            <NavItem 
+                                icon={<Star className="w-5 h-5" />} 
+                                label="My Reviews" 
+                                isActive={activeTab === 'reviews'} 
+                                onClick={() => handleNav('/dashboard?tab=reviews')}
+                            />
+                        </>
                     )}
 
                     {(isAdmin || isEditor) && (

@@ -22,11 +22,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/signin" element={<Signin />} />
           
-          {/* Protected Routes wrapped in MainLayout */}
-          <Route element={<MainLayout />}>
-            <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-                <Route path="/dashboard" element={<StudentDashboard />} />
-            </Route>
+            {/* Protected Routes wrapped in MainLayout */}
+            <Route element={<MainLayout />}>
+              <Route element={<ProtectedRoute allowedRoles={['student']} />}>
+                  <Route path="/dashboard" element={<StudentDashboard />} />
+              </Route>
             <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
             </Route>
@@ -45,3 +45,4 @@ function App() {
 }
 
 export default App;
+// Triggering HMR rebuild
