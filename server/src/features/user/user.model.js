@@ -28,8 +28,12 @@ const userSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        enum: ['admin', 'student', 'editor'],
+        enum: ['admin', 'student', 'editor', 'college'],
         default: 'student',
+    },
+    isFirstLogin: {
+        type: Boolean,
+        default: true
     },
     password: {
         type: String,
