@@ -67,6 +67,10 @@
     @apply w-full px-5 py-2.5 rounded-full border border-slate-200 dark:border-slate-700 bg-[var(--card)] text-[var(--foreground)] focus:ring-2 focus:ring-blue-400/50 outline-none transition-all shadow-sm;
   }
 
+  textarea.input-field {
+    @apply rounded-2xl py-4 min-h-[100px] resize-y;
+  }
+
   .card {
     @apply bg-[var(--card)] text-[var(--card-foreground)] rounded-3xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)] border border-slate-100 dark:border-slate-800 p-6 md:p-8 backdrop-blur-sm transition-all;
   }
