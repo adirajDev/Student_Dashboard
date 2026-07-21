@@ -45,9 +45,18 @@ const useSignin = () => {
                 res = await apiClient.post('/set-password', { email, password: passwordData.password });
             }
 
-            const userRole = res.data.user.role; 
+            const user = res.data.user;
+            const userRole = user.role; 
+            
+            if (userRole === 'college' && user.isFirstLogin) {
+                navigate('/force-password-reset');
+                return;
+            }
+
             if (userRole === 'admin' || userRole === 'editor') {
                 navigate('/admin/dashboard');
+            } else if (userRole === 'college') {
+                navigate('/college/dashboard');
             } else {
                 navigate('/dashboard');
             }
