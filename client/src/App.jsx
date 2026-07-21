@@ -4,6 +4,7 @@ import Signin from './pages/Auth/Signin';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
 import ProtectedRoute from './routes/ProtectedRoute';
 import ForcePasswordReset from './pages/Auth/ForcePasswordReset';
+import CollegeDashboard from './pages/Dashboard/CollegeDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import WrongUrl from './pages/NotFound/WrongUrl';
 import MainLayout from './components/layout/MainLayout';
@@ -30,7 +31,7 @@ function App() {
               </Route>
               <Route element={<ProtectedRoute allowedRoles={['college']} />}>
                   <Route path="/force-password-reset" element={<ForcePasswordReset />} />
-                  <Route path="/college/dashboard" element={<div className="p-8">College Dashboard Placeholder</div>} />
+                  <Route path="/college/dashboard" element={<CollegeDashboard />} />
               </Route>
             <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />

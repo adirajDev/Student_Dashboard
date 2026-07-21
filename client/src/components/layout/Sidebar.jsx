@@ -31,6 +31,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
     const isAdmin = user?.role === 'admin';
     const isEditor = user?.role === 'editor';
     const isStudent = user?.role === 'student';
+    const isCollege = user?.role === 'college';
 
     // Determine active tab based on current URL
     let activeTab = 'overview';
@@ -40,6 +41,8 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
         activeTab = searchParams.get('tab') || 'overview';
     } else if (location.pathname.startsWith('/admin')) {
         activeTab = searchParams.get('tab') || 'overview';
+    } else if (location.pathname === '/college/dashboard') {
+        activeTab = searchParams.get('tab') || 'edit';
     }
 
     const handleNav = (path) => {
@@ -168,6 +171,23 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                             onClick={() => handleNav('/admin/dashboard?tab=colleges')}
                         />
                     )}
+                    {isCollege && (
+                        <>
+                            <NavItem 
+                                icon={<LayoutDashboard className="w-5 h-5" />} 
+                                label="Edit College" 
+                                isActive={activeTab === 'edit'} 
+                                onClick={() => handleNav('/college/dashboard?tab=edit')}
+                            />
+                            <NavItem 
+                                icon={<Star className="w-5 h-5" />} 
+                                label="Update History" 
+                                isActive={activeTab === 'history'} 
+                                onClick={() => handleNav('/college/dashboard?tab=history')}
+                            />
+                        </>
+                    )}
+
                 </nav>
             </div>
 
