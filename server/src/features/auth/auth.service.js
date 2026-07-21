@@ -88,3 +88,21 @@ export const signin = async (email, password) => {
 
     return user;
 };
+
+export const resetInitialPassword = async (userId, newPassword) => {
+    const user = await User.findById(userId);
+    if (!user) {
+        throw new AppError('User not found', 404);
+    }
+
+    if (!newPassword || newPassword.length < 6) {
+        throw new AppError('Password must be at least 6 characters', 400);
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    user.isFirstLogin = false;
+    await user.save();
+
+    return user;
+};

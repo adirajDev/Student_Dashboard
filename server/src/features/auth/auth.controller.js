@@ -21,7 +21,12 @@ export const setPassword = asyncHandler(async (req, res) => {
 export const signin = asyncHandler(async (req, res) => {
     const user = await authService.signin(req.body.email, req.body.password);
     generateTokenAndSetCookie(res, user._id);
-    res.json({ message: 'Logged in successfully', user: { id: user._id, email: user.email, name: user.name, role: user.role } });
+    res.json({ message: 'Logged in successfully', user: { id: user._id, email: user.email, name: user.name, role: user.role, isFirstLogin: user.isFirstLogin } });
+});
+
+export const resetInitialPassword = asyncHandler(async (req, res) => {
+    const user = await authService.resetInitialPassword(req.user._id, req.body.newPassword);
+    res.json({ message: 'Password updated successfully', user: { id: user._id, email: user.email, name: user.name, role: user.role, isFirstLogin: user.isFirstLogin } });
 });
 
 export const logout = (req, res) => {
