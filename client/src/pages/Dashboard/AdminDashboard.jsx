@@ -3,6 +3,7 @@ import { LayoutDashboard } from 'lucide-react';
 import UserManagementSection from '../../features/users/components/UserManagementSection';
 import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
 import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
+import PendingUpdatesSection from '../../features/collegeUpdate/components/Admin/PendingUpdatesSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -60,6 +61,12 @@ const AdminDashboard = () => {
             {activeTab === 'colleges' && isAdmin && (
                 <div className="animate-fade-in">
                     <CollegeManagementSection title="College Directory" />
+                </div>
+            )}
+
+            {activeTab === 'approvals' && isAdmin && (
+                <div className="animate-fade-in">
+                    <PendingUpdatesSection title="Approval Requests" />
                 </div>
             )}
         </div>
