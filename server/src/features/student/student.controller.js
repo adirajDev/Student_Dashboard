@@ -1,9 +1,12 @@
 import * as studentService from './student.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
+import { getPaginationOptions, formatPaginatedResponse } from '../../common/utils/pagination.util.js';
 
 export const getStudents = asyncHandler(async (req, res) => {
-    const students = await studentService.getStudents();
-    res.status(200).json(students);
+    const { page, limit, skip } = getPaginationOptions(req);
+    const search = req.query.search || '';
+    const { data, totalCount } = await studentService.getStudents(skip, limit, search);
+    res.status(200).json(formatPaginatedResponse(data, totalCount, page, limit));
 });
 
 export const createStudent = asyncHandler(async (req, res) => {

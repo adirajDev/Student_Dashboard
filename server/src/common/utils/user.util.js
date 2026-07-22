@@ -3,11 +3,27 @@ import mongoose from 'mongoose';
 
 export const isDuplicateKeyError = err => err?.code === 11000;
 
-export const getUsersByRole = async role => {
-    return await User.find({ role })
-        .populate('course college')
-        .select('-password')
-        .sort({ name: 1 });
+export const getUsersByRole = async (role, skip = 0, limit = 0, search = '') => {
+    const queryObj = { role };
+    if (search) {
+        queryObj.$or = [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } }
+        ];
+    }
+    
+    const query = User.find(queryObj);
+    const [data, totalCount] = await Promise.all([
+        query.clone()
+            .populate('course college')
+            .select('-password')
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(limit),
+        User.countDocuments(queryObj)
+    ]);
+    
+    return { data, totalCount };
 };
 
 export const createUserByRole = async (payload, role) => {

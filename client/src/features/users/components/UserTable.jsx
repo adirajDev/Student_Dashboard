@@ -3,18 +3,22 @@ import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
 import NoResultsFound from '../../../components/common/NoResultsFound';
 import Error from '../../../components/common/Error';
-import useUserSearch from '../hooks/useUserSearch';
+import Pagination from '../../../components/common/Pagination';
 import UserTableGrid from './UserTableGrid';
 
 const UserTable = ({
     users,
     isLoading,
     error,
+    page,
+    totalPages,
+    onPageChange,
+    searchTerm,
+    setSearchTerm,
     onEdit,
     onDelete,
     showCourse,
 }) => {
-    const { searchTerm, setSearchTerm, filteredUsers } = useUserSearch(users);
 
     // Loading
     if (isLoading) return <Loading />;
@@ -35,15 +39,24 @@ const UserTable = ({
                 placeholder="Search by name or email..."
             />
 
-            {filteredUsers.length === 0 ? (
+            {users.length === 0 ? (
                 <NoResultsFound searchTerm={searchTerm} />
             ) : (
-                <UserTableGrid
-                    users={filteredUsers}
-                    showCourse={showCourse}
-                    onEdit={onEdit}
-                    onDelete={onDelete}
-                />
+                <>
+                    <UserTableGrid
+                        users={users}
+                        showCourse={showCourse}
+                        onEdit={onEdit}
+                        onDelete={onDelete}
+                    />
+                    <div className="mt-6 border-t border-[var(--border)] pt-4">
+                        <Pagination 
+                            currentPage={page || 1} 
+                            totalPages={totalPages || 1} 
+                            onPageChange={onPageChange} 
+                        />
+                    </div>
+                </>
             )}
         </div>
     );

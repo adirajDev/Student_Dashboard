@@ -13,8 +13,8 @@ import Rating from '../rating/rating.model.js';
 import { recalculateCollegeRating } from '../../common/utils/rating.util.js';
 import AppError from '../../common/utils/AppError.js';
 
-export const getStudents = async () => {
-    return await getUsersByRole('student');
+export const getStudents = async (skip, limit, search) => {
+    return await getUsersByRole('student', skip, limit, search);
 };
 
 export const createStudent = async payload => {
