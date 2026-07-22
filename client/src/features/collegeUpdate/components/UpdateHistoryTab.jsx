@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 import { Clock, CheckCircle2, XCircle } from 'lucide-react';
 import useCollegeUpdates from '../hooks/useCollegeUpdates';
 import Loading from '../../../components/common/Loading';
+import Pagination from '../../../components/common/Pagination';
 
 const UpdateHistoryTab = () => {
-    const { getMyUpdates } = useCollegeUpdates();
+    const { page, setPage, totalPages, getMyUpdates } = useCollegeUpdates();
     const [updates, setUpdates] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -15,7 +16,7 @@ const UpdateHistoryTab = () => {
             setLoading(false);
         };
         fetchUpdates();
-    }, [getMyUpdates]);
+    }, [page, getMyUpdates]);
 
     if (loading) return <Loading />;
 
@@ -208,6 +209,16 @@ const UpdateHistoryTab = () => {
                     )}
                 </div>
             ))}
+
+            {updates && updates.length > 0 && (
+                <div className="mt-6 border-t border-[var(--border)] pt-4">
+                    <Pagination 
+                        currentPage={page || 1} 
+                        totalPages={totalPages || 1} 
+                        onPageChange={setPage} 
+                    />
+                </div>
+            )}
         </div>
     );
 };

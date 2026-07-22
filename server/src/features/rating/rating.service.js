@@ -34,16 +34,34 @@ export const addRating = async (user, data) => {
     }
 };
 
-export const getRatingsByCollege = async collegeId => {
-    return await Rating.find({ college: collegeId })
-        .populate('student', 'name')
-        .sort({ createdAt: -1 });
+export const getRatingsByCollege = async (collegeId, skip = 0, limit = 0, stars = 0) => {
+    const queryObj = { college: collegeId };
+    if (stars > 0) {
+        queryObj.stars = stars;
+    }
+    const query = Rating.find(queryObj);
+    const [data, totalCount] = await Promise.all([
+        query.clone()
+            .populate('student', 'name')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit),
+        Rating.countDocuments(queryObj)
+    ]);
+    return { data, totalCount };
 };
 
-export const getMyRatings = async studentId => {
-    return await Rating.find({ student: studentId })
-        .populate('college', 'name location')
-        .sort({ createdAt: -1 });
+export const getMyRatings = async (studentId, skip = 0, limit = 0) => {
+    const query = Rating.find({ student: studentId });
+    const [data, totalCount] = await Promise.all([
+        query.clone()
+            .populate('college', 'name location')
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit),
+        Rating.countDocuments({ student: studentId })
+    ]);
+    return { data, totalCount };
 };
 
 export const updateRating = async (studentId, ratingId, data) => {

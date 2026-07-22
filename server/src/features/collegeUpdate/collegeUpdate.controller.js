@@ -1,5 +1,6 @@
 import * as collegeUpdateService from './collegeUpdate.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
+import { getPaginationOptions, formatPaginatedResponse } from '../../common/utils/pagination.util.js';
 
 export const submitUpdate = asyncHandler(async (req, res) => {
     const update = await collegeUpdateService.submitUpdate(req.user, req.body);
@@ -7,13 +8,15 @@ export const submitUpdate = asyncHandler(async (req, res) => {
 });
 
 export const getMyUpdates = asyncHandler(async (req, res) => {
-    const updates = await collegeUpdateService.getMyUpdates(req.user._id);
-    res.status(200).json(updates);
+    const { page, limit, skip } = getPaginationOptions(req);
+    const { data, totalCount } = await collegeUpdateService.getMyUpdates(req.user._id, skip, limit);
+    res.status(200).json(formatPaginatedResponse(data, totalCount, page, limit));
 });
 
 export const getAllUpdates = asyncHandler(async (req, res) => {
-    const updates = await collegeUpdateService.getAllUpdates();
-    res.status(200).json(updates);
+    const { page, limit, skip } = getPaginationOptions(req);
+    const { data, totalCount } = await collegeUpdateService.getAllUpdates(skip, limit);
+    res.status(200).json(formatPaginatedResponse(data, totalCount, page, limit));
 });
 
 export const approveUpdate = asyncHandler(async (req, res) => {
