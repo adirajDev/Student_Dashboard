@@ -3,13 +3,11 @@ import CourseCard from './CourseCard';
 
 const CourseList = ({ courses }) => {
     return (
-        <div>
-            <div className="flex items-center gap-2 mb-6">
-                <BookOpen className="w-6 h-6 text-blue-500" />
-                <h2 className="text-2xl text-[var(--foreground)]">
-                    Offered Courses ({courses?.length || 0})
-                </h2>
-            </div>
+        <div className="card mb-8">
+            <h2 className="text-2xl mb-6 text-[var(--foreground)] flex items-center">
+                <BookOpen className="w-5 h-5 mr-2 text-blue-500" />
+                Offered Courses ({courses?.length || 0})
+            </h2>
 
             {courses && courses.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

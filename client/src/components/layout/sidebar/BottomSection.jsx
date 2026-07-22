@@ -1,6 +1,6 @@
 import { Settings, LogOut, Sun, Moon } from 'lucide-react';
 import NavItem from './NavItem';
-import { useTheme } from '../../../../context/ThemeContext';
+import { useTheme } from '../../../context/ThemeContext';
 
 const BottomSection = ({ onSettingsOpen, onLogout, setIsMobileOpen }) => {
     const { theme, toggleTheme } = useTheme();
