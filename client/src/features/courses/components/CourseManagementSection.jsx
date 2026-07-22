@@ -6,7 +6,8 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useCourseManagement from '../hooks/useCourseManagement';
 
 const CourseManagementSection = ({ title }) => {
-    const { courses, isLoading, error, addCourse, updateCourse, deleteCourse } = useCourseManagement(true);
+    const { courses, isLoading, error, addCourse, updateCourse, deleteCourse } =
+        useCourseManagement(true);
     const [editingCourse, setEditingCourse] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingCourse, setDeletingCourse] = useState(null);
@@ -32,7 +33,7 @@ const CourseManagementSection = ({ title }) => {
                 isLoading={isLoading}
                 error={error}
                 onDelete={setDeletingCourse}
-                onEdit={(c) => {
+                onEdit={c => {
                     setEditingCourse(c);
                     setShowFormModal(true);
                 }}
@@ -53,9 +54,11 @@ const CourseManagementSection = ({ title }) => {
 
             {deletingCourse && (
                 <DeleteConfirmModal
-                    studentName={deletingCourse.name} 
+                    studentName={deletingCourse.name}
                     onConfirm={async () => {
-                        await deleteCourse(deletingCourse._id || deletingCourse.id);
+                        await deleteCourse(
+                            deletingCourse._id || deletingCourse.id
+                        );
                         setDeletingCourse(null);
                     }}
                     onClose={() => setDeletingCourse(null)}

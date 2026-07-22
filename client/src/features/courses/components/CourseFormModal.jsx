@@ -3,10 +3,16 @@ import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import FormField from '../../../components/common/FormField';
 
-const CourseFormModal = ({ onAdd, onUpdate, editingCourse, onClose, title }) => {
+const CourseFormModal = ({
+    onAdd,
+    onUpdate,
+    editingCourse,
+    onClose,
+    title,
+}) => {
     const [formData, setFormData] = useState({
         name: '',
-        level: 'bachelors'
+        level: 'bachelors',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -15,16 +21,16 @@ const CourseFormModal = ({ onAdd, onUpdate, editingCourse, onClose, title }) => 
         if (editingCourse) {
             setFormData({
                 name: editingCourse.name || '',
-                level: editingCourse.level || 'bachelors'
+                level: editingCourse.level || 'bachelors',
             });
         }
     }, [editingCourse]);
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -47,15 +53,26 @@ const CourseFormModal = ({ onAdd, onUpdate, editingCourse, onClose, title }) => 
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="relative w-full max-w-lg bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
-                
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h2 className="text-xl text-[var(--foreground)]">{title}</h2>
-                    <button 
+                    <h2 className="text-xl text-[var(--foreground)]">
+                        {title}
+                    </h2>
+                    <button
                         onClick={onClose}
                         className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
                     >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -75,9 +92,12 @@ const CourseFormModal = ({ onAdd, onUpdate, editingCourse, onClose, title }) => 
                             onChange={handleChange}
                             placeholder="e.g. Computer Science"
                         />
-                        
+
                         <div>
-                            <label htmlFor="level" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                            <label
+                                htmlFor="level"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
                                 Level
                             </label>
                             <select
@@ -108,8 +128,12 @@ const CourseFormModal = ({ onAdd, onUpdate, editingCourse, onClose, title }) => 
                                 disabled={loading}
                                 className="btn-primary px-8 py-2.5 flex items-center gap-2"
                             >
-                                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
-                                {editingCourse ? 'Save Changes' : 'Create Course'}
+                                {loading && (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                )}
+                                {editingCourse
+                                    ? 'Save Changes'
+                                    : 'Create Course'}
                             </button>
                         </div>
                     </form>

@@ -6,7 +6,7 @@ const useRatings = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const getRatingsByCollege = useCallback(async (collegeId) => {
+    const getRatingsByCollege = useCallback(async collegeId => {
         setIsLoading(true);
         setError(null);
         try {
@@ -28,39 +28,55 @@ const useRatings = () => {
             setRatings(res.data);
             return res.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch your ratings');
+            setError(
+                err.response?.data?.message || 'Failed to fetch your ratings'
+            );
         } finally {
             setIsLoading(false);
         }
     }, []);
 
-    const addRating = async (data) => {
+    const addRating = async data => {
         try {
             const res = await apiClient.post('/ratings/add-rating', data);
             setRatings(prev => [res.data, ...prev]);
             return { success: true, data: res.data };
         } catch (err) {
-            return { success: false, error: err.response?.data?.message || 'Failed to add rating' };
+            return {
+                success: false,
+                error: err.response?.data?.message || 'Failed to add rating',
+            };
         }
     };
 
     const updateRating = async (ratingId, data) => {
         try {
-            const res = await apiClient.patch(`/ratings/update-rating/${ratingId}`, data);
-            setRatings(prev => prev.map(r => r._id === ratingId ? { ...r, ...res.data } : r));
+            const res = await apiClient.patch(
+                `/ratings/update-rating/${ratingId}`,
+                data
+            );
+            setRatings(prev =>
+                prev.map(r => (r._id === ratingId ? { ...r, ...res.data } : r))
+            );
             return { success: true, data: res.data };
         } catch (err) {
-            return { success: false, error: err.response?.data?.message || 'Failed to update rating' };
+            return {
+                success: false,
+                error: err.response?.data?.message || 'Failed to update rating',
+            };
         }
     };
 
-    const deleteRating = async (ratingId) => {
+    const deleteRating = async ratingId => {
         try {
             await apiClient.delete(`/ratings/delete-rating/${ratingId}`);
             setRatings(prev => prev.filter(r => r._id !== ratingId));
             return { success: true };
         } catch (err) {
-            return { success: false, error: err.response?.data?.message || 'Failed to delete rating' };
+            return {
+                success: false,
+                error: err.response?.data?.message || 'Failed to delete rating',
+            };
         }
     };
 
@@ -72,7 +88,7 @@ const useRatings = () => {
         getMyRatings,
         addRating,
         updateRating,
-        deleteRating
+        deleteRating,
     };
 };
 

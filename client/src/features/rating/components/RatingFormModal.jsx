@@ -3,10 +3,16 @@ import { createPortal } from 'react-dom';
 import { Loader2, Star } from 'lucide-react';
 import FormField from '../../../components/common/FormField';
 
-const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose }) => {
+const RatingFormModal = ({
+    onAdd,
+    onUpdate,
+    editingRating,
+    collegeId,
+    onClose,
+}) => {
     const [formData, setFormData] = useState({
         stars: 0,
-        comment: ''
+        comment: '',
     });
     const [hoveredStar, setHoveredStar] = useState(0);
     const [loading, setLoading] = useState(false);
@@ -16,18 +22,18 @@ const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose })
         if (editingRating) {
             setFormData({
                 stars: editingRating.stars || 0,
-                comment: editingRating.comment || ''
+                comment: editingRating.comment || '',
             });
         }
     }, [editingRating]);
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
-        
+
         if (formData.stars === 0) {
             setError('Please select a star rating');
             return;
@@ -38,9 +44,16 @@ const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose })
 
         let res;
         if (editingRating) {
-            res = await onUpdate(editingRating._id, { stars: formData.stars, comment: formData.comment });
+            res = await onUpdate(editingRating._id, {
+                stars: formData.stars,
+                comment: formData.comment,
+            });
         } else {
-            res = await onAdd({ collegeId, stars: formData.stars, comment: formData.comment });
+            res = await onAdd({
+                collegeId,
+                stars: formData.stars,
+                comment: formData.comment,
+            });
         }
 
         if (res?.success) {
@@ -54,15 +67,26 @@ const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose })
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="relative w-full max-w-lg bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
-                
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h2 className="text-xl text-[var(--foreground)]">{editingRating ? 'Edit Review' : 'Write a Review'}</h2>
-                    <button 
+                    <h2 className="text-xl text-[var(--foreground)]">
+                        {editingRating ? 'Edit Review' : 'Write a Review'}
+                    </h2>
+                    <button
                         onClick={() => onClose()}
                         className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
                     >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -84,26 +108,38 @@ const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose })
                                     <button
                                         key={star}
                                         type="button"
-                                        onMouseEnter={() => setHoveredStar(star)}
+                                        onMouseEnter={() =>
+                                            setHoveredStar(star)
+                                        }
                                         onMouseLeave={() => setHoveredStar(0)}
-                                        onClick={() => setFormData({ ...formData, stars: star })}
+                                        onClick={() =>
+                                            setFormData({
+                                                ...formData,
+                                                stars: star,
+                                            })
+                                        }
                                         className="focus:outline-none"
                                     >
-                                        <Star 
+                                        <Star
                                             className={`w-10 h-10 transition-colors ${
-                                                star <= (hoveredStar || formData.stars) 
-                                                ? 'fill-amber-400 text-amber-400' 
-                                                : 'text-slate-300 dark:text-slate-600'
-                                            }`} 
+                                                star <=
+                                                (hoveredStar || formData.stars)
+                                                    ? 'fill-amber-400 text-amber-400'
+                                                    : 'text-slate-300 dark:text-slate-600'
+                                            }`}
                                         />
                                     </button>
                                 ))}
                             </div>
                         </div>
-                        
+
                         <div>
-                            <label htmlFor="comment" className="block text-sm font-medium text-[var(--foreground)] mb-1">
-                                Share details of your own experience at this college
+                            <label
+                                htmlFor="comment"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
+                                Share details of your own experience at this
+                                college
                             </label>
                             <textarea
                                 id="comment"
@@ -134,7 +170,9 @@ const RatingFormModal = ({ onAdd, onUpdate, editingRating, collegeId, onClose })
                                 disabled={loading || formData.stars === 0}
                                 className="btn-primary px-8 py-2.5 flex items-center gap-2 disabled:opacity-50"
                             >
-                                {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                                {loading && (
+                                    <Loader2 className="w-4 h-4 animate-spin" />
+                                )}
                                 Post Review
                             </button>
                         </div>

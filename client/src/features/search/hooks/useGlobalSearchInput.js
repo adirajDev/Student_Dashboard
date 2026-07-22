@@ -5,7 +5,7 @@ const useGlobalSearchInput = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [searchParams] = useSearchParams();
-    
+
     // We maintain a local state for the input value to allow fast typing
     const [inputValue, setInputValue] = useState(searchParams.get('q') || '');
 
@@ -18,11 +18,13 @@ const useGlobalSearchInput = () => {
         }
     }, [location.pathname, searchParams]);
 
-    const handleSearch = (val) => {
+    const handleSearch = val => {
         setInputValue(val);
-        
+
         if (val.trim()) {
-            navigate(`/search?q=${encodeURIComponent(val)}`, { replace: location.pathname === '/search' });
+            navigate(`/search?q=${encodeURIComponent(val)}`, {
+                replace: location.pathname === '/search',
+            });
         } else if (location.pathname === '/search') {
             navigate('/search', { replace: true });
         }
@@ -37,7 +39,7 @@ const useGlobalSearchInput = () => {
     return {
         inputValue,
         handleSearch,
-        handleContainerClick
+        handleContainerClick,
     };
 };
 

@@ -1,5 +1,10 @@
 import express from 'express';
-import { getCollegeUsers, createCollegeUser, updateCollegeUser, deleteCollegeUser } from './collegeUser.controller.js';
+import {
+    getCollegeUsers,
+    createCollegeUser,
+    updateCollegeUser,
+    deleteCollegeUser,
+} from './collegeUser.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 

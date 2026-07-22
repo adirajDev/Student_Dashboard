@@ -2,11 +2,13 @@ import { Calendar } from 'lucide-react';
 
 const CourseCard = ({ course }) => {
     return (
-        <div 
+        <div
             id={`course-${course._id}`}
             className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
         >
-            <h3 className="font-semibold text-lg text-[var(--foreground)] mb-2">{course.name}</h3>
+            <h3 className="font-semibold text-lg text-[var(--foreground)] mb-2">
+                {course.name}
+            </h3>
             <div className="text-sm text-[var(--ring)] flex items-center">
                 <Calendar className="w-3.5 h-3.5 mr-1" />
                 <span>Regular Program</span>

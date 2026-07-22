@@ -2,8 +2,12 @@ import { useState, useEffect } from 'react';
 import apiClient from '../../../services/apiClient';
 import useCollegeUpdates from './useCollegeUpdates';
 
-const useEditCollegeForm = (user) => {
-    const { submitUpdate, loading: submitting, error: submitError } = useCollegeUpdates();
+const useEditCollegeForm = user => {
+    const {
+        submitUpdate,
+        loading: submitting,
+        error: submitError,
+    } = useCollegeUpdates();
     const [college, setCollege] = useState(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
@@ -13,15 +17,22 @@ const useEditCollegeForm = (user) => {
         name: '',
         overview: '',
         description: '',
-        placementDetails: { averagePackage: '', highestPackage: '', placementPercentage: '' },
+        placementDetails: {
+            averagePackage: '',
+            highestPackage: '',
+            placementPercentage: '',
+        },
         recruiters: [],
-        faculty: []
+        faculty: [],
     });
 
     useEffect(() => {
         const fetchCollege = async () => {
             try {
-                const collegeId = typeof user.college === 'object' ? user.college._id : user.college;
+                const collegeId =
+                    typeof user.college === 'object'
+                        ? user.college._id
+                        : user.college;
                 if (!collegeId) {
                     setError('No college assigned to this user.');
                     return;
@@ -29,15 +40,19 @@ const useEditCollegeForm = (user) => {
                 const res = await apiClient.get(`/colleges/${collegeId}`);
                 const data = res.data;
                 setCollege(data);
-                
+
                 // Pre-fill form
                 setFormData({
                     name: data.name || '',
                     overview: data.overview || '',
                     description: data.description || '',
-                    placementDetails: data.placementDetails || { averagePackage: '', highestPackage: '', placementPercentage: '' },
+                    placementDetails: data.placementDetails || {
+                        averagePackage: '',
+                        highestPackage: '',
+                        placementPercentage: '',
+                    },
                     recruiters: data.recruiters || [],
-                    faculty: data.faculty || []
+                    faculty: data.faculty || [],
                 });
             } catch (err) {
                 setError('Failed to load college data.');
@@ -49,57 +64,67 @@ const useEditCollegeForm = (user) => {
         fetchCollege();
     }, [user.college]);
 
-    const handleInputChange = (e) => {
+    const handleInputChange = e => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handlePlacementChange = (e) => {
+    const handlePlacementChange = e => {
         const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
-            placementDetails: { ...prev.placementDetails, [name]: value }
+            placementDetails: { ...prev.placementDetails, [name]: value },
         }));
     };
 
     // Recruiter handlers
-    const addRecruiter = () => setFormData(prev => ({ ...prev, recruiters: [...prev.recruiters, ''] }));
+    const addRecruiter = () =>
+        setFormData(prev => ({
+            ...prev,
+            recruiters: [...prev.recruiters, ''],
+        }));
     const updateRecruiter = (index, value) => {
         const updated = [...formData.recruiters];
         updated[index] = value;
         setFormData(prev => ({ ...prev, recruiters: updated }));
     };
-    const removeRecruiter = (index) => {
+    const removeRecruiter = index => {
         const updated = formData.recruiters.filter((_, i) => i !== index);
         setFormData(prev => ({ ...prev, recruiters: updated }));
     };
 
     // Faculty handlers
-    const addFaculty = () => setFormData(prev => ({ ...prev, faculty: [...prev.faculty, { name: '', department: '', role: '' }] }));
+    const addFaculty = () =>
+        setFormData(prev => ({
+            ...prev,
+            faculty: [...prev.faculty, { name: '', department: '', role: '' }],
+        }));
     const updateFaculty = (index, field, value) => {
         const updated = [...formData.faculty];
         updated[index] = { ...updated[index], [field]: value };
         setFormData(prev => ({ ...prev, faculty: updated }));
     };
-    const removeFaculty = (index) => {
+    const removeFaculty = index => {
         const updated = formData.faculty.filter((_, i) => i !== index);
         setFormData(prev => ({ ...prev, faculty: updated }));
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setSuccessMsg('');
-        
+
         // Filter out empty recruiters/faculty
         const cleanData = {
             ...formData,
             recruiters: formData.recruiters.filter(r => r.trim() !== ''),
-            faculty: formData.faculty.filter(f => f.name.trim() !== '')
+            faculty: formData.faculty.filter(f => f.name.trim() !== ''),
         };
 
         try {
             await submitUpdate(cleanData);
-            setSuccessMsg('Update requested successfully! It is now pending admin approval.');
+            setSuccessMsg(
+                'Update requested successfully! It is now pending admin approval.'
+            );
         } catch (err) {
             // Error is handled by hook
         }
@@ -120,7 +145,7 @@ const useEditCollegeForm = (user) => {
         addFaculty,
         updateFaculty,
         removeFaculty,
-        handleSubmit
+        handleSubmit,
     };
 };
 

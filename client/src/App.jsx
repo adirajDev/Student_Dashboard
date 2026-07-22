@@ -13,41 +13,70 @@ import CollegeDetails from './pages/College/CollegeDetails';
 import SearchPage from './pages/Search/SearchPage';
 
 function App() {
-  return (
-    <BrowserRouter>
-      <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
-        <Routes>
-          {/* Default Route */}
-          <Route path="/" element={<RootRedirect />} />
+    return (
+        <BrowserRouter>
+            <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
+                <Routes>
+                    {/* Default Route */}
+                    <Route path="/" element={<RootRedirect />} />
 
-          {/* Auth Routes */}
-          <Route path="/signup" element={<Signup />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/reset-otp-password" element={<ResetOtpPassword />} />
-          
-            {/* Protected Routes wrapped in MainLayout */}
-            <Route element={<MainLayout />}>
-              <Route element={<ProtectedRoute allowedRoles={['student']} />}>
-                  <Route path="/dashboard" element={<StudentDashboard />} />
-              </Route>
-              <Route element={<ProtectedRoute allowedRoles={['college']} />}>
-                  <Route path="/college/dashboard" element={<CollegeDashboard />} />
-              </Route>
-            <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-            </Route>
-            
-            {/* General authenticated routes */}
-            <Route path="/college/:id" element={<CollegeDetails />} />
-            <Route path="/search" element={<SearchPage />} />
-          </Route>
+                    {/* Auth Routes */}
+                    <Route path="/signup" element={<Signup />} />
+                    <Route path="/signin" element={<Signin />} />
+                    <Route
+                        path="/reset-otp-password"
+                        element={<ResetOtpPassword />}
+                    />
 
-          {/* Fallback Route */}
-          <Route path="*" element={<WrongUrl />} />
-        </Routes>
-      </div>
-    </BrowserRouter>
-  );
+                    {/* Protected Routes wrapped in MainLayout */}
+                    <Route element={<MainLayout />}>
+                        <Route
+                            element={
+                                <ProtectedRoute allowedRoles={['student']} />
+                            }
+                        >
+                            <Route
+                                path="/dashboard"
+                                element={<StudentDashboard />}
+                            />
+                        </Route>
+                        <Route
+                            element={
+                                <ProtectedRoute allowedRoles={['college']} />
+                            }
+                        >
+                            <Route
+                                path="/college/dashboard"
+                                element={<CollegeDashboard />}
+                            />
+                        </Route>
+                        <Route
+                            element={
+                                <ProtectedRoute
+                                    allowedRoles={['admin', 'editor']}
+                                />
+                            }
+                        >
+                            <Route
+                                path="/admin/dashboard"
+                                element={<AdminDashboard />}
+                            />
+                        </Route>
+
+                        {/* General authenticated routes */}
+                        <Route
+                            path="/college/:id"
+                            element={<CollegeDetails />}
+                        />
+                        <Route path="/search" element={<SearchPage />} />
+                    </Route>
+
+                    {/* Fallback Route */}
+                    <Route path="*" element={<WrongUrl />} />
+                </Routes>
+            </div>
+        </BrowserRouter>
+    );
 }
 
 export default App;

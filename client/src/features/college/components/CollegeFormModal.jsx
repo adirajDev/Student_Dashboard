@@ -4,15 +4,21 @@ import { Loader2 } from 'lucide-react';
 import FormField from '../../../components/common/FormField';
 import useCourseManagement from '../../courses/hooks/useCourseManagement';
 
-const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) => {
+const CollegeFormModal = ({
+    onAdd,
+    onUpdate,
+    editingCollege,
+    onClose,
+    title,
+}) => {
     const { courses } = useCourseManagement(true);
-    
+
     const [formData, setFormData] = useState({
         name: '',
         collegeId: '',
         location: '',
         description: '',
-        availableCourses: []
+        availableCourses: [],
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -24,27 +30,36 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                 collegeId: editingCollege.collegeId || '',
                 location: editingCollege.location || '',
                 description: editingCollege.description || '',
-                availableCourses: editingCollege.availableCourses?.map(c => c._id) || []
+                availableCourses:
+                    editingCollege.availableCourses?.map(c => c._id) || [],
             });
         }
     }, [editingCollege]);
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleCourseToggle = (courseId) => {
+    const handleCourseToggle = courseId => {
         setFormData(prev => {
             const isSelected = prev.availableCourses.includes(courseId);
             if (isSelected) {
-                return { ...prev, availableCourses: prev.availableCourses.filter(id => id !== courseId) };
+                return {
+                    ...prev,
+                    availableCourses: prev.availableCourses.filter(
+                        id => id !== courseId
+                    ),
+                };
             } else {
-                return { ...prev, availableCourses: [...prev.availableCourses, courseId] };
+                return {
+                    ...prev,
+                    availableCourses: [...prev.availableCourses, courseId],
+                };
             }
         });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
         setError('');
@@ -67,15 +82,26 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="relative w-full max-w-2xl bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up max-h-[90vh] flex flex-col">
-                
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
-                    <h2 className="text-xl text-[var(--foreground)]">{title}</h2>
-                    <button 
+                    <h2 className="text-xl text-[var(--foreground)]">
+                        {title}
+                    </h2>
+                    <button
                         onClick={onClose}
                         className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
                     >
-                        <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                        <svg
+                            className="w-5 h-5"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M6 18L18 6M6 6l12 12"
+                            />
                         </svg>
                     </button>
                 </div>
@@ -87,7 +113,11 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                         </div>
                     )}
 
-                    <form id="college-form" onSubmit={handleSubmit} className="space-y-5">
+                    <form
+                        id="college-form"
+                        onSubmit={handleSubmit}
+                        className="space-y-5"
+                    >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                             <FormField
                                 label="College Name"
@@ -105,7 +135,7 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                                 required={false}
                             />
                         </div>
-                        
+
                         <FormField
                             label="Location"
                             id="location"
@@ -113,9 +143,12 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                             onChange={handleChange}
                             placeholder="e.g. Stanford, California"
                         />
-                        
+
                         <div>
-                            <label htmlFor="description" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                            <label
+                                htmlFor="description"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
                                 Description
                             </label>
                             <textarea
@@ -135,20 +168,36 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                             </label>
                             <div className="border border-[var(--border)] rounded-2xl p-4 max-h-48 overflow-y-auto bg-slate-50 dark:bg-slate-800/30">
                                 {courses.length === 0 ? (
-                                    <div className="text-sm text-[var(--ring)] text-center py-4">No courses available. Create courses first.</div>
+                                    <div className="text-sm text-[var(--ring)] text-center py-4">
+                                        No courses available. Create courses
+                                        first.
+                                    </div>
                                 ) : (
                                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                                         {courses.map(course => (
-                                            <label key={course._id} className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 cursor-pointer transition-colors">
+                                            <label
+                                                key={course._id}
+                                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 cursor-pointer transition-colors"
+                                            >
                                                 <input
                                                     type="checkbox"
                                                     className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                    checked={formData.availableCourses.includes(course._id)}
-                                                    onChange={() => handleCourseToggle(course._id)}
+                                                    checked={formData.availableCourses.includes(
+                                                        course._id
+                                                    )}
+                                                    onChange={() =>
+                                                        handleCourseToggle(
+                                                            course._id
+                                                        )
+                                                    }
                                                 />
                                                 <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-[var(--foreground)]">{course.name}</span>
-                                                    <span className="text-xs text-[var(--ring)] capitalize">{course.level}</span>
+                                                    <span className="text-sm font-medium text-[var(--foreground)]">
+                                                        {course.name}
+                                                    </span>
+                                                    <span className="text-xs text-[var(--ring)] capitalize">
+                                                        {course.level}
+                                                    </span>
                                                 </div>
                                             </label>
                                         ))}
@@ -174,7 +223,9 @@ const CollegeFormModal = ({ onAdd, onUpdate, editingCollege, onClose, title }) =
                         disabled={loading}
                         className="btn-primary px-8 py-2.5 flex items-center gap-2"
                     >
-                        {loading && <Loader2 className="w-4 h-4 animate-spin" />}
+                        {loading && (
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                        )}
                         {editingCollege ? 'Save Changes' : 'Create College'}
                     </button>
                 </div>

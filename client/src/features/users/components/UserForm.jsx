@@ -2,21 +2,50 @@ import useUserForm from '../hooks/useUserForm';
 import FormField from '../../../components/common/FormField';
 import SearchableSelect from '../../search/components/SearchableSelect';
 
-const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, showCollegeOnly }) => {
-    const { formData, validationError, handleChange, handleSubmit, colleges, courses } = useUserForm(editingUser);
+const UserForm = ({
+    onAdd,
+    onUpdate,
+    editingUser,
+    onCancelEdit,
+    showCourse,
+    showCollegeOnly,
+}) => {
+    const {
+        formData,
+        validationError,
+        handleChange,
+        handleSubmit,
+        colleges,
+        courses,
+    } = useUserForm(editingUser);
 
     return (
-        <form onSubmit={(e) => handleSubmit(e, onAdd, onUpdate, showCourse)} className="bg-[var(--card)] p-6 rounded-3xl shadow-sm border border-[var(--border)]">
+        <form
+            onSubmit={e => handleSubmit(e, onAdd, onUpdate, showCourse)}
+            className="bg-[var(--card)] p-6 rounded-3xl shadow-sm border border-[var(--border)]"
+        >
             <h3 className="text-xl mb-6 text-[var(--foreground)]">
                 {editingUser ? 'Edit User' : 'Add New User'}
             </h3>
 
             {validationError && (
                 <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    <svg
+                        className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                    >
+                        <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
                     </svg>
-                    <p className="text-sm text-red-700 dark:text-red-400">{validationError}</p>
+                    <p className="text-sm text-red-700 dark:text-red-400">
+                        {validationError}
+                    </p>
                 </div>
             )}
 
@@ -41,7 +70,10 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, show
                 {showCourse && (
                     <>
                         <div>
-                            <label htmlFor="course" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                            <label
+                                htmlFor="course"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
                                 Course
                             </label>
                             <select
@@ -50,18 +82,25 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, show
                                 onChange={handleChange}
                                 className="input-field"
                             >
-                                <option value="" disabled>Select a course</option>
+                                <option value="" disabled>
+                                    Select a course
+                                </option>
                                 {courses.map(c => (
-                                    <option key={c._id} value={c._id}>{c.name}</option>
+                                    <option key={c._id} value={c._id}>
+                                        {c.name}
+                                    </option>
                                 ))}
                             </select>
                         </div>
 
                         <div>
-                            <label htmlFor="college" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                            <label
+                                htmlFor="college"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
                                 College
                             </label>
-                            <SearchableSelect 
+                            <SearchableSelect
                                 name="college"
                                 options={colleges}
                                 value={formData.college}
@@ -72,18 +111,21 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, show
 
                         {formData.college === 'others' && (
                             <div className="animate-fade-in md:col-span-2 mt-2">
-                                <label htmlFor="customCollege" className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400">
+                                <label
+                                    htmlFor="customCollege"
+                                    className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400"
+                                >
                                     College Name
                                 </label>
-                                <input 
-                                    type="text" 
+                                <input
+                                    type="text"
                                     id="customCollege"
-                                    name="customCollege" 
-                                    required 
-                                    value={formData.customCollege} 
-                                    onChange={handleChange} 
-                                    className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500" 
-                                    placeholder="Enter the college name" 
+                                    name="customCollege"
+                                    required
+                                    value={formData.customCollege}
+                                    onChange={handleChange}
+                                    className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500"
+                                    placeholder="Enter the college name"
                                 />
                             </div>
                         )}
@@ -92,10 +134,13 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, show
 
                 {showCollegeOnly && !showCourse && (
                     <div className="md:col-span-2">
-                        <label htmlFor="college" className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                        <label
+                            htmlFor="college"
+                            className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                        >
                             Assigned College
                         </label>
-                        <SearchableSelect 
+                        <SearchableSelect
                             name="college"
                             options={colleges}
                             value={formData.college}
@@ -125,10 +170,7 @@ const UserForm = ({ onAdd, onUpdate, editingUser, onCancelEdit, showCourse, show
                         Cancel
                     </button>
                 )}
-                <button
-                    type="submit"
-                    className="btn-primary"
-                >
+                <button type="submit" className="btn-primary">
                     {editingUser ? 'Save Changes' : 'Add User'}
                 </button>
             </div>

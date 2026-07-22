@@ -1,7 +1,13 @@
 import express from 'express';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
-import { createCollege, deleteCollege, getCollegeById, getColleges, updateCollege } from './college.controller.js';
+import {
+    createCollege,
+    deleteCollege,
+    getCollegeById,
+    getColleges,
+    updateCollege,
+} from './college.controller.js';
 
 const router = express.Router();
 router.get('/', getColleges);

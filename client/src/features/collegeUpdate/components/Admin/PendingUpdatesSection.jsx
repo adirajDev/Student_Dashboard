@@ -21,7 +21,7 @@ const PendingUpdatesSection = ({ title }) => {
         fetchUpdates();
     }, []);
 
-    const handleApprove = async (id) => {
+    const handleApprove = async id => {
         await approveUpdate(id);
         setSelectedUpdate(null);
         fetchUpdates();
@@ -46,7 +46,9 @@ const PendingUpdatesSection = ({ title }) => {
             </div>
 
             {loading ? (
-                <div className="py-12"><Loading /></div>
+                <div className="py-12">
+                    <Loading />
+                </div>
             ) : updates.length === 0 ? (
                 <div className="py-16 text-center text-[var(--ring)] flex flex-col items-center">
                     <CheckCircle2 className="w-12 h-12 text-green-400 mb-4 opacity-50" />
@@ -58,20 +60,38 @@ const PendingUpdatesSection = ({ title }) => {
                         <thead>
                             <tr className="border-b border-[var(--border)] text-sm text-[var(--ring)]">
                                 <th className="pb-3 font-medium">College</th>
-                                <th className="pb-3 font-medium">Requested By</th>
+                                <th className="pb-3 font-medium">
+                                    Requested By
+                                </th>
                                 <th className="pb-3 font-medium">Date</th>
-                                <th className="pb-3 font-medium text-right">Action</th>
+                                <th className="pb-3 font-medium text-right">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
-                            {updates.map((update) => (
-                                <tr key={update._id} className="border-b border-[var(--border)] last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
-                                    <td className="py-4 text-sm font-medium">{update.college?.name || 'Unknown College'}</td>
-                                    <td className="py-4 text-sm text-[var(--ring)]">{update.requestedBy?.name}</td>
-                                    <td className="py-4 text-sm text-[var(--ring)]">{new Date(update.createdAt).toLocaleDateString()}</td>
+                            {updates.map(update => (
+                                <tr
+                                    key={update._id}
+                                    className="border-b border-[var(--border)] last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                                >
+                                    <td className="py-4 text-sm font-medium">
+                                        {update.college?.name ||
+                                            'Unknown College'}
+                                    </td>
+                                    <td className="py-4 text-sm text-[var(--ring)]">
+                                        {update.requestedBy?.name}
+                                    </td>
+                                    <td className="py-4 text-sm text-[var(--ring)]">
+                                        {new Date(
+                                            update.createdAt
+                                        ).toLocaleDateString()}
+                                    </td>
                                     <td className="py-4 text-right">
-                                        <button 
-                                            onClick={() => setSelectedUpdate(update)}
+                                        <button
+                                            onClick={() =>
+                                                setSelectedUpdate(update)
+                                            }
                                             className="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-400 rounded-xl text-sm font-medium transition-colors"
                                         >
                                             Review
@@ -85,9 +105,9 @@ const PendingUpdatesSection = ({ title }) => {
             )}
 
             {selectedUpdate && (
-                <ReviewUpdateModal 
-                    update={selectedUpdate} 
-                    onClose={() => setSelectedUpdate(null)} 
+                <ReviewUpdateModal
+                    update={selectedUpdate}
+                    onClose={() => setSelectedUpdate(null)}
                     onApprove={handleApprove}
                     onReject={handleReject}
                 />

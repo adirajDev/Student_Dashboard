@@ -1,14 +1,17 @@
 import mongoose from 'mongoose';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import User from '../user/user.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
 
-export const signup = async (data) => {
+export const signup = async data => {
     const { name, email, phone, course, college } = data;
-    
+
     if (!name || !email || !phone || !course || !college) {
-        throw new AppError('Name, email, phone number, course, and college are required.', 400);
+        throw new AppError(
+            'Name, email, phone number, course, and college are required.',
+            400
+        );
     }
 
     const existingUser = await User.findOne({ email });
@@ -21,7 +24,7 @@ export const signup = async (data) => {
     if (!mongoose.Types.ObjectId.isValid(college)) {
         const newCollege = new College({
             name: college,
-            collegeId: `C-${Date.now()}`
+            collegeId: `C-${Date.now()}`,
         });
         await newCollege.save();
         collegeId = newCollege._id;
@@ -32,25 +35,25 @@ export const signup = async (data) => {
         email,
         phone,
         course,
-        college: collegeId
+        college: collegeId,
     });
 
     await user.save();
     return { id: user._id, email: user.email };
 };
 
-export const checkUserLoggedIn = async (email) => {
+export const checkUserLoggedIn = async email => {
     const user = await User.findOne({ email });
-    
+
     if (!user) {
         throw new AppError('User not found', 404);
     }
 
-    return { 
-        exists: true, 
+    return {
+        exists: true,
         hasPassword: !!user.password,
         role: user.role,
-        isFirstLogin: user.isFirstLogin
+        isFirstLogin: user.isFirstLogin,
     };
 };
 

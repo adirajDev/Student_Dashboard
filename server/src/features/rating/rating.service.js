@@ -1,22 +1,26 @@
-import Rating from "./rating.model.js";
-import { recalculateCollegeRating } from "../../common/utils/rating.util.js";
+import Rating from './rating.model.js';
+import { recalculateCollegeRating } from '../../common/utils/rating.util.js';
 import AppError from '../../common/utils/AppError.js';
 
 export const addRating = async (user, data) => {
     const { collegeId, stars, comment } = data;
-    
+
     // Check if the user is currently in the college they are trying to rate
-    const userCollegeId = user.college?._id?.toString() || user.college?.toString();
+    const userCollegeId =
+        user.college?._id?.toString() || user.college?.toString();
     if (userCollegeId !== collegeId) {
-        throw new AppError('You can only rate the college you are currently enrolled in.', 403);
+        throw new AppError(
+            'You can only rate the college you are currently enrolled in.',
+            403
+        );
     }
 
     try {
         const rating = await Rating.create({
-            student: user._id, 
+            student: user._id,
             college: collegeId,
             stars,
-            comment
+            comment,
         });
 
         // update college's avg and total ratings
@@ -30,13 +34,13 @@ export const addRating = async (user, data) => {
     }
 };
 
-export const getRatingsByCollege = async (collegeId) => {
+export const getRatingsByCollege = async collegeId => {
     return await Rating.find({ college: collegeId })
         .populate('student', 'name')
         .sort({ createdAt: -1 });
 };
 
-export const getMyRatings = async (studentId) => {
+export const getMyRatings = async studentId => {
     return await Rating.find({ student: studentId })
         .populate('college', 'name location')
         .sort({ createdAt: -1 });
@@ -48,14 +52,14 @@ export const updateRating = async (studentId, ratingId, data) => {
     const rating = await Rating.findOne({ _id: ratingId, student: studentId });
 
     if (!rating) {
-        throw new AppError("Rating not found or unauthorized", 404);
+        throw new AppError('Rating not found or unauthorized', 404);
     }
 
     const starsChanged = stars !== undefined && rating.stars !== stars;
 
     if (stars !== undefined) rating.stars = stars;
     if (comment !== undefined) rating.comment = comment;
-    
+
     if (rating.isModified()) {
         rating.isEdited = true;
         await rating.save();
@@ -69,11 +73,14 @@ export const updateRating = async (studentId, ratingId, data) => {
 };
 
 export const deleteRating = async (studentId, ratingId) => {
-    const rating = await Rating.findOneAndDelete({ _id: ratingId, student: studentId });
+    const rating = await Rating.findOneAndDelete({
+        _id: ratingId,
+        student: studentId,
+    });
 
     if (!rating) {
-        throw new AppError("Rating not found or unauthorized", 404);
+        throw new AppError('Rating not found or unauthorized', 404);
     }
-    
+
     await recalculateCollegeRating(rating.college);
 };

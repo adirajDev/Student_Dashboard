@@ -22,11 +22,16 @@ const EditCollegeTab = ({ user }) => {
         addFaculty,
         updateFaculty,
         removeFaculty,
-        handleSubmit
+        handleSubmit,
     } = useEditCollegeForm(user);
 
     if (loading) return <Loading />;
-    if (error) return <div className="p-4 bg-red-100 text-red-700 rounded-2xl">{error}</div>;
+    if (error)
+        return (
+            <div className="p-4 bg-red-100 text-red-700 rounded-2xl">
+                {error}
+            </div>
+        );
 
     return (
         <div className="animate-fade-in bg-[var(--card)] p-6 md:p-8 rounded-3xl border border-[var(--border)] shadow-sm">
@@ -34,36 +39,61 @@ const EditCollegeTab = ({ user }) => {
                 <Building2 className="w-6 h-6 text-blue-500" />
                 <h3 className="text-2xl font-semibold">Edit College Details</h3>
             </div>
-            
+
             <p className="text-sm text-[var(--ring)] mb-8">
-                Changes made here will be submitted to the administration for review. Once approved, they will go live.
+                Changes made here will be submitted to the administration for
+                review. Once approved, they will go live.
             </p>
 
-            {submitError && <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-xl">{submitError}</div>}
-            {successMsg && <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-xl">{successMsg}</div>}
+            {submitError && (
+                <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-xl">
+                    {submitError}
+                </div>
+            )}
+            {successMsg && (
+                <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-xl">
+                    {successMsg}
+                </div>
+            )}
 
             <form onSubmit={handleSubmit} className="space-y-8">
-                <BasicInfoFields formData={formData} handleInputChange={handleInputChange} />
-                
-                <PlacementFields placementDetails={formData.placementDetails} handlePlacementChange={handlePlacementChange} />
-                
-                <RecruiterFields 
-                    recruiters={formData.recruiters} 
-                    addRecruiter={addRecruiter} 
-                    updateRecruiter={updateRecruiter} 
-                    removeRecruiter={removeRecruiter} 
+                <BasicInfoFields
+                    formData={formData}
+                    handleInputChange={handleInputChange}
                 />
-                
-                <FacultyFields 
-                    faculty={formData.faculty} 
-                    addFaculty={addFaculty} 
-                    updateFaculty={updateFaculty} 
-                    removeFaculty={removeFaculty} 
+
+                <PlacementFields
+                    placementDetails={formData.placementDetails}
+                    handlePlacementChange={handlePlacementChange}
+                />
+
+                <RecruiterFields
+                    recruiters={formData.recruiters}
+                    addRecruiter={addRecruiter}
+                    updateRecruiter={updateRecruiter}
+                    removeRecruiter={removeRecruiter}
+                />
+
+                <FacultyFields
+                    faculty={formData.faculty}
+                    addFaculty={addFaculty}
+                    updateFaculty={updateFaculty}
+                    removeFaculty={removeFaculty}
                 />
 
                 <div className="pt-4">
-                    <button type="submit" disabled={submitting} className="btn-primary w-full md:w-auto flex justify-center items-center gap-2">
-                        {submitting ? 'Submitting...' : <><Save className="w-4 h-4" /> Submit for Approval</>}
+                    <button
+                        type="submit"
+                        disabled={submitting}
+                        className="btn-primary w-full md:w-auto flex justify-center items-center gap-2"
+                    >
+                        {submitting ? (
+                            'Submitting...'
+                        ) : (
+                            <>
+                                <Save className="w-4 h-4" /> Submit for Approval
+                            </>
+                        )}
                     </button>
                 </div>
             </form>

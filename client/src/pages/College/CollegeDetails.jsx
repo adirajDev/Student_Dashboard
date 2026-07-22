@@ -1,4 +1,9 @@
-import { useParams, useLocation, useNavigate, useOutletContext } from 'react-router-dom';
+import {
+    useParams,
+    useLocation,
+    useNavigate,
+    useOutletContext,
+} from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import Loading from '../../components/common/Loading';
 import Error from '../../components/common/Error';
@@ -12,17 +17,22 @@ const CollegeDetails = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const { user } = useOutletContext();
-    
+
     const { college, isLoading, error } = useCollegeDetails(id, location.hash);
 
     if (isLoading) return <Loading />;
     if (error) return <Error error={error} />;
-    if (!college) return <div className="p-8 text-center text-[var(--ring)]">College not found.</div>;
+    if (!college)
+        return (
+            <div className="p-8 text-center text-[var(--ring)]">
+                College not found.
+            </div>
+        );
 
     return (
         <div className="max-w-5xl mx-auto px-4 py-8 animate-fade-in">
-            <button 
-                onClick={() => navigate(-1)} 
+            <button
+                onClick={() => navigate(-1)}
                 className="flex items-center text-sm font-medium text-[var(--ring)] hover:text-[var(--foreground)] transition-colors mb-6"
             >
                 <ArrowLeft className="w-4 h-4 mr-1" />

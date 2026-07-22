@@ -6,7 +6,14 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useCollegeManagement from '../hooks/useCollegeManagement';
 
 const CollegeManagementSection = ({ title }) => {
-    const { colleges, isLoading, error, addCollege, updateCollege, deleteCollege } = useCollegeManagement(true);
+    const {
+        colleges,
+        isLoading,
+        error,
+        addCollege,
+        updateCollege,
+        deleteCollege,
+    } = useCollegeManagement(true);
     const [editingCollege, setEditingCollege] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingCollege, setDeletingCollege] = useState(null);
@@ -32,7 +39,7 @@ const CollegeManagementSection = ({ title }) => {
                 isLoading={isLoading}
                 error={error}
                 onDelete={setDeletingCollege}
-                onEdit={(c) => {
+                onEdit={c => {
                     setEditingCollege(c);
                     setShowFormModal(true);
                 }}
@@ -53,7 +60,7 @@ const CollegeManagementSection = ({ title }) => {
 
             {deletingCollege && (
                 <DeleteConfirmModal
-                    studentName={deletingCollege.name} 
+                    studentName={deletingCollege.name}
                     onConfirm={async () => {
                         await deleteCollege(deletingCollege._id);
                         setDeletingCollege(null);

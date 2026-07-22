@@ -22,6 +22,9 @@ export const approveUpdate = asyncHandler(async (req, res) => {
 });
 
 export const rejectUpdate = asyncHandler(async (req, res) => {
-    const update = await collegeUpdateService.rejectUpdate(req.params.id, req.body.adminFeedback);
+    const update = await collegeUpdateService.rejectUpdate(
+        req.params.id,
+        req.body.adminFeedback
+    );
     res.status(200).json({ message: 'Update rejected.', update });
 });

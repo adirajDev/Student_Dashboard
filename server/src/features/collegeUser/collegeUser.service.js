@@ -1,12 +1,12 @@
 import User from '../user/user.model.js';
 import AppError from '../../common/utils/AppError.js';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 
 export const getCollegeUsers = async () => {
     return await User.find({ role: 'college' }).populate('college', 'name');
 };
 
-export const createCollegeUser = async (data) => {
+export const createCollegeUser = async data => {
     const { name, email, phone, college } = data;
 
     const existingUser = await User.findOne({ email });
@@ -29,13 +29,15 @@ export const createCollegeUser = async (data) => {
         college,
         role: 'college',
         isFirstLogin: true, // They must reset their password on first login
-        password: hashedPassword
+        password: hashedPassword,
     });
 
     await newCollegeUser.save();
-    
+
     // Convert to plain object so we can attach the OTP to the response
-    const populatedUser = await User.findById(newCollegeUser._id).populate('college', 'name').lean();
+    const populatedUser = await User.findById(newCollegeUser._id)
+        .populate('college', 'name')
+        .lean();
     return { ...populatedUser, generatedOtp: otp };
 };
 
@@ -63,7 +65,7 @@ export const updateCollegeUser = async (id, data) => {
     return await User.findById(id).populate('college', 'name');
 };
 
-export const deleteCollegeUser = async (id) => {
+export const deleteCollegeUser = async id => {
     const user = await User.findById(id);
     if (!user || user.role !== 'college') {
         throw new AppError('College user not found.', 404);

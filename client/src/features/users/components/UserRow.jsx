@@ -4,26 +4,24 @@ const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
     return (
         <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
             <td className="px-6 py-4">
-                <div className="font-medium text-[var(--foreground)]">{user.name}</div>
+                <div className="font-medium text-[var(--foreground)]">
+                    {user.name}
+                </div>
             </td>
-            <td className="px-6 py-4 text-[var(--ring)]">
-                {user.email}
-            </td>
-            
+            <td className="px-6 py-4 text-[var(--ring)]">{user.email}</td>
+
             {showCourse && (
                 <>
-                <td className="px-6 py-4 text-[var(--ring)]">
-                    {user.course?.name || user.course || 'N/A'}
-                </td>
-                <td className="px-6 py-4 text-[var(--ring)]">
-                    {user.college?.name || user.college || 'N/A'}
-                </td>
+                    <td className="px-6 py-4 text-[var(--ring)]">
+                        {user.course?.name || user.course || 'N/A'}
+                    </td>
+                    <td className="px-6 py-4 text-[var(--ring)]">
+                        {user.college?.name || user.college || 'N/A'}
+                    </td>
                 </>
             )}
-            
-            <td className="px-6 py-4 text-[var(--ring)]">
-                {user.phone}
-            </td>
+
+            <td className="px-6 py-4 text-[var(--ring)]">{user.phone}</td>
 
             <td className="px-6 py-4">
                 <div className="flex items-center justify-end gap-2">

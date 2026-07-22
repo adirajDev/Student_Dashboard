@@ -1,13 +1,13 @@
 import { ChevronDown, Search } from 'lucide-react';
 import useSearchableSelect from '../hooks/useSearchableSelect';
 
-const SearchableSelect = ({ 
-    options, 
-    value, 
-    onChange, 
-    name, 
-    placeholder = "Select an option...",
-    customOption = null
+const SearchableSelect = ({
+    options,
+    value,
+    onChange,
+    name,
+    placeholder = 'Select an option...',
+    customOption = null,
 }) => {
     const {
         isOpen,
@@ -17,12 +17,12 @@ const SearchableSelect = ({
         wrapperRef,
         displayValue,
         filteredOptions,
-        handleSelect
+        handleSelect,
     } = useSearchableSelect({ options, value, customOption, onChange, name });
 
     return (
         <div ref={wrapperRef} className="relative w-full">
-            <div 
+            <div
                 className="relative cursor-text"
                 onClick={() => {
                     if (!isOpen) {
@@ -36,7 +36,7 @@ const SearchableSelect = ({
                     className="input-field pr-10 cursor-text"
                     placeholder={placeholder}
                     value={displayValue}
-                    onChange={(e) => {
+                    onChange={e => {
                         setSearchTerm(e.target.value);
                         if (!isOpen) setIsOpen(true);
                     }}
@@ -47,7 +47,11 @@ const SearchableSelect = ({
                     required={!value} // HTML5 validation: required if no value is set
                 />
                 <div className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--ring)] pointer-events-none">
-                    {isOpen ? <Search className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    {isOpen ? (
+                        <Search className="w-4 h-4" />
+                    ) : (
+                        <ChevronDown className="w-4 h-4" />
+                    )}
                 </div>
             </div>
 
@@ -68,7 +72,7 @@ const SearchableSelect = ({
                             No options found.
                         </div>
                     )}
-                    
+
                     {/* Optional Persistent Custom Option */}
                     {customOption && (
                         <div className="border-t border-[var(--border)]">
@@ -76,9 +80,12 @@ const SearchableSelect = ({
                                 onClick={() => handleSelect(customOption.value)}
                                 className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === customOption.value ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
                             >
-                                {customOption.displayLabel || customOption.label} 
+                                {customOption.displayLabel ||
+                                    customOption.label}
                                 {customOption.subLabel && (
-                                    <span className="text-xs text-[var(--ring)] ml-1">{customOption.subLabel}</span>
+                                    <span className="text-xs text-[var(--ring)] ml-1">
+                                        {customOption.subLabel}
+                                    </span>
                                 )}
                             </div>
                         </div>

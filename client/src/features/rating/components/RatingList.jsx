@@ -6,8 +6,15 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import Loading from '../../../components/common/Loading';
 
 const RatingList = ({ collegeId, currentUser }) => {
-    const { ratings, isLoading, getRatingsByCollege, addRating, updateRating, deleteRating } = useRatings();
-    
+    const {
+        ratings,
+        isLoading,
+        getRatingsByCollege,
+        addRating,
+        updateRating,
+        deleteRating,
+    } = useRatings();
+
     const [filterStars, setFilterStars] = useState(0);
     const [showFormModal, setShowFormModal] = useState(false);
     const [editingRating, setEditingRating] = useState(null);
@@ -28,13 +35,20 @@ const RatingList = ({ collegeId, currentUser }) => {
     // Check if current user has already rated
     const userRating = useMemo(() => {
         if (!currentUser) return null;
-        return ratings.find(r => r.student?._id === currentUser._id || r.student === currentUser._id);
+        return ratings.find(
+            r =>
+                r.student?._id === currentUser._id ||
+                r.student === currentUser._id
+        );
     }, [ratings, currentUser]);
 
     // Check if the current user is eligible to rate (must be a student of this college)
-    const canRate = currentUser?.role === 'student' && currentUser.college === collegeId && !userRating;
+    const canRate =
+        currentUser?.role === 'student' &&
+        currentUser.college === collegeId &&
+        !userRating;
 
-    const handleFormClose = (success) => {
+    const handleFormClose = success => {
         setShowFormModal(false);
         setEditingRating(null);
         if (success) {
@@ -56,15 +70,20 @@ const RatingList = ({ collegeId, currentUser }) => {
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div>
                     <h3 className="text-2xl font-medium">Student Reviews</h3>
-                    <p className="text-[var(--ring)] text-sm mt-1">{ratings.length} {ratings.length === 1 ? 'review' : 'reviews'}</p>
+                    <p className="text-[var(--ring)] text-sm mt-1">
+                        {ratings.length}{' '}
+                        {ratings.length === 1 ? 'review' : 'reviews'}
+                    </p>
                 </div>
-                
+
                 <div className="flex items-center gap-4 w-full sm:w-auto">
                     {/* Star Filter */}
                     <div className="relative w-full sm:w-48">
                         <select
                             value={filterStars}
-                            onChange={(e) => setFilterStars(Number(e.target.value))}
+                            onChange={e =>
+                                setFilterStars(Number(e.target.value))
+                            }
                             className="w-full px-4 py-2.5 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
                         >
                             <option value={0}>All Stars</option>
@@ -75,7 +94,13 @@ const RatingList = ({ collegeId, currentUser }) => {
                             <option value={1}>1 Star only</option>
                         </select>
                         <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--ring)]">
-                            <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                            <svg
+                                className="fill-current h-4 w-4"
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 20 20"
+                            >
+                                <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
+                            </svg>
                         </div>
                     </div>
 
@@ -95,57 +120,79 @@ const RatingList = ({ collegeId, currentUser }) => {
             <div className="space-y-6">
                 {filteredRatings.length === 0 ? (
                     <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-3xl bg-[var(--card)] text-[var(--ring)]">
-                        {filterStars > 0 ? `No ${filterStars}-star reviews yet.` : 'No reviews yet. Be the first to rate!'}
+                        {filterStars > 0
+                            ? `No ${filterStars}-star reviews yet.`
+                            : 'No reviews yet. Be the first to rate!'}
                     </div>
                 ) : (
                     filteredRatings.map(rating => (
-                        <div key={rating._id} className="p-6 bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-sm hover:shadow-md transition-shadow">
+                        <div
+                            key={rating._id}
+                            className="p-6 bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-sm hover:shadow-md transition-shadow"
+                        >
                             <div className="flex justify-between items-start mb-4">
                                 <div>
                                     <div className="flex items-center gap-2 mb-1">
                                         <div className="flex">
                                             {[1, 2, 3, 4, 5].map(star => (
-                                                <Star 
-                                                    key={star} 
-                                                    className={`w-4 h-4 ${star <= rating.stars ? 'fill-amber-400 text-amber-400' : 'text-slate-300 dark:text-slate-700'}`} 
+                                                <Star
+                                                    key={star}
+                                                    className={`w-4 h-4 ${star <= rating.stars ? 'fill-amber-400 text-amber-400' : 'text-slate-300 dark:text-slate-700'}`}
                                                 />
                                             ))}
                                         </div>
                                         {rating.isEdited && (
-                                            <span className="text-xs text-[var(--ring)] italic">(Edited)</span>
+                                            <span className="text-xs text-[var(--ring)] italic">
+                                                (Edited)
+                                            </span>
                                         )}
                                     </div>
                                     <div className="flex items-center gap-2 text-sm text-[var(--ring)]">
-                                        <span className="font-medium text-[var(--foreground)]">{rating.student?.name || 'Anonymous User'}</span>
+                                        <span className="font-medium text-[var(--foreground)]">
+                                            {rating.student?.name ||
+                                                'Anonymous User'}
+                                        </span>
                                         <span>•</span>
-                                        <span>{new Date(rating.createdAt).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</span>
+                                        <span>
+                                            {new Date(
+                                                rating.createdAt
+                                            ).toLocaleDateString(undefined, {
+                                                year: 'numeric',
+                                                month: 'short',
+                                                day: 'numeric',
+                                            })}
+                                        </span>
                                     </div>
                                 </div>
 
                                 {/* Actions if this is the current user's rating */}
-                                {currentUser && (rating.student?._id === currentUser._id || rating.student === currentUser._id) && (
-                                    <div className="flex items-center gap-2">
-                                        <button 
-                                            onClick={() => {
-                                                setEditingRating(rating);
-                                                setShowFormModal(true);
-                                            }}
-                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
-                                            title="Edit Review"
-                                        >
-                                            <Pencil className="w-4 h-4" />
-                                        </button>
-                                        <button 
-                                            onClick={() => setDeletingRating(rating)}
-                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
-                                            title="Delete Review"
-                                        >
-                                            <Trash2 className="w-4 h-4" />
-                                        </button>
-                                    </div>
-                                )}
+                                {currentUser &&
+                                    (rating.student?._id === currentUser._id ||
+                                        rating.student === currentUser._id) && (
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => {
+                                                    setEditingRating(rating);
+                                                    setShowFormModal(true);
+                                                }}
+                                                className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                title="Edit Review"
+                                            >
+                                                <Pencil className="w-4 h-4" />
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    setDeletingRating(rating)
+                                                }
+                                                className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                title="Delete Review"
+                                            >
+                                                <Trash2 className="w-4 h-4" />
+                                            </button>
+                                        </div>
+                                    )}
                             </div>
-                            
+
                             {rating.comment && (
                                 <p className="text-[var(--foreground)] whitespace-pre-wrap text-sm leading-relaxed">
                                     {rating.comment}
@@ -157,7 +204,7 @@ const RatingList = ({ collegeId, currentUser }) => {
             </div>
 
             {showFormModal && (
-                <RatingFormModal 
+                <RatingFormModal
                     collegeId={collegeId}
                     editingRating={editingRating}
                     onAdd={addRating}

@@ -1,16 +1,16 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../../services/apiClient';
 
-const useUserForm = (editingUser) => {
+const useUserForm = editingUser => {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
         course: '',
         college: '',
         customCollege: '',
-        phone: ''
+        phone: '',
     });
-    
+
     const [colleges, setColleges] = useState([]);
     const [courses, setCourses] = useState([]);
     const [validationError, setValidationError] = useState('');
@@ -20,12 +20,12 @@ const useUserForm = (editingUser) => {
             try {
                 const [collegeRes, courseRes] = await Promise.all([
                     apiClient.get('/colleges'),
-                    apiClient.get('/courses')
+                    apiClient.get('/courses'),
                 ]);
                 setColleges(collegeRes.data);
                 setCourses(courseRes.data);
             } catch (err) {
-                console.error("Failed to fetch colleges/courses", err);
+                console.error('Failed to fetch colleges/courses', err);
             }
         };
         fetchData();
@@ -39,23 +39,23 @@ const useUserForm = (editingUser) => {
                 course: editingUser.course?._id || editingUser.course || '',
                 college: editingUser.college?._id || editingUser.college || '',
                 customCollege: '',
-                phone: editingUser.phone || ''
+                phone: editingUser.phone || '',
             });
         }
     }, [editingUser]);
 
-    const handleChange = (e) => {
+    const handleChange = e => {
         const { id, name, value } = e.target;
         const key = id || name; // Support both id and name attributes
-        setFormData((prev) => ({
+        setFormData(prev => ({
             ...prev,
-            [key]: value
+            [key]: value,
         }));
     };
 
     const handleSubmit = async (e, onAdd, onUpdate, showCourse) => {
         e.preventDefault();
-        
+
         if (!formData.name || !formData.email || !formData.phone) {
             setValidationError('Name, email, and phone number are required.');
             return;
@@ -84,7 +84,7 @@ const useUserForm = (editingUser) => {
             }
         } catch (err) {
             setValidationError(err.response?.data?.error || 'Operation failed');
-            throw err; 
+            throw err;
         }
     };
 
@@ -94,7 +94,7 @@ const useUserForm = (editingUser) => {
         handleChange,
         handleSubmit,
         colleges,
-        courses
+        courses,
     };
 };
 

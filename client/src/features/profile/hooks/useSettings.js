@@ -5,21 +5,21 @@ const useSettings = (user, onUpdate, onClose) => {
     const [formData, setFormData] = useState({
         email: user.email || '',
         currentPassword: '',
-        newPassword: ''
+        newPassword: '',
     });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e) => {
-        setFormData({...formData, [e.target.name]: e.target.value});
+    const handleChange = e => {
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async e => {
         e.preventDefault();
         setError('');
         setSuccess('');
-        
+
         if (formData.newPassword && !formData.currentPassword) {
             setError('Current password is required to set a new password');
             return;
@@ -34,7 +34,9 @@ const useSettings = (user, onUpdate, onClose) => {
                 onClose();
             }, 1500);
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to update settings');
+            setError(
+                err.response?.data?.message || 'Failed to update settings'
+            );
         } finally {
             setLoading(false);
         }

@@ -1,5 +1,11 @@
 import express from 'express';
-import { submitUpdate, getMyUpdates, getAllUpdates, approveUpdate, rejectUpdate } from './collegeUpdate.controller.js';
+import {
+    submitUpdate,
+    getMyUpdates,
+    getAllUpdates,
+    approveUpdate,
+    rejectUpdate,
+} from './collegeUpdate.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 

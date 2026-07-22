@@ -1,5 +1,10 @@
 import express from 'express';
-import { createCourse, updateCourse, deleteCourse, getCourses } from './course.controller.js';
+import {
+    createCourse,
+    updateCourse,
+    deleteCourse,
+    getCourses,
+} from './course.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 

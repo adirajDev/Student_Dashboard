@@ -1,12 +1,19 @@
-import SearchBar from "../../search/components/SearchBar";
-import Loading from "../../../components/common/Loading";
-import EmptyTable from "../../../components/common/EmptyTable";
-import NoResultsFound from "../../../components/common/NoResultsFound";
-import Error from "../../../components/common/Error";
-import useUserSearch from "../hooks/useUserSearch";
-import UserTableGrid from "./UserTableGrid";
+import SearchBar from '../../search/components/SearchBar';
+import Loading from '../../../components/common/Loading';
+import EmptyTable from '../../../components/common/EmptyTable';
+import NoResultsFound from '../../../components/common/NoResultsFound';
+import Error from '../../../components/common/Error';
+import useUserSearch from '../hooks/useUserSearch';
+import UserTableGrid from './UserTableGrid';
 
-const UserTable = ({ users, isLoading, error, onEdit, onDelete, showCourse }) => {
+const UserTable = ({
+    users,
+    isLoading,
+    error,
+    onEdit,
+    onDelete,
+    showCourse,
+}) => {
     const { searchTerm, setSearchTerm, filteredUsers } = useUserSearch(users);
 
     // Loading
@@ -24,7 +31,7 @@ const UserTable = ({ users, isLoading, error, onEdit, onDelete, showCourse }) =>
             <SearchBar
                 value={searchTerm}
                 onChange={setSearchTerm}
-                onClear={() => setSearchTerm("")}
+                onClear={() => setSearchTerm('')}
                 placeholder="Search by name or email..."
             />
 

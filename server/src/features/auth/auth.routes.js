@@ -1,12 +1,12 @@
 import express from 'express';
-import { 
-    checkUserLoggedIn, 
-    logout, 
-    setPassword, 
-    signin, 
+import {
+    checkUserLoggedIn,
+    logout,
+    setPassword,
+    signin,
     signup,
     resetInitialPassword,
-    resetOtpPassword
+    resetOtpPassword,
 } from './auth.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 

@@ -3,14 +3,23 @@ import { createPortal } from 'react-dom';
 
 const DeleteConfirmModal = ({ studentName, onConfirm, onClose }) => {
     return createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in" onClick={onClose}>
-            <div className="bg-[var(--card)] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]" onClick={e => e.stopPropagation()}>
+        <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in"
+            onClick={onClose}
+        >
+            <div
+                className="bg-[var(--card)] w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-fade-in border border-[var(--border)]"
+                onClick={e => e.stopPropagation()}
+            >
                 <div className="flex justify-between items-center p-4 border-b border-[var(--border)]">
                     <h2 className="text-xl flex items-center gap-2 text-red-500">
                         <AlertTriangle className="w-5 h-5" />
                         Delete Student
                     </h2>
-                    <button onClick={onClose} className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors">
+                    <button
+                        onClick={onClose}
+                        className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                    >
                         <X className="w-5 h-5" />
                     </button>
                 </div>

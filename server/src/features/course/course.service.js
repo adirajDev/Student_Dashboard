@@ -6,9 +6,9 @@ export const getCourses = async () => {
     return await Course.find({}).sort({ name: 1 });
 };
 
-export const createCourse = async (data) => {
+export const createCourse = async data => {
     const { name, level } = data;
-    
+
     if (!name) {
         throw new AppError('Course name is required', 400);
     }
@@ -48,7 +48,7 @@ export const updateCourse = async (id, data) => {
     return course;
 };
 
-export const deleteCourse = async (id) => {
+export const deleteCourse = async id => {
     const course = await Course.findById(id);
     if (!course) {
         throw new AppError('Course not found', 404);

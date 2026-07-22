@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 const StudentSchema = mongoose.Schema({
     name: {
@@ -21,7 +21,7 @@ const StudentSchema = mongoose.Schema({
         type: String,
         required: true,
         enum: ['BTech', 'BBA', 'Commerce', 'Management', 'Designing'],
-    }
+    },
 });
 
 const Student = mongoose.model('Student', StudentSchema);

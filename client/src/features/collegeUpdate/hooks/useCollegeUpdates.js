@@ -5,11 +5,14 @@ const useCollegeUpdates = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-    const submitUpdate = async (proposedChanges) => {
+    const submitUpdate = async proposedChanges => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.post('/college-updates/submit', proposedChanges);
+            const res = await apiClient.post(
+                '/college-updates/submit',
+                proposedChanges
+            );
             return res.data;
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to submit update');
@@ -26,7 +29,9 @@ const useCollegeUpdates = () => {
             const res = await apiClient.get('/college-updates/me');
             return res.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch your updates');
+            setError(
+                err.response?.data?.message || 'Failed to fetch your updates'
+            );
             return [];
         } finally {
             setLoading(false);
@@ -40,14 +45,16 @@ const useCollegeUpdates = () => {
             const res = await apiClient.get('/college-updates');
             return res.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch pending updates');
+            setError(
+                err.response?.data?.message || 'Failed to fetch pending updates'
+            );
             return [];
         } finally {
             setLoading(false);
         }
     }, []);
 
-    const approveUpdate = async (id) => {
+    const approveUpdate = async id => {
         setLoading(true);
         setError('');
         try {
@@ -65,7 +72,9 @@ const useCollegeUpdates = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.put(`/college-updates/${id}/reject`, { adminFeedback });
+            const res = await apiClient.put(`/college-updates/${id}/reject`, {
+                adminFeedback,
+            });
             return res.data;
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to reject update');
@@ -82,7 +91,7 @@ const useCollegeUpdates = () => {
         getMyUpdates,
         getAllUpdates,
         approveUpdate,
-        rejectUpdate
+        rejectUpdate,
     };
 };
 

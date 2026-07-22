@@ -7,21 +7,29 @@ const useSignin = () => {
     const [step, setStep] = useState(1);
     const [email, setEmail] = useState('');
     const [hasPassword, setHasPassword] = useState(false);
-    const [passwordData, setPasswordData] = useState({ password: '', confirmPassword: '' });
+    const [passwordData, setPasswordData] = useState({
+        password: '',
+        confirmPassword: '',
+    });
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleCheckUser = async (e) => {
+    const handleCheckUser = async e => {
         e.preventDefault();
         setError('');
         setLoading(true);
         try {
             const res = await apiClient.post('/check-user', { email });
-            
+
             if (res.data.role === 'college' && res.data.isFirstLogin) {
-                setError('First time login detected. Please set your password using OTP.');
-                setTimeout(() => navigate('/reset-otp-password', { state: { email } }), 1500);
+                setError(
+                    'First time login detected. Please set your password using OTP.'
+                );
+                setTimeout(
+                    () => navigate('/reset-otp-password', { state: { email } }),
+                    1500
+                );
                 return;
             }
 
@@ -34,11 +42,14 @@ const useSignin = () => {
         }
     };
 
-    const handleAuth = async (e) => {
+    const handleAuth = async e => {
         e.preventDefault();
         setError('');
-        
-        if (!hasPassword && passwordData.password !== passwordData.confirmPassword) {
+
+        if (
+            !hasPassword &&
+            passwordData.password !== passwordData.confirmPassword
+        ) {
             setError('Passwords do not match');
             return;
         }
@@ -47,14 +58,19 @@ const useSignin = () => {
         try {
             let res;
             if (hasPassword) {
-                res = await apiClient.post('/signin', { email, password: passwordData.password });
+                res = await apiClient.post('/signin', {
+                    email,
+                    password: passwordData.password,
+                });
             } else {
-                res = await apiClient.post('/set-password', { email, password: passwordData.password });
+                res = await apiClient.post('/set-password', {
+                    email,
+                    password: passwordData.password,
+                });
             }
 
             const user = res.data.user;
-            const userRole = user.role; 
-            
+            const userRole = user.role;
 
             if (userRole === 'admin' || userRole === 'editor') {
                 navigate('/admin/dashboard');
@@ -64,7 +80,10 @@ const useSignin = () => {
                 navigate('/dashboard');
             }
         } catch (err) {
-            setError(err.response?.data?.message || `Authentication failed due to: ${err}`);
+            setError(
+                err.response?.data?.message ||
+                    `Authentication failed due to: ${err}`
+            );
         } finally {
             setLoading(false);
         }
@@ -81,7 +100,7 @@ const useSignin = () => {
         error,
         loading,
         handleCheckUser,
-        handleAuth
+        handleAuth,
     };
 };
 

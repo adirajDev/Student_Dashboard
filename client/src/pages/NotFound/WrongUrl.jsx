@@ -9,10 +9,11 @@ const WrongUrl = () => {
                 Page Not Found
             </h1>
             <p className="text-lg text-[var(--ring)] mb-8 max-w-md">
-                Oops! The URL you are requesting doesn't exist or has been moved.
+                Oops! The URL you are requesting doesn't exist or has been
+                moved.
             </p>
-            <Link 
-                to="/signin" 
+            <Link
+                to="/signin"
                 className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-xl transition-colors shadow-sm"
             >
                 Return to Login

@@ -5,8 +5,17 @@ import UserFormModal from './UserFormModal';
 import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useUserManagement from '../hooks/useUserManagement';
 
-const UserManagementSection = ({ title, role, showCourse, showCollegeOnly, canAdd, canDelete, shouldFetch }) => {
-    const { users, isLoading, error, addUser, updateUser, deleteUser } = useUserManagement(role, shouldFetch);
+const UserManagementSection = ({
+    title,
+    role,
+    showCourse,
+    showCollegeOnly,
+    canAdd,
+    canDelete,
+    shouldFetch,
+}) => {
+    const { users, isLoading, error, addUser, updateUser, deleteUser } =
+        useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingUser, setDeletingUser] = useState(null);
@@ -26,7 +35,9 @@ const UserManagementSection = ({ title, role, showCourse, showCollegeOnly, canAd
                         className="btn-primary flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
-                        Add {role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}
+                        Add{' '}
+                        {role.replace('User', '').charAt(0).toUpperCase() +
+                            role.replace('User', '').slice(1)}
                     </button>
                 )}
             </div>
@@ -37,7 +48,7 @@ const UserManagementSection = ({ title, role, showCourse, showCollegeOnly, canAd
                 error={error}
                 showCourse={showCourse}
                 onDelete={canDelete ? setDeletingUser : null}
-                onEdit={(u) => {
+                onEdit={u => {
                     setEditingUser(u);
                     setShowFormModal(true);
                 }}
@@ -48,11 +59,17 @@ const UserManagementSection = ({ title, role, showCourse, showCollegeOnly, canAd
                     editingUser={editingUser}
                     showCourse={showCourse}
                     showCollegeOnly={showCollegeOnly}
-                    title={editingUser ? `Edit ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}` : `Add New ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}`}
-                    onAdd={async (data) => {
+                    title={
+                        editingUser
+                            ? `Edit ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}`
+                            : `Add New ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}`
+                    }
+                    onAdd={async data => {
                         const newUser = await addUser(data);
                         if (newUser?.generatedOtp) {
-                            alert(`COLLEGE USER CREATED!\n\nPlease securely share this One-Time Password with the user:\n\nOTP: ${newUser.generatedOtp}\n\nThey will need this to log in and set their actual password.`);
+                            alert(
+                                `COLLEGE USER CREATED!\n\nPlease securely share this One-Time Password with the user:\n\nOTP: ${newUser.generatedOtp}\n\nThey will need this to log in and set their actual password.`
+                            );
                         }
                     }}
                     onUpdate={updateUser}

@@ -1,11 +1,11 @@
 import AppError from '../utils/AppError.js';
 
-const handleCastErrorDB = (err) => {
+const handleCastErrorDB = err => {
     const message = `Invalid ${err.path}: ${err.value}.`;
     return new AppError(message, 400);
 };
 
-const handleDuplicateFieldsDB = (err) => {
+const handleDuplicateFieldsDB = err => {
     let value = '';
     if (err.keyValue) {
         value = Object.values(err.keyValue)[0];
@@ -14,8 +14,8 @@ const handleDuplicateFieldsDB = (err) => {
     return new AppError(message, 400);
 };
 
-const handleValidationErrorDB = (err) => {
-    const errors = Object.values(err.errors).map((el) => el.message);
+const handleValidationErrorDB = err => {
+    const errors = Object.values(err.errors).map(el => el.message);
     const message = `Invalid input data. ${errors.join('. ')}`;
     return new AppError(message, 400);
 };
@@ -31,7 +31,8 @@ const errorMiddleware = (err, req, res, next) => {
 
     if (error.name === 'CastError') error = handleCastErrorDB(error);
     if (error.code === 11000) error = handleDuplicateFieldsDB(error);
-    if (error.name === 'ValidationError') error = handleValidationErrorDB(error);
+    if (error.name === 'ValidationError')
+        error = handleValidationErrorDB(error);
 
     if (error.isOperational) {
         res.status(error.statusCode).json({

@@ -3,10 +3,12 @@ import Rating from '../rating/rating.model.js';
 import AppError from '../../common/utils/AppError.js';
 
 export const getColleges = async () => {
-    return await College.find({}).populate('availableCourses', 'name level').sort({ name: 1 });
+    return await College.find({})
+        .populate('availableCourses', 'name level')
+        .sort({ name: 1 });
 };
 
-export const getCollegeById = async (id) => {
+export const getCollegeById = async id => {
     const college = await College.findById(id).populate('availableCourses');
     if (!college) {
         throw new AppError('College not found', 404);
@@ -14,9 +16,9 @@ export const getCollegeById = async (id) => {
     return college;
 };
 
-export const createCollege = async (data) => {
+export const createCollege = async data => {
     const { name, location, description, collegeId, availableCourses } = data;
-    
+
     if (!name) {
         throw new AppError('Name is required', 400);
     }
@@ -31,7 +33,7 @@ export const createCollege = async (data) => {
         location,
         description,
         collegeId,
-        availableCourses
+        availableCourses,
     });
 
     await college.save();
@@ -43,11 +45,10 @@ export const updateCollege = async (id, data) => {
     delete updateData.averageRating;
     delete updateData.totalRatings;
 
-    const college = await College.findByIdAndUpdate(
-        id, 
-        updateData, 
-        { returnDocument: 'after', runValidators: true }
-    ).populate('availableCourses', 'name level');
+    const college = await College.findByIdAndUpdate(id, updateData, {
+        returnDocument: 'after',
+        runValidators: true,
+    }).populate('availableCourses', 'name level');
 
     if (!college) {
         throw new AppError('College not found', 404);
@@ -56,7 +57,7 @@ export const updateCollege = async (id, data) => {
     return college;
 };
 
-export const deleteCollege = async (id) => {
+export const deleteCollege = async id => {
     const college = await College.findByIdAndDelete(id);
     if (!college) {
         throw new AppError('College not found', 404);

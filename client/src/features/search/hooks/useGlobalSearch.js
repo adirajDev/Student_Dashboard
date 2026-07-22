@@ -18,16 +18,18 @@ const useGlobalSearch = () => {
             setIsLoading(true);
             setError(null);
             try {
-                const response = await apiClient.get(`/data/search?q=${encodeURIComponent(query)}`);
+                const response = await apiClient.get(
+                    `/data/search?q=${encodeURIComponent(query)}`
+                );
                 if (Array.isArray(response.data)) {
                     setResults(response.data);
                 } else {
-                    console.error("Unexpected API response:", response.data);
+                    console.error('Unexpected API response:', response.data);
                     setResults([]);
                 }
             } catch (err) {
-                console.error("Global search error:", err);
-                setError("Failed to fetch results");
+                console.error('Global search error:', err);
+                setError('Failed to fetch results');
                 setResults([]);
             } finally {
                 setIsLoading(false);
@@ -45,7 +47,7 @@ const useGlobalSearch = () => {
         isLoading,
         error,
         isOpen,
-        setIsOpen
+        setIsOpen,
     };
 };
 

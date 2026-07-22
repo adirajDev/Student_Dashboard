@@ -1,5 +1,5 @@
 import User from './user.model.js';
-import bcrypt from "bcrypt";
+import bcrypt from 'bcrypt';
 import AppError from '../../common/utils/AppError.js';
 
 export const updateSetting = async (userId, data) => {
@@ -21,9 +21,12 @@ export const updateSetting = async (userId, data) => {
     // Handle Password Update
     if (newPassword) {
         if (!currentPassword) {
-            throw new AppError('Current password is required to set a new password', 400);
+            throw new AppError(
+                'Current password is required to set a new password',
+                400
+            );
         }
-        
+
         const isMatch = await bcrypt.compare(currentPassword, user.password);
         if (!isMatch) {
             throw new AppError('Incorrect current password', 400);

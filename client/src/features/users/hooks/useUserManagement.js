@@ -24,20 +24,29 @@ const useUserManagement = (role, shouldFetch = true) => {
         fetchUsers();
     }, [fetchUsers]);
 
-    const addUser = async (userData) => {
+    const addUser = async userData => {
         const res = await apiClient.post(`/${role}s/create-${role}`, userData);
-        setUsers((prev) => [...prev, res.data].sort((a, b) => a.name.localeCompare(b.name)));
+        setUsers(prev =>
+            [...prev, res.data].sort((a, b) => a.name.localeCompare(b.name))
+        );
         return res.data;
     };
 
     const updateUser = async (id, userData) => {
-        const res = await apiClient.put(`/${role}s/update-${role}/${id}`, userData);
-        setUsers((prev) => prev.map((u) => (u._id === id ? res.data : u)).sort((a, b) => a.name.localeCompare(b.name)));
+        const res = await apiClient.put(
+            `/${role}s/update-${role}/${id}`,
+            userData
+        );
+        setUsers(prev =>
+            prev
+                .map(u => (u._id === id ? res.data : u))
+                .sort((a, b) => a.name.localeCompare(b.name))
+        );
     };
 
-    const deleteUser = async (id) => {
+    const deleteUser = async id => {
         await apiClient.delete(`/${role}s/delete-${role}/${id}`);
-        setUsers((prev) => prev.filter((u) => u._id !== id));
+        setUsers(prev => prev.filter(u => u._id !== id));
     };
 
     return { users, isLoading, error, addUser, updateUser, deleteUser };

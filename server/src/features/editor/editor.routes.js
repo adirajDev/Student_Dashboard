@@ -1,5 +1,10 @@
 import express from 'express';
-import { getEditors, createEditor, updateEditor, deleteEditor } from './editor.controller.js';
+import {
+    getEditors,
+    createEditor,
+    updateEditor,
+    deleteEditor,
+} from './editor.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 

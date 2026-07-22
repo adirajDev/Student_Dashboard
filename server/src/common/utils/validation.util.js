@@ -1,7 +1,13 @@
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
 
-export const normalizeUserPayload = ({ name, email, course, phone, college } = {}) => {
+export const normalizeUserPayload = ({
+    name,
+    email,
+    course,
+    phone,
+    college,
+} = {}) => {
     const payload = {
         name: name?.trim(),
         email: email?.trim().toLowerCase(),
@@ -14,11 +20,11 @@ export const normalizeUserPayload = ({ name, email, course, phone, college } = {
 
 export const validateUserPayload = (payload, role) => {
     const { name, email, phone, course, college } = payload;
-    
+
     if (!name || !email || !phone) {
         return 'Name, email, and phone number are required.';
     }
-    
+
     if (role === 'student' && (!course || !college)) {
         return 'Course and College are required for students.';
     }

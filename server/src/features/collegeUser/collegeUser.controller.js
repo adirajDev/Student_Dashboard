@@ -12,7 +12,10 @@ export const createCollegeUser = asyncHandler(async (req, res) => {
 });
 
 export const updateCollegeUser = asyncHandler(async (req, res) => {
-    const user = await collegeUserService.updateCollegeUser(req.params.id, req.body);
+    const user = await collegeUserService.updateCollegeUser(
+        req.params.id,
+        req.body
+    );
     res.status(200).json(user);
 });
 

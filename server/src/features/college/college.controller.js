@@ -13,15 +13,18 @@ export const getCollegeById = asyncHandler(async (req, res) => {
 
 export const createCollege = asyncHandler(async (req, res) => {
     const college = await collegeService.createCollege(req.body);
-    res.status(201).json({ message: "College created successfully", college });
+    res.status(201).json({ message: 'College created successfully', college });
 });
 
 export const updateCollege = asyncHandler(async (req, res) => {
-    const college = await collegeService.updateCollege(req.params.collegeId, req.body);
+    const college = await collegeService.updateCollege(
+        req.params.collegeId,
+        req.body
+    );
     res.status(200).json(college);
 });
 
 export const deleteCollege = asyncHandler(async (req, res) => {
     await collegeService.deleteCollege(req.params.collegeId);
-    res.status(200).json({ message: "College deleted successfully" });
+    res.status(200).json({ message: 'College deleted successfully' });
 });

@@ -1,7 +1,7 @@
 import College from '../college/college.model.js';
 import Course from '../course/course.model.js';
 
-export const globalSearch = async (queryStr) => {
+export const globalSearch = async queryStr => {
     if (!queryStr || queryStr.trim() === '') {
         return [];
     }
@@ -16,9 +16,11 @@ export const globalSearch = async (queryStr) => {
     const colleges = await College.find({
         $or: [
             { name: { $regex: regex } },
-            { availableCourses: { $in: courseIds } }
-        ]
-    }).populate('availableCourses').sort({ name: 1 });
+            { availableCourses: { $in: courseIds } },
+        ],
+    })
+        .populate('availableCourses')
+        .sort({ name: 1 });
 
     return colleges;
 };

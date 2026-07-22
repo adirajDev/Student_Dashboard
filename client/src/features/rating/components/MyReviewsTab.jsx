@@ -8,26 +8,34 @@ const MyReviewsTab = ({ user }) => {
     const { addRating, ratings } = useRatings();
     const [showFormModal, setShowFormModal] = useState(false);
 
-    const handleFormClose = (success) => {
+    const handleFormClose = success => {
         setShowFormModal(false);
         if (success) {
             // Force a refresh of the MyRatingsSection
-            window.location.reload(); 
+            window.location.reload();
         }
     };
 
     // Determine if the user has already rated their current college
     // user.college could be an object if populated, or a string ID.
-    const userCollegeId = typeof user.college === 'object' ? user.college?._id : user.college;
-    const userCollegeName = typeof user.college === 'object' ? user.college?.name : 'Your Enrolled College';
+    const userCollegeId =
+        typeof user.college === 'object' ? user.college?._id : user.college;
+    const userCollegeName =
+        typeof user.college === 'object'
+            ? user.college?.name
+            : 'Your Enrolled College';
 
-    const hasRatedCollege = ratings?.some(r => r.college?._id === userCollegeId || r.college === userCollegeId);
+    const hasRatedCollege = ratings?.some(
+        r => r.college?._id === userCollegeId || r.college === userCollegeId
+    );
 
     return (
         <div className="animate-fade-in">
             <div className="mb-8">
                 <h2 className="text-3xl mb-2">My Reviews</h2>
-                <p className="text-[var(--ring)]">Manage the reviews you have left for colleges.</p>
+                <p className="text-[var(--ring)]">
+                    Manage the reviews you have left for colleges.
+                </p>
             </div>
 
             {/* Banner for Current College */}
@@ -38,13 +46,19 @@ const MyReviewsTab = ({ user }) => {
                             <GraduationCap className="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-semibold mb-1">Rate your current college</h3>
+                            <h3 className="text-xl font-semibold mb-1">
+                                Rate your current college
+                            </h3>
                             <p className="text-blue-100 text-sm">
-                                Share your experience at <span className="font-semibold">{userCollegeName}</span> to help future students!
+                                Share your experience at{' '}
+                                <span className="font-semibold">
+                                    {userCollegeName}
+                                </span>{' '}
+                                to help future students!
                             </p>
                         </div>
                     </div>
-                    
+
                     <button
                         onClick={() => setShowFormModal(true)}
                         className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap flex items-center gap-2"
@@ -60,7 +74,7 @@ const MyReviewsTab = ({ user }) => {
             </div>
 
             {showFormModal && userCollegeId && (
-                <RatingFormModal 
+                <RatingFormModal
                     collegeId={userCollegeId}
                     editingRating={null} // To edit, they can use the pencil icon on the card below
                     onAdd={addRating}

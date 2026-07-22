@@ -7,8 +7,8 @@ import { useState, useMemo } from 'react';
 //         if (!searchTerm.trim()) return users;
 
 //         const lowercasedSearch = searchTerm.toLowerCase();
-        
-//         return users.filter((user) => 
+
+//         return users.filter((user) =>
 //             user.name.toLowerCase().includes(lowercasedSearch) ||
 //             user.email.toLowerCase().includes(lowercasedSearch)
 //         );
@@ -21,25 +21,26 @@ import { useState, useMemo } from 'react';
 //     };
 // };
 
-const useUserSearch = (users) => {
-    const [searchTerm, setSearchTerm] = useState("");
+const useUserSearch = users => {
+    const [searchTerm, setSearchTerm] = useState('');
 
     // React Compiler automatically memoizes this block behind the scenes
     let filteredUsers = users;
-    
+
     if (searchTerm.trim()) {
         const lowercasedSearch = searchTerm.toLowerCase();
-        
-        filteredUsers = users.filter((user) => 
-            user.name.toLowerCase().includes(lowercasedSearch) ||
-            user.email.toLowerCase().includes(lowercasedSearch)
+
+        filteredUsers = users.filter(
+            user =>
+                user.name.toLowerCase().includes(lowercasedSearch) ||
+                user.email.toLowerCase().includes(lowercasedSearch)
         );
     }
 
     return {
         searchTerm,
         setSearchTerm,
-        filteredUsers
+        filteredUsers,
     };
 };
 
