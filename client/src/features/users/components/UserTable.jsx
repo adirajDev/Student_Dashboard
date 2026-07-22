@@ -20,15 +20,6 @@ const UserTable = ({
     showCourse,
 }) => {
 
-    // Loading
-    if (isLoading) return <Loading />;
-
-    // Error getting data
-    if (error) return <Error error={error} />;
-
-    // UI State: No users at all
-    if (!users || users.length === 0) return <EmptyTable />;
-
     // UI State: Data Render
     return (
         <div>
@@ -39,8 +30,16 @@ const UserTable = ({
                 placeholder="Search by name or email..."
             />
 
-            {users.length === 0 ? (
-                <NoResultsFound searchTerm={searchTerm} />
+            {isLoading ? (
+                <Loading />
+            ) : error ? (
+                <Error error={error} />
+            ) : (!users || users.length === 0) ? (
+                searchTerm ? (
+                    <NoResultsFound searchTerm={searchTerm} />
+                ) : (
+                    <EmptyTable />
+                )
             ) : (
                 <>
                     <UserTableGrid

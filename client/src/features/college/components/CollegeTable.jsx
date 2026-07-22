@@ -22,15 +22,6 @@ const CollegeTable = ({
     onEdit, 
     onDelete 
 }) => {
-    // Loading
-    if (isLoading) return <Loading />;
-
-    // Error getting data
-    if (error) return <Error error={error} />;
-
-    // UI State: No colleges at all
-    if (!colleges || colleges.length === 0) return <EmptyTable />;
-
     return (
         <div>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -65,9 +56,19 @@ const CollegeTable = ({
                 </div>
             </div>
 
-            {colleges.length === 0 ? (
-                <NoResultsFound searchTerm={searchTerm} />
+            {isLoading ? (
+                <Loading />
+            ) : error ? (
+                <Error error={error} />
+            ) : (!colleges || colleges.length === 0) ? (
+                searchTerm || minRating !== '0' ? (
+                    <NoResultsFound searchTerm={searchTerm} />
+                ) : (
+                    <EmptyTable />
+                )
             ) : (
+
+
                 <>
                     <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
                         <div className="overflow-x-auto">
