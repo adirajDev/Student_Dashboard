@@ -108,14 +108,18 @@ const UserForm = ({
                                         formData.college &&
                                         formData.college !== 'others'
                                     ) {
-                                        const selectedCollegeData = colleges.find(
-                                            c => c._id === formData.college
-                                        );
+                                        const selectedCollegeData =
+                                            colleges.find(
+                                                c => c._id === formData.college
+                                            );
                                         if (selectedCollegeData) {
-                                            displayedCourses = courses.filter(c =>
-                                                selectedCollegeData.availableCourses?.some(
-                                                    ac => (ac._id || ac) === c._id
-                                                )
+                                            displayedCourses = courses.filter(
+                                                c =>
+                                                    selectedCollegeData.availableCourses?.some(
+                                                        ac =>
+                                                            (ac._id || ac) ===
+                                                            c._id
+                                                    )
                                             );
                                         }
                                     }
