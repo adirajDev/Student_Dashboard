@@ -1,0 +1,82 @@
+import {
+    LayoutDashboard,
+    Users,
+    GraduationCap,
+    BookOpen,
+    Library,
+    FileEdit,
+} from 'lucide-react';
+import NavItem from '../NavItem';
+
+const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
+    return (
+        <>
+            {(isAdmin || isEditor) && (
+                <NavItem
+                    icon={<LayoutDashboard className="w-5 h-5" />}
+                    label="Overview"
+                    isActive={activeTab === 'overview'}
+                    onClick={() => handleNav('/admin/dashboard?tab=overview')}
+                />
+            )}
+
+            {isAdmin && (
+                <NavItem
+                    icon={<Users className="w-5 h-5" />}
+                    label="Editors"
+                    isActive={activeTab === 'editors'}
+                    onClick={() => handleNav('/admin/dashboard?tab=editors')}
+                />
+            )}
+
+            {(isAdmin || isEditor) && (
+                <NavItem
+                    icon={<GraduationCap className="w-5 h-5" />}
+                    label="Students"
+                    isActive={activeTab === 'students'}
+                    onClick={() => handleNav('/admin/dashboard?tab=students')}
+                />
+            )}
+
+            {isAdmin && (
+                <NavItem
+                    icon={<BookOpen className="w-5 h-5" />}
+                    label="Courses"
+                    isActive={activeTab === 'courses'}
+                    onClick={() => handleNav('/admin/dashboard?tab=courses')}
+                />
+            )}
+
+            {isAdmin && (
+                <>
+                    <NavItem
+                        icon={<Library className="w-5 h-5" />}
+                        label="Colleges"
+                        isActive={activeTab === 'colleges'}
+                        onClick={() =>
+                            handleNav('/admin/dashboard?tab=colleges')
+                        }
+                    />
+                    <NavItem
+                        icon={<Users className="w-5 h-5" />}
+                        label="College Admins"
+                        isActive={activeTab === 'collegeUsers'}
+                        onClick={() =>
+                            handleNav('/admin/dashboard?tab=collegeUsers')
+                        }
+                    />
+                    <NavItem
+                        icon={<FileEdit className="w-5 h-5" />}
+                        label="Approval Requests"
+                        isActive={activeTab === 'approvals'}
+                        onClick={() =>
+                            handleNav('/admin/dashboard?tab=approvals')
+                        }
+                    />
+                </>
+            )}
+        </>
+    );
+};
+
+export default AdminLinks;
