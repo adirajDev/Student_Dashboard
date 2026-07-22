@@ -1,9 +1,12 @@
 import * as courseService from './course.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
+import { getPaginationOptions, formatPaginatedResponse } from '../../common/utils/pagination.util.js';
 
 export const getCourses = asyncHandler(async (req, res) => {
-    const courses = await courseService.getCourses();
-    res.json(courses);
+    const { page, limit, skip } = getPaginationOptions(req);
+    const search = req.query.search || '';
+    const { data, totalCount } = await courseService.getCourses(skip, limit, search);
+    res.json(formatPaginatedResponse(data, totalCount, page, limit));
 });
 
 export const createCourse = asyncHandler(async (req, res) => {

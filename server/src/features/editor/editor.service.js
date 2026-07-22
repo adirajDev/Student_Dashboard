@@ -11,8 +11,8 @@ import {
 } from '../../common/utils/user.util.js';
 import AppError from '../../common/utils/AppError.js';
 
-export const getEditors = async () => {
-    return await getUsersByRole('editor');
+export const getEditors = async (skip, limit, search) => {
+    return await getUsersByRole('editor', skip, limit, search);
 };
 
 export const createEditor = async payload => {

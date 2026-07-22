@@ -6,42 +6,22 @@ import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
 import NoResultsFound from '../../../components/common/NoResultsFound';
 import Error from '../../../components/common/Error';
+import Pagination from '../../../components/common/Pagination';
 
-const CollegeTable = ({ colleges, isLoading, error, onEdit, onDelete }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-    const [minRating, setMinRating] = useState('0');
-
-    const filteredColleges = useMemo(() => {
-        if (!colleges) return [];
-        return colleges.filter(college => {
-            const matchesSearch =
-                college.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                (college.location &&
-                    college.location
-                        .toLowerCase()
-                        .includes(searchTerm.toLowerCase())) ||
-                (college.availableCourses &&
-                    college.availableCourses.some(c =>
-                        c?.name
-                            ?.toLowerCase()
-                            .includes(searchTerm.toLowerCase())
-                    ));
-
-            const matchesRating =
-                college.averageRating >= parseFloat(minRating);
-            return matchesSearch && matchesRating;
-        });
-    }, [colleges, searchTerm, minRating]);
-
-    // Loading
-    if (isLoading) return <Loading />;
-
-    // Error getting data
-    if (error) return <Error error={error} />;
-
-    // UI State: No colleges at all
-    if (!colleges || colleges.length === 0) return <EmptyTable />;
-
+const CollegeTable = ({ 
+    colleges, 
+    isLoading, 
+    error, 
+    page, 
+    totalPages, 
+    onPageChange, 
+    searchTerm,
+    setSearchTerm,
+    minRating,
+    setMinRating,
+    onEdit, 
+    onDelete 
+}) => {
     return (
         <div>
             <div className="flex flex-col sm:flex-row gap-4 mb-6">
@@ -76,129 +56,148 @@ const CollegeTable = ({ colleges, isLoading, error, onEdit, onDelete }) => {
                 </div>
             </div>
 
-            {filteredColleges.length === 0 ? (
-                <NoResultsFound searchTerm={searchTerm} />
+            {isLoading ? (
+                <Loading />
+            ) : error ? (
+                <Error error={error} />
+            ) : (!colleges || colleges.length === 0) ? (
+                searchTerm || minRating !== '0' ? (
+                    <NoResultsFound searchTerm={searchTerm} />
+                ) : (
+                    <EmptyTable />
+                )
             ) : (
-                <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left border-collapse">
-                            <thead>
-                                <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        College Name
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Location
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Courses
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Rating
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
-                                        Actions
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-[var(--border)]">
-                                {filteredColleges.map(college => (
-                                    <tr
-                                        key={college._id}
-                                        className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
-                                    >
-                                        <td className="px-6 py-4">
-                                            <Link
-                                                to={`/college/${college._id}`}
-                                                className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
-                                            >
-                                                {college.name}
-                                            </Link>
-                                            {college.collegeId && (
-                                                <div className="text-xs text-[var(--ring)] mt-1">
-                                                    ID: {college.collegeId}
-                                                </div>
-                                            )}
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center text-[var(--ring)] text-sm">
-                                                <MapPin className="w-3 h-3 mr-1" />
-                                                {college.location}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex flex-wrap gap-1">
-                                                {college.availableCourses
-                                                    ?.slice(0, 2)
-                                                    .map(course => (
-                                                        <span
-                                                            key={course._id}
-                                                            className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 truncate max-w-[120px]"
-                                                        >
-                                                            {course.name}
-                                                        </span>
-                                                    ))}
-                                                {college.availableCourses
-                                                    ?.length > 2 && (
-                                                    <span className="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400">
-                                                        +
-                                                        {college
-                                                            .availableCourses
-                                                            .length - 2}
-                                                    </span>
-                                                )}
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex flex-col">
-                                                <div className="flex items-center text-amber-500 font-medium">
-                                                    <Star className="w-4 h-4 mr-1 fill-current" />
-                                                    {college.averageRating > 0
-                                                        ? college.averageRating.toFixed(
-                                                              1
-                                                          )
-                                                        : 'New'}
-                                                </div>
-                                                <div className="text-xs text-[var(--ring)] mt-1">
-                                                    {college.totalRatings}{' '}
-                                                    {college.totalRatings === 1
-                                                        ? 'rating'
-                                                        : 'ratings'}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-6 py-4">
-                                            <div className="flex items-center justify-end gap-2">
-                                                {onEdit && (
-                                                    <button
-                                                        onClick={() =>
-                                                            onEdit(college)
-                                                        }
-                                                        className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
-                                                        title="Edit College"
-                                                    >
-                                                        <Pencil className="w-4 h-4" />
-                                                    </button>
-                                                )}
-                                                {onDelete && (
-                                                    <button
-                                                        onClick={() =>
-                                                            onDelete(college)
-                                                        }
-                                                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
-                                                        title="Delete College"
-                                                    >
-                                                        <Trash2 className="w-4 h-4" />
-                                                    </button>
-                                                )}
-                                            </div>
-                                        </td>
+
+
+                <>
+                    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            College Name
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Location
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Courses
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Rating
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
+                                            Actions
+                                        </th>
                                     </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody className="divide-y divide-[var(--border)]">
+                                    {colleges.map(college => (
+                                        <tr
+                                            key={college._id}
+                                            className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
+                                        >
+                                            <td className="px-6 py-4">
+                                                <Link
+                                                    to={`/college/${college._id}`}
+                                                    className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                                >
+                                                    {college.name}
+                                                </Link>
+                                                {college.collegeId && (
+                                                    <div className="text-xs text-[var(--ring)] mt-1">
+                                                        ID: {college.collegeId}
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center text-[var(--ring)] text-sm">
+                                                    <MapPin className="w-3 h-3 mr-1" />
+                                                    {college.location}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-wrap gap-1">
+                                                    {college.availableCourses
+                                                        ?.slice(0, 2)
+                                                        .map(course => (
+                                                            <span
+                                                                key={course._id}
+                                                                className="px-2 py-1 text-xs font-medium rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 truncate max-w-[120px]"
+                                                            >
+                                                                {course.name}
+                                                            </span>
+                                                        ))}
+                                                    {college.availableCourses
+                                                        ?.length > 2 && (
+                                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-400">
+                                                            +
+                                                            {college
+                                                                .availableCourses
+                                                                .length - 2}
+                                                        </span>
+                                                    )}
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex flex-col">
+                                                    <div className="flex items-center text-amber-500 font-medium">
+                                                        <Star className="w-4 h-4 mr-1 fill-current" />
+                                                        {college.averageRating > 0
+                                                            ? college.averageRating.toFixed(
+                                                                  1
+                                                              )
+                                                            : 'New'}
+                                                    </div>
+                                                    <div className="text-xs text-[var(--ring)] mt-1">
+                                                        {college.totalRatings}{' '}
+                                                        {college.totalRatings === 1
+                                                            ? 'rating'
+                                                            : 'ratings'}
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td className="px-6 py-4">
+                                                <div className="flex items-center justify-end gap-2">
+                                                    {onEdit && (
+                                                        <button
+                                                            onClick={() =>
+                                                                onEdit(college)
+                                                            }
+                                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                            title="Edit College"
+                                                        >
+                                                            <Pencil className="w-4 h-4" />
+                                                        </button>
+                                                    )}
+                                                    {onDelete && (
+                                                        <button
+                                                            onClick={() =>
+                                                                onDelete(college)
+                                                            }
+                                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                            title="Delete College"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                    <div className="mt-6 border-t border-[var(--border)] pt-4">
+                        <Pagination 
+                            currentPage={page || 1} 
+                            totalPages={totalPages || 1} 
+                            onPageChange={onPageChange} 
+                        />
+                    </div>
+                </>
             )}
         </div>
     );

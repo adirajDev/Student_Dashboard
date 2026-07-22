@@ -1,9 +1,14 @@
 import * as collegeService from './college.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
+import { getPaginationOptions, formatPaginatedResponse } from '../../common/utils/pagination.util.js';
 
 export const getColleges = asyncHandler(async (req, res) => {
-    const colleges = await collegeService.getColleges();
-    res.json(colleges);
+    const { page, limit, skip } = getPaginationOptions(req);
+    const search = req.query.search || '';
+    const minRating = req.query.minRating || 0;
+    
+    const { data, totalCount } = await collegeService.getColleges(skip, limit, search, minRating);
+    res.json(formatPaginatedResponse(data, totalCount, page, limit));
 });
 
 export const getCollegeById = asyncHandler(async (req, res) => {

@@ -6,8 +6,19 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useCourseManagement from '../hooks/useCourseManagement';
 
 const CourseManagementSection = ({ title }) => {
-    const { courses, isLoading, error, addCourse, updateCourse, deleteCourse } =
-        useCourseManagement(true);
+    const { 
+        courses, 
+        isLoading, 
+        error, 
+        page, 
+        totalPages, 
+        setPage, 
+        searchTerm, 
+        setSearchTerm, 
+        addCourse, 
+        updateCourse, 
+        deleteCourse 
+    } = useCourseManagement(true);
     const [editingCourse, setEditingCourse] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingCourse, setDeletingCourse] = useState(null);
@@ -32,6 +43,11 @@ const CourseManagementSection = ({ title }) => {
                 courses={courses}
                 isLoading={isLoading}
                 error={error}
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
                 onDelete={setDeletingCourse}
                 onEdit={c => {
                     setEditingCourse(c);

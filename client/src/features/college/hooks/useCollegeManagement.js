@@ -5,6 +5,24 @@ const useCollegeManagement = (shouldFetch = true) => {
     const [colleges, setColleges] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+    const [minRating, setMinRating] = useState('0');
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+            setPage(1);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchTerm]);
+
+    const handleMinRatingChange = (val) => {
+        setMinRating(val);
+        setPage(1);
+    };
 
     const fetchColleges = useCallback(async () => {
         if (!shouldFetch) return;
@@ -12,18 +30,22 @@ const useCollegeManagement = (shouldFetch = true) => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await apiClient.get('/colleges');
-            const sortedColleges = res.data.sort((a, b) =>
+            const res = await apiClient.get(`/colleges?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}&minRating=${minRating}`);
+            const data = Array.isArray(res.data) ? res.data : res.data.data;
+            const sortedColleges = data.sort((a, b) =>
                 a.name.toLowerCase().localeCompare(b.name.toLowerCase())
             );
             setColleges(sortedColleges);
+            if (res.data.totalPages) {
+                setTotalPages(res.data.totalPages);
+            }
         } catch (err) {
             setError('Failed to load colleges');
             console.error(err);
         } finally {
             setIsLoading(false);
         }
-    }, [shouldFetch]);
+    }, [shouldFetch, page, debouncedSearchTerm, minRating]);
 
     useEffect(() => {
         fetchColleges();
@@ -91,6 +113,13 @@ const useCollegeManagement = (shouldFetch = true) => {
         colleges,
         isLoading,
         error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+        minRating,
+        setMinRating: handleMinRatingChange,
         addCollege,
         updateCollege,
         deleteCollege,

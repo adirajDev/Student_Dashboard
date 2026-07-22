@@ -2,10 +2,11 @@ import { useState, useEffect } from 'react';
 import { FileEdit, CheckCircle2 } from 'lucide-react';
 import useCollegeUpdates from '../../hooks/useCollegeUpdates';
 import Loading from '../../../../components/common/Loading';
+import Pagination from '../../../../components/common/Pagination';
 import ReviewUpdateModal from './ReviewUpdateModal';
 
 const PendingUpdatesSection = ({ title }) => {
-    const { getAllUpdates, approveUpdate, rejectUpdate } = useCollegeUpdates();
+    const { page, setPage, totalPages, getAllUpdates, approveUpdate, rejectUpdate } = useCollegeUpdates();
     const [updates, setUpdates] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedUpdate, setSelectedUpdate] = useState(null);
@@ -19,7 +20,7 @@ const PendingUpdatesSection = ({ title }) => {
 
     useEffect(() => {
         fetchUpdates();
-    }, []);
+    }, [page, getAllUpdates]);
 
     const handleApprove = async id => {
         await approveUpdate(id);
@@ -101,6 +102,16 @@ const PendingUpdatesSection = ({ title }) => {
                             ))}
                         </tbody>
                     </table>
+                </div>
+            )}
+
+            {updates && updates.length > 0 && (
+                <div className="mt-6 border-t border-[var(--border)] pt-4">
+                    <Pagination 
+                        currentPage={page || 1} 
+                        totalPages={totalPages || 1} 
+                        onPageChange={setPage} 
+                    />
                 </div>
             )}
 

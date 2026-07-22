@@ -4,18 +4,23 @@ import useRatings from '../hooks/useRatings';
 import RatingFormModal from './RatingFormModal';
 import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import Loading from '../../../components/common/Loading';
+import Pagination from '../../../components/common/Pagination';
 
 const RatingList = ({ collegeId, currentUser }) => {
     const {
         ratings,
         isLoading,
+        page,
+        setPage,
+        totalPages,
+        filterStars,
+        setFilterStars,
         getRatingsByCollege,
         addRating,
         updateRating,
         deleteRating,
     } = useRatings();
 
-    const [filterStars, setFilterStars] = useState(0);
     const [showFormModal, setShowFormModal] = useState(false);
     const [editingRating, setEditingRating] = useState(null);
     const [deletingRating, setDeletingRating] = useState(null);
@@ -26,11 +31,11 @@ const RatingList = ({ collegeId, currentUser }) => {
         }
     }, [collegeId, getRatingsByCollege]);
 
-    // Derived states
-    const filteredRatings = useMemo(() => {
-        if (filterStars === 0) return ratings;
-        return ratings.filter(r => r.stars === filterStars);
-    }, [ratings, filterStars]);
+    useEffect(() => {
+        if (collegeId) {
+            getRatingsByCollege(collegeId);
+        }
+    }, [collegeId, getRatingsByCollege]);
 
     // Check if current user has already rated
     const userRating = useMemo(() => {
@@ -81,9 +86,10 @@ const RatingList = ({ collegeId, currentUser }) => {
                     <div className="relative w-full sm:w-48">
                         <select
                             value={filterStars}
-                            onChange={e =>
-                                setFilterStars(Number(e.target.value))
-                            }
+                            onChange={e => {
+                                setFilterStars(Number(e.target.value));
+                                setPage(1);
+                            }}
                             className="w-full px-4 py-2.5 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
                         >
                             <option value={0}>All Stars</option>
@@ -118,14 +124,14 @@ const RatingList = ({ collegeId, currentUser }) => {
             </div>
 
             <div className="space-y-6">
-                {filteredRatings.length === 0 ? (
+                {(!ratings || ratings.length === 0) ? (
                     <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-3xl bg-[var(--card)] text-[var(--ring)]">
                         {filterStars > 0
                             ? `No ${filterStars}-star reviews yet.`
                             : 'No reviews yet. Be the first to rate!'}
                     </div>
                 ) : (
-                    filteredRatings.map(rating => (
+                    ratings.map(rating => (
                         <div
                             key={rating._id}
                             className="p-6 bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-sm hover:shadow-md transition-shadow"
@@ -202,6 +208,16 @@ const RatingList = ({ collegeId, currentUser }) => {
                     ))
                 )}
             </div>
+
+            {ratings && ratings.length > 0 && (
+                <div className="mt-6 border-t border-[var(--border)] pt-4">
+                    <Pagination 
+                        currentPage={page || 1} 
+                        totalPages={totalPages || 1} 
+                        onPageChange={setPage} 
+                    />
+                </div>
+            )}
 
             {showFormModal && (
                 <RatingFormModal

@@ -4,6 +4,8 @@ import apiClient from '../../../services/apiClient';
 const useCollegeUpdates = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
 
     const submitUpdate = async proposedChanges => {
         setLoading(true);
@@ -26,8 +28,9 @@ const useCollegeUpdates = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.get('/college-updates/me');
-            return res.data;
+            const res = await apiClient.get(`/college-updates/me?page=${page}&limit=10`);
+            if (res.data.totalPages) setTotalPages(res.data.totalPages);
+            return res.data.data || res.data;
         } catch (err) {
             setError(
                 err.response?.data?.message || 'Failed to fetch your updates'
@@ -36,14 +39,15 @@ const useCollegeUpdates = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [page]);
 
     const getAllUpdates = useCallback(async () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.get('/college-updates');
-            return res.data;
+            const res = await apiClient.get(`/college-updates?page=${page}&limit=10`);
+            if (res.data.totalPages) setTotalPages(res.data.totalPages);
+            return res.data.data || res.data;
         } catch (err) {
             setError(
                 err.response?.data?.message || 'Failed to fetch pending updates'
@@ -52,7 +56,7 @@ const useCollegeUpdates = () => {
         } finally {
             setLoading(false);
         }
-    }, []);
+    }, [page]);
 
     const approveUpdate = async id => {
         setLoading(true);
@@ -87,6 +91,9 @@ const useCollegeUpdates = () => {
     return {
         loading,
         error,
+        page,
+        setPage,
+        totalPages,
         submitUpdate,
         getMyUpdates,
         getAllUpdates,

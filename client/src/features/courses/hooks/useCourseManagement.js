@@ -5,6 +5,18 @@ const useCourseManagement = shouldFetch => {
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [page, setPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm);
+            setPage(1);
+        }, 500);
+        return () => clearTimeout(timer);
+    }, [searchTerm]);
 
     const fetchCourses = useCallback(async () => {
         if (!shouldFetch) return;
@@ -12,18 +24,22 @@ const useCourseManagement = shouldFetch => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await apiClient.get('/courses');
-            const sortedCourses = res.data.sort((a, b) =>
+            const res = await apiClient.get(`/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`);
+            const data = Array.isArray(res.data) ? res.data : res.data.data;
+            const sortedCourses = data.sort((a, b) =>
                 a.name.toLowerCase().localeCompare(b.name.toLowerCase())
             );
             setCourses(sortedCourses);
+            if (res.data.totalPages) {
+                setTotalPages(res.data.totalPages);
+            }
         } catch (err) {
             setError('Failed to load courses');
             console.error(err);
         } finally {
             setIsLoading(false);
         }
-    }, [shouldFetch]);
+    }, [shouldFetch, page, debouncedSearchTerm]);
 
     useEffect(() => {
         fetchCourses();
@@ -86,6 +102,11 @@ const useCourseManagement = shouldFetch => {
         courses,
         isLoading,
         error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
         addCourse,
         updateCourse,
         deleteCourse,

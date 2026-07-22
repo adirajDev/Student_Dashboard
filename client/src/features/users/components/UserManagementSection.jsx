@@ -14,8 +14,19 @@ const UserManagementSection = ({
     canDelete,
     shouldFetch,
 }) => {
-    const { users, isLoading, error, addUser, updateUser, deleteUser } =
-        useUserManagement(role, shouldFetch);
+    const { 
+        users, 
+        isLoading, 
+        error, 
+        page, 
+        totalPages, 
+        setPage, 
+        searchTerm, 
+        setSearchTerm, 
+        addUser, 
+        updateUser, 
+        deleteUser 
+    } = useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingUser, setDeletingUser] = useState(null);
@@ -46,6 +57,11 @@ const UserManagementSection = ({
                 users={users}
                 isLoading={isLoading}
                 error={error}
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
                 showCourse={showCourse}
                 onDelete={canDelete ? setDeletingUser : null}
                 onEdit={u => {

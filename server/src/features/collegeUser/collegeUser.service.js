@@ -1,9 +1,10 @@
 import User from '../user/user.model.js';
 import AppError from '../../common/utils/AppError.js';
 import bcrypt from 'bcrypt';
+import { getUsersByRole } from '../../common/utils/user.util.js';
 
-export const getCollegeUsers = async () => {
-    return await User.find({ role: 'college' }).populate('college', 'name');
+export const getCollegeUsers = async (skip, limit, search) => {
+    return await getUsersByRole('college', skip, limit, search);
 };
 
 export const createCollegeUser = async data => {
