@@ -2,10 +2,37 @@ import College from './college.model.js';
 import Rating from '../rating/rating.model.js';
 import AppError from '../../common/utils/AppError.js';
 
-export const getColleges = async () => {
-    return await College.find({})
-        .populate('availableCourses', 'name level')
-        .sort({ name: 1 });
+import Course from '../course/course.model.js';
+
+export const getColleges = async (skip = 0, limit = 0, search = '', minRating = 0) => {
+    const queryObj = {};
+
+    if (minRating) {
+        queryObj.averageRating = { $gte: Number(minRating) };
+    }
+
+    if (search) {
+        const searchRegex = { $regex: search, $options: 'i' };
+        const matchingCourses = await Course.find({ name: searchRegex }).select('_id');
+        const courseIds = matchingCourses.map(c => c._id);
+
+        queryObj.$or = [
+            { name: searchRegex },
+            { location: searchRegex },
+            { availableCourses: { $in: courseIds } }
+        ];
+    }
+
+    const query = College.find(queryObj);
+    const [data, totalCount] = await Promise.all([
+        query.clone()
+            .populate('availableCourses', 'name level')
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(limit),
+        College.countDocuments(queryObj)
+    ]);
+    return { data, totalCount };
 };
 
 export const getCollegeById = async id => {

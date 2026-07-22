@@ -1,8 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
-    if (totalPages <= 1) return null;
-
+const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
     // Helper to generate page numbers to display
     const getPageNumbers = () => {
         const pages = [];

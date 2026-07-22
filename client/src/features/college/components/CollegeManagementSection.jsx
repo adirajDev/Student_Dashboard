@@ -10,6 +10,13 @@ const CollegeManagementSection = ({ title }) => {
         colleges,
         isLoading,
         error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+        minRating,
+        setMinRating,
         addCollege,
         updateCollege,
         deleteCollege,
@@ -38,6 +45,13 @@ const CollegeManagementSection = ({ title }) => {
                 colleges={colleges}
                 isLoading={isLoading}
                 error={error}
+                page={page}
+                totalPages={totalPages}
+                onPageChange={setPage}
+                searchTerm={searchTerm}
+                setSearchTerm={setSearchTerm}
+                minRating={minRating}
+                setMinRating={setMinRating}
                 onDelete={setDeletingCollege}
                 onEdit={c => {
                     setEditingCollege(c);
