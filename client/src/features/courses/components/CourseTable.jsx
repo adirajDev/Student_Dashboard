@@ -5,25 +5,20 @@ import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
 import NoResultsFound from '../../../components/common/NoResultsFound';
 import Error from '../../../components/common/Error';
+import Pagination from '../../../components/common/Pagination';
 
-const CourseTable = ({ courses, isLoading, error, onEdit, onDelete }) => {
-    const [searchTerm, setSearchTerm] = useState('');
-
-    // Loading
-    if (isLoading) return <Loading />;
-
-    // Error getting data
-    if (error) return <Error error={error} />;
-
-    // UI State: No courses at all
-    if (!courses || courses.length === 0) return <EmptyTable />;
-
-    const filteredCourses = courses.filter(
-        course =>
-            course.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            course.level.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-
+const CourseTable = ({ 
+    courses, 
+    isLoading, 
+    error, 
+    page, 
+    totalPages, 
+    onPageChange, 
+    searchTerm, 
+    setSearchTerm, 
+    onEdit, 
+    onDelete 
+}) => {
     // UI State: Data Render
     return (
         <div>
@@ -34,10 +29,19 @@ const CourseTable = ({ courses, isLoading, error, onEdit, onDelete }) => {
                 placeholder="Search by course name or level..."
             />
 
-            {filteredCourses.length === 0 ? (
-                <NoResultsFound searchTerm={searchTerm} />
+            {isLoading ? (
+                <Loading />
+            ) : error ? (
+                <Error error={error} />
+            ) : (!courses || courses.length === 0) ? (
+                searchTerm ? (
+                    <NoResultsFound searchTerm={searchTerm} />
+                ) : (
+                    <EmptyTable />
+                )
             ) : (
-                <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
+                <>
+                    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
                     <div className="overflow-x-auto">
                         <table className="w-full text-left border-collapse">
                             <thead>
@@ -54,7 +58,7 @@ const CourseTable = ({ courses, isLoading, error, onEdit, onDelete }) => {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-[var(--border)]">
-                                {filteredCourses.map(course => (
+                                {courses.map(course => (
                                     <tr
                                         key={course._id}
                                         className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
@@ -106,7 +110,15 @@ const CourseTable = ({ courses, isLoading, error, onEdit, onDelete }) => {
                             </tbody>
                         </table>
                     </div>
-                </div>
+                    </div>
+                    <div className="mt-6 border-t border-[var(--border)] pt-4">
+                        <Pagination 
+                            currentPage={page || 1} 
+                            totalPages={totalPages || 1} 
+                            onPageChange={onPageChange} 
+                        />
+                    </div>
+                </>
             )}
         </div>
     );

@@ -2,8 +2,23 @@ import Course from './course.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
 
-export const getCourses = async () => {
-    return await Course.find({}).sort({ name: 1 });
+export const getCourses = async (skip = 0, limit = 0, search = '') => {
+    const queryObj = {};
+    if (search) {
+        queryObj.$or = [
+            { name: { $regex: search, $options: 'i' } },
+            { level: { $regex: search, $options: 'i' } }
+        ];
+    }
+    const query = Course.find(queryObj);
+    const [data, totalCount] = await Promise.all([
+        query.clone()
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(limit),
+        Course.countDocuments(queryObj)
+    ]);
+    return { data, totalCount };
 };
 
 export const createCourse = async data => {
