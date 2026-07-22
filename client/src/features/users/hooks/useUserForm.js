@@ -44,6 +44,46 @@ const useUserForm = editingUser => {
         }
     }, [editingUser]);
 
+    // Effect to handle resetting course when college changes
+    useEffect(() => {
+        if (colleges.length > 0 && courses.length > 0) {
+            if (formData.college && formData.college !== 'others') {
+                const selectedCollege = colleges.find(
+                    c => c._id === formData.college
+                );
+                if (selectedCollege) {
+                    const availableCourses = courses.filter(c =>
+                        selectedCollege.availableCourses?.some(
+                            ac => (ac._id || ac) === c._id
+                        )
+                    );
+                    const isCurrentCourseValid = availableCourses.some(
+                        c => c._id === formData.course
+                    );
+                    if (!isCurrentCourseValid) {
+                        setFormData(prev => ({
+                            ...prev,
+                            course:
+                                availableCourses.length > 0
+                                    ? availableCourses[0]._id
+                                    : '',
+                        }));
+                    }
+                }
+            } else if (formData.college === 'others') {
+                const isCurrentCourseValid = courses.some(
+                    c => c._id === formData.course
+                );
+                if (!isCurrentCourseValid) {
+                    setFormData(prev => ({
+                        ...prev,
+                        course: courses.length > 0 ? courses[0]._id : '',
+                    }));
+                }
+            }
+        }
+    }, [formData.college, colleges, courses]);
+
     const handleChange = e => {
         const { id, name, value } = e.target;
         const key = id || name; // Support both id and name attributes

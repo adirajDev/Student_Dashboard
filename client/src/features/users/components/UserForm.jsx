@@ -71,30 +71,6 @@ const UserForm = ({
                     <>
                         <div>
                             <label
-                                htmlFor="course"
-                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
-                            >
-                                Course
-                            </label>
-                            <select
-                                id="course"
-                                value={formData.course}
-                                onChange={handleChange}
-                                className="input-field"
-                            >
-                                <option value="" disabled>
-                                    Select a course
-                                </option>
-                                {courses.map(c => (
-                                    <option key={c._id} value={c._id}>
-                                        {c.name}
-                                    </option>
-                                ))}
-                            </select>
-                        </div>
-
-                        <div>
-                            <label
                                 htmlFor="college"
                                 className="block text-sm font-medium text-[var(--foreground)] mb-1"
                             >
@@ -107,6 +83,49 @@ const UserForm = ({
                                 onChange={handleChange}
                                 placeholder="Search for a college..."
                             />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="course"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                            >
+                                Course
+                            </label>
+                            <select
+                                id="course"
+                                value={formData.course}
+                                onChange={handleChange}
+                                className="input-field disabled:opacity-50"
+                                disabled={!formData.college}
+                            >
+                                <option value="" disabled>
+                                    Select a course
+                                </option>
+                                {(() => {
+                                    let displayedCourses = courses;
+                                    if (
+                                        formData.college &&
+                                        formData.college !== 'others'
+                                    ) {
+                                        const selectedCollegeData = colleges.find(
+                                            c => c._id === formData.college
+                                        );
+                                        if (selectedCollegeData) {
+                                            displayedCourses = courses.filter(c =>
+                                                selectedCollegeData.availableCourses?.some(
+                                                    ac => (ac._id || ac) === c._id
+                                                )
+                                            );
+                                        }
+                                    }
+                                    return displayedCourses.map(c => (
+                                        <option key={c._id} value={c._id}>
+                                            {c.name}
+                                        </option>
+                                    ));
+                                })()}
+                            </select>
                         </div>
 
                         {formData.college === 'others' && (
