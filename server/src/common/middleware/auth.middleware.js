@@ -24,3 +24,25 @@ export const requireAuth = async (req, res, next) => {
         return res.status(401).json({ message: 'Invalid or expired token' });
     }
 };
+
+export const checkAuth = async (req, res, next) => {
+    try {
+        const token = req.cookies.jwt;
+
+        if (!token) {
+            req.user = null;
+            return next();
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const user = await User.findById(decoded.userId)
+            .populate('course college')
+            .select('-password');
+
+        req.user = user || null;
+        next();
+    } catch (error) {
+        req.user = null;
+        next();
+    }
+};

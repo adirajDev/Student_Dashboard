@@ -1,9 +1,12 @@
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
+import Loading from '../components/common/Loading';
 
 const ProtectedRoute = ({ allowedRoles }) => {
-    // Receive the context (which includes user) from MainLayout
     const context = useOutletContext();
-    const { user } = context || {};
+    const { user, isLoading } = context || {};
+
+    // Wait for auth check to complete
+    if (isLoading) return <Loading />;
 
     // If somehow there is no user, redirect to signin
     if (!user) {
@@ -12,7 +15,8 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
     // Check if route has role restrictions and user meets them
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-        // Redirect students trying to access admin pages to their dashboard
+        if (user.role === 'admin' || user.role === 'editor') return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'college') return <Navigate to="/college/dashboard" replace />;
         return <Navigate to="/dashboard" replace />;
     }
 

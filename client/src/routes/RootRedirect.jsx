@@ -10,7 +10,7 @@ const RootRedirect = () => {
         const checkAuth = async () => {
             try {
                 const res = await apiClient.get('/me');
-                setAuth({ loading: false, role: res.data.role });
+                setAuth({ loading: false, role: res.data ? res.data.role : null });
             } catch (err) {
                 setAuth({ loading: false, role: null });
             }
