@@ -9,7 +9,7 @@ import editorRoutes from './features/editor/editor.routes.js';
 import dataRoutes from './features/data/data.routes.js';
 import collegeUserRoutes from './features/collegeUser/collegeUser.routes.js';
 import collegeUpdateRoutes from './features/collegeUpdate/collegeUpdate.routes.js';
-import examRoutes from "./features/exam/exam.routes.js";
+import examRoutes from './features/exam/exam.routes.js';
 
 const router = Router();
 

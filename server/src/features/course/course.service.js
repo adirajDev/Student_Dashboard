@@ -7,16 +7,13 @@ export const getCourses = async (skip = 0, limit = 0, search = '') => {
     if (search) {
         queryObj.$or = [
             { name: { $regex: search, $options: 'i' } },
-            { level: { $regex: search, $options: 'i' } }
+            { level: { $regex: search, $options: 'i' } },
         ];
     }
     const query = Course.find(queryObj);
     const [data, totalCount] = await Promise.all([
-        query.clone()
-            .sort({ name: 1 })
-            .skip(skip)
-            .limit(limit),
-        Course.countDocuments(queryObj)
+        query.clone().sort({ name: 1 }).skip(skip).limit(limit),
+        Course.countDocuments(queryObj),
     ]);
     return { data, totalCount };
 };

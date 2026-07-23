@@ -33,9 +33,8 @@ const examSchema = new mongoose.Schema({
     examLink: {
         type: String,
         trim: true,
-    }
-
-})
+    },
+});
 
 const Exam = mongoose.model('Exam', examSchema);
 export default Exam;

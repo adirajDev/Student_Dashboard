@@ -24,11 +24,8 @@ export const submitUpdate = async (user, proposedChanges) => {
 export const getMyUpdates = async (userId, skip = 0, limit = 0) => {
     const query = CollegeUpdate.find({ requestedBy: userId });
     const [data, totalCount] = await Promise.all([
-        query.clone()
-            .sort({ createdAt: -1 })
-            .skip(skip)
-            .limit(limit),
-        CollegeUpdate.countDocuments({ requestedBy: userId })
+        query.clone().sort({ createdAt: -1 }).skip(skip).limit(limit),
+        CollegeUpdate.countDocuments({ requestedBy: userId }),
     ]);
     return { data, totalCount };
 };
@@ -36,13 +33,14 @@ export const getMyUpdates = async (userId, skip = 0, limit = 0) => {
 export const getAllUpdates = async (skip = 0, limit = 0) => {
     const query = CollegeUpdate.find({ status: 'pending' });
     const [data, totalCount] = await Promise.all([
-        query.clone()
+        query
+            .clone()
             .populate('college', 'name')
             .populate('requestedBy', 'name email')
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit),
-        CollegeUpdate.countDocuments({ status: 'pending' })
+        CollegeUpdate.countDocuments({ status: 'pending' }),
     ]);
     return { data, totalCount };
 };

@@ -5,7 +5,7 @@ import {
     getExamById,
     updateExam,
     deleteExam,
-} from "./exam.controller.js";
+} from './exam.controller.js';
 
 const router = express.Router();
 router.get('/', getAllExams);
