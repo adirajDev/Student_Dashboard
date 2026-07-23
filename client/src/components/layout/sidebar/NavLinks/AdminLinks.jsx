@@ -48,6 +48,15 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
             )}
 
             {isAdmin && (
+                <NavItem
+                    icon={<FileEdit className="w-5 h-5" />}
+                    label="Exams"
+                    isActive={activeTab === 'exams'}
+                    onClick={() => handleNav('/admin/dashboard?tab=exams')}
+                />
+            )}
+
+            {isAdmin && (
                 <>
                     <NavItem
                         icon={<Library className="w-5 h-5" />}
