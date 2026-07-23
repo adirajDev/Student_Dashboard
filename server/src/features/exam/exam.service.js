@@ -56,3 +56,13 @@ export const updateExam = async (data, id) => {
 
     return exam;
 }
+
+export const deleteExam = async (id) => {
+    const exam = await Exam.findByIdAndDelete(id);
+
+    if (!exam) {
+        throw new AppError('Exam not found', 400)
+    }
+
+    return exam;
+}

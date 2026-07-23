@@ -20,3 +20,8 @@ export const updateExam = asyncHandler(async (req, res) => {
     const updatedExam = await examService.updateExam(req.body, req.params.id);
     res.status(200).json( { message: 'Exam updated successfully', updatedExam })
 })
+
+export const deleteExam = asyncHandler(async (req, res) => {
+    await examService.deleteExam(req.params.id);
+    res.status(200).json({ message: 'Exam deleted successfully' })
+})

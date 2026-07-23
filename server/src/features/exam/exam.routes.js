@@ -3,13 +3,15 @@ import {
     createExam,
     getAllExams,
     getExamById,
-    updateExam
+    updateExam,
+    deleteExam,
 } from "./exam.controller.js";
 
 const router = express.Router();
 router.get('/', getAllExams);
 router.get('/:id', getExamById);
-router.post('/create-exam', createExam);
-router.patch('/update-exam/:id', updateExam);
+router.post('/', createExam);
+router.patch('/:id', updateExam);
+router.delete('/:id', deleteExam);
 
 export default router;
