@@ -79,12 +79,11 @@ const ExamTable = ({
                                             className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
-                                                <Link
-                                                    to={`/exam/${exam._id}`}
-                                                    className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                                <span
+                                                    className="font-medium text-[var(--foreground)]"
                                                 >
                                                     {exam.name}
-                                                </Link>
+                                                </span>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center gap-1.5">

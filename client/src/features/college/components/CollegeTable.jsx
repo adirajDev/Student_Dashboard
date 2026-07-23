@@ -99,12 +99,11 @@ const CollegeTable = ({
                                             className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
-                                                <Link
-                                                    to={`/college/${college._id}`}
-                                                    className="font-medium text-blue-600 dark:text-blue-400 hover:underline"
+                                                <span
+                                                    className="font-medium text-[var(--foreground)]"
                                                 >
                                                     {college.name}
-                                                </Link>
+                                                </span>
                                                 {college.collegeId && (
                                                     <div className="text-xs text-[var(--ring)] mt-1">
                                                         ID: {college.collegeId}
