@@ -19,11 +19,11 @@ const useUserForm = editingUser => {
         const fetchData = async () => {
             try {
                 const [collegeRes, courseRes] = await Promise.all([
-                    apiClient.get('/colleges'),
-                    apiClient.get('/courses'),
+                    apiClient.get('/colleges?limit=1000'),
+                    apiClient.get('/courses?limit=1000'),
                 ]);
-                setColleges(collegeRes.data);
-                setCourses(courseRes.data);
+                setColleges(collegeRes.data.data || collegeRes.data);
+                setCourses(courseRes.data.data || courseRes.data);
             } catch (err) {
                 console.error('Failed to fetch colleges/courses', err);
             }

@@ -22,19 +22,23 @@ const useSignup = () => {
         const fetchData = async () => {
             try {
                 const [collegeRes, courseRes] = await Promise.all([
-                    apiClient.get('/colleges'),
-                    apiClient.get('/courses'),
+                    apiClient.get('/colleges?limit=1000'),
+                    apiClient.get('/courses?limit=1000'),
                 ]);
-                setColleges(collegeRes.data);
-                setCourses(courseRes.data);
+                
+                const collegeData = collegeRes.data.data || collegeRes.data;
+                const courseData = courseRes.data.data || courseRes.data;
+                
+                setColleges(collegeData);
+                setCourses(courseData);
 
                 // Set defaults if available
                 let defaultCollege = '';
                 let defaultCourse = '';
-                if (collegeRes.data.length > 0) {
-                    defaultCollege = collegeRes.data[0]._id;
-                    const availableCourses = courseRes.data.filter(c =>
-                        collegeRes.data[0].availableCourses?.some(
+                if (collegeData.length > 0) {
+                    defaultCollege = collegeData[0]._id;
+                    const availableCourses = courseData.filter(c =>
+                        collegeData[0].availableCourses?.some(
                             ac => (ac._id || ac) === c._id
                         )
                     );
