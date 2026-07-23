@@ -10,6 +10,7 @@ import WrongUrl from './pages/NotFound/WrongUrl';
 import MainLayout from './components/layout/MainLayout';
 import RootRedirect from './routes/RootRedirect';
 import CollegeDetails from './pages/College/CollegeDetails';
+import LandingPage from './pages/Landing/LandingPage';
 import SearchPage from './pages/Search/SearchPage';
 
 function App() {
@@ -18,7 +19,8 @@ function App() {
             <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] transition-colors duration-300">
                 <Routes>
                     {/* Default Route */}
-                    <Route path="/" element={<RootRedirect />} />
+                    <Route path="/" element={<LandingPage />} />
+                    <Route path="/dashboard-redirect" element={<RootRedirect />} />
 
                     {/* Auth Routes */}
                     <Route path="/signup" element={<Signup />} />
