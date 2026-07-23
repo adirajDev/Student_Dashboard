@@ -15,3 +15,8 @@ export const createExam = asyncHandler(async (req, res) => {
     const exam = await examService.createExam(req.body)
     res.status(201).json({ message: 'Exam created successfully', exam })
 })
+
+export const updateExam = asyncHandler(async (req, res) => {
+    const updatedExam = await examService.updateExam(req.body, req.params.id);
+    res.status(200).json( { message: 'Exam updated successfully', updatedExam })
+})

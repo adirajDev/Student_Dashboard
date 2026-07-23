@@ -41,3 +41,18 @@ export const createExam = async data => {
     await exam.save();
     return exam;
 }
+
+export const updateExam = async (data, id) => {
+    const updatedData = {...data};
+
+    const exam = await Exam.findByIdAndUpdate(id, updatedData, {
+        returnDocument: 'after',
+        runValidators: true,
+    })
+
+    if (!exam) {
+        throw new AppError('Exam not found', 400)
+    }
+
+    return exam;
+}
