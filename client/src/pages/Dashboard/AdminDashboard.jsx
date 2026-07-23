@@ -4,6 +4,7 @@ import UserManagementSection from '../../features/users/components/UserManagemen
 import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
 import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
 import PendingUpdatesSection from '../../features/collegeUpdate/components/Admin/PendingUpdatesSection';
+import ExamManagementSection from '../../features/exam/components/ExamManagementSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -61,6 +62,12 @@ const AdminDashboard = () => {
             {activeTab === 'courses' && isAdmin && (
                 <div className="animate-fade-in">
                     <CourseManagementSection title="Course Directory" />
+                </div>
+            )}
+
+            {activeTab === 'exams' && isAdmin && (
+                <div className="animate-fade-in">
+                    <ExamManagementSection title="Exam Directory" />
                 </div>
             )}
 
