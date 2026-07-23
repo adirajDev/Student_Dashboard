@@ -65,7 +65,7 @@ const ExamTable = ({
                                             Mode
                                         </th>
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                            Registration Period
+                                            Exam Date
                                         </th>
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
                                             Actions
@@ -100,9 +100,14 @@ const ExamTable = ({
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="flex items-center text-[var(--ring)] text-sm gap-1.5">
-                                                    <Calendar className="w-4 h-4" />
-                                                    {new Date(exam.regStartingDate).toLocaleDateString()} - {new Date(exam.regEndingDate).toLocaleDateString()}
+                                                <div className="flex flex-col text-[var(--foreground)] text-sm">
+                                                    <span className="font-semibold flex items-center gap-1.5">
+                                                        <Calendar className="w-4 h-4 text-indigo-500" />
+                                                        {new Date(exam.examDate).toLocaleDateString()}
+                                                    </span>
+                                                    <span className="text-[var(--ring)] text-xs mt-1 ml-5">
+                                                        {exam.examTime} ({exam.examDuration >= 60 ? `${Math.floor(exam.examDuration/60)}hr ` : ''}{exam.examDuration % 60 ? `${exam.examDuration % 60}m` : ''})
+                                                    </span>
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">

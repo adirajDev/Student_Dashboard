@@ -11,6 +11,10 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         examMode: 'Offline',
         examDescription: '',
         examLink: '',
+        examDate: '',
+        examTime: '',
+        examDurationHours: '',
+        examDurationMinutes: '',
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -33,6 +37,10 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                 examMode: editingExam.examMode || 'Offline',
                 examDescription: editingExam.examDescription || '',
                 examLink: editingExam.examLink || '',
+                examDate: formatDateForInput(editingExam.examDate),
+                examTime: editingExam.examTime || '',
+                examDurationHours: editingExam.examDuration ? Math.floor(editingExam.examDuration / 60) : '',
+                examDurationMinutes: editingExam.examDuration ? editingExam.examDuration % 60 : '',
             });
         }
     }, [editingExam]);
@@ -43,11 +51,20 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         setIsSubmitting(true);
 
         try {
+            const submissionData = {
+                ...formData,
+                examDuration: (parseInt(formData.examDurationHours) || 0) * 60 + (parseInt(formData.examDurationMinutes) || 0)
+            };
+            
+            // Clean up temporary UI state from payload
+            delete submissionData.examDurationHours;
+            delete submissionData.examDurationMinutes;
+
             let res;
             if (editingExam) {
-                res = await onUpdate(editingExam._id, formData);
+                res = await onUpdate(editingExam._id, submissionData);
             } else {
-                res = await onAdd(formData);
+                res = await onAdd(submissionData);
             }
 
             if (res.success) {
@@ -190,6 +207,72 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                                         className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
                                         placeholder="https://example.com"
                                     />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                                    Exam Date <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="date"
+                                        name="examDate"
+                                        value={formData.examDate}
+                                        min={formData.regEndingDate}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                                    Start Time <span className="text-red-500">*</span>
+                                </label>
+                                <div className="relative">
+                                    <input
+                                        type="time"
+                                        name="examTime"
+                                        value={formData.examTime}
+                                        onChange={handleChange}
+                                        required
+                                        className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                                    Duration <span className="text-red-500">*</span>
+                                </label>
+                                <div className="flex gap-2">
+                                    <div className="relative flex-1">
+                                        <input
+                                            type="number"
+                                            name="examDurationHours"
+                                            value={formData.examDurationHours}
+                                            onChange={handleChange}
+                                            min="0"
+                                            placeholder="Hrs"
+                                            required={!formData.examDurationMinutes}
+                                            className="w-full px-3 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
+                                        />
+                                    </div>
+                                    <div className="relative flex-1">
+                                        <input
+                                            type="number"
+                                            name="examDurationMinutes"
+                                            value={formData.examDurationMinutes}
+                                            onChange={handleChange}
+                                            min="0"
+                                            max="59"
+                                            placeholder="Min"
+                                            required={!formData.examDurationHours}
+                                            className="w-full px-3 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
+                                        />
+                                    </div>
                                 </div>
                             </div>
                         </div>

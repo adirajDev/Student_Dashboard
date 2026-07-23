@@ -19,6 +19,9 @@ export const createExam = async data => {
         examMode,
         examDescription,
         examLink,
+        examDate,
+        examDuration,
+        examTime,
     } = data;
 
     validateExam(data);
@@ -36,6 +39,9 @@ export const createExam = async data => {
         examMode,
         examDescription,
         examLink,
+        examDate,
+        examDuration,
+        examTime,
     });
 
     await exam.save();

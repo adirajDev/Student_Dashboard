@@ -34,6 +34,18 @@ const examSchema = new mongoose.Schema({
         type: String,
         trim: true,
     },
+    examDate: {
+        type: Date,
+        required: true,
+    },
+    examDuration: {
+        type: Number, // In minutes
+        required: true,
+    },
+    examTime: {
+        type: String, // HH:mm format
+        required: true,
+    }
 });
 
 const Exam = mongoose.model('Exam', examSchema);
