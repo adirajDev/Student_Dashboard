@@ -5,11 +5,13 @@ import Sidebar from './Sidebar';
 import SettingsModal from '../../features/profile/components/SettingsModal';
 import Loading from '../common/Loading';
 
-const MainLayout = () => {
-    const { user, setUser, handleLogout } = useAuth();
+const SidebarLayout = () => {
+    // Requires authenticated user
+    const { user, setUser, handleLogout, isLoading } = useAuth(true);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    if (!user) return <Loading />;
+    if (isLoading) return <Loading />;
+    if (!user) return <Loading />; // Extra safety since useAuth(true) should redirect
 
     return (
         <div className="flex h-screen overflow-hidden bg-[var(--background)] transition-colors duration-300">
@@ -41,4 +43,4 @@ const MainLayout = () => {
     );
 };
 
-export default MainLayout;
+export default SidebarLayout;

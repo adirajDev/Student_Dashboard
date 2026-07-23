@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { ArrowRight, User, Building, ShieldCheck } from 'lucide-react';
+import Topbar from '../../components/layout/Topbar';
+import useAuth from '../../features/auth/hooks/useAuth';
 
 const LandingPage = () => {
-    const [scrolled, setScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
     const navLinks = [
         { name: 'Home', href: '#' },
         { name: 'About Us', href: '#about' },
@@ -20,54 +12,17 @@ const LandingPage = () => {
         { name: 'Contact Us', href: '#contact' },
     ];
 
+    const { user } = useAuth(false);
+
+    // Prevent management roles from accessing landing page
+    if (user && user.role !== 'student') {
+        if (user.role === 'admin' || user.role === 'editor') return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'college') return <Navigate to="/college/dashboard" replace />;
+    }
+
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-indigo-500 selection:text-white font-sans">
-            {/* Header */}
-            <header
-                className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-                    scrolled
-                        ? 'bg-white/80 dark:bg-slate-900/80 backdrop-blur-md shadow-sm py-3'
-                        : 'bg-transparent py-5'
-                }`}
-            >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
-                            SD
-                        </div>
-                        <span className={`text-xl font-bold ${scrolled ? 'text-[var(--foreground)]' : 'text-white'}`}>
-                            Student Dashboard
-                        </span>
-                    </div>
-
-                    <nav className="hidden md:flex gap-8 items-center">
-                        {navLinks.map((link) => (
-                            <a
-                                key={link.name}
-                                href={link.href}
-                                className={`text-sm font-medium hover:text-indigo-500 transition-colors ${
-                                    scrolled ? 'text-[var(--foreground)]' : 'text-white/90'
-                                }`}
-                            >
-                                {link.name}
-                            </a>
-                        ))}
-                    </nav>
-
-                    <div className="flex items-center gap-4">
-                        <Link
-                            to="/dashboard-redirect"
-                            className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
-                                scrolled
-                                    ? 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
-                                    : 'bg-white text-indigo-900 hover:bg-slate-100'
-                            }`}
-                        >
-                            Login
-                        </Link>
-                    </div>
-                </div>
-            </header>
+            <Topbar transparentOnTop={true} />
 
             {/* Hero Section */}
             <section className="relative h-screen flex items-center justify-center overflow-hidden">

@@ -18,6 +18,7 @@ import CollegeHeader from '../../features/college/components/CollegeHeader';
 import CourseList from '../../features/college/components/CourseList';
 import RatingList from '../../features/rating/components/RatingList';
 import BackButton from '../../components/common/BackButton';
+import useCollegeDetails from '../../features/college/hooks/useCollegeDetails';
 
 const CollegeDetails = () => {
     const { id } = useParams();

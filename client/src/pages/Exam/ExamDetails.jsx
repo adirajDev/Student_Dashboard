@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate, useOutletContext } from 'react-router-dom';
 import { Calendar, Monitor, Book, GraduationCap, Link as LinkIcon, ChevronLeft, Building, Clock } from 'lucide-react';
 import useExams from '../../features/exam/hooks/useExams';
 import Loading from '../../components/common/Loading';
@@ -13,6 +13,15 @@ const ExamDetails = () => {
     const [exam, setExam] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState('');
+    const navigate = useNavigate();
+    const { user } = useOutletContext();
+
+    const handleApply = (e) => {
+        if (!user) {
+            e.preventDefault();
+            navigate('/signin');
+        }
+    };
 
     useEffect(() => {
         const fetchExamDetails = async () => {
@@ -100,6 +109,7 @@ const ExamDetails = () => {
                             <div className="mt-6 md:mt-0 md:ml-auto">
                                 <a 
                                     href={exam.examLink.startsWith('http') ? exam.examLink : `https://${exam.examLink}`} 
+                                    onClick={handleApply}
                                     target="_blank" 
                                     rel="noopener noreferrer"
                                     className="inline-flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-2.5 px-6 rounded-xl transition-colors shadow-sm"

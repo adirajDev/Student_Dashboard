@@ -7,7 +7,8 @@ import ResetOtpPassword from './pages/Auth/ResetOtpPassword';
 import CollegeDashboard from './pages/Dashboard/CollegeDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import WrongUrl from './pages/NotFound/WrongUrl';
-import MainLayout from './components/layout/MainLayout';
+import PublicLayout from './components/layout/PublicLayout';
+import SidebarLayout from './components/layout/SidebarLayout';
 import RootRedirect from './routes/RootRedirect';
 import CollegeDetails from './pages/College/CollegeDetails';
 import ExamDetails from './pages/Exam/ExamDetails';
@@ -31,18 +32,24 @@ function App() {
                         element={<ResetOtpPassword />}
                     />
 
-                    {/* Protected Routes wrapped in MainLayout */}
-                    <Route element={<MainLayout />}>
+                    {/* Public Routes and Student Dashboard with Topbar */}
+                    <Route element={<PublicLayout />}>
+                        <Route path="/search" element={<SearchPage />} />
+                        <Route path="/college/:id" element={<CollegeDetails />} />
+                        <Route path="/exam/:id" element={<ExamDetails />} />
+
                         <Route
-                            element={
-                                <ProtectedRoute allowedRoles={['student']} />
-                            }
+                            element={<ProtectedRoute allowedRoles={['student']} />}
                         >
                             <Route
                                 path="/dashboard"
                                 element={<StudentDashboard />}
                             />
                         </Route>
+                    </Route>
+
+                    {/* Management Dashboards with Sidebar */}
+                    <Route element={<SidebarLayout />}>
                         <Route
                             element={
                                 <ProtectedRoute allowedRoles={['college']} />
@@ -65,17 +72,6 @@ function App() {
                                 element={<AdminDashboard />}
                             />
                         </Route>
-
-                        {/* General authenticated routes */}
-                        <Route
-                            path="/college/:id"
-                            element={<CollegeDetails />}
-                        />
-                        <Route
-                            path="/exam/:id"
-                            element={<ExamDetails />}
-                        />
-                        <Route path="/search" element={<SearchPage />} />
                     </Route>
 
                     {/* Fallback Route */}
