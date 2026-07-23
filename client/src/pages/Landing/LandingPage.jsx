@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon, ArrowRight, User, Building, ShieldCheck } from 'lucide-react';
+import { ArrowRight, User, Building, ShieldCheck } from 'lucide-react';
 
 const LandingPage = () => {
-    const { theme, toggleTheme } = useTheme();
     const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
@@ -57,16 +55,6 @@ const LandingPage = () => {
                     </nav>
 
                     <div className="flex items-center gap-4">
-                        <button
-                            onClick={toggleTheme}
-                            className={`p-2 rounded-full transition-colors ${
-                                scrolled
-                                    ? 'hover:bg-slate-100 dark:hover:bg-slate-800 text-[var(--foreground)]'
-                                    : 'hover:bg-white/20 text-white'
-                            }`}
-                        >
-                            {theme === 'light' ? <Moon className="w-5 h-5" /> : <Sun className="w-5 h-5" />}
-                        </button>
                         <Link
                             to="/dashboard-redirect"
                             className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${

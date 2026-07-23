@@ -1,12 +1,10 @@
 import { Link } from 'react-router-dom';
-import { useTheme } from '../../context/ThemeContext';
-import { Sun, Moon, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import useSignup from '../../features/auth/hooks/useSignup';
 
 import SearchableSelect from '../../features/search/components/SearchableSelect';
 
 const Signup = () => {
-    const { theme, toggleTheme } = useTheme();
     const {
         formData,
         handleChange,
@@ -19,17 +17,6 @@ const Signup = () => {
 
     return (
         <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100 dark:from-slate-900 dark:to-slate-800">
-            <button
-                onClick={toggleTheme}
-                className="absolute top-4 right-4 p-2 rounded-full bg-[var(--card)] shadow-md hover:scale-110 transition-transform"
-            >
-                {theme === 'light' ? (
-                    <Moon className="w-5 h-5" />
-                ) : (
-                    <Sun className="w-5 h-5 text-yellow-400" />
-                )}
-            </button>
-
             <div className="card w-full max-w-md">
                 <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">
                     Create Account
