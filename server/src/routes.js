@@ -9,6 +9,7 @@ import editorRoutes from './features/editor/editor.routes.js';
 import dataRoutes from './features/data/data.routes.js';
 import collegeUserRoutes from './features/collegeUser/collegeUser.routes.js';
 import collegeUpdateRoutes from './features/collegeUpdate/collegeUpdate.routes.js';
+import examRoutes from "./features/exam/exam.routes.js";
 
 const router = Router();
 
@@ -20,6 +21,7 @@ router.use('/courses', courseRoutes);
 router.use('/students', studentRoutes);
 router.use('/ratings', ratingRoutes);
 router.use('/editors', editorRoutes);
+router.use('/exams', examRoutes);
 router.use('/data', dataRoutes);
 router.use('/collegeUsers', collegeUserRoutes);
 router.use('/college-updates', collegeUpdateRoutes);
