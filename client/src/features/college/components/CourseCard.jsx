@@ -9,8 +9,8 @@ const CourseCard = ({ course }) => {
             <h3 className="font-semibold text-lg text-[var(--foreground)] mb-2">
                 {course.name}
             </h3>
-            <div className="text-sm text-[var(--ring)] flex items-center">
-                <Calendar className="w-3.5 h-3.5 mr-1" />
+            <div className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
+                <Calendar className="w-3.5 h-3.5 mr-1.5" />
                 <span>Regular Program</span>
             </div>
         </div>

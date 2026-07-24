@@ -39,8 +39,8 @@ const ExamListingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[var(--background)] animate-fade-in pb-12">
-            <main className="max-w-6xl mx-auto px-4 mt-8">
+        <div className="min-h-screen bg-[var(--background)] animate-fade-in pt-2 pb-8">
+            <main className="max-w-6xl mx-auto px-4 mt-4">
                 <div className="mb-8">
                     <h1 className="text-3xl text-[var(--foreground)] mb-2">
                         Available Exams

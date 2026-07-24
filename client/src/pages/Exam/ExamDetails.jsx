@@ -2,7 +2,6 @@ import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import useExamDetails from '../../features/exam/hooks/useExamDetails';
 import Loading from '../../components/common/Loading';
 import Error from '../../components/common/Error';
-import BackButton from '../../components/common/BackButton';
 import ExamHeader from './ExamHeader';
 import ExamSidebar from './ExamSidebar';
 import ExamEligibility from './ExamEligibility';
@@ -28,8 +27,6 @@ const ExamDetails = () => {
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] animate-fade-in">
             <div className="max-w-5xl mx-auto px-6 pt-2 pb-8">
-                <BackButton label="Back" />
-                
                 <ExamHeader exam={exam} handleApply={handleApply} />
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">

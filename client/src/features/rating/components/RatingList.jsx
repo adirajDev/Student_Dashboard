@@ -71,7 +71,7 @@ const RatingList = ({ collegeId, currentUser }) => {
     if (isLoading) return <Loading />;
 
     return (
-        <div className="mt-12">
+        <div className="card mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div>
                     <h3 className="text-2xl font-medium">Student Reviews</h3>
