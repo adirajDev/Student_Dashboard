@@ -74,7 +74,7 @@ const RatingList = ({ collegeId, currentUser }) => {
         <div className="card mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h3 className="text-2xl font-medium">Student Reviews</h3>
+                    <h3 className="text-2xl">Student Reviews</h3>
                     <p className="text-[var(--ring)] text-sm mt-1">
                         {ratings.length}{' '}
                         {ratings.length === 1 ? 'review' : 'reviews'}

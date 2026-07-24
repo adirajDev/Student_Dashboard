@@ -1,7 +1,7 @@
 const PlacementFields = ({ placementDetails, handlePlacementChange }) => {
     return (
         <div className="space-y-4">
-            <h4 className="text-lg font-medium border-b border-[var(--border)] pb-2">
+            <h4 className="text-lg border-b border-[var(--border)] pb-2">
                 Placement Details
             </h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

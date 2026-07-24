@@ -5,7 +5,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
         <div className="md:col-span-1 md:row-span-2 order-2 md:sticky md:top-24 self-start space-y-8 w-full">
             {/* Important Dates */}
             <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-sm">
-                <h3 className="text-lg font-bold mb-6 pb-4 border-b border-[var(--border)]">
+                <h3 className="text-lg mb-6 pb-4 border-b border-[var(--border)]">
                     Important Dates
                 </h3>
                 <div className="space-y-6">
@@ -19,7 +19,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                             </span>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-[var(--foreground)]">
+                            <h4 className="text-[var(--foreground)]">
                                 Registration Opens
                             </h4>
                             <p className="text-sm text-[var(--ring)]">
@@ -37,7 +37,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                             </span>
                         </div>
                         <div>
-                            <h4 className="font-semibold text-[var(--foreground)]">
+                            <h4 className="text-[var(--foreground)]">
                                 Registration Closes
                             </h4>
                             <p className="text-sm text-[var(--ring)]">
@@ -51,7 +51,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
             {/* Exam Schedule */}
             {exam.examDate && (
                 <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-sm">
-                    <h3 className="text-lg font-bold mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">
+                    <h3 className="text-lg mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">
                         <Clock className="w-5 h-5 text-indigo-500" />
                         Exam Schedule
                     </h3>
@@ -61,7 +61,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                                 <Calendar className="w-5 h-5" />
                             </div>
                             <div>
-                                <h4 className="font-semibold text-[var(--foreground)]">
+                                <h4 className="text-[var(--foreground)]">
                                     Exam Date
                                 </h4>
                                 <p className="text-sm font-medium text-[var(--ring)]">
@@ -79,7 +79,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                                 <Clock className="w-5 h-5" />
                             </div>
                             <div>
-                                <h4 className="font-semibold text-[var(--foreground)]">
+                                <h4 className="text-[var(--foreground)]">
                                     Timing
                                 </h4>
                                 <p className="text-sm font-medium text-[var(--ring)]">

@@ -133,7 +133,7 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
             <div className="bg-[var(--card)] rounded-3xl w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h3 className="text-xl font-semibold">
+                    <h3 className="text-xl">
                         Review: {update.college?.name}
                     </h3>
                     <button

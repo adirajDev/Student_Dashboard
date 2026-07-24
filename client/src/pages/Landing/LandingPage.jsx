@@ -35,7 +35,8 @@ const LandingPage = () => {
                         alt="University Campus"
                         className="w-full h-full object-cover object-center"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-[var(--background)]"></div>
+                    <div className="absolute inset-0 bg-black/60"></div>
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-[var(--background)]"></div>
                 </div>
 
                 <div className="relative z-10 text-center px-4 max-w-5xl mx-auto animate-fade-in-up mt-16">
@@ -45,7 +46,7 @@ const LandingPage = () => {
                             Impact
                         </span>
                     </h1>
-                    <p className="text-lg md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto font-light drop-shadow-md">
+                    <p className="text-lg md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto font-light drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                         It's all about the way we{' '}
                         <span className="font-semibold text-cyan-300">
                             think
@@ -91,7 +92,7 @@ const LandingPage = () => {
             <section id="roles" className="py-24 px-4 bg-[var(--background)]">
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-4 text-[var(--foreground)]">
+                        <h2 className="text-3xl md:text-5xl mb-4 text-[var(--foreground)]">
                             I am a...
                         </h2>
                         <p className="text-[var(--ring)] text-lg max-w-2xl mx-auto">
@@ -108,7 +109,7 @@ const LandingPage = () => {
                             <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-6">
                                 <User className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-3">Student</h3>
+                            <h3 className="text-2xl mb-3">Student</h3>
                             <p className="text-[var(--ring)] mb-8">
                                 Discover colleges, read verified reviews, and
                                 participate in community discussions about
@@ -129,7 +130,7 @@ const LandingPage = () => {
                             <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
                                 <Building className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-3">
+                            <h3 className="text-2xl mb-3">
                                 College Rep
                             </h3>
                             <p className="text-[var(--ring)] mb-8">
@@ -152,7 +153,7 @@ const LandingPage = () => {
                             <div className="w-14 h-14 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center mb-6">
                                 <ShieldCheck className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl font-bold mb-3">
+                            <h3 className="text-2xl mb-3">
                                 Administrator
                             </h3>
                             <p className="text-[var(--ring)] mb-8">
@@ -195,7 +196,7 @@ const LandingPage = () => {
                         </div>
 
                         <div id="contact">
-                            <h4 className="text-white font-semibold mb-4">
+                            <h4 className="text-white mb-4">
                                 Quick Links
                             </h4>
                             <ul className="space-y-2">
@@ -213,7 +214,7 @@ const LandingPage = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-white font-semibold mb-4">
+                            <h4 className="text-white mb-4">
                                 Contact
                             </h4>
                             <ul className="space-y-2 text-slate-400">

@@ -44,7 +44,7 @@ const PendingUpdatesSection = ({ title }) => {
     return (
         <div className="bg-[var(--card)] rounded-3xl p-6 shadow-sm border border-[var(--border)]">
             <div className="flex items-center justify-between mb-6">
-                <h3 className="text-xl font-semibold flex items-center gap-2">
+                <h3 className="text-xl flex items-center gap-2">
                     <FileEdit className="w-5 h-5 text-blue-500" />
                     {title}
                 </h3>

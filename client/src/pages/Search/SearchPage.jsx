@@ -39,7 +39,7 @@ const SearchPage = () => {
                 <PopularSearches />
             ) : (
                 <div className="mt-4">
-                    <h2 className="text-xl font-medium text-[var(--ring)] mb-6">
+                    <h2 className="text-xl text-[var(--ring)] mb-6">
                         Search results for{' '}
                         <span className="text-[var(--foreground)] font-semibold">
                             "{query}"
@@ -73,7 +73,7 @@ const SearchPage = () => {
                             <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Search className="w-8 h-8 text-[var(--ring)]" />
                             </div>
-                            <h3 className="text-xl font-semibold mb-2">
+                            <h3 className="text-xl mb-2">
                                 No results found
                             </h3>
                             <p className="text-[var(--ring)]">

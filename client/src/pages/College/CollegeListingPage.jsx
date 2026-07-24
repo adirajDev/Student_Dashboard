@@ -93,7 +93,7 @@ const CollegeListingPage = () => {
                             </div>
                         ) : (
                             <div className="p-12 text-center bg-[var(--card)] rounded-3xl border border-[var(--border)]">
-                                <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">
+                                <h3 className="text-xl mb-2 text-[var(--foreground)]">
                                     No colleges found
                                 </h3>
                                 <p className="text-[var(--ring)]">

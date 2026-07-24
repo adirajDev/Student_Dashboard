@@ -155,7 +155,7 @@ const CollegeDetails = () => {
                                     {member.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
-                                    <h4 className="font-medium text-[var(--foreground)]">
+                                    <h4 className="text-[var(--foreground)]">
                                         {member.name}
                                     </h4>
                                     {member.department && (

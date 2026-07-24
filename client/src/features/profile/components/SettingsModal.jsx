@@ -86,7 +86,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         </div>
 
                         <div className="border-t border-[var(--border)] pt-4 mt-4">
-                            <h3 className="text-sm font-semibold mb-3">
+                            <h3 className="text-sm mb-3">
                                 Change Password
                             </h3>
                             <div className="space-y-4">

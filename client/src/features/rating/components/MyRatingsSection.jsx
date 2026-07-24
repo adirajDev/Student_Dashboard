@@ -42,7 +42,7 @@ const MyRatingsSection = () => {
                     <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-4 text-blue-500">
                         <Star className="w-8 h-8" />
                     </div>
-                    <h4 className="text-lg font-medium text-[var(--foreground)] mb-2">
+                    <h4 className="text-lg text-[var(--foreground)] mb-2">
                         No Reviews Yet
                     </h4>
                     <p className="text-[var(--ring)] max-w-sm">

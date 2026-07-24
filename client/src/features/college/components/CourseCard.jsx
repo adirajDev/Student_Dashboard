@@ -6,7 +6,7 @@ const CourseCard = ({ course }) => {
             id={`course-${course._id}`}
             className="bg-[var(--card)] border border-[var(--border)] rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
         >
-            <h3 className="font-semibold text-lg text-[var(--foreground)] mb-2">
+            <h3 className="text-lg text-[var(--foreground)] mb-2">
                 {course.name}
             </h3>
             <div className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">

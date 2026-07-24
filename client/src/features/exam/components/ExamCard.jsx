@@ -19,7 +19,7 @@ const ExamCard = ({ exam, onClick }) => {
                 {/* Title & Badge */}
                 <div className="flex-1 min-w-0 flex justify-between items-center">
                     <div className="flex-1 pr-4">
-                        <h3 className="text-xl font-semibold text-indigo-700 truncate">
+                        <h3 className="text-xl text-indigo-700 truncate">
                             {exam.name}
                         </h3>
                     </div>

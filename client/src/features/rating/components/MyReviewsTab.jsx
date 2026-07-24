@@ -46,7 +46,7 @@ const MyReviewsTab = ({ user }) => {
                             <GraduationCap className="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-semibold mb-1">
+                            <h3 className="text-xl mb-1">
                                 Rate your current college
                             </h3>
                             <p className="text-blue-100 text-sm">

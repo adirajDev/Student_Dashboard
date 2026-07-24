@@ -15,7 +15,7 @@ const PopularSearches = () => {
 
     return (
         <div className="mt-8">
-            <h2 className="text-2xl font-semibold mb-6 text-[var(--foreground)]">
+            <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                 Popular Searches
             </h2>
             <div className="flex flex-wrap gap-3">
