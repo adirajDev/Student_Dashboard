@@ -17,11 +17,11 @@ const UserDropdown = ({ user, handleLogout, setIsSettingsOpen }) => {
 
             {isOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-2 z-50 animate-fade-in-up">
-                    <div className="px-4 py-2 border-b border-slate-50 mb-2">
-                        <p className="text-sm font-semibold text-slate-800">
+                    <div className="px-4 py-3 border-b border-slate-100 mb-1">
+                        <p className="text-sm font-medium text-slate-900">
                             {user.name}
                         </p>
-                        <p className="text-xs text-slate-500 truncate">
+                        <p className="text-xs text-slate-500 truncate mt-0.5">
                             {user.email}
                         </p>
                     </div>
@@ -31,9 +31,9 @@ const UserDropdown = ({ user, handleLogout, setIsSettingsOpen }) => {
                                 setIsOpen(false);
                                 navigate('/dashboard');
                             }}
-                            className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+                            className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
                         >
-                            <Star className="w-4 h-4 text-[var(--ring)]" />
+                            <Star className="w-4 h-4 text-slate-400" />
                             My Reviews
                         </button>
                     )}
@@ -42,21 +42,23 @@ const UserDropdown = ({ user, handleLogout, setIsSettingsOpen }) => {
                             setIsOpen(false);
                             setIsSettingsOpen(true);
                         }}
-                        className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2 transition-colors"
+                        className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
                     >
-                        <Settings className="w-4 h-4 text-[var(--ring)]" />
+                        <Settings className="w-4 h-4 text-slate-400" />
                         Settings
                     </button>
-                    <button
-                        onClick={() => {
-                            setIsOpen(false);
-                            handleLogout();
-                        }}
-                        className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2 transition-colors"
-                    >
-                        <LogOut className="w-4 h-4" />
-                        Logout
-                    </button>
+                    <div className="border-t border-slate-100 mt-1 pt-1">
+                        <button
+                            onClick={() => {
+                                setIsOpen(false);
+                                handleLogout();
+                            }}
+                            className="w-full text-left px-4 py-2.5 text-sm text-red-600 hover:bg-red-50 flex items-center gap-3 transition-colors"
+                        >
+                            <LogOut className="w-4 h-4" />
+                            Logout
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

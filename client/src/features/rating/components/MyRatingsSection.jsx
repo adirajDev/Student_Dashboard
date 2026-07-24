@@ -51,14 +51,14 @@ const MyRatingsSection = () => {
                     </p>
                 </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-4">
                     {ratings.map(rating => (
                         <div
                             key={rating._id}
                             className="bg-[var(--card)] p-6 rounded-3xl border border-[var(--border)] shadow-sm flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <div>
+                                <div className="flex-1 pr-4">
                                     <Link
                                         to={`/college/${rating.college?._id}`}
                                         className="text-lg font-semibold text-blue-600 dark:text-blue-400 hover:underline mb-1 inline-block"
@@ -75,7 +75,7 @@ const MyRatingsSection = () => {
                                                 />
                                             ))}
                                         </div>
-                                        <span className="text-xs text-[var(--ring)]">
+                                        <span className="text-xs text-slate-400">
                                             {new Date(
                                                 rating.createdAt
                                             ).toLocaleDateString()}
@@ -83,7 +83,7 @@ const MyRatingsSection = () => {
                                     </div>
                                 </div>
 
-                                <div className="flex items-center gap-1">
+                                <div className="flex items-center gap-1 flex-shrink-0">
                                     <button
                                         onClick={() => {
                                             setEditingRating(rating);
@@ -107,17 +107,17 @@ const MyRatingsSection = () => {
                             </div>
 
                             {rating.comment ? (
-                                <p className="text-[var(--foreground)] text-sm leading-relaxed mt-2 line-clamp-3 flex-grow">
+                                <p className="text-slate-800 dark:text-slate-200 text-base leading-relaxed mt-2 flex-grow">
                                     {rating.comment}
                                 </p>
                             ) : (
-                                <p className="text-[var(--ring)] text-sm italic mt-2 flex-grow">
+                                <p className="text-slate-400 text-base italic mt-2 flex-grow">
                                     No comment provided.
                                 </p>
                             )}
 
                             {rating.isEdited && (
-                                <div className="mt-4 text-xs text-[var(--ring)]">
+                                <div className="mt-4 text-xs text-slate-400">
                                     Edited
                                 </div>
                             )}
