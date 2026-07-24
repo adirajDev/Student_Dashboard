@@ -32,25 +32,46 @@ const Topbar = ({ transparentOnTop = false }) => {
                         : 'bg-white/80 backdrop-blur-md shadow-sm py-3 border-b border-slate-200'
                 }`}
             >
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
-                    <Link to="/" className="flex items-center gap-2">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 md:gap-8">
+                    {/* Mobile Menu Button */}
+                    <div className="md:hidden flex items-center shrink-0">
+                        <button
+                            onClick={() =>
+                                setIsMobileMenuOpen(!isMobileMenuOpen)
+                            }
+                            className={`p-2 -ml-2 rounded-lg ${isTransparent ? 'text-white' : 'text-slate-800'}`}
+                        >
+                            {isMobileMenuOpen ? (
+                                <X className="w-6 h-6" />
+                            ) : (
+                                <Menu className="w-6 h-6" />
+                            )}
+                        </button>
+                    </div>
+
+                    <Link to="/" className="flex items-center gap-2 mr-auto md:mr-0 shrink-0">
                         <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
                             SD
                         </div>
                         <span
-                            className={`text-xl font-bold ${isTransparent ? 'text-white' : 'text-slate-900'}`}
+                            className={`text-xl font-bold hidden sm:block ${isTransparent ? 'text-white' : 'text-slate-900'}`}
                         >
                             Student Dashboard
+                        </span>
+                        <span
+                            className={`text-xl font-bold sm:hidden ${isTransparent ? 'text-white' : 'text-slate-900'}`}
+                        >
+                            SD
                         </span>
                     </Link>
 
                     {/* Desktop Navigation */}
-                    <nav className="hidden md:flex gap-8 items-center">
+                    <nav className="hidden md:flex gap-8 items-center ml-auto">
                         {navLinks.map(link => (
                             <Link
                                 key={link.name}
                                 to={link.href}
-                                className={`text-sm font-medium hover:text-indigo-500 transition-colors ${
+                                className={`text-base font-medium hover:text-indigo-500 transition-colors ${
                                     isTransparent
                                         ? 'text-white/90'
                                         : 'text-slate-700'
@@ -62,7 +83,7 @@ const Topbar = ({ transparentOnTop = false }) => {
                     </nav>
 
                     {/* Right side icons/buttons */}
-                    <div className="hidden md:flex items-center gap-4">
+                    <div className="flex items-center shrink-0">
                         {user ? (
                             <UserDropdown 
                                 user={user} 
@@ -72,7 +93,7 @@ const Topbar = ({ transparentOnTop = false }) => {
                         ) : (
                             <Link
                                 to="/dashboard-redirect"
-                                className={`px-5 py-2 rounded-full text-sm font-semibold transition-all ${
+                                className={`px-6 py-2.5 rounded-full text-base font-semibold transition-all ${
                                     isTransparent
                                         ? 'bg-white text-indigo-900 hover:bg-slate-100'
                                         : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
@@ -82,33 +103,17 @@ const Topbar = ({ transparentOnTop = false }) => {
                             </Link>
                         )}
                     </div>
-
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center">
-                        <button
-                            onClick={() =>
-                                setIsMobileMenuOpen(!isMobileMenuOpen)
-                            }
-                            className={`p-2 rounded-lg ${isTransparent ? 'text-white' : 'text-slate-800'}`}
-                        >
-                            {isMobileMenuOpen ? (
-                                <X className="w-6 h-6" />
-                            ) : (
-                                <Menu className="w-6 h-6" />
-                            )}
-                        </button>
-                    </div>
                 </div>
-
-                <MobileMenu
-                    isOpen={isMobileMenuOpen}
-                    setIsOpen={setIsMobileMenuOpen}
-                    navLinks={navLinks}
-                    user={user}
-                    handleLogout={handleLogout}
-                    setIsSettingsOpen={setIsSettingsOpen}
-                />
             </header>
+
+            <MobileMenu
+                isOpen={isMobileMenuOpen}
+                setIsOpen={setIsMobileMenuOpen}
+                navLinks={navLinks}
+                user={user}
+                handleLogout={handleLogout}
+                setIsSettingsOpen={setIsSettingsOpen}
+            />
 
             {isSettingsOpen && (
                 <SettingsModal
