@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../../services/apiClient';
 
-const useExamSearch = () => {
-    const [query, setQuery] = useState('');
+const useExamSearch = (initialQuery = '') => {
+    const [query, setQuery] = useState(initialQuery);
     const [filters, setFilters] = useState({
         status: 'all', // 'all', 'live', 'upcoming'
         mode: 'all', // 'all', 'Online', 'Offline'
@@ -10,7 +10,6 @@ const useExamSearch = () => {
 
     const [allExams, setAllExams] = useState([]);
     const [results, setResults] = useState([]);
-    const [latestLiveExams, setLatestLiveExams] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -20,27 +19,7 @@ const useExamSearch = () => {
             setIsLoading(true);
             try {
                 const res = await apiClient.get('/exams');
-                const exams = res.data;
-                setAllExams(exams);
-
-                // Calculate latest 5 live exams
-                const today = new Date();
-                today.setHours(0, 0, 0, 0);
-
-                const live = exams.filter(exam => {
-                    if (!exam.regStartingDate || !exam.regEndingDate)
-                        return false;
-                    const start = new Date(exam.regStartingDate);
-                    const end = new Date(exam.regEndingDate);
-                    return today >= start && today <= end;
-                });
-
-                // Sort by closest ending date
-                live.sort(
-                    (a, b) =>
-                        new Date(a.regEndingDate) - new Date(b.regEndingDate)
-                );
-                setLatestLiveExams(live.slice(0, 5));
+                setAllExams(res.data);
             } catch (err) {
                 setError('Failed to fetch exams.');
                 console.error(err);
@@ -95,13 +74,18 @@ const useExamSearch = () => {
         setResults(filtered);
     }, [query, filters, allExams]);
 
+    useEffect(() => {
+        if (initialQuery) {
+            setQuery(initialQuery);
+        }
+    }, [initialQuery]);
+
     return {
         query,
         setQuery,
         filters,
         setFilters,
         results,
-        latestLiveExams,
         isLoading,
         error,
     };

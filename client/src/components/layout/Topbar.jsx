@@ -1,36 +1,27 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Menu, X, Settings, LogOut, Star } from 'lucide-react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import useAuth from '../../features/auth/hooks/useAuth';
+import useScroll from '../../hooks/useScroll';
 import SettingsModal from '../../features/profile/components/SettingsModal';
+import UserDropdown from './UserDropdown';
+import MobileMenu from './MobileMenu';
+
+const navLinks = [
+    { name: 'Home', href: '/' },
+    { name: 'About Us', href: '/#about' },
+    { name: 'Colleges', href: '/search' },
+    { name: 'Exams', href: '/exams' },
+    { name: 'Contact Us', href: '/#contact' },
+];
 
 const Topbar = ({ transparentOnTop = false }) => {
-    const [scrolled, setScrolled] = useState(false);
+    const scrolled = useScroll(50);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const { user, handleLogout, setUser, isLoading } = useAuth(false);
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setScrolled(window.scrollY > 50);
-        };
-        window.addEventListener('scroll', handleScroll);
-        // Set initial state
-        handleScroll();
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
+    const { user, handleLogout, setUser } = useAuth(false);
 
     const isTransparent = transparentOnTop && !scrolled;
-
-    const navLinks = [
-        { name: 'Home', href: '/' },
-        { name: 'About Us', href: '/#about' },
-        { name: 'Colleges', href: '/search' },
-        { name: 'Exams', href: '/exams' },
-        { name: 'Contact Us', href: '/#contact' },
-    ];
 
     return (
         <>
@@ -71,73 +62,13 @@ const Topbar = ({ transparentOnTop = false }) => {
                     </nav>
 
                     {/* Right side icons/buttons */}
-                    <div className="hidden md:flex items-center gap-4 relative">
+                    <div className="hidden md:flex items-center gap-4">
                         {user ? (
-                            <div className="relative">
-                                <button
-                                    onClick={() =>
-                                        setIsDropdownOpen(!isDropdownOpen)
-                                    }
-                                    className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold overflow-hidden border-2 border-indigo-200 hover:border-indigo-400 transition-colors"
-                                >
-                                    {user.name?.charAt(0).toUpperCase()}
-                                </button>
-
-                                {isDropdownOpen && (
-                                    <>
-                                        <div
-                                            className="fixed inset-0 z-40"
-                                            onClick={() =>
-                                                setIsDropdownOpen(false)
-                                            }
-                                        ></div>
-                                        <div className="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-2 z-50">
-                                            <div className="px-4 py-2 border-b border-slate-50 mb-2">
-                                                <p className="text-sm font-semibold text-slate-800">
-                                                    {user.name}
-                                                </p>
-                                                <p className="text-xs text-slate-500 truncate">
-                                                    {user.email}
-                                                </p>
-                                            </div>
-                                            {user.role === 'student' && (
-                                                <button
-                                                    onClick={() => {
-                                                        setIsDropdownOpen(
-                                                            false
-                                                        );
-                                                        navigate('/dashboard');
-                                                    }}
-                                                    className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                                                >
-                                                    <Star className="w-4 h-4" />
-                                                    My Reviews
-                                                </button>
-                                            )}
-                                            <button
-                                                onClick={() => {
-                                                    setIsDropdownOpen(false);
-                                                    setIsSettingsOpen(true);
-                                                }}
-                                                className="w-full text-left px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2"
-                                            >
-                                                <Settings className="w-4 h-4" />
-                                                Settings
-                                            </button>
-                                            <button
-                                                onClick={() => {
-                                                    setIsDropdownOpen(false);
-                                                    handleLogout();
-                                                }}
-                                                className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
-                                            >
-                                                <LogOut className="w-4 h-4" />
-                                                Logout
-                                            </button>
-                                        </div>
-                                    </>
-                                )}
-                            </div>
+                            <UserDropdown 
+                                user={user} 
+                                handleLogout={handleLogout} 
+                                setIsSettingsOpen={setIsSettingsOpen} 
+                            />
                         ) : (
                             <Link
                                 to="/dashboard-redirect"
@@ -169,81 +100,14 @@ const Topbar = ({ transparentOnTop = false }) => {
                     </div>
                 </div>
 
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-lg py-4 px-4 flex flex-col gap-4 max-h-screen overflow-y-auto">
-                        <nav className="flex flex-col gap-4">
-                            {navLinks.map(link => (
-                                <Link
-                                    key={link.name}
-                                    to={link.href}
-                                    className="text-base font-medium text-slate-700 hover:text-indigo-600"
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    {link.name}
-                                </Link>
-                            ))}
-                        </nav>
-                        <hr className="border-slate-100" />
-                        {user ? (
-                            <div className="flex flex-col gap-4">
-                                <div className="flex items-center gap-3 mb-2">
-                                    <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
-                                        {user.name?.charAt(0).toUpperCase()}
-                                    </div>
-                                    <div>
-                                        <p className="font-semibold text-slate-800">
-                                            {user.name}
-                                        </p>
-                                        <p className="text-sm text-slate-500">
-                                            {user.email}
-                                        </p>
-                                    </div>
-                                </div>
-                                {user.role === 'student' && (
-                                    <button
-                                        onClick={() => {
-                                            setIsMobileMenuOpen(false);
-                                            navigate('/dashboard');
-                                        }}
-                                        className="text-left font-medium text-slate-700 flex items-center gap-2"
-                                    >
-                                        <Star className="w-5 h-5" />
-                                        My Reviews
-                                    </button>
-                                )}
-                                <button
-                                    onClick={() => {
-                                        setIsMobileMenuOpen(false);
-                                        setIsSettingsOpen(true);
-                                    }}
-                                    className="text-left font-medium text-slate-700 flex items-center gap-2"
-                                >
-                                    <Settings className="w-5 h-5" />
-                                    Settings
-                                </button>
-                                <button
-                                    onClick={() => {
-                                        setIsMobileMenuOpen(false);
-                                        handleLogout();
-                                    }}
-                                    className="text-left font-medium text-red-600 flex items-center gap-2"
-                                >
-                                    <LogOut className="w-5 h-5" />
-                                    Logout
-                                </button>
-                            </div>
-                        ) : (
-                            <Link
-                                to="/dashboard-redirect"
-                                className="bg-indigo-600 text-white font-semibold py-3 rounded-xl text-center"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                Login / Register
-                            </Link>
-                        )}
-                    </div>
-                )}
+                <MobileMenu
+                    isOpen={isMobileMenuOpen}
+                    setIsOpen={setIsMobileMenuOpen}
+                    navLinks={navLinks}
+                    user={user}
+                    handleLogout={handleLogout}
+                    setIsSettingsOpen={setIsSettingsOpen}
+                />
             </header>
 
             {isSettingsOpen && (

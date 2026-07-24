@@ -33,7 +33,7 @@ const useExams = (shouldFetch = true) => {
         fetchExams();
     }, [fetchExams]);
 
-    const getExamById = async id => {
+    const getExamById = useCallback(async id => {
         try {
             const res = await apiClient.get(`/exams/${id}`);
             return { success: true, data: res.data };
@@ -43,9 +43,9 @@ const useExams = (shouldFetch = true) => {
                 error: err.response?.data?.message || 'Failed to fetch exam',
             };
         }
-    };
+    }, []);
 
-    const addExam = async examData => {
+    const addExam = useCallback(async examData => {
         try {
             const res = await apiClient.post('/exams', examData);
             const newExam = res.data.exam || res.data.data || res.data;
@@ -61,9 +61,9 @@ const useExams = (shouldFetch = true) => {
                 error: err.response?.data?.message || 'Failed to add exam',
             };
         }
-    };
+    }, []);
 
-    const updateExam = async (id, examData) => {
+    const updateExam = useCallback(async (id, examData) => {
         try {
             const res = await apiClient.patch(`/exams/${id}`, examData);
             const updated = res.data.updatedExam || res.data.data || res.data;
@@ -81,9 +81,9 @@ const useExams = (shouldFetch = true) => {
                 error: err.response?.data?.message || 'Failed to update exam',
             };
         }
-    };
+    }, []);
 
-    const deleteExam = async id => {
+    const deleteExam = useCallback(async id => {
         try {
             await apiClient.delete(`/exams/${id}`);
             setExams(prev => prev.filter(e => e._id !== id));
@@ -95,7 +95,7 @@ const useExams = (shouldFetch = true) => {
                 error: err.response?.data?.message || 'Failed to delete exam',
             };
         }
-    };
+    }, []);
 
     return {
         exams,
