@@ -8,14 +8,16 @@ const PublicLayout = () => {
 
     // Prevent management roles from accessing public pages
     if (user && user.role !== 'student') {
-        if (user.role === 'admin' || user.role === 'editor') return <Navigate to="/admin/dashboard" replace />;
-        if (user.role === 'college') return <Navigate to="/college/dashboard" replace />;
+        if (user.role === 'admin' || user.role === 'editor')
+            return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'college')
+            return <Navigate to="/college/dashboard" replace />;
     }
 
     return (
         <div className="flex flex-col min-h-screen bg-[var(--background)] transition-colors duration-300">
             <Topbar transparentOnTop={false} />
-            <main className="flex-1 overflow-y-auto pt-24">
+            <main className="flex-1 pt-24">
                 <Outlet context={{ user, setUser, isLoading }} />
             </main>
         </div>

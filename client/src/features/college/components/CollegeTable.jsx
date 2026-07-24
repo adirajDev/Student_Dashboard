@@ -8,19 +8,19 @@ import NoResultsFound from '../../../components/common/NoResultsFound';
 import Error from '../../../components/common/Error';
 import Pagination from '../../../components/common/Pagination';
 
-const CollegeTable = ({ 
-    colleges, 
-    isLoading, 
-    error, 
-    page, 
-    totalPages, 
-    onPageChange, 
+const CollegeTable = ({
+    colleges,
+    isLoading,
+    error,
+    page,
+    totalPages,
+    onPageChange,
     searchTerm,
     setSearchTerm,
     minRating,
     setMinRating,
-    onEdit, 
-    onDelete 
+    onEdit,
+    onDelete,
 }) => {
     return (
         <div>
@@ -60,15 +60,13 @@ const CollegeTable = ({
                 <Loading />
             ) : error ? (
                 <Error error={error} />
-            ) : (!colleges || colleges.length === 0) ? (
+            ) : !colleges || colleges.length === 0 ? (
                 searchTerm || minRating !== '0' ? (
                     <NoResultsFound searchTerm={searchTerm} />
                 ) : (
                     <EmptyTable />
                 )
             ) : (
-
-
                 <>
                     <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
                         <div className="overflow-x-auto">
@@ -99,9 +97,7 @@ const CollegeTable = ({
                                             className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
-                                                <span
-                                                    className="font-medium text-[var(--foreground)]"
-                                                >
+                                                <span className="font-medium text-[var(--foreground)]">
                                                     {college.name}
                                                 </span>
                                                 {college.collegeId && (
@@ -143,7 +139,8 @@ const CollegeTable = ({
                                                 <div className="flex flex-col">
                                                     <div className="flex items-center text-amber-500 font-medium">
                                                         <Star className="w-4 h-4 mr-1 fill-current" />
-                                                        {college.averageRating > 0
+                                                        {college.averageRating >
+                                                        0
                                                             ? college.averageRating.toFixed(
                                                                   1
                                                               )
@@ -151,7 +148,8 @@ const CollegeTable = ({
                                                     </div>
                                                     <div className="text-xs text-[var(--ring)] mt-1">
                                                         {college.totalRatings}{' '}
-                                                        {college.totalRatings === 1
+                                                        {college.totalRatings ===
+                                                        1
                                                             ? 'rating'
                                                             : 'ratings'}
                                                     </div>
@@ -173,7 +171,9 @@ const CollegeTable = ({
                                                     {onDelete && (
                                                         <button
                                                             onClick={() =>
-                                                                onDelete(college)
+                                                                onDelete(
+                                                                    college
+                                                                )
                                                             }
                                                             className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
                                                             title="Delete College"
@@ -190,10 +190,10 @@ const CollegeTable = ({
                         </div>
                     </div>
                     <div className="mt-6 border-t border-[var(--border)] pt-4">
-                        <Pagination 
-                            currentPage={page || 1} 
-                            totalPages={totalPages || 1} 
-                            onPageChange={onPageChange} 
+                        <Pagination
+                            currentPage={page || 1}
+                            totalPages={totalPages || 1}
+                            onPageChange={onPageChange}
                         />
                     </div>
                 </>

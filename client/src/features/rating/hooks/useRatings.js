@@ -9,21 +9,28 @@ const useRatings = () => {
     const [totalPages, setTotalPages] = useState(1);
     const [filterStars, setFilterStars] = useState(0);
 
-    const getRatingsByCollege = useCallback(async collegeId => {
-        if (!collegeId) return;
-        setIsLoading(true);
-        setError(null);
-        try {
-            const res = await apiClient.get(`/ratings/college/${collegeId}?page=${page}&limit=10&stars=${filterStars}`);
-            setRatings(res.data.data || res.data);
-            if (res.data.totalPages) setTotalPages(res.data.totalPages);
-            return res.data;
-        } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch ratings');
-        } finally {
-            setIsLoading(false);
-        }
-    }, [page, filterStars]);
+    const getRatingsByCollege = useCallback(
+        async collegeId => {
+            if (!collegeId) return;
+            setIsLoading(true);
+            setError(null);
+            try {
+                const res = await apiClient.get(
+                    `/ratings/college/${collegeId}?page=${page}&limit=10&stars=${filterStars}`
+                );
+                setRatings(res.data.data || res.data);
+                if (res.data.totalPages) setTotalPages(res.data.totalPages);
+                return res.data;
+            } catch (err) {
+                setError(
+                    err.response?.data?.message || 'Failed to fetch ratings'
+                );
+            } finally {
+                setIsLoading(false);
+            }
+        },
+        [page, filterStars]
+    );
 
     const getMyRatings = useCallback(async () => {
         setIsLoading(true);

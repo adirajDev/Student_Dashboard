@@ -19,7 +19,7 @@ const useCollegeManagement = (shouldFetch = true) => {
         return () => clearTimeout(timer);
     }, [searchTerm]);
 
-    const handleMinRatingChange = (val) => {
+    const handleMinRatingChange = val => {
         setMinRating(val);
         setPage(1);
     };
@@ -30,7 +30,9 @@ const useCollegeManagement = (shouldFetch = true) => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await apiClient.get(`/colleges?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}&minRating=${minRating}`);
+            const res = await apiClient.get(
+                `/colleges?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}&minRating=${minRating}`
+            );
             const data = Array.isArray(res.data) ? res.data : res.data.data;
             const sortedColleges = data.sort((a, b) =>
                 a.name.toLowerCase().localeCompare(b.name.toLowerCase())

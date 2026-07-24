@@ -15,8 +15,10 @@ const ProtectedRoute = ({ allowedRoles }) => {
 
     // Check if route has role restrictions and user meets them
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-        if (user.role === 'admin' || user.role === 'editor') return <Navigate to="/admin/dashboard" replace />;
-        if (user.role === 'college') return <Navigate to="/college/dashboard" replace />;
+        if (user.role === 'admin' || user.role === 'editor')
+            return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'college')
+            return <Navigate to="/college/dashboard" replace />;
         return <Navigate to="/dashboard" replace />;
     }
 

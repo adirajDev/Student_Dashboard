@@ -14,18 +14,18 @@ const UserManagementSection = ({
     canDelete,
     shouldFetch,
 }) => {
-    const { 
-        users, 
-        isLoading, 
-        error, 
-        page, 
-        totalPages, 
-        setPage, 
-        searchTerm, 
-        setSearchTerm, 
-        addUser, 
-        updateUser, 
-        deleteUser 
+    const {
+        users,
+        isLoading,
+        error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+        addUser,
+        updateUser,
+        deleteUser,
     } = useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);

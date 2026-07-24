@@ -4,13 +4,13 @@ import {
     useNavigate,
     useOutletContext,
 } from 'react-router-dom';
-import { 
-    ArrowLeft, 
-    Briefcase, 
-    Users, 
-    Building, 
-    Percent, 
-    TrendingUp 
+import {
+    ArrowLeft,
+    Briefcase,
+    Users,
+    Building,
+    Percent,
+    TrendingUp,
 } from 'lucide-react';
 import Loading from '../../components/common/Loading';
 import Error from '../../components/common/Error';
@@ -38,10 +38,11 @@ const CollegeDetails = () => {
         );
 
     // Check if placement details exist and have at least one field
-    const hasPlacements = college.placementDetails && 
-        (college.placementDetails.averagePackage || 
-         college.placementDetails.highestPackage || 
-         college.placementDetails.placementPercentage);
+    const hasPlacements =
+        college.placementDetails &&
+        (college.placementDetails.averagePackage ||
+            college.placementDetails.highestPackage ||
+            college.placementDetails.placementPercentage);
 
     return (
         <div className="max-w-5xl mx-auto px-4 py-8 animate-fade-in">
@@ -72,7 +73,9 @@ const CollegeDetails = () => {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {college.placementDetails.averagePackage && (
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">Average Package</p>
+                                <p className="text-sm text-[var(--ring)] mb-1">
+                                    Average Package
+                                </p>
                                 <p className="text-2xl font-semibold text-green-600 dark:text-green-400">
                                     {college.placementDetails.averagePackage}
                                 </p>
@@ -80,7 +83,9 @@ const CollegeDetails = () => {
                         )}
                         {college.placementDetails.highestPackage && (
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">Highest Package</p>
+                                <p className="text-sm text-[var(--ring)] mb-1">
+                                    Highest Package
+                                </p>
                                 <p className="text-2xl font-semibold text-blue-600 dark:text-blue-400">
                                     {college.placementDetails.highestPackage}
                                 </p>
@@ -88,9 +93,14 @@ const CollegeDetails = () => {
                         )}
                         {college.placementDetails.placementPercentage && (
                             <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">Placement Rate</p>
+                                <p className="text-sm text-[var(--ring)] mb-1">
+                                    Placement Rate
+                                </p>
                                 <p className="text-2xl font-semibold text-purple-600 dark:text-purple-400 flex items-center">
-                                    {college.placementDetails.placementPercentage}
+                                    {
+                                        college.placementDetails
+                                            .placementPercentage
+                                    }
                                     <Percent className="w-5 h-5 ml-1" />
                                 </p>
                             </div>
@@ -108,8 +118,8 @@ const CollegeDetails = () => {
                     </h2>
                     <div className="flex flex-wrap gap-3">
                         {college.recruiters.map((recruiter, idx) => (
-                            <span 
-                                key={idx} 
+                            <span
+                                key={idx}
                                 className="px-4 py-2 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-100 dark:border-blue-800"
                             >
                                 {recruiter}
@@ -130,17 +140,26 @@ const CollegeDetails = () => {
                     </h2>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {college.faculty.map((member, idx) => (
-                            <div key={idx} className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700 flex items-start gap-4">
+                            <div
+                                key={idx}
+                                className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700 flex items-start gap-4"
+                            >
                                 <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-lg font-semibold text-[var(--ring)] shrink-0">
                                     {member.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
-                                    <h4 className="font-medium text-[var(--foreground)]">{member.name}</h4>
+                                    <h4 className="font-medium text-[var(--foreground)]">
+                                        {member.name}
+                                    </h4>
                                     {member.department && (
-                                        <p className="text-sm text-[var(--ring)]">{member.department}</p>
+                                        <p className="text-sm text-[var(--ring)]">
+                                            {member.department}
+                                        </p>
                                     )}
                                     {member.role && (
-                                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-1 uppercase tracking-wide">{member.role}</p>
+                                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-1 uppercase tracking-wide">
+                                            {member.role}
+                                        </p>
                                     )}
                                 </div>
                             </div>

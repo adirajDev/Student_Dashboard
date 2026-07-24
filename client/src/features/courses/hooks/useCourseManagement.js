@@ -24,7 +24,9 @@ const useCourseManagement = shouldFetch => {
         setIsLoading(true);
         setError('');
         try {
-            const res = await apiClient.get(`/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`);
+            const res = await apiClient.get(
+                `/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`
+            );
             const data = Array.isArray(res.data) ? res.data : res.data.data;
             const sortedCourses = data.sort((a, b) =>
                 a.name.toLowerCase().localeCompare(b.name.toLowerCase())

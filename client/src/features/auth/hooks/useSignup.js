@@ -25,10 +25,10 @@ const useSignup = () => {
                     apiClient.get('/colleges?limit=1000'),
                     apiClient.get('/courses?limit=1000'),
                 ]);
-                
+
                 const collegeData = collegeRes.data.data || collegeRes.data;
                 const courseData = courseRes.data.data || courseRes.data;
-                
+
                 setColleges(collegeData);
                 setCourses(courseData);
 

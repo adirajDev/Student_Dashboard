@@ -11,7 +11,9 @@ const examSchema = Joi.object({
     examLink: Joi.string().uri().optional().allow(''),
     examDate: Joi.date().min(Joi.ref('regEndingDate')).required(),
     examDuration: Joi.number().min(1).required(),
-    examTime: Joi.string().regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/).required()
+    examTime: Joi.string()
+        .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
+        .required(),
 });
 
 export const validateExam = data => {

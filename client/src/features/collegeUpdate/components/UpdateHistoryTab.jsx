@@ -212,10 +212,10 @@ const UpdateHistoryTab = () => {
 
             {updates && updates.length > 0 && (
                 <div className="mt-6 border-t border-[var(--border)] pt-4">
-                    <Pagination 
-                        currentPage={page || 1} 
-                        totalPages={totalPages || 1} 
-                        onPageChange={setPage} 
+                    <Pagination
+                        currentPage={page || 1}
+                        totalPages={totalPages || 1}
+                        onPageChange={setPage}
                     />
                 </div>
             )}

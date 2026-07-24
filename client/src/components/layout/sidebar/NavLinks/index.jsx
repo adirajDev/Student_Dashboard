@@ -9,7 +9,6 @@ const NavLinks = ({ user, activeTab, handleNav }) => {
 
     return (
         <nav className="flex flex-col gap-2 mt-2">
-
             {(isAdmin || isEditor) && (
                 <AdminLinks
                     isAdmin={isAdmin}

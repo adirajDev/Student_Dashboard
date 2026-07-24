@@ -28,7 +28,9 @@ const useCollegeUpdates = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.get(`/college-updates/me?page=${page}&limit=10`);
+            const res = await apiClient.get(
+                `/college-updates/me?page=${page}&limit=10`
+            );
             if (res.data.totalPages) setTotalPages(res.data.totalPages);
             return res.data.data || res.data;
         } catch (err) {
@@ -45,7 +47,9 @@ const useCollegeUpdates = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.get(`/college-updates?page=${page}&limit=10`);
+            const res = await apiClient.get(
+                `/college-updates?page=${page}&limit=10`
+            );
             if (res.data.totalPages) setTotalPages(res.data.totalPages);
             return res.data.data || res.data;
         } catch (err) {

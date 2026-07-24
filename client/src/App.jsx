@@ -14,6 +14,7 @@ import CollegeDetails from './pages/College/CollegeDetails';
 import ExamDetails from './pages/Exam/ExamDetails';
 import LandingPage from './pages/Landing/LandingPage';
 import SearchPage from './pages/Search/SearchPage';
+import ExamSearchPage from './pages/Search/ExamSearchPage';
 
 function App() {
     return (
@@ -22,7 +23,10 @@ function App() {
                 <Routes>
                     {/* Default Route */}
                     <Route path="/" element={<LandingPage />} />
-                    <Route path="/dashboard-redirect" element={<RootRedirect />} />
+                    <Route
+                        path="/dashboard-redirect"
+                        element={<RootRedirect />}
+                    />
 
                     {/* Auth Routes */}
                     <Route path="/signup" element={<Signup />} />
@@ -35,11 +39,17 @@ function App() {
                     {/* Public Routes and Student Dashboard with Topbar */}
                     <Route element={<PublicLayout />}>
                         <Route path="/search" element={<SearchPage />} />
-                        <Route path="/college/:id" element={<CollegeDetails />} />
+                        <Route path="/exams" element={<ExamSearchPage />} />
+                        <Route
+                            path="/college/:id"
+                            element={<CollegeDetails />}
+                        />
                         <Route path="/exam/:id" element={<ExamDetails />} />
 
                         <Route
-                            element={<ProtectedRoute allowedRoles={['student']} />}
+                            element={
+                                <ProtectedRoute allowedRoles={['student']} />
+                            }
                         >
                             <Route
                                 path="/dashboard"
@@ -83,4 +93,3 @@ function App() {
 }
 
 export default App;
-// Triggering HMR rebuild

@@ -124,7 +124,7 @@ const RatingList = ({ collegeId, currentUser }) => {
             </div>
 
             <div className="space-y-6">
-                {(!ratings || ratings.length === 0) ? (
+                {!ratings || ratings.length === 0 ? (
                     <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-3xl bg-[var(--card)] text-[var(--ring)]">
                         {filterStars > 0
                             ? `No ${filterStars}-star reviews yet.`
@@ -211,10 +211,10 @@ const RatingList = ({ collegeId, currentUser }) => {
 
             {ratings && ratings.length > 0 && (
                 <div className="mt-6 border-t border-[var(--border)] pt-4">
-                    <Pagination 
-                        currentPage={page || 1} 
-                        totalPages={totalPages || 1} 
-                        onPageChange={setPage} 
+                    <Pagination
+                        currentPage={page || 1}
+                        totalPages={totalPages || 1}
+                        onPageChange={setPage}
                     />
                 </div>
             )}

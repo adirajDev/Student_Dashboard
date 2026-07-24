@@ -6,18 +6,18 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useCourseManagement from '../hooks/useCourseManagement';
 
 const CourseManagementSection = ({ title }) => {
-    const { 
-        courses, 
-        isLoading, 
-        error, 
-        page, 
-        totalPages, 
-        setPage, 
-        searchTerm, 
-        setSearchTerm, 
-        addCourse, 
-        updateCourse, 
-        deleteCourse 
+    const {
+        courses,
+        isLoading,
+        error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+        addCourse,
+        updateCourse,
+        deleteCourse,
     } = useCourseManagement(true);
     const [editingCourse, setEditingCourse] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
