@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
 import ExamGlobalSearch from '../../features/search/components/ExamGlobalSearch';
-import ExamResultCard from '../../features/search/components/ExamResultCard';
+import ExamCard from '../../features/exam/components/ExamCard';
 import useExamSearch from '../../features/search/hooks/useExamSearch';
 import Error from '../../components/common/Error';
 import ExamSearchLoading from './ExamSearchLoading';
@@ -77,7 +77,7 @@ const ExamSearchPage = () => {
                         ) : results.length > 0 ? (
                             <div className="grid gap-4">
                                 {results.map(exam => (
-                                    <ExamResultCard
+                                    <ExamCard
                                         key={exam._id}
                                         exam={exam}
                                         onClick={handleExamClick}

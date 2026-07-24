@@ -5,7 +5,8 @@ const useExamSearch = (initialQuery = '') => {
     const [query, setQuery] = useState(initialQuery);
     const [filters, setFilters] = useState({
         status: 'all', // 'all', 'live', 'upcoming'
-        mode: 'all', // 'all', 'Online', 'Offline'
+        mode: [], // can be string 'all' or array of modes
+        month: 'all', // 'all' or month index string '0'-'11'
     });
 
     const [allExams, setAllExams] = useState([]);
@@ -67,8 +68,23 @@ const useExamSearch = (initialQuery = '') => {
         }
 
         // Apply mode filter
-        if (filters.mode !== 'all') {
-            filtered = filtered.filter(exam => exam.examMode === filters.mode);
+        if (filters.mode && filters.mode !== 'all') {
+            if (Array.isArray(filters.mode)) {
+                if (filters.mode.length > 0) {
+                    filtered = filtered.filter(exam => filters.mode.includes(exam.examMode));
+                }
+            } else {
+                filtered = filtered.filter(exam => exam.examMode === filters.mode);
+            }
+        }
+
+        // Apply month filter
+        if (filters.month && filters.month !== 'all') {
+            filtered = filtered.filter(exam => {
+                if (!exam.examDate) return false;
+                const examMonth = new Date(exam.examDate).getMonth().toString();
+                return examMonth === filters.month;
+            });
         }
 
         setResults(filtered);
