@@ -1,4 +1,4 @@
-import { Calendar, Monitor, Book, Clock } from 'lucide-react';
+import { Calendar, Monitor, Book, Clock, FileText } from 'lucide-react';
 import useExamStatus from '../../search/hooks/useExamStatus';
 
 const ExamCard = ({ exam, onClick }) => {
@@ -7,46 +7,62 @@ const ExamCard = ({ exam, onClick }) => {
     return (
         <div
             onClick={() => onClick(exam)}
-            className="p-6 bg-[var(--card)] rounded-3xl border border-[var(--border)] hover:border-indigo-500 dark:hover:border-indigo-400 shadow-sm hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 cursor-pointer group"
+            className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-[var(--border)] hover:border-indigo-500 dark:hover:border-indigo-400 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
         >
-            <div className="flex items-stretch justify-between h-full">
-                <div className="flex flex-col">
-                    <h3 className="text-xl text-[var(--foreground)]">
-                        {exam.name}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-5 text-sm font-medium text-slate-600 dark:text-slate-400 mt-4">
-                        {exam.examDate && (
-                            <div className="flex items-center">
-                                <Calendar className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500" />
-                                {new Date(exam.examDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-                            </div>
-                        )}
-                        {exam.examMode && (
-                            <div className="flex items-center">
-                                {exam.examMode === 'Online' ? (
-                                    <Monitor className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500" />
-                                ) : (
-                                    <Book className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500" />
-                                )}
-                                {exam.examMode}
-                            </div>
-                        )}
-                        {exam.examDuration && (
-                            <div className="flex items-center">
-                                <Clock className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500" />
-                                {exam.examDuration >= 60 && `${Math.floor(exam.examDuration / 60)} Hour${Math.floor(exam.examDuration / 60) > 1 ? 's' : ''} `}
-                                {exam.examDuration % 60 > 0 && `${exam.examDuration % 60} Minutes`}
-                            </div>
-                        )}
-                    </div>
+            {/* Top Header Section */}
+            <div className="flex items-center gap-4 mb-4">
+                {/* Generic Logo Placeholder */}
+                <div className="w-14 h-14 shrink-0 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center text-indigo-500">
+                    <FileText className="w-7 h-7" />
                 </div>
-                <div className="flex flex-col items-end ml-4">
-                    <div
-                        className={`px-3 py-1.5 rounded-full text-xs font-semibold ${statusClass}`}
-                    >
+                
+                {/* Title & Badge */}
+                <div className="flex-1 min-w-0 flex justify-between items-center">
+                    <div className="flex-1 pr-4">
+                        <h3 className="text-xl font-semibold text-indigo-700 truncate">
+                            {exam.name}
+                        </h3>
+                    </div>
+                    <div className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold ${statusClass}`}>
                         {statusText}
                     </div>
                 </div>
+            </div>
+
+            <hr className="border-[var(--border)] mb-4" />
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-3 gap-4">
+                {/* Exam Date */}
+                {exam.examDate && (
+                    <div>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Exam Date</p>
+                        <div className="flex items-center text-[var(--foreground)] font-medium truncate">
+                            {new Date(exam.examDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </div>
+                    </div>
+                )}
+
+                {/* Exam Mode */}
+                {exam.examMode && (
+                    <div>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Mode</p>
+                        <div className="flex items-center text-[var(--foreground)] font-medium truncate">
+                            {exam.examMode}
+                        </div>
+                    </div>
+                )}
+
+                {/* Exam Duration */}
+                {exam.examDuration && (
+                    <div>
+                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Duration</p>
+                        <div className="flex items-center text-[var(--foreground)] font-medium truncate">
+                            {exam.examDuration >= 60 && `${Math.floor(exam.examDuration / 60)} Hour${Math.floor(exam.examDuration / 60) > 1 ? 's' : ''} `}
+                            {exam.examDuration % 60 > 0 && `${exam.examDuration % 60} Minutes`}
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
     );
