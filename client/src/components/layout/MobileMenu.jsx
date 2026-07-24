@@ -14,78 +14,26 @@ const MobileMenu = ({
     if (!isOpen) return null;
 
     return (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-slate-200 shadow-lg py-4 px-4 flex flex-col gap-4 max-h-[calc(100vh-70px)] overflow-y-auto animate-fade-in">
-            <nav className="flex flex-col gap-4">
-                {navLinks.map(link => (
-                    <Link
-                        key={link.name}
-                        to={link.href}
-                        className="text-base font-medium text-slate-700 hover:text-indigo-600"
-                        onClick={() => setIsOpen(false)}
-                    >
-                        {link.name}
-                    </Link>
-                ))}
-            </nav>
-            <hr className="border-slate-100" />
-            {user ? (
-                <div className="flex flex-col gap-4 pb-4">
-                    <div className="flex items-center gap-3 mb-2">
-                        <div className="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-700 font-bold">
-                            {user.name?.charAt(0).toUpperCase()}
-                        </div>
-                        <div>
-                            <p className="font-semibold text-slate-800">
-                                {user.name}
-                            </p>
-                            <p className="text-sm text-slate-500">
-                                {user.email}
-                            </p>
-                        </div>
-                    </div>
-                    {user.role === 'student' && (
-                        <button
-                            onClick={() => {
-                                setIsOpen(false);
-                                navigate('/dashboard');
-                            }}
-                            className="text-left font-medium text-slate-700 flex items-center gap-2"
+        <>
+            <div 
+                className="md:hidden fixed inset-0 top-[72px] bg-black/20 backdrop-blur-sm z-40"
+                onClick={() => setIsOpen(false)}
+            />
+            <div className="md:hidden fixed top-[72px] left-4 right-4 mt-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl border border-white/20 dark:border-slate-800 shadow-2xl py-6 px-6 flex flex-col gap-4 max-h-[calc(100vh-100px)] overflow-y-auto animate-fade-in-up z-50">
+                <nav className="flex flex-col gap-4">
+                    {navLinks.map(link => (
+                        <Link
+                            key={link.name}
+                            to={link.href}
+                            className="text-lg font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            onClick={() => setIsOpen(false)}
                         >
-                            <Star className="w-5 h-5 text-[var(--ring)]" />
-                            My Reviews
-                        </button>
-                    )}
-                    <button
-                        onClick={() => {
-                            setIsOpen(false);
-                            setIsSettingsOpen(true);
-                        }}
-                        className="text-left font-medium text-slate-700 flex items-center gap-2"
-                    >
-                        <Settings className="w-5 h-5 text-[var(--ring)]" />
-                        Settings
-                    </button>
-                    <button
-                        onClick={() => {
-                            setIsOpen(false);
-                            handleLogout();
-                        }}
-                        className="text-left font-medium text-red-600 flex items-center gap-2"
-                    >
-                        <LogOut className="w-5 h-5" />
-                        Logout
-                    </button>
-                </div>
-            ) : (
-                <Link
-                    to="/dashboard-redirect"
-                    className="bg-indigo-600 text-white font-semibold py-3 rounded-xl text-center mb-4"
-                    onClick={() => setIsOpen(false)}
-                >
-                    Login / Register
-                </Link>
-            )}
-        </div>
+                            {link.name}
+                        </Link>
+                    ))}
+                </nav>
+            </div>
+        </>
     );
 };
 
