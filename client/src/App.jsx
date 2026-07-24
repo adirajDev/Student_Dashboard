@@ -14,6 +14,7 @@ import CollegeDetails from './pages/College/CollegeDetails';
 import ExamDetails from './pages/Exam/ExamDetails';
 import LandingPage from './pages/Landing/LandingPage';
 import SearchPage from './pages/Search/SearchPage';
+import ExamSearchPage from './pages/Search/ExamSearchPage';
 
 function App() {
     return (
@@ -35,6 +36,7 @@ function App() {
                     {/* Public Routes and Student Dashboard with Topbar */}
                     <Route element={<PublicLayout />}>
                         <Route path="/search" element={<SearchPage />} />
+                        <Route path="/exams" element={<ExamSearchPage />} />
                         <Route path="/college/:id" element={<CollegeDetails />} />
                         <Route path="/exam/:id" element={<ExamDetails />} />
 

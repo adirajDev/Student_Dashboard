@@ -73,7 +73,7 @@ const ExamDetails = () => {
 
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] animate-fade-in">
-            <div className="max-w-5xl mx-auto px-6 py-8">
+            <div className="max-w-5xl mx-auto px-6 pt-2 pb-8">
                 <BackButton label="Back" />
 
                 {/* Header Section */}
@@ -122,38 +122,22 @@ const ExamDetails = () => {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                    {/* Main Content */}
-                    <div className="md:col-span-2 space-y-8">
-                        {/* Eligibility */}
-                        <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-sm">
-                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <GraduationCap className="w-6 h-6 text-emerald-500" />
-                                Eligibility Criteria
-                            </h2>
-                            <div className="p-6 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/30 rounded-2xl">
-                                <p className="whitespace-pre-line text-[var(--foreground)] font-medium text-lg leading-relaxed">
-                                    {exam.requirement}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Description */}
-                        <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-sm">
-                            <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
-                                <Book className="w-6 h-6 text-indigo-500" />
-                                About the Exam
-                            </h2>
-                            <div className="prose dark:prose-invert max-w-none text-[var(--foreground)]">
-                                <p className="whitespace-pre-line leading-relaxed text-lg">
-                                    {exam.examDescription}
-                                </p>
-                            </div>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
+                    {/* Eligibility */}
+                    <div className="md:col-span-2 order-1 bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-sm">
+                        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                            <GraduationCap className="w-6 h-6 text-emerald-500" />
+                            Eligibility Criteria
+                        </h2>
+                        <div className="p-6 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/30 rounded-2xl">
+                            <p className="whitespace-pre-line text-[var(--foreground)] font-medium text-lg leading-relaxed">
+                                {exam.requirement}
+                            </p>
                         </div>
                     </div>
 
                     {/* Sidebar */}
-                    <div className="space-y-8">
+                    <div className="md:col-span-1 md:row-span-2 order-2 md:sticky md:top-24 self-start space-y-8 w-full">
                         {/* Important Dates */}
                         <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-sm">
                             <h3 className="text-lg font-bold mb-6 pb-4 border-b border-[var(--border)]">
@@ -219,6 +203,19 @@ const ExamDetails = () => {
                                 </div>
                             </div>
                         )}
+                    </div>
+
+                    {/* Description */}
+                    <div className="md:col-span-2 order-3 bg-[var(--card)] border border-[var(--border)] rounded-3xl p-8 shadow-sm">
+                        <h2 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                            <Book className="w-6 h-6 text-indigo-500" />
+                            About the Exam
+                        </h2>
+                        <div className="prose dark:prose-invert max-w-none text-[var(--foreground)]">
+                            <p className="whitespace-pre-line leading-relaxed text-lg">
+                                {exam.examDescription}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>

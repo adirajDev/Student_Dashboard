@@ -28,6 +28,7 @@ const Topbar = ({ transparentOnTop = false }) => {
         { name: 'Home', href: '/' },
         { name: 'About Us', href: '/#about' },
         { name: 'Colleges', href: '/search' },
+        { name: 'Exams', href: '/exams' },
         { name: 'Contact Us', href: '/#contact' },
     ];
 

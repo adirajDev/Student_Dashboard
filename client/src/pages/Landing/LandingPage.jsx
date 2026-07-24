@@ -59,6 +59,12 @@ const LandingPage = () => {
                         >
                             Explore Colleges
                         </Link>
+                        <Link
+                            to="/exams"
+                            className="px-8 py-4 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-full font-semibold text-lg transition-all"
+                        >
+                            Explore Exams
+                        </Link>
                     </div>
                 </div>
             </section>
