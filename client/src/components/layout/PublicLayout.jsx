@@ -8,8 +8,10 @@ const PublicLayout = () => {
 
     // Prevent management roles from accessing public pages
     if (user && user.role !== 'student') {
-        if (user.role === 'admin' || user.role === 'editor') return <Navigate to="/admin/dashboard" replace />;
-        if (user.role === 'college') return <Navigate to="/college/dashboard" replace />;
+        if (user.role === 'admin' || user.role === 'editor')
+            return <Navigate to="/admin/dashboard" replace />;
+        if (user.role === 'college')
+            return <Navigate to="/college/dashboard" replace />;
     }
 
     return (

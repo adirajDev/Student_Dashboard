@@ -23,7 +23,10 @@ function App() {
                 <Routes>
                     {/* Default Route */}
                     <Route path="/" element={<LandingPage />} />
-                    <Route path="/dashboard-redirect" element={<RootRedirect />} />
+                    <Route
+                        path="/dashboard-redirect"
+                        element={<RootRedirect />}
+                    />
 
                     {/* Auth Routes */}
                     <Route path="/signup" element={<Signup />} />
@@ -37,11 +40,16 @@ function App() {
                     <Route element={<PublicLayout />}>
                         <Route path="/search" element={<SearchPage />} />
                         <Route path="/exams" element={<ExamSearchPage />} />
-                        <Route path="/college/:id" element={<CollegeDetails />} />
+                        <Route
+                            path="/college/:id"
+                            element={<CollegeDetails />}
+                        />
                         <Route path="/exam/:id" element={<ExamDetails />} />
 
                         <Route
-                            element={<ProtectedRoute allowedRoles={['student']} />}
+                            element={
+                                <ProtectedRoute allowedRoles={['student']} />
+                            }
                         >
                             <Route
                                 path="/dashboard"

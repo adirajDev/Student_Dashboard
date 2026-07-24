@@ -7,7 +7,7 @@ const useExamSearch = () => {
         status: 'all', // 'all', 'live', 'upcoming'
         mode: 'all', // 'all', 'Online', 'Offline'
     });
-    
+
     const [allExams, setAllExams] = useState([]);
     const [results, setResults] = useState([]);
     const [latestLiveExams, setLatestLiveExams] = useState([]);
@@ -22,22 +22,25 @@ const useExamSearch = () => {
                 const res = await apiClient.get('/exams');
                 const exams = res.data;
                 setAllExams(exams);
-                
+
                 // Calculate latest 5 live exams
                 const today = new Date();
-                today.setHours(0,0,0,0);
-                
+                today.setHours(0, 0, 0, 0);
+
                 const live = exams.filter(exam => {
-                    if (!exam.regStartingDate || !exam.regEndingDate) return false;
+                    if (!exam.regStartingDate || !exam.regEndingDate)
+                        return false;
                     const start = new Date(exam.regStartingDate);
                     const end = new Date(exam.regEndingDate);
                     return today >= start && today <= end;
                 });
-                
+
                 // Sort by closest ending date
-                live.sort((a, b) => new Date(a.regEndingDate) - new Date(b.regEndingDate));
+                live.sort(
+                    (a, b) =>
+                        new Date(a.regEndingDate) - new Date(b.regEndingDate)
+                );
                 setLatestLiveExams(live.slice(0, 5));
-                
             } catch (err) {
                 setError('Failed to fetch exams.');
                 console.error(err);
@@ -60,19 +63,21 @@ const useExamSearch = () => {
         // Apply text query
         if (query.trim()) {
             const q = query.toLowerCase();
-            filtered = filtered.filter(exam => exam.name.toLowerCase().includes(q));
+            filtered = filtered.filter(exam =>
+                exam.name.toLowerCase().includes(q)
+            );
         }
 
         // Apply status filter
         if (filters.status !== 'all') {
             const today = new Date();
-            today.setHours(0,0,0,0);
-            
+            today.setHours(0, 0, 0, 0);
+
             filtered = filtered.filter(exam => {
                 if (!exam.regStartingDate || !exam.regEndingDate) return false;
                 const start = new Date(exam.regStartingDate);
                 const end = new Date(exam.regEndingDate);
-                
+
                 if (filters.status === 'live') {
                     return today >= start && today <= end;
                 } else if (filters.status === 'upcoming') {
@@ -98,7 +103,7 @@ const useExamSearch = () => {
         results,
         latestLiveExams,
         isLoading,
-        error
+        error,
     };
 };
 

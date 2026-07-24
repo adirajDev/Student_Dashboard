@@ -1,4 +1,10 @@
-const SearchBar = ({ value, onChange, placeholder = 'Search...', onClear, className = "relative mb-4" }) => {
+const SearchBar = ({
+    value,
+    onChange,
+    placeholder = 'Search...',
+    onClear,
+    className = 'relative mb-4',
+}) => {
     return (
         <div className={className}>
             <svg

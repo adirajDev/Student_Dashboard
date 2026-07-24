@@ -19,7 +19,6 @@ const UserTable = ({
     onDelete,
     showCourse,
 }) => {
-
     // UI State: Data Render
     return (
         <div>
@@ -34,7 +33,7 @@ const UserTable = ({
                 <Loading />
             ) : error ? (
                 <Error error={error} />
-            ) : (!users || users.length === 0) ? (
+            ) : !users || users.length === 0 ? (
                 searchTerm ? (
                     <NoResultsFound searchTerm={searchTerm} />
                 ) : (
@@ -49,10 +48,10 @@ const UserTable = ({
                         onDelete={onDelete}
                     />
                     <div className="mt-6 border-t border-[var(--border)] pt-4">
-                        <Pagination 
-                            currentPage={page || 1} 
-                            totalPages={totalPages || 1} 
-                            onPageChange={onPageChange} 
+                        <Pagination
+                            currentPage={page || 1}
+                            totalPages={totalPages || 1}
+                            onPageChange={onPageChange}
                         />
                     </div>
                 </>

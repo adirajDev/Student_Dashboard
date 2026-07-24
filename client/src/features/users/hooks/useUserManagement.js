@@ -23,7 +23,9 @@ const useUserManagement = (role, shouldFetch = true) => {
         try {
             setIsLoading(true);
             setError(null);
-            const res = await apiClient.get(`/${role}s/get-${role}s?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`);
+            const res = await apiClient.get(
+                `/${role}s/get-${role}s?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`
+            );
             const data = Array.isArray(res.data) ? res.data : res.data.data;
             setUsers(data);
             if (res.data.totalPages) {
@@ -65,18 +67,18 @@ const useUserManagement = (role, shouldFetch = true) => {
         setUsers(prev => prev.filter(u => u._id !== id));
     };
 
-    return { 
-        users, 
-        isLoading, 
-        error, 
-        page, 
-        totalPages, 
-        setPage, 
-        searchTerm, 
-        setSearchTerm, 
-        addUser, 
-        updateUser, 
-        deleteUser 
+    return {
+        users,
+        isLoading,
+        error,
+        page,
+        totalPages,
+        setPage,
+        searchTerm,
+        setSearchTerm,
+        addUser,
+        updateUser,
+        deleteUser,
     };
 };
 

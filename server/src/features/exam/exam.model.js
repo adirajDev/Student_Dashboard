@@ -45,7 +45,7 @@ const examSchema = new mongoose.Schema({
     examTime: {
         type: String, // HH:mm format
         required: true,
-    }
+    },
 });
 
 const Exam = mongoose.model('Exam', examSchema);

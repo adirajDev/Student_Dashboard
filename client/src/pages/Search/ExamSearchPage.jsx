@@ -11,15 +11,15 @@ const ExamSearchPage = () => {
     const initialQuery = searchParams.get('q') || '';
     const navigate = useNavigate();
 
-    const { 
-        query, 
-        setQuery, 
-        filters, 
-        setFilters, 
-        results, 
-        latestLiveExams, 
-        isLoading, 
-        error 
+    const {
+        query,
+        setQuery,
+        filters,
+        setFilters,
+        results,
+        latestLiveExams,
+        isLoading,
+        error,
     } = useExamSearch();
 
     useEffect(() => {
@@ -32,12 +32,13 @@ const ExamSearchPage = () => {
         navigate(`/exam/${exam._id}`);
     };
 
-    const isSearching = query.trim() || filters.status !== 'all' || filters.mode !== 'all';
+    const isSearching =
+        query.trim() || filters.status !== 'all' || filters.mode !== 'all';
 
     return (
         <main className="max-w-4xl mx-auto px-4 py-8 animate-fade-in">
             <div className="flex justify-center mb-10">
-                <ExamGlobalSearch 
+                <ExamGlobalSearch
                     query={query}
                     setQuery={setQuery}
                     filters={filters}
@@ -63,16 +64,15 @@ const ExamSearchPage = () => {
                             )}
                         </h2>
                         <span className="text-sm text-[var(--ring)]">
-                            {results.length} {results.length === 1 ? 'result' : 'results'} found
+                            {results.length}{' '}
+                            {results.length === 1 ? 'result' : 'results'} found
                         </span>
                     </div>
 
                     {isLoading ? (
                         <div className="flex flex-col items-center justify-center p-12 text-[var(--ring)]">
                             <Loader2 className="w-8 h-8 animate-spin mb-4" />
-                            <p className="text-lg">
-                                Searching exams...
-                            </p>
+                            <p className="text-lg">Searching exams...</p>
                         </div>
                     ) : error ? (
                         <div className="p-8 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-3xl border border-red-200 dark:border-red-800 text-center">
@@ -97,7 +97,8 @@ const ExamSearchPage = () => {
                                 No exams found
                             </h3>
                             <p className="text-[var(--ring)]">
-                                Try adjusting your search query or removing some filters.
+                                Try adjusting your search query or removing some
+                                filters.
                             </p>
                         </div>
                     )}

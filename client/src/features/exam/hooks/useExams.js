@@ -14,7 +14,9 @@ const useExams = (shouldFetch = true) => {
         try {
             const res = await apiClient.get('/exams');
             // Assuming the backend returns the array directly or inside data
-            const data = Array.isArray(res.data) ? res.data : (res.data.data || []);
+            const data = Array.isArray(res.data)
+                ? res.data
+                : res.data.data || [];
             const sortedExams = data.sort((a, b) =>
                 a.name.toLowerCase().localeCompare(b.name.toLowerCase())
             );
@@ -31,7 +33,7 @@ const useExams = (shouldFetch = true) => {
         fetchExams();
     }, [fetchExams]);
 
-    const getExamById = async (id) => {
+    const getExamById = async id => {
         try {
             const res = await apiClient.get(`/exams/${id}`);
             return { success: true, data: res.data };
@@ -43,7 +45,7 @@ const useExams = (shouldFetch = true) => {
         }
     };
 
-    const addExam = async (examData) => {
+    const addExam = async examData => {
         try {
             const res = await apiClient.post('/exams', examData);
             const newExam = res.data.exam || res.data.data || res.data;
@@ -81,7 +83,7 @@ const useExams = (shouldFetch = true) => {
         }
     };
 
-    const deleteExam = async (id) => {
+    const deleteExam = async id => {
         try {
             await apiClient.delete(`/exams/${id}`);
             setExams(prev => prev.filter(e => e._id !== id));

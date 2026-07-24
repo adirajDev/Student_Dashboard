@@ -6,14 +6,8 @@ import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useExams from '../hooks/useExams';
 
 const ExamManagementSection = ({ title }) => {
-    const {
-        exams,
-        isLoading,
-        error,
-        addExam,
-        updateExam,
-        deleteExam,
-    } = useExams(true);
+    const { exams, isLoading, error, addExam, updateExam, deleteExam } =
+        useExams(true);
     const [editingExam, setEditingExam] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingExam, setDeletingExam] = useState(null);

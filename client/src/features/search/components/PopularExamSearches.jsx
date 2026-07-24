@@ -54,16 +54,21 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                                     <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-[var(--ring)]">
                                         <div className="flex items-center gap-1.5 font-medium">
                                             <Calendar className="w-4 h-4 text-indigo-500" />
-                                            Reg Ends: {new Date(exam.regEndingDate).toLocaleDateString()}
+                                            Reg Ends:{' '}
+                                            {new Date(
+                                                exam.regEndingDate
+                                            ).toLocaleDateString()}
                                         </div>
                                         <div className="flex items-center gap-1.5">
                                             {exam.examMode === 'Online' ? (
                                                 <span className="flex items-center gap-1 text-green-600 dark:text-green-400">
-                                                    <Monitor className="w-4 h-4" /> Online
+                                                    <Monitor className="w-4 h-4" />{' '}
+                                                    Online
                                                 </span>
                                             ) : (
                                                 <span className="flex items-center gap-1 text-purple-600 dark:text-purple-400">
-                                                    <Book className="w-4 h-4" /> Offline
+                                                    <Book className="w-4 h-4" />{' '}
+                                                    Offline
                                                 </span>
                                             )}
                                         </div>

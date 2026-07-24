@@ -2,7 +2,6 @@ import { Settings, LogOut } from 'lucide-react';
 import NavItem from './NavItem';
 
 const BottomSection = ({ onSettingsOpen, onLogout, setIsMobileOpen }) => {
-
     return (
         <div className="flex flex-col gap-2 px-4 mt-auto">
             <NavItem
