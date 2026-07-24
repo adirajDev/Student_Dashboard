@@ -10,7 +10,7 @@ import MobileMenu from './MobileMenu';
 const navLinks = [
     { name: 'Home', href: '/' },
     { name: 'About Us', href: '/#about' },
-    { name: 'Colleges', href: '/search' },
+    { name: 'Colleges', href: '/college' },
     { name: 'Exams', href: '/exams' },
     { name: 'Contact Us', href: '/#contact' },
 ];

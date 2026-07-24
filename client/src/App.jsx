@@ -16,6 +16,7 @@ import LandingPage from './pages/Landing/LandingPage';
 import SearchPage from './pages/Search/SearchPage';
 import ExamSearchPage from './pages/Search/ExamSearchPage';
 import ExamListingPage from './pages/Exam/ExamListingPage';
+import CollegeListingPage from './pages/College/CollegeListingPage';
 
 function App() {
     return (
@@ -39,7 +40,8 @@ function App() {
 
                     {/* Public Routes and Student Dashboard with Topbar */}
                     <Route element={<PublicLayout />}>
-                        <Route path="/search" element={<SearchPage />} />
+                        <Route path="/college-search" element={<SearchPage />} />
+                        <Route path="/college" element={<CollegeListingPage />} />
                         <Route path="/exam-search" element={<ExamSearchPage />} />
                         <Route path="/exams" element={<ExamListingPage />} />
                         <Route
