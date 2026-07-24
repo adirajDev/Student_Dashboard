@@ -4,7 +4,7 @@ import { Loader2, Search } from 'lucide-react';
 import useGlobalSearch from '../../features/search/hooks/useGlobalSearch';
 import GlobalSearch from '../../features/search/components/GlobalSearch';
 import PopularSearches from '../../features/search/components/PopularSearches';
-import CollegeResultCard from '../../features/search/components/CollegeResultCard';
+import CollegeCard from '../../features/college/components/CollegeCard';
 
 const SearchPage = () => {
     const [searchParams] = useSearchParams();
@@ -60,7 +60,7 @@ const SearchPage = () => {
                     ) : results.length > 0 ? (
                         <div className="grid gap-4">
                             {results.map(college => (
-                                <CollegeResultCard
+                                <CollegeCard
                                     key={college._id}
                                     college={college}
                                     query={query}
