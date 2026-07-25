@@ -1,18 +1,11 @@
 import mongoose from 'mongoose';
+import { COURSE_LEVELS } from './course.constants.js';
 
 const courseSchema = new mongoose.Schema(
     {
         level: {
             type: String,
-            enum: [
-                'Certificate',
-                'Diploma',
-                'Advanced Diploma',
-                "Bachelor's",
-                "Master's",
-                'Doctorate',
-                'Post Doctorate',
-            ],
+            enum: COURSE_LEVELS,
             required: true,
             default: "Bachelor's",
             index: true,
