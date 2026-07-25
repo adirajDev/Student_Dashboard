@@ -71,10 +71,10 @@ const RatingList = ({ collegeId, currentUser }) => {
     if (isLoading) return <Loading />;
 
     return (
-        <div className="mt-12">
+        <div className="mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h3 className="text-2xl font-medium">Student Reviews</h3>
+                    <h3 className="text-2xl">Student Reviews</h3>
                     <p className="text-[var(--ring)] text-sm mt-1">
                         {ratings.length}{' '}
                         {ratings.length === 1 ? 'review' : 'reviews'}
@@ -123,7 +123,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                 </div>
             </div>
 
-            <div className="space-y-6">
+            <div className="flex flex-col gap-4">
                 {!ratings || ratings.length === 0 ? (
                     <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-3xl bg-[var(--card)] text-[var(--ring)]">
                         {filterStars > 0
@@ -137,7 +137,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                             className="p-6 bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-sm hover:shadow-md transition-shadow"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <div>
+                                <div className="flex-1 pr-4">
                                     <div className="flex items-center gap-2 mb-1">
                                         <div className="flex">
                                             {[1, 2, 3, 4, 5].map(star => (
@@ -148,13 +148,13 @@ const RatingList = ({ collegeId, currentUser }) => {
                                             ))}
                                         </div>
                                         {rating.isEdited && (
-                                            <span className="text-xs text-[var(--ring)] italic">
+                                            <span className="text-xs text-slate-400 italic">
                                                 (Edited)
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-2 text-sm text-[var(--ring)]">
-                                        <span className="font-medium text-[var(--foreground)]">
+                                    <div className="flex items-center gap-2 text-xs text-slate-400">
+                                        <span className="font-medium text-slate-500">
                                             {rating.student?.name ||
                                                 'Anonymous User'}
                                         </span>
@@ -175,7 +175,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                                 {currentUser &&
                                     (rating.student?._id === currentUser._id ||
                                         rating.student === currentUser._id) && (
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-2 flex-shrink-0">
                                             <button
                                                 onClick={() => {
                                                     setEditingRating(rating);
@@ -200,7 +200,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                             </div>
 
                             {rating.comment && (
-                                <p className="text-[var(--foreground)] whitespace-pre-wrap text-sm leading-relaxed">
+                                <p className="text-slate-800 dark:text-slate-200 whitespace-pre-wrap text-base leading-relaxed mt-2">
                                     {rating.comment}
                                 </p>
                             )}

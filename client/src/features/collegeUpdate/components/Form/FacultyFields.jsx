@@ -9,7 +9,7 @@ const FacultyFields = ({
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-[var(--border)] pb-2">
-                <h4 className="text-lg font-medium">Faculty Members</h4>
+                <h4 className="text-lg">Faculty Members</h4>
                 <button
                     type="button"
                     onClick={addFaculty}

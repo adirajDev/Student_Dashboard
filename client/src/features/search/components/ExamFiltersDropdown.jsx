@@ -4,7 +4,7 @@ const ExamFiltersDropdown = ({ filters, setFilters, onClose }) => {
     return (
         <div className="absolute right-0 mt-3 w-72 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-slate-200/50 dark:border-slate-700/50 shadow-xl rounded-3xl p-6 z-50 animate-fade-in-up">
             <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-[var(--foreground)]">
+                <h3 className="text-[var(--foreground)]">
                     Filter Exams
                 </h3>
                 <button

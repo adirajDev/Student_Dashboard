@@ -37,7 +37,7 @@ const EditCollegeTab = ({ user }) => {
         <div className="animate-fade-in bg-[var(--card)] p-6 md:p-8 rounded-3xl border border-[var(--border)] shadow-sm">
             <div className="flex items-center gap-3 mb-6">
                 <Building2 className="w-6 h-6 text-blue-500" />
-                <h3 className="text-2xl font-semibold">Edit College Details</h3>
+                <h3 className="text-2xl">Edit College Details</h3>
             </div>
 
             <p className="text-sm text-[var(--ring)] mb-8">

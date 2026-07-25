@@ -5,7 +5,6 @@ import {
     useOutletContext,
 } from 'react-router-dom';
 import {
-    ArrowLeft,
     Briefcase,
     Users,
     Building,
@@ -17,8 +16,18 @@ import Error from '../../components/common/Error';
 import CollegeHeader from '../../features/college/components/CollegeHeader';
 import CourseList from '../../features/college/components/CourseList';
 import RatingList from '../../features/rating/components/RatingList';
-import BackButton from '../../components/common/BackButton';
 import useCollegeDetails from '../../features/college/hooks/useCollegeDetails';
+
+const formatPackage = (pkg) => {
+    if (!pkg) return null;
+    let str = String(pkg).trim();
+    const hasLetters = /[a-zA-Z]/.test(str);
+    const hasCurrency = str.includes('₹') || str.toLowerCase().includes('rs');
+    let result = str;
+    if (!hasCurrency) result = `₹${result}`;
+    if (!hasLetters) result = `${result} LPA`;
+    return result;
+};
 
 const CollegeDetails = () => {
     const { id } = useParams();
@@ -45,69 +54,67 @@ const CollegeDetails = () => {
             college.placementDetails.placementPercentage);
 
     return (
-        <div className="max-w-5xl mx-auto px-4 py-8 animate-fade-in">
-            <BackButton />
-
+        <div className="max-w-5xl mx-auto px-4 pb-8 animate-fade-in">
             <CollegeHeader college={college} />
 
-            {/* Overview Section */}
-            {college.overview && (
-                <div className="card mb-8">
-                    <h2 className="text-2xl mb-4 text-[var(--foreground)] flex items-center">
-                        <Building className="w-5 h-5 mr-2 text-blue-500" />
-                        Overview
-                    </h2>
-                    <div className="prose dark:prose-invert max-w-none text-[var(--foreground)] opacity-90 whitespace-pre-wrap">
-                        {college.overview}
+            {/* Two-Column Grid for Overview and Placements */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                {/* Overview Section */}
+                {college.overview && (
+                    <div className="card h-full">
+                        <h2 className="text-2xl mb-4 text-[var(--foreground)] flex items-center">
+                            <Building className="w-5 h-5 mr-2 text-blue-500" />
+                            Overview
+                        </h2>
+                        <div className="prose dark:prose-invert max-w-none text-[var(--foreground)] opacity-90 whitespace-pre-wrap">
+                            {college.overview}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
 
-            {/* Placement Details */}
-            {hasPlacements && (
-                <div className="card mb-8">
-                    <h2 className="text-2xl mb-6 text-[var(--foreground)] flex items-center">
-                        <TrendingUp className="w-5 h-5 mr-2 text-blue-500" />
-                        Placement Statistics
-                    </h2>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        {college.placementDetails.averagePackage && (
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">
-                                    Average Package
-                                </p>
-                                <p className="text-2xl font-semibold text-green-600 dark:text-green-400">
-                                    {college.placementDetails.averagePackage}
-                                </p>
-                            </div>
-                        )}
-                        {college.placementDetails.highestPackage && (
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">
-                                    Highest Package
-                                </p>
-                                <p className="text-2xl font-semibold text-blue-600 dark:text-blue-400">
-                                    {college.placementDetails.highestPackage}
-                                </p>
-                            </div>
-                        )}
-                        {college.placementDetails.placementPercentage && (
-                            <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
-                                <p className="text-sm text-[var(--ring)] mb-1">
-                                    Placement Rate
-                                </p>
-                                <p className="text-2xl font-semibold text-purple-600 dark:text-purple-400 flex items-center">
-                                    {
-                                        college.placementDetails
-                                            .placementPercentage
-                                    }
-                                    <Percent className="w-5 h-5 ml-1" />
-                                </p>
-                            </div>
-                        )}
+                {/* Placement Details */}
+                {hasPlacements && (
+                    <div className="card h-full">
+                        <h2 className="text-2xl mb-6 text-[var(--foreground)] flex items-center">
+                            <TrendingUp className="w-5 h-5 mr-2 text-blue-500" />
+                            Placement Statistics
+                        </h2>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {college.placementDetails.averagePackage && (
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                    <p className="text-sm text-[var(--ring)] mb-1">
+                                        Median Package
+                                    </p>
+                                    <p className="text-2xl font-semibold text-green-600 dark:text-green-400">
+                                        {formatPackage(college.placementDetails.averagePackage)}
+                                    </p>
+                                </div>
+                            )}
+                            {college.placementDetails.highestPackage && (
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                    <p className="text-sm text-[var(--ring)] mb-1">
+                                        Highest Package
+                                    </p>
+                                    <p className="text-2xl font-semibold text-blue-600 dark:text-blue-400">
+                                        {formatPackage(college.placementDetails.highestPackage)}
+                                    </p>
+                                </div>
+                            )}
+                            {college.placementDetails.placementPercentage && (
+                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 sm:col-span-2">
+                                    <p className="text-sm text-[var(--ring)] mb-1">
+                                        Placement Rate
+                                    </p>
+                                    <p className="text-2xl font-semibold text-purple-600 dark:text-purple-400 flex items-center">
+                                        {college.placementDetails.placementPercentage}
+                                        <Percent className="w-5 h-5 ml-1" />
+                                    </p>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
 
             {/* Recruiters */}
             {college.recruiters && college.recruiters.length > 0 && (
@@ -148,7 +155,7 @@ const CollegeDetails = () => {
                                     {member.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
-                                    <h4 className="font-medium text-[var(--foreground)]">
+                                    <h4 className="text-[var(--foreground)]">
                                         {member.name}
                                     </h4>
                                     {member.department && (
@@ -157,7 +164,7 @@ const CollegeDetails = () => {
                                         </p>
                                     )}
                                     {member.role && (
-                                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 mt-1 uppercase tracking-wide">
+                                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1 capitalize">
                                             {member.role}
                                         </p>
                                     )}

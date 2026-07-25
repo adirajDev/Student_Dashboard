@@ -46,7 +46,7 @@ const MyReviewsTab = ({ user }) => {
                             <GraduationCap className="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h3 className="text-xl font-semibold mb-1">
+                            <h3 className="text-xl mb-1">
                                 Rate your current college
                             </h3>
                             <p className="text-blue-100 text-sm">
@@ -61,7 +61,7 @@ const MyReviewsTab = ({ user }) => {
 
                     <button
                         onClick={() => setShowFormModal(true)}
-                        className="bg-white text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap flex items-center gap-2"
+                        className="bg-white text-slate-900 hover:bg-slate-50 px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap flex items-center gap-2"
                     >
                         <Edit3 className="w-5 h-5" />
                         Write a Review
@@ -69,7 +69,7 @@ const MyReviewsTab = ({ user }) => {
                 </div>
             )}
 
-            <div className="bg-[var(--card)] rounded-3xl border border-[var(--border)] p-6 md:p-8 shadow-sm">
+            <div className="w-full">
                 <MyRatingsSection />
             </div>
 

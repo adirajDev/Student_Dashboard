@@ -210,7 +210,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
             <div className="bg-[var(--card)] w-full max-w-2xl rounded-3xl shadow-xl overflow-hidden flex flex-col max-h-[90vh]">
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
-                    <h2 className="text-xl font-bold">{title}</h2>
+                    <h2 className="text-xl">{title}</h2>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"

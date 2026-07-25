@@ -1,4 +1,4 @@
-import { Book, Monitor, Building, Calendar, Link as LinkIcon } from 'lucide-react';
+import { Book, Monitor, Building, Calendar, ExternalLink } from 'lucide-react';
 
 const ExamHeader = ({ exam, handleApply }) => {
     return (
@@ -10,7 +10,7 @@ const ExamHeader = ({ exam, handleApply }) => {
                     <Book className="w-10 h-10" />
                 </div>
                 <div className="flex-1">
-                    <h1 className="text-4xl font-extrabold text-[var(--foreground)] mb-2 tracking-tight">
+                    <h1 className="text-4xl text-[var(--foreground)] mb-2 tracking-tight">
                         {exam.name}
                     </h1>
                     <div className="flex flex-wrap items-center gap-4 text-sm font-medium mt-4">
@@ -25,7 +25,7 @@ const ExamHeader = ({ exam, handleApply }) => {
                         )}
                         <span className="px-3 py-1.5 bg-slate-100 text-slate-700 dark:bg-slate-800 dark:text-slate-300 rounded-full flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
-                            {new Date(exam.regStartingDate).toLocaleDateString()} - {new Date(exam.regEndingDate).toLocaleDateString()}
+                            {new Date(exam.regStartingDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} - {new Date(exam.regEndingDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </span>
                     </div>
                 </div>
@@ -37,10 +37,10 @@ const ExamHeader = ({ exam, handleApply }) => {
                             onClick={handleApply}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-2.5 px-6 rounded-xl transition-colors shadow-sm"
+                            className="inline-flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-2.5 px-6 rounded-full transition-colors shadow-sm"
                         >
-                            <LinkIcon className="w-4 h-4" />
                             Register Now
+                            <ExternalLink className="w-4 h-4" />
                         </a>
                     </div>
                 )}

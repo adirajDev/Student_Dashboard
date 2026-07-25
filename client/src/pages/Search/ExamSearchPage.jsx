@@ -42,7 +42,7 @@ const ExamSearchPage = () => {
 
                 {!query.trim() && filters.status === 'all' && filters.mode === 'all' ? (
                     <div className="mt-8">
-                        <h2 className="text-2xl font-semibold mb-6 text-[var(--foreground)]">
+                        <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                             Top Searches
                         </h2>
                         <div className="flex flex-wrap gap-3">
@@ -60,7 +60,7 @@ const ExamSearchPage = () => {
                 ) : (
                     <div className="mt-4">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-2xl font-bold text-[var(--foreground)]">
+                            <h2 className="text-2xl text-[var(--foreground)]">
                                 {query || filters.status !== 'all' || filters.mode !== 'all'
                                     ? 'Search Results'
                                     : 'All Exams'}

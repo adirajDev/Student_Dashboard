@@ -17,7 +17,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
     return (
         <div className="mt-8 space-y-12">
             <div>
-                <h2 className="text-2xl font-semibold mb-6 text-[var(--foreground)]">
+                <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                     Popular Searches
                 </h2>
                 <div className="flex flex-wrap gap-3">
@@ -37,7 +37,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
 
             {latestLiveExams && latestLiveExams.length > 0 && (
                 <div>
-                    <h2 className="text-2xl font-semibold mb-6 text-[var(--foreground)]">
+                    <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                         Latest Live Postings
                     </h2>
                     <div className="grid gap-4">
@@ -48,7 +48,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                                 className="p-6 bg-[var(--card)] rounded-3xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             >
                                 <div>
-                                    <h3 className="text-lg font-semibold text-blue-600 dark:text-blue-400 group-hover:underline">
+                                    <h3 className="text-lg text-blue-600 dark:text-blue-400 group-hover:underline">
                                         {exam.name}
                                     </h3>
                                     <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-[var(--ring)]">

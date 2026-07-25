@@ -64,7 +64,7 @@ const ResetOtpPassword = () => {
                     <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-12 shadow-sm">
                         <ShieldCheck className="w-8 h-8 text-blue-600 dark:text-blue-400 -rotate-12" />
                     </div>
-                    <h1 className="text-4xl font-bold mb-3 tracking-tight">
+                    <h1 className="text-4xl mb-3 tracking-tight">
                         Account Setup
                     </h1>
                     <p className="text-[var(--ring)] text-lg">

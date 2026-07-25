@@ -59,7 +59,7 @@ const UpdateHistoryTab = () => {
                     </div>
 
                     <div className="space-y-4">
-                        <h4 className="font-medium text-[var(--foreground)]">
+                        <h4 className="text-[var(--foreground)]">
                             Proposed Changes:
                         </h4>
 

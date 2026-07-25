@@ -1,7 +1,7 @@
 const BasicInfoFields = ({ formData, handleInputChange }) => {
     return (
         <div className="space-y-4">
-            <h4 className="text-lg font-medium border-b border-[var(--border)] pb-2">
+            <h4 className="text-lg border-b border-[var(--border)] pb-2">
                 Basic Information
             </h4>
             <div>

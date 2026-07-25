@@ -29,7 +29,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                 
                 {/* Title, Location & Rating */}
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-xl font-medium text-indigo-700 text-[var(--foreground)] truncate">
+                    <h3 className="text-xl text-indigo-700 text-[var(--foreground)] truncate">
                         {college.name}
                     </h3>
                     <div className="flex items-center gap-4 mt-1">

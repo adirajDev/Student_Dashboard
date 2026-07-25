@@ -9,7 +9,7 @@ const RecruiterFields = ({
     return (
         <div className="space-y-4">
             <div className="flex items-center justify-between border-b border-[var(--border)] pb-2">
-                <h4 className="text-lg font-medium">Top Recruiters</h4>
+                <h4 className="text-lg">Top Recruiters</h4>
                 <button
                     type="button"
                     onClick={addRecruiter}

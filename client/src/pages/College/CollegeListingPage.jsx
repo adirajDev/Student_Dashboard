@@ -57,7 +57,7 @@ const CollegeListingPage = () => {
 
     return (
         <div className="min-h-screen bg-[var(--background)] animate-fade-in pb-12">
-            <main className="max-w-6xl mx-auto px-4 mt-8">
+            <main className="max-w-6xl mx-auto px-4 mt-4">
                 <div className="mb-8">
                     <h1 className="text-3xl text-[var(--foreground)] mb-2">
                         Top Colleges
@@ -93,7 +93,7 @@ const CollegeListingPage = () => {
                             </div>
                         ) : (
                             <div className="p-12 text-center bg-[var(--card)] rounded-3xl border border-[var(--border)]">
-                                <h3 className="text-xl font-semibold mb-2 text-[var(--foreground)]">
+                                <h3 className="text-xl mb-2 text-[var(--foreground)]">
                                     No colleges found
                                 </h3>
                                 <p className="text-[var(--ring)]">

@@ -29,36 +29,38 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                 </div>
 
                 <div className="p-6">
-                    <div className="mb-6 grid grid-cols-2 gap-4 text-sm text-[var(--ring)]">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-900 dark:text-slate-100 items-start">
                         <div>
-                            <span className="block font-medium text-[var(--foreground)]">
+                            <span className="block text-slate-500 mb-1">
                                 Name
                             </span>
                             {user.name}
                         </div>
+                        <div>
+                            <span className="block text-slate-500 mb-1">
+                                Phone
+                            </span>
+                            {user.phone}
+                        </div>
                         {user.course && (
-                            <div>
-                                <span className="block font-medium text-[var(--foreground)]">
+                            <div className="sm:col-span-2">
+                                <span className="block text-slate-500 mb-1">
                                     Course
                                 </span>
                                 {user.course?.name || user.course}
                             </div>
                         )}
                         {user.college && (
-                            <div>
-                                <span className="block font-medium text-[var(--foreground)]">
+                            <div className="sm:col-span-2">
+                                <span className="block text-slate-500 mb-1">
                                     College
                                 </span>
                                 {user.college?.name || user.college}
                             </div>
                         )}
-                        <div>
-                            <span className="block font-medium text-[var(--foreground)]">
-                                Phone
-                            </span>
-                            {user.phone}
-                        </div>
                     </div>
+
+                    <hr className="my-6 border-slate-200 dark:border-slate-800" />
 
                     {error && (
                         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-2xl text-sm">
@@ -86,7 +88,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         </div>
 
                         <div className="border-t border-[var(--border)] pt-4 mt-4">
-                            <h3 className="text-sm font-semibold mb-3">
+                            <h3 className="text-sm mb-3">
                                 Change Password
                             </h3>
                             <div className="space-y-4">
