@@ -1,5 +1,5 @@
 import College from '../college/college.model.js';
-import Course from '../course/course.model.js';
+import Course from '../course/program.model.js';
 
 export const globalSearch = async queryStr => {
     if (!queryStr || queryStr.trim() === '') {
