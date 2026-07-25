@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const programSchema = new mongoose.Schema(
+const courseSchema = new mongoose.Schema(
     {
         level: {
             type: String,
@@ -55,7 +55,7 @@ const programSchema = new mongoose.Schema(
 );
 
 // Prevent duplicate programs
-programSchema.index(
+courseSchema.index(
     {
         shortName: 1,
         specialization: 1,
@@ -66,12 +66,12 @@ programSchema.index(
 );
 
 // Full-text search
-programSchema.index({
+courseSchema.index({
     shortName: 'text',
     name: 'text',
     specialization: 'text',
 });
 
-const Program = mongoose.model('Program', programSchema);
+const Course = mongoose.model('Program', programSchema);
 
-export default Program;
+export default Course;

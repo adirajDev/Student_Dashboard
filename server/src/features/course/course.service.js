@@ -1,4 +1,4 @@
-import Course from './program.model.js';
+import Course from './course.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
 

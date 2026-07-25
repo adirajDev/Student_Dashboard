@@ -2,7 +2,7 @@ import College from './college.model.js';
 import Rating from '../rating/rating.model.js';
 import AppError from '../../common/utils/AppError.js';
 
-import Course from '../course/program.model.js';
+import Course from '../course/course.model.js';
 
 export const getColleges = async (
     skip = 0,
