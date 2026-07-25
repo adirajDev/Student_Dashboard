@@ -72,6 +72,6 @@ courseSchema.index({
     specialization: 'text',
 });
 
-const Course = mongoose.model('Program', programSchema);
+const Course = mongoose.model('Course', courseSchema);
 
 export default Course;
