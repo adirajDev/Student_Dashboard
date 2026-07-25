@@ -37,7 +37,7 @@ const ExamHeader = ({ exam, handleApply }) => {
                             onClick={handleApply}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-2.5 px-6 rounded-xl transition-colors shadow-sm"
+                            className="inline-flex items-center gap-2 bg-indigo-600 text-white hover:bg-indigo-700 font-medium py-2.5 px-6 rounded-full transition-colors shadow-sm"
                         >
                             Register Now
                             <ExternalLink className="w-4 h-4" />
