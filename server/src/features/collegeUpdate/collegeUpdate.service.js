@@ -17,7 +17,11 @@ export const submitUpdate = async (user, proposedChanges) => {
         status: 'pending',
     });
 
-    await updateRequest.save();
+    try {
+        await updateRequest.save();
+    } catch (error) {
+        throw new AppError(`Failed to submit update: ${err.message}`, 400);
+    }
     return updateRequest;
 };
 
@@ -63,10 +67,12 @@ export const approveUpdate = async updateId => {
         throw new AppError('College not found.', 404);
     }
 
+
     // Merge proposed changes into the college document
     const changes = updateRequest.proposedChanges;
 
     if (changes.name) college.name = changes.name;
+    if (changes.overview === '') college.overview = null;
     if (changes.overview !== undefined) college.overview = changes.overview;
     if (changes.description !== undefined)
         college.description = changes.description;
@@ -78,16 +84,27 @@ export const approveUpdate = async updateId => {
         college.availableCourses = changes.availableCourses;
 
     if (changes.placementDetails) {
-        college.placementDetails = {
-            ...college.placementDetails,
-            ...changes.placementDetails,
-        };
+        if (!college.placementDetails) college.placementDetails = {};
+        if (changes.placementDetails.averagePackage !== undefined)
+            college.placementDetails.averagePackage = changes.placementDetails.averagePackage;
+        if (changes.placementDetails.highestPackage !== undefined)
+            college.placementDetails.highestPackage = changes.placementDetails.highestPackage;
+        if (changes.placementDetails.placementPercentage !== undefined) {
+            college.placementDetails.placementPercentage = 
+                changes.placementDetails.placementPercentage === '' 
+                    ? null 
+                    : changes.placementDetails.placementPercentage;
+        }
     }
 
     if (changes.recruiters) college.recruiters = changes.recruiters;
     if (changes.faculty) college.faculty = changes.faculty;
 
-    await college.save();
+    try {
+        await college.save();
+    } catch (err) {
+        throw new AppError(`Failed to approve update: ${err.message}`, 400);
+    }
 
     // Mark request as approved
     updateRequest.status = 'approved';
