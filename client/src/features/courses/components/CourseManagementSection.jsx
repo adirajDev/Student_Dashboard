@@ -15,6 +15,8 @@ const CourseManagementSection = ({ title }) => {
         setPage,
         searchTerm,
         setSearchTerm,
+        filterLevel,
+        setFilterLevel,
         addCourse,
         updateCourse,
         deleteCourse,
@@ -48,6 +50,8 @@ const CourseManagementSection = ({ title }) => {
                 onPageChange={setPage}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
+                filterLevel={filterLevel}
+                setFilterLevel={setFilterLevel}
                 onDelete={setDeletingCourse}
                 onEdit={c => {
                     setEditingCourse(c);

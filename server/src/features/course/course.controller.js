@@ -8,10 +8,12 @@ import {
 export const getCourses = asyncHandler(async (req, res) => {
     const { page, limit, skip } = getPaginationOptions(req);
     const search = req.query.search || '';
+    const level = req.query.level || '';
     const { data, totalCount } = await courseService.getCourses(
         skip,
         limit,
-        search
+        search,
+        level
     );
     res.json(formatPaginatedResponse(data, totalCount, page, limit));
 });

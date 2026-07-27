@@ -1,9 +1,13 @@
 import Course from './course.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
+import { validateAndCheckDuplicate } from './course.validationHelper.js';
 
-export const getCourses = async (skip = 0, limit = 0, search = '') => {
+export const getCourses = async (skip = 0, limit = 0, search = '', level = '') => {
     const queryObj = {};
+    if (level) {
+        queryObj.level = level;
+    }
     if (search) {
         queryObj.$or = [
             { name: { $regex: search, $options: 'i' } },
@@ -19,44 +23,37 @@ export const getCourses = async (skip = 0, limit = 0, search = '') => {
 };
 
 export const createCourse = async data => {
-    const { name, level } = data;
+    const validated = await validateAndCheckDuplicate(data);
 
-    if (!name) {
-        throw new AppError('Course name is required', 400);
-    }
+    const course = new Course({
+        level: validated.level,
+        shortName: validated.shortName,
+        name: validated.name,
+        specialization: validated.specialization,
+        duration: validated.duration,
+    });
 
-    const existingCourse = await Course.findOne({ name });
-    if (existingCourse) {
-        throw new AppError('Course already exists', 400);
-    }
-
-    const course = new Course({ name, level });
     await course.save();
 
     return course;
 };
 
 export const updateCourse = async (id, data) => {
-    const { name, level } = data;
-
     const course = await Course.findById(id);
     if (!course) {
         throw new AppError('Course not found', 404);
     }
 
-    if (name) {
-        const existingCourse = await Course.findOne({ name, _id: { $ne: id } });
-        if (existingCourse) {
-            throw new AppError('Course name already in use', 400);
-        }
-        course.name = name;
-    }
+    const validated = await validateAndCheckDuplicate(data, id);
 
-    if (level) {
-        course.level = level;
-    }
+    course.level = validated.level;
+    course.shortName = validated.shortName;
+    course.name = validated.name;
+    course.specialization = validated.specialization;
+    course.duration = validated.duration;
 
     await course.save();
+
     return course;
 };
 

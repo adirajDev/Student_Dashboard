@@ -48,6 +48,7 @@ export const createExam = async data => {
     return exam;
 };
 
+// TODO: add validation for updateExam
 export const updateExam = async (data, id) => {
     const updatedData = { ...data };
 
