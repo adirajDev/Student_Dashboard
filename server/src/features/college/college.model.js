@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import {COLLEGE_TYPE} from "./college.constants.js";
+import { COLLEGE_TYPE } from './college.constants.js';
 
 const collegeSchema = new mongoose.Schema(
     {
@@ -49,8 +49,8 @@ const collegeSchema = new mongoose.Schema(
                     type: Number,
                     required: true,
                     min: 0,
-                }
-            }
+                },
+            },
         ],
         placementDetails: {
             averagePackage: { type: String, trim: true },
@@ -68,15 +68,15 @@ const collegeSchema = new mongoose.Schema(
                 name: {
                     type: String,
                     required: true,
-                    trim: true
+                    trim: true,
                 },
                 department: {
                     type: String,
-                    trim: true
+                    trim: true,
                 },
                 role: {
                     type: String,
-                    trim: true
+                    trim: true,
                 },
             },
         ],

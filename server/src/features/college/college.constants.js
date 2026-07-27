@@ -1,5 +1,1 @@
-export const COLLEGE_TYPE = [
-    "Government",
-    "Private",
-    "Deemed",
-];
+export const COLLEGE_TYPE = ['Government', 'Private', 'Deemed'];

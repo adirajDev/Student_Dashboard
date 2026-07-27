@@ -47,8 +47,9 @@ export const getColleges = async (
 };
 
 export const getCollegeById = async id => {
-    const college = await College.findById(id)
-                                 .populate('availableCourses.course');
+    const college = await College.findById(id).populate(
+        'availableCourses.course'
+    );
     if (!college) {
         throw new AppError('College not found', 404);
     }
@@ -56,13 +57,7 @@ export const getCollegeById = async id => {
 };
 
 export const createCollege = async data => {
-    const {
-        name,
-        type,
-        location,
-        description,
-        collegeId,
-    } = data;
+    const { name, type, location, description, collegeId } = data;
 
     if (!name) {
         throw new AppError('Name is required', 400);
