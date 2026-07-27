@@ -3,8 +3,11 @@ import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
 import { validateAndCheckDuplicate } from './course.validationHelper.js';
 
-export const getCourses = async (skip = 0, limit = 0, search = '') => {
+export const getCourses = async (skip = 0, limit = 0, search = '', level = '') => {
     const queryObj = {};
+    if (level) {
+        queryObj.level = level;
+    }
     if (search) {
         queryObj.$or = [
             { name: { $regex: search, $options: 'i' } },

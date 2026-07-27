@@ -12,7 +12,11 @@ const CourseFormModal = ({
 }) => {
     const [formData, setFormData] = useState({
         name: '',
-        level: 'bachelors',
+        shortName: '',
+        specialization: '',
+        level: "Bachelor's",
+        durationYears: '',
+        durationMonths: '',
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -21,7 +25,11 @@ const CourseFormModal = ({
         if (editingCourse) {
             setFormData({
                 name: editingCourse.name || '',
-                level: editingCourse.level || 'bachelors',
+                shortName: editingCourse.shortName || '',
+                specialization: editingCourse.specialization || '',
+                level: editingCourse.level || "Bachelor's",
+                durationYears: editingCourse.duration ? Math.floor(editingCourse.duration / 12) : '',
+                durationMonths: editingCourse.duration ? editingCourse.duration % 12 : '',
             });
         }
     }, [editingCourse]);
@@ -35,11 +43,25 @@ const CourseFormModal = ({
         setLoading(true);
         setError('');
 
+        const payload = {
+            ...formData,
+            duration: (parseInt(formData.durationYears || 0) * 12) + parseInt(formData.durationMonths || 0)
+        };
+        // Clean up UI-only fields
+        delete payload.durationYears;
+        delete payload.durationMonths;
+
+        if (payload.duration <= 0) {
+            setError('Duration must be greater than 0');
+            setLoading(false);
+            return;
+        }
+
         let res;
         if (editingCourse) {
-            res = await onUpdate(editingCourse._id, formData);
+            res = await onUpdate(editingCourse._id, payload);
         } else {
-            res = await onAdd(formData);
+            res = await onAdd(payload);
         }
 
         if (res?.success) {
@@ -93,6 +115,22 @@ const CourseFormModal = ({
                             placeholder="e.g. Computer Science"
                         />
 
+                        <FormField
+                            label="Short Name"
+                            id="shortName"
+                            value={formData.shortName}
+                            onChange={handleChange}
+                            placeholder="e.g. B.Tech"
+                        />
+                        
+                        <FormField
+                            label="Specialization (Optional)"
+                            id="specialization"
+                            value={formData.specialization}
+                            onChange={handleChange}
+                            placeholder="e.g. Computer Science and Engineering"
+                        />
+
                         <div>
                             <label
                                 htmlFor="level"
@@ -108,10 +146,47 @@ const CourseFormModal = ({
                                 className="input-field"
                                 required
                             >
-                                <option value="diploma">Diploma</option>
-                                <option value="bachelors">Bachelors</option>
-                                <option value="masters">Masters</option>
+                                <option value="Certificate">Certificate</option>
+                                <option value="Diploma">Diploma</option>
+                                <option value="Advanced Diploma">Advanced Diploma</option>
+                                <option value="Bachelor's">Bachelor's</option>
+                                <option value="Master's">Master's</option>
+                                <option value="Doctorate">Doctorate</option>
+                                <option value="Post Doctorate">Post Doctorate</option>
                             </select>
+                        </div>
+                        
+                        <div>
+                            <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
+                                Duration
+                            </label>
+                            <div className="flex gap-4">
+                                <div className="flex-1">
+                                    <input
+                                        type="number"
+                                        id="durationYears"
+                                        name="durationYears"
+                                        min="0"
+                                        value={formData.durationYears}
+                                        onChange={handleChange}
+                                        className="input-field"
+                                        placeholder="Years"
+                                    />
+                                </div>
+                                <div className="flex-1">
+                                    <input
+                                        type="number"
+                                        id="durationMonths"
+                                        name="durationMonths"
+                                        min="0"
+                                        max="11"
+                                        value={formData.durationMonths}
+                                        onChange={handleChange}
+                                        className="input-field"
+                                        placeholder="Months"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
                         <div className="flex justify-end gap-3 mt-8">

@@ -16,18 +16,41 @@ const CourseTable = ({
     onPageChange,
     searchTerm,
     setSearchTerm,
+    filterLevel,
+    setFilterLevel,
     onEdit,
     onDelete,
 }) => {
     // UI State: Data Render
     return (
         <div>
-            <SearchBar
-                value={searchTerm}
-                onChange={setSearchTerm}
-                onClear={() => setSearchTerm('')}
-                placeholder="Search by course name or level..."
-            />
+            <div className="flex flex-col sm:flex-row gap-4 mb-4">
+                <div className="flex-1">
+                    <SearchBar
+                        value={searchTerm}
+                        onChange={setSearchTerm}
+                        onClear={() => setSearchTerm('')}
+                        placeholder="Search by course name or level..."
+                        className="relative"
+                    />
+                </div>
+                <div className="w-full sm:w-48 shrink-0">
+                    <select
+                        value={filterLevel}
+                        onChange={(e) => setFilterLevel(e.target.value)}
+                        className="w-full py-3 px-4 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
+                    >
+                        <option value="">All Levels</option>
+                        <option value="Certificate">Certificate</option>
+                        <option value="Diploma">Diploma</option>
+                        <option value="Advanced Diploma">Advanced Diploma</option>
+                        <option value="Bachelor's">Bachelor's</option>
+                        <option value="Master's">Master's</option>
+                        <option value="Doctorate">Doctorate</option>
+                        <option value="Post Doctorate">Post Doctorate</option>
+                    </select>
+                </div>
+            </div>
 
             {isLoading ? (
                 <Loading />
@@ -47,10 +70,13 @@ const CourseTable = ({
                                 <thead>
                                     <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                            Course Name
+                                            Course
                                         </th>
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Level
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Duration
                                         </th>
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
                                             Actions
@@ -67,17 +93,24 @@ const CourseTable = ({
                                                 <div className="font-medium text-[var(--foreground)]">
                                                     {course.name}
                                                 </div>
+                                                <div className="text-sm text-[var(--ring)] mt-1">
+                                                    {course.shortName} {course.specialization ? `- ${course.specialization}` : ''}
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
-                                                    className={`px-3 py-1 text-xs font-medium rounded-full capitalize
-                                                ${course.level === 'diploma' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
-                                                ${course.level === 'bachelors' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : ''}
-                                                ${course.level === 'masters' ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : ''}
+                                                    className={`px-3 py-1 text-xs font-medium rounded-full
+                                                ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
+                                                ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : ''}
+                                                ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : ''}
+                                                ${!course.level?.toLowerCase().includes('diploma') && !course.level?.toLowerCase().includes('bachelor') && !course.level?.toLowerCase().includes('master') && !course.level?.toLowerCase().includes('doctorate') ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : ''}
                                             `}
                                                 >
                                                     {course.level}
                                                 </span>
+                                            </td>
+                                            <td className="px-6 py-4 text-sm text-[var(--ring)]">
+                                                {course.duration ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}` : 'N/A'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">

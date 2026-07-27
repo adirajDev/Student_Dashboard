@@ -8,6 +8,7 @@ const useCourseManagement = shouldFetch => {
     const [page, setPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [searchTerm, setSearchTerm] = useState('');
+    const [filterLevel, setFilterLevel] = useState('');
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('');
 
     useEffect(() => {
@@ -17,6 +18,10 @@ const useCourseManagement = shouldFetch => {
         }, 500);
         return () => clearTimeout(timer);
     }, [searchTerm]);
+    
+    useEffect(() => {
+        setPage(1);
+    }, [filterLevel]);
 
     const fetchCourses = useCallback(async () => {
         if (!shouldFetch) return;
@@ -24,8 +29,9 @@ const useCourseManagement = shouldFetch => {
         setIsLoading(true);
         setError('');
         try {
+            const levelQuery = filterLevel ? `&level=${encodeURIComponent(filterLevel)}` : '';
             const res = await apiClient.get(
-                `/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`
+                `/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}${levelQuery}`
             );
             const data = Array.isArray(res.data) ? res.data : res.data.data;
             const sortedCourses = data.sort((a, b) =>
@@ -41,7 +47,7 @@ const useCourseManagement = shouldFetch => {
         } finally {
             setIsLoading(false);
         }
-    }, [shouldFetch, page, debouncedSearchTerm]);
+    }, [shouldFetch, page, debouncedSearchTerm, filterLevel]);
 
     useEffect(() => {
         fetchCourses();
@@ -109,6 +115,8 @@ const useCourseManagement = shouldFetch => {
         setPage,
         searchTerm,
         setSearchTerm,
+        filterLevel,
+        setFilterLevel,
         addCourse,
         updateCourse,
         deleteCourse,
