@@ -1,10 +1,17 @@
 import CollegeUpdate from './collegeUpdate.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/utils/AppError.js';
+import {validateProposedChanges} from "./collegeUpdate.validation.js";
+import {applyProposedChanges} from "./collegeUpdate.merge.js";
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
         throw new AppError('You are not assigned to any college.', 400);
+    }
+
+    const {error, value} = validateProposedChanges(proposedChanges)
+    if (error) {
+        throw new AppError(`Invalid update data: ${error}`, 400);
     }
 
     const collegeId =
@@ -13,11 +20,15 @@ export const submitUpdate = async (user, proposedChanges) => {
     const updateRequest = new CollegeUpdate({
         college: collegeId,
         requestedBy: user._id,
-        proposedChanges,
+        proposedChanges: value,
         status: 'pending',
     });
 
-    await updateRequest.save();
+    try {
+        await updateRequest.save();
+    } catch (error) {
+        throw new AppError(`Failed to submit update: ${err.message}`, 400);
+    }
     return updateRequest;
 };
 
@@ -63,25 +74,21 @@ export const approveUpdate = async updateId => {
         throw new AppError('College not found.', 404);
     }
 
-    // Merge proposed changes into the college document
-    const changes = updateRequest.proposedChanges;
-
-    if (changes.name) college.name = changes.name;
-    if (changes.overview !== undefined) college.overview = changes.overview;
-    if (changes.description !== undefined)
-        college.description = changes.description;
-
-    if (changes.placementDetails) {
-        college.placementDetails = {
-            ...college.placementDetails,
-            ...changes.placementDetails,
-        };
+    // re-validate: catches stale requests if College schema changed since submission
+    const { error, value: changes } = validateProposedChanges(
+        updateRequest.proposedChanges
+    );
+    if (error) {
+        throw new AppError(`Stored update data is invalid: ${error}`, 400);
     }
 
-    if (changes.recruiters) college.recruiters = changes.recruiters;
-    if (changes.faculty) college.faculty = changes.faculty;
+    applyProposedChanges(college, changes);
 
-    await college.save();
+    try {
+        await college.save();
+    } catch (err) {
+        throw new AppError(`Failed to approve update: ${err.message}`, 400);
+    }
 
     // Mark request as approved
     updateRequest.status = 'approved';

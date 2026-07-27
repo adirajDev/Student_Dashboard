@@ -34,7 +34,10 @@ export const getColleges = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('availableCourses', 'name level')
+            .populate(
+                'availableCourses.course',
+                'name level shortName specialization duration'
+            )
             .sort({ name: 1 })
             .skip(skip)
             .limit(limit),
@@ -44,7 +47,9 @@ export const getColleges = async (
 };
 
 export const getCollegeById = async id => {
-    const college = await College.findById(id).populate('availableCourses');
+    const college = await College.findById(id).populate(
+        'availableCourses.course'
+    );
     if (!college) {
         throw new AppError('College not found', 404);
     }
@@ -52,7 +57,7 @@ export const getCollegeById = async id => {
 };
 
 export const createCollege = async data => {
-    const { name, location, description, collegeId, availableCourses } = data;
+    const { name, type, location, description, collegeId } = data;
 
     if (!name) {
         throw new AppError('Name is required', 400);
@@ -65,10 +70,10 @@ export const createCollege = async data => {
 
     const college = new College({
         name,
+        type,
         location,
         description,
         collegeId,
-        availableCourses,
     });
 
     await college.save();

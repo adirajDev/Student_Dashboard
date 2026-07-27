@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { COLLEGE_TYPE } from './college.constants.js';
 
 const collegeSchema = new mongoose.Schema(
     {
@@ -7,6 +8,16 @@ const collegeSchema = new mongoose.Schema(
             required: true,
             trim: true,
             unique: true,
+        },
+        logo: {
+            type: String,
+            trim: true,
+        },
+        type: {
+            type: String,
+            enum: COLLEGE_TYPE,
+            required: true,
+            default: 'Private',
         },
         location: {
             type: String,
@@ -29,8 +40,16 @@ const collegeSchema = new mongoose.Schema(
         },
         availableCourses: [
             {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Course',
+                course: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Course',
+                    required: true,
+                },
+                fee: {
+                    type: Number,
+                    required: true,
+                    min: 0,
+                },
             },
         ],
         placementDetails: {
@@ -46,9 +65,19 @@ const collegeSchema = new mongoose.Schema(
         ],
         faculty: [
             {
-                name: { type: String, required: true, trim: true },
-                department: { type: String, trim: true },
-                role: { type: String, trim: true },
+                name: {
+                    type: String,
+                    required: true,
+                    trim: true,
+                },
+                department: {
+                    type: String,
+                    trim: true,
+                },
+                role: {
+                    type: String,
+                    trim: true,
+                },
             },
         ],
         averageRating: {

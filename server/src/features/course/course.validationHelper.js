@@ -5,7 +5,10 @@ import AppError from '../../common/utils/AppError.js';
 export const validateAndCheckDuplicate = async (data, excludeId = null) => {
     const validated = validateCourse(data);
 
-    if (validated.specialization === '' || validated.specialization === undefined) {
+    if (
+        validated.specialization === '' ||
+        validated.specialization === undefined
+    ) {
         validated.specialization = null;
     }
 

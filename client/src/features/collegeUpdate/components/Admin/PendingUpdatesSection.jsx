@@ -30,15 +30,23 @@ const PendingUpdatesSection = ({ title }) => {
     }, [page, getAllUpdates]);
 
     const handleApprove = async id => {
-        await approveUpdate(id);
-        setSelectedUpdate(null);
-        fetchUpdates();
+        try {
+            await approveUpdate(id);
+            setSelectedUpdate(null);
+            fetchUpdates();
+        } catch (err) {
+            console.error('Failed to approve update', err);
+        }
     };
 
     const handleReject = async (id, feedback) => {
-        await rejectUpdate(id, feedback);
-        setSelectedUpdate(null);
-        fetchUpdates();
+        try {
+            await rejectUpdate(id, feedback);
+            setSelectedUpdate(null);
+            fetchUpdates();
+        } catch (err) {
+            console.error('Failed to reject update', err);
+        }
     };
 
     return (
