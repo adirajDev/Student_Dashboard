@@ -65,9 +65,19 @@ const collegeSchema = new mongoose.Schema(
         ],
         faculty: [
             {
-                name: { type: String, required: true, trim: true },
-                department: { type: String, trim: true },
-                role: { type: String, trim: true },
+                name: {
+                    type: String,
+                    required: true,
+                    trim: true
+                },
+                department: {
+                    type: String,
+                    trim: true
+                },
+                role: {
+                    type: String,
+                    trim: true
+                },
             },
         ],
         averageRating: {

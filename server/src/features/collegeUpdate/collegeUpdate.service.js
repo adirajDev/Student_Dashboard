@@ -70,6 +70,11 @@ export const approveUpdate = async updateId => {
     if (changes.overview !== undefined) college.overview = changes.overview;
     if (changes.description !== undefined)
         college.description = changes.description;
+    if (changes.logo !== undefined) college.logo = changes.logo;
+    if (changes.type) college.type = changes.type;
+    if (changes.location !== undefined) college.location = changes.location;
+    if (changes.collegeId !== undefined) college.collegeId = changes.collegeId;
+    if (changes.availableCourses !== undefined) college.availableCourses = changes.availableCourses;
 
     if (changes.placementDetails) {
         college.placementDetails = {
