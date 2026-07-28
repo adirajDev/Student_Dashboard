@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
 import { Search, Plus, Trash2, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
+import SearchBar from '../../search/components/SearchBar';
 import useCollegeCoursesForm from '../hooks/useCollegeCoursesForm';
 import useCourseManagement from '../../courses/hooks/useCourseManagement';
 
@@ -21,7 +22,7 @@ const CourseCard = ({ course, actionButton }) => (
                 </div>
             )}
             <div className="text-xs text-[var(--ring)]">
-                Duration: {course.duration?.value} {course.duration?.unit}
+                Duration: {course.duration ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}` : 'N/A'}
             </div>
         </div>
         <div className="flex items-center gap-3 shrink-0">
@@ -51,6 +52,8 @@ const CollegeCoursesTab = () => {
         isLoading: coursesLoading,
         searchTerm,
         setSearchTerm,
+        filterLevel,
+        setFilterLevel,
     } = useCourseManagement(true);
 
     if (formLoading) {
@@ -108,15 +111,27 @@ const CollegeCoursesTab = () => {
                     <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden h-[600px]">
                         <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
                             <h4 className="font-medium mb-3">Global Courses</h4>
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[var(--ring)]" />
-                                <input
-                                    type="text"
-                                    placeholder="Search by name or specialization..."
+                            <div className="flex flex-col gap-3">
+                                <SearchBar
                                     value={searchTerm}
-                                    onChange={e => setSearchTerm(e.target.value)}
-                                    className="w-full pl-9 pr-4 py-2 bg-[var(--card)] border border-[var(--border)] rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm"
+                                    onChange={setSearchTerm}
+                                    onClear={() => setSearchTerm('')}
+                                    placeholder="Search by name or specialization..."
                                 />
+                                <select
+                                    value={filterLevel}
+                                    onChange={(e) => setFilterLevel(e.target.value)}
+                                    className="w-full py-2.5 px-3 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm appearance-none"
+                                >
+                                    <option value="">All Levels</option>
+                                    <option value="Certificate">Certificate</option>
+                                    <option value="Diploma">Diploma</option>
+                                    <option value="Advanced Diploma">Advanced Diploma</option>
+                                    <option value="Bachelor's">Bachelor's</option>
+                                    <option value="Master's">Master's</option>
+                                    <option value="Doctorate">Doctorate</option>
+                                    <option value="Post Doctorate">Post Doctorate</option>
+                                </select>
                             </div>
                         </div>
                         <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -136,7 +151,7 @@ const CollegeCoursesTab = () => {
                                         actionButton={
                                             <button
                                                 type="button"
-                                                onClick={() => addCourse(course._id, 0)}
+                                                onClick={() => addCourse(course._id, 0, course)}
                                                 className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 rounded-xl transition-colors flex items-center gap-1 text-sm font-medium"
                                             >
                                                 <Plus className="w-4 h-4" />
@@ -162,16 +177,8 @@ const CollegeCoursesTab = () => {
                                 </div>
                             ) : (
                                 selectedCourses.map(sc => {
-                                    // Find the course details from the global courses list
-                                    // if it's already in the college, it might not be in the search results if we have pagination.
-                                    // For safety, we should ideally fetch the full details, but for now we look it up in globalCourses
-                                    // OR we could have mapped the initial originalCourses to include details if possible.
-                                    // Given useCourseManagement loads all courses, it should be there.
-                                    const courseDetails = globalCourses.find(c => c._id === sc.course) || { 
-                                        name: 'Loading...', 
-                                        shortName: 'Loading...', 
-                                        _id: sc.course 
-                                    };
+                                    const courseDetails = sc.courseDetails || {};
+                                    const fallbackName = `Course ID: ${String(sc.course).substring(0,6)}`;
 
                                     return (
                                         <div key={sc.course} className="p-4 border border-blue-100 dark:border-blue-900/40 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex flex-col gap-3">
@@ -179,7 +186,7 @@ const CollegeCoursesTab = () => {
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-1">
                                                         <h4 className="font-medium text-[var(--foreground)]">
-                                                            {courseDetails.shortName || courseDetails.name}
+                                                            {courseDetails.shortName || courseDetails.name || fallbackName}
                                                         </h4>
                                                         {courseDetails.level && (
                                                             <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
@@ -189,7 +196,7 @@ const CollegeCoursesTab = () => {
                                                     </div>
                                                     {courseDetails.specialization && (
                                                         <div className="text-xs text-[var(--ring)]">
-                                                            {courseDetails.specialization}
+                                                            Specialization: {courseDetails.specialization}
                                                         </div>
                                                     )}
                                                 </div>

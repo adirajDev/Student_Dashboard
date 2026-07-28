@@ -16,7 +16,7 @@ export const getCourses = async (
     if (search) {
         queryObj.$or = [
             { name: { $regex: search, $options: 'i' } },
-            { level: { $regex: search, $options: 'i' } },
+            { specialization: { $regex: search, $options: 'i' } },
         ];
     }
     const query = Course.find(queryObj);

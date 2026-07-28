@@ -9,13 +9,10 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
-import useCourseManagement from '../../../courses/hooks/useCourseManagement';
 
 const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
     const [feedback, setFeedback] = useState('');
     const [isRejecting, setIsRejecting] = useState(false);
-
-    const { courses: globalCourses } = useCourseManagement(true);
     
     if (!update) return null;
 
@@ -135,7 +132,7 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
         if (!courseUpdates) return null;
 
         const getCourseDetails = (id) => {
-            const course = globalCourses.find(c => c._id === id);
+            const course = courseUpdates.populatedCourses?.find(c => c._id === id);
             if (!course) return { name: id, shortName: id, level: '' };
             return course;
         };
@@ -150,7 +147,11 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 const course = getCourseDetails(item.course);
                                 return (
                                     <div key={i} className="flex justify-between items-center text-sm">
-                                        <span>{course.shortName || course.name} <span className="text-xs opacity-70">({course.level})</span></span>
+                                        <span>
+                                            {course.shortName || course.name}
+                                            {course.specialization ? ` - ${course.specialization}` : ''}
+                                            <span className="text-xs opacity-70 ml-1">({course.level})</span>
+                                        </span>
                                         <span className="font-medium">Fee: ₹{item.fee}</span>
                                     </div>
                                 );
@@ -166,7 +167,11 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 const course = getCourseDetails(item.course);
                                 return (
                                     <div key={i} className="flex justify-between items-center text-sm">
-                                        <span>{course.shortName || course.name} <span className="text-xs opacity-70">({course.level})</span></span>
+                                        <span>
+                                            {course.shortName || course.name}
+                                            {course.specialization ? ` - ${course.specialization}` : ''}
+                                            <span className="text-xs opacity-70 ml-1">({course.level})</span>
+                                        </span>
                                         <span className="font-medium">New Fee: ₹{item.fee}</span>
                                     </div>
                                 );
@@ -182,7 +187,9 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 const course = getCourseDetails(id);
                                 return (
                                     <div key={i} className="text-sm line-through opacity-70 text-red-700 dark:text-red-300">
-                                        {course.shortName || course.name} ({course.level})
+                                        {course.shortName || course.name} 
+                                        {course.specialization ? ` - ${course.specialization}` : ''}
+                                        <span className="ml-1">({course.level})</span>
                                     </div>
                                 );
                             })}

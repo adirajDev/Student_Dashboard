@@ -34,10 +34,23 @@ const useCollegeCoursesForm = user => {
                 setCollege(data);
 
                 // Map available courses to our local state
-                const currentCourses = (data.availableCourses || []).map(ac => ({
-                    course: ac.course._id || ac.course, // in case it's populated
-                    fee: ac.fee,
-                }));
+                const currentCourses = (data.availableCourses || []).map(ac => {
+                    const courseId = ac.course?._id || ac.course;
+                    let cDetails = ac.course;
+                    
+                    if (!cDetails || typeof cDetails === 'string') {
+                        cDetails = { 
+                            name: 'Populating...', 
+                            shortName: 'Loading ID: ' + String(courseId).substring(0, 4) 
+                        };
+                    }
+                    
+                    return {
+                        course: courseId,
+                        courseDetails: cDetails,
+                        fee: ac.fee,
+                    };
+                });
                 
                 setOriginalCourses(currentCourses);
                 setSelectedCourses(currentCourses);
@@ -51,11 +64,11 @@ const useCollegeCoursesForm = user => {
         fetchCollege();
     }, [user.college]);
 
-    const addCourse = (courseId, fee) => {
+    const addCourse = (courseId, fee, courseDetails) => {
         setSelectedCourses(prev => {
             // Prevent duplicates
             if (prev.some(c => c.course === courseId)) return prev;
-            return [...prev, { course: courseId, fee: Number(fee) || 0 }];
+            return [...prev, { course: courseId, fee: Number(fee) || 0, courseDetails }];
         });
     };
 
@@ -84,9 +97,10 @@ const useCollegeCoursesForm = user => {
         selectedCourses.forEach(sc => {
             const original = originalCourses.find(oc => oc.course === sc.course);
             if (!original) {
-                added.push(sc);
+                // Remove courseDetails from payload
+                added.push({ course: sc.course, fee: sc.fee });
             } else if (original.fee !== sc.fee) {
-                updated.push(sc);
+                updated.push({ course: sc.course, fee: sc.fee });
             }
         });
 

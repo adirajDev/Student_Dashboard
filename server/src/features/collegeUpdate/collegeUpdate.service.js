@@ -1,5 +1,6 @@
 import CollegeUpdate from './collegeUpdate.model.js';
 import College from '../college/college.model.js';
+import Course from '../course/course.model.js';
 import AppError from '../../common/utils/AppError.js';
 import {validateProposedChanges} from "./collegeUpdate.validation.js";
 import {applyProposedChanges} from "./collegeUpdate.merge.js";
@@ -52,9 +53,28 @@ export const getAllUpdates = async (skip = 0, limit = 0) => {
             .populate('requestedBy', 'name email')
             .sort({ createdAt: -1 })
             .skip(skip)
-            .limit(limit),
+            .limit(limit)
+            .lean(),
         CollegeUpdate.countDocuments({ status: 'pending' }),
     ]);
+
+    // Manually populate courses for courseUpdates delta
+    for (const update of data) {
+        if (update.proposedChanges?.courseUpdates) {
+            const courseIds = [];
+            const cu = update.proposedChanges.courseUpdates;
+            if (cu.added) courseIds.push(...cu.added.map(a => a.course));
+            if (cu.updated) courseIds.push(...cu.updated.map(u => u.course));
+            if (cu.removed) courseIds.push(...cu.removed);
+
+            if (courseIds.length > 0) {
+                const uniqueIds = [...new Set(courseIds)];
+                const courses = await Course.find({ _id: { $in: uniqueIds } }).select('name shortName level specialization');
+                cu.populatedCourses = courses;
+            }
+        }
+    }
+
     return { data, totalCount };
 };
 

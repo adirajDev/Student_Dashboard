@@ -47,9 +47,10 @@ export const getColleges = async (
 };
 
 export const getCollegeById = async id => {
-    const college = await College.findById(id).populate(
-        'availableCourses.course'
-    );
+    const college = await College.findById(id).populate({
+        path: 'availableCourses.course',
+        model: 'Course'
+    });
     if (!college) {
         throw new AppError('College not found', 404);
     }
