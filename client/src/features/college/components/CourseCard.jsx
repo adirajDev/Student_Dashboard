@@ -1,6 +1,6 @@
 import { Calendar } from 'lucide-react';
 
-const CourseCard = ({ course }) => {
+const CourseCard = ({ course, fee }) => {
     return (
         <div
             id={`course-${course._id}`}
@@ -18,9 +18,15 @@ const CourseCard = ({ course }) => {
             </div>
             
             {course.specialization && (
-                <p className="text-sm text-[var(--ring)] mb-4 line-clamp-1">
+                <p className="text-sm text-[var(--ring)] mb-3 line-clamp-1">
                     {course.specialization}
                 </p>
+            )}
+
+            {fee !== undefined && (
+                <div className="mb-4 inline-flex items-center px-3 py-1 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-lg text-sm font-semibold">
+                    Fee: ₹{Number(fee).toLocaleString()}
+                </div>
             )}
 
             <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
