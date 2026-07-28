@@ -18,7 +18,7 @@ const useCourseManagement = shouldFetch => {
         }, 500);
         return () => clearTimeout(timer);
     }, [searchTerm]);
-    
+
     useEffect(() => {
         setPage(1);
     }, [filterLevel]);
@@ -29,7 +29,9 @@ const useCourseManagement = shouldFetch => {
         setIsLoading(true);
         setError('');
         try {
-            const levelQuery = filterLevel ? `&level=${encodeURIComponent(filterLevel)}` : '';
+            const levelQuery = filterLevel
+                ? `&level=${encodeURIComponent(filterLevel)}`
+                : '';
             const res = await apiClient.get(
                 `/courses?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}${levelQuery}`
             );

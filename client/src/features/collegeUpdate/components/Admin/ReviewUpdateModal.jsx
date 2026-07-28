@@ -13,7 +13,7 @@ import { createPortal } from 'react-dom';
 const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
     const [feedback, setFeedback] = useState('');
     const [isRejecting, setIsRejecting] = useState(false);
-    
+
     if (!update) return null;
 
     const changes = update.proposedChanges;
@@ -128,11 +128,13 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
         );
     };
 
-    const renderCourseUpdates = (courseUpdates) => {
+    const renderCourseUpdates = courseUpdates => {
         if (!courseUpdates) return null;
 
-        const getCourseDetails = (id) => {
-            const course = courseUpdates.populatedCourses?.find(c => c._id === id);
+        const getCourseDetails = id => {
+            const course = courseUpdates.populatedCourses?.find(
+                c => c._id === id
+            );
             if (!course) return { name: id, shortName: id, level: '' };
             return course;
         };
@@ -141,18 +143,29 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
             <div className="space-y-4 mt-2">
                 {courseUpdates.added?.length > 0 && (
                     <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                        <h4 className="text-sm font-semibold text-emerald-800 mb-2">Added Courses</h4>
+                        <h4 className="text-sm font-semibold text-emerald-800 mb-2">
+                            Added Courses
+                        </h4>
                         <div className="grid gap-2">
                             {courseUpdates.added.map((item, i) => {
                                 const course = getCourseDetails(item.course);
                                 return (
-                                    <div key={i} className="flex justify-between items-center text-sm">
+                                    <div
+                                        key={i}
+                                        className="flex justify-between items-center text-sm"
+                                    >
                                         <span>
                                             {course.shortName || course.name}
-                                            {course.specialization ? ` - ${course.specialization}` : ''}
-                                            <span className="text-xs opacity-70 ml-1">({course.level})</span>
+                                            {course.specialization
+                                                ? ` - ${course.specialization}`
+                                                : ''}
+                                            <span className="text-xs opacity-70 ml-1">
+                                                ({course.level})
+                                            </span>
                                         </span>
-                                        <span className="font-medium">Fee: ₹{item.fee}</span>
+                                        <span className="font-medium">
+                                            Fee: ₹{item.fee}
+                                        </span>
                                     </div>
                                 );
                             })}
@@ -161,18 +174,29 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                 )}
                 {courseUpdates.updated?.length > 0 && (
                     <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                        <h4 className="text-sm font-semibold text-blue-800 mb-2">Updated Fees</h4>
+                        <h4 className="text-sm font-semibold text-blue-800 mb-2">
+                            Updated Fees
+                        </h4>
                         <div className="grid gap-2">
                             {courseUpdates.updated.map((item, i) => {
                                 const course = getCourseDetails(item.course);
                                 return (
-                                    <div key={i} className="flex justify-between items-center text-sm">
+                                    <div
+                                        key={i}
+                                        className="flex justify-between items-center text-sm"
+                                    >
                                         <span>
                                             {course.shortName || course.name}
-                                            {course.specialization ? ` - ${course.specialization}` : ''}
-                                            <span className="text-xs opacity-70 ml-1">({course.level})</span>
+                                            {course.specialization
+                                                ? ` - ${course.specialization}`
+                                                : ''}
+                                            <span className="text-xs opacity-70 ml-1">
+                                                ({course.level})
+                                            </span>
                                         </span>
-                                        <span className="font-medium">New Fee: ₹{item.fee}</span>
+                                        <span className="font-medium">
+                                            New Fee: ₹{item.fee}
+                                        </span>
                                     </div>
                                 );
                             })}
@@ -181,15 +205,24 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                 )}
                 {courseUpdates.removed?.length > 0 && (
                     <div className="bg-red-50 p-4 rounded-xl border border-red-200">
-                        <h4 className="text-sm font-semibold text-red-800 mb-2">Removed Courses</h4>
+                        <h4 className="text-sm font-semibold text-red-800 mb-2">
+                            Removed Courses
+                        </h4>
                         <div className="grid gap-2">
                             {courseUpdates.removed.map((id, i) => {
                                 const course = getCourseDetails(id);
                                 return (
-                                    <div key={i} className="text-sm line-through opacity-70 text-red-700">
-                                        {course.shortName || course.name} 
-                                        {course.specialization ? ` - ${course.specialization}` : ''}
-                                        <span className="ml-1">({course.level})</span>
+                                    <div
+                                        key={i}
+                                        className="text-sm line-through opacity-70 text-red-700"
+                                    >
+                                        {course.shortName || course.name}
+                                        {course.specialization
+                                            ? ` - ${course.specialization}`
+                                            : ''}
+                                        <span className="ml-1">
+                                            ({course.level})
+                                        </span>
                                     </div>
                                 );
                             })}
@@ -205,9 +238,7 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
             <div className="bg-[var(--card)] rounded-3xl w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h3 className="text-xl">
-                        Review: {update.college?.name}
-                    </h3>
+                    <h3 className="text-xl">Review: {update.college?.name}</h3>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-slate-100 rounded-full transition-colors"

@@ -28,8 +28,12 @@ const CourseFormModal = ({
                 shortName: editingCourse.shortName || '',
                 specialization: editingCourse.specialization || '',
                 level: editingCourse.level || "Bachelor's",
-                durationYears: editingCourse.duration ? Math.floor(editingCourse.duration / 12) : '',
-                durationMonths: editingCourse.duration ? editingCourse.duration % 12 : '',
+                durationYears: editingCourse.duration
+                    ? Math.floor(editingCourse.duration / 12)
+                    : '',
+                durationMonths: editingCourse.duration
+                    ? editingCourse.duration % 12
+                    : '',
             });
         }
     }, [editingCourse]);
@@ -45,7 +49,9 @@ const CourseFormModal = ({
 
         const payload = {
             ...formData,
-            duration: (parseInt(formData.durationYears || 0) * 12) + parseInt(formData.durationMonths || 0)
+            duration:
+                parseInt(formData.durationYears || 0) * 12 +
+                parseInt(formData.durationMonths || 0),
         };
         // Clean up UI-only fields
         delete payload.durationYears;
@@ -122,7 +128,7 @@ const CourseFormModal = ({
                             onChange={handleChange}
                             placeholder="e.g. B.Tech"
                         />
-                        
+
                         <FormField
                             label="Specialization (Optional)"
                             id="specialization"
@@ -148,14 +154,18 @@ const CourseFormModal = ({
                             >
                                 <option value="Certificate">Certificate</option>
                                 <option value="Diploma">Diploma</option>
-                                <option value="Advanced Diploma">Advanced Diploma</option>
+                                <option value="Advanced Diploma">
+                                    Advanced Diploma
+                                </option>
                                 <option value="Bachelor's">Bachelor's</option>
                                 <option value="Master's">Master's</option>
                                 <option value="Doctorate">Doctorate</option>
-                                <option value="Post Doctorate">Post Doctorate</option>
+                                <option value="Post Doctorate">
+                                    Post Doctorate
+                                </option>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
                                 Duration

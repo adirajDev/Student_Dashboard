@@ -113,11 +113,17 @@ const CollegeTable = ({
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                                                    college.type === 'Government' ? 'bg-emerald-100 text-emerald-700' :
-                                                    college.type === 'Private' ? 'bg-blue-100 text-blue-700' :
-                                                    'bg-purple-100 text-purple-700'
-                                                }`}>
+                                                <span
+                                                    className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                                        college.type ===
+                                                        'Government'
+                                                            ? 'bg-emerald-100 text-emerald-700'
+                                                            : college.type ===
+                                                                'Private'
+                                                              ? 'bg-blue-100 text-blue-700'
+                                                              : 'bg-purple-100 text-purple-700'
+                                                    }`}
+                                                >
                                                     {college.type || 'Private'}
                                                 </span>
                                             </td>

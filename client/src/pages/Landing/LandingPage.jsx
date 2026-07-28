@@ -130,9 +130,7 @@ const LandingPage = () => {
                             <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
                                 <Building className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl mb-3">
-                                College Rep
-                            </h3>
+                            <h3 className="text-2xl mb-3">College Rep</h3>
                             <p className="text-[var(--ring)] mb-8">
                                 Claim your institution, manage public profiles,
                                 and keep placement and faculty records up to
@@ -153,9 +151,7 @@ const LandingPage = () => {
                             <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-6">
                                 <ShieldCheck className="w-7 h-7" />
                             </div>
-                            <h3 className="text-2xl mb-3">
-                                Administrator
-                            </h3>
+                            <h3 className="text-2xl mb-3">Administrator</h3>
                             <p className="text-[var(--ring)] mb-8">
                                 Platform management, review moderation, and
                                 overseeing institutional data integrity across
@@ -196,9 +192,7 @@ const LandingPage = () => {
                         </div>
 
                         <div id="contact">
-                            <h4 className="text-white mb-4">
-                                Quick Links
-                            </h4>
+                            <h4 className="text-white mb-4">Quick Links</h4>
                             <ul className="space-y-2">
                                 {navLinks.map(link => (
                                     <li key={link.name}>
@@ -214,9 +208,7 @@ const LandingPage = () => {
                         </div>
 
                         <div>
-                            <h4 className="text-white mb-4">
-                                Contact
-                            </h4>
+                            <h4 className="text-white mb-4">Contact</h4>
                             <ul className="space-y-2 text-slate-400">
                                 <li>info@studentdashboard.edu</li>
                                 <li>+1 (555) 123-4567</li>

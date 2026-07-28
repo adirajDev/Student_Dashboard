@@ -73,9 +73,7 @@ const SearchPage = () => {
                             <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Search className="w-8 h-8 text-[var(--ring)]" />
                             </div>
-                            <h3 className="text-xl mb-2">
-                                No results found
-                            </h3>
+                            <h3 className="text-xl mb-2">No results found</h3>
                             <p className="text-[var(--ring)]">
                                 We couldn't find any colleges or courses
                                 matching your search.

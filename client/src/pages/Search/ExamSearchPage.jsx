@@ -14,15 +14,8 @@ const ExamSearchPage = () => {
     const [searchParams] = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
 
-    const {
-        query,
-        setQuery,
-        filters,
-        setFilters,
-        results,
-        isLoading,
-        error,
-    } = useExamSearch(initialQuery);
+    const { query, setQuery, filters, setFilters, results, isLoading, error } =
+        useExamSearch(initialQuery);
 
     const handleExamClick = exam => {
         navigate(`/exam/${exam._id}`);
@@ -40,7 +33,9 @@ const ExamSearchPage = () => {
                     />
                 </div>
 
-                {!query.trim() && filters.status === 'all' && filters.mode === 'all' ? (
+                {!query.trim() &&
+                filters.status === 'all' &&
+                filters.mode === 'all' ? (
                     <div className="mt-8">
                         <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                             Top Searches
@@ -61,7 +56,9 @@ const ExamSearchPage = () => {
                     <div className="mt-4">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-2xl text-[var(--foreground)]">
-                                {query || filters.status !== 'all' || filters.mode !== 'all'
+                                {query ||
+                                filters.status !== 'all' ||
+                                filters.mode !== 'all'
                                     ? 'Search Results'
                                     : 'All Exams'}
                             </h2>

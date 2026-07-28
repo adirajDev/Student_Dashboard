@@ -1,4 +1,4 @@
-const useExamStatus = (exam) => {
+const useExamStatus = exam => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const start = exam.regStartingDate ? new Date(exam.regStartingDate) : null;

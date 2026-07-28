@@ -13,9 +13,7 @@ const NoResultsFound = ({ searchTerm }) => (
                 d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"
             />
         </svg>
-        <h3 className="text-lg text-[var(--foreground)]">
-            No matches found
-        </h3>
+        <h3 className="text-lg text-[var(--foreground)]">No matches found</h3>
         <p className="text-[var(--ring)] mt-1 max-w-sm">
             No students match "{searchTerm}". Try a different name or clear the
             search.

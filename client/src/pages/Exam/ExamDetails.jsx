@@ -31,7 +31,10 @@ const ExamDetails = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
                     <ExamEligibility requirement={exam.requirement} />
-                    <ExamSidebar exam={exam} formatTimeRange={formatTimeRange} />
+                    <ExamSidebar
+                        exam={exam}
+                        formatTimeRange={formatTimeRange}
+                    />
                     <ExamDescription description={exam.examDescription} />
                 </div>
             </div>

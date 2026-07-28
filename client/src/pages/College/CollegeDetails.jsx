@@ -4,13 +4,7 @@ import {
     useNavigate,
     useOutletContext,
 } from 'react-router-dom';
-import {
-    Briefcase,
-    Users,
-    Building,
-    Percent,
-    TrendingUp,
-} from 'lucide-react';
+import { Briefcase, Users, Building, Percent, TrendingUp } from 'lucide-react';
 import Loading from '../../components/common/Loading';
 import Error from '../../components/common/Error';
 import CollegeHeader from '../../features/college/components/CollegeHeader';
@@ -18,7 +12,7 @@ import CourseList from '../../features/college/components/CourseList';
 import RatingList from '../../features/rating/components/RatingList';
 import useCollegeDetails from '../../features/college/hooks/useCollegeDetails';
 
-const formatPackage = (pkg) => {
+const formatPackage = pkg => {
     if (!pkg) return null;
     let str = String(pkg).trim();
     const hasLetters = /[a-zA-Z]/.test(str);
@@ -86,7 +80,10 @@ const CollegeDetails = () => {
                                         Median Package
                                     </p>
                                     <p className="text-2xl font-semibold text-green-600">
-                                        {formatPackage(college.placementDetails.averagePackage)}
+                                        {formatPackage(
+                                            college.placementDetails
+                                                .averagePackage
+                                        )}
                                     </p>
                                 </div>
                             )}
@@ -96,7 +93,10 @@ const CollegeDetails = () => {
                                         Highest Package
                                     </p>
                                     <p className="text-2xl font-semibold text-blue-600">
-                                        {formatPackage(college.placementDetails.highestPackage)}
+                                        {formatPackage(
+                                            college.placementDetails
+                                                .highestPackage
+                                        )}
                                     </p>
                                 </div>
                             )}
@@ -106,7 +106,10 @@ const CollegeDetails = () => {
                                         Placement Rate
                                     </p>
                                     <p className="text-2xl font-semibold text-purple-600 flex items-center">
-                                        {college.placementDetails.placementPercentage}
+                                        {
+                                            college.placementDetails
+                                                .placementPercentage
+                                        }
                                         <Percent className="w-5 h-5 ml-1" />
                                     </p>
                                 </div>

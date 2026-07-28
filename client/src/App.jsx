@@ -40,9 +40,18 @@ function App() {
 
                     {/* Public Routes and Student Dashboard with Topbar */}
                     <Route element={<PublicLayout />}>
-                        <Route path="/college-search" element={<SearchPage />} />
-                        <Route path="/college" element={<CollegeListingPage />} />
-                        <Route path="/exam-search" element={<ExamSearchPage />} />
+                        <Route
+                            path="/college-search"
+                            element={<SearchPage />}
+                        />
+                        <Route
+                            path="/college"
+                            element={<CollegeListingPage />}
+                        />
+                        <Route
+                            path="/exam-search"
+                            element={<ExamSearchPage />}
+                        />
                         <Route path="/exams" element={<ExamListingPage />} />
                         <Route
                             path="/college/:id"

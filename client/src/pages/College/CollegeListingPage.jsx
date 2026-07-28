@@ -7,34 +7,41 @@ import Error from '../../components/common/Error';
 
 const CollegeListingPage = () => {
     const navigate = useNavigate();
-    const {
-        filters,
-        setFilters,
-        results,
-        isLoading,
-        error,
-        allColleges,
-    } = useCollegeSearch('');
+    const { filters, setFilters, results, isLoading, error, allColleges } =
+        useCollegeSearch('');
 
     const handleCollegeClick = college => {
         navigate(`/college/${college._id}`);
     };
 
     const handleLocationChange = locValue => {
-        const currentLocs = Array.isArray(filters.location) ? filters.location : [];
+        const currentLocs = Array.isArray(filters.location)
+            ? filters.location
+            : [];
         if (currentLocs.includes(locValue)) {
-            setFilters({ ...filters, location: currentLocs.filter(l => l !== locValue) });
+            setFilters({
+                ...filters,
+                location: currentLocs.filter(l => l !== locValue),
+            });
         } else {
             setFilters({ ...filters, location: [...currentLocs, locValue] });
         }
     };
 
     const handleCourseChange = courseValue => {
-        const currentCourses = Array.isArray(filters.course) ? filters.course : [];
+        const currentCourses = Array.isArray(filters.course)
+            ? filters.course
+            : [];
         if (currentCourses.includes(courseValue)) {
-            setFilters({ ...filters, course: currentCourses.filter(c => c !== courseValue) });
+            setFilters({
+                ...filters,
+                course: currentCourses.filter(c => c !== courseValue),
+            });
         } else {
-            setFilters({ ...filters, course: [...currentCourses, courseValue] });
+            setFilters({
+                ...filters,
+                course: [...currentCourses, courseValue],
+            });
         }
     };
 
@@ -97,7 +104,8 @@ const CollegeListingPage = () => {
                                     No colleges found
                                 </h3>
                                 <p className="text-[var(--ring)]">
-                                    Try adjusting your filters to see more results.
+                                    Try adjusting your filters to see more
+                                    results.
                                 </p>
                             </div>
                         )}
@@ -122,31 +130,69 @@ const CollegeListingPage = () => {
                                                 Location
                                             </label>
                                             <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                                {uniqueLocations.map(locValue => {
-                                                    const isChecked = Array.isArray(filters.location) && filters.location.includes(locValue);
-                                                    return (
-                                                        <label key={locValue} className="flex items-center gap-3 cursor-pointer group">
-                                                            <input 
-                                                                type="checkbox" 
-                                                                className="hidden" 
-                                                                checked={isChecked}
-                                                                onChange={() => handleLocationChange(locValue)}
-                                                            />
-                                                            <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
-                                                                isChecked 
-                                                                    ? 'bg-indigo-600 border-indigo-600' 
-                                                                    : 'border border-slate-300 bg-white group-hover:border-indigo-400'
-                                                            }`}>
-                                                                {isChecked && (
-                                                                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                                                    </svg>
-                                                                )}
-                                                            </div>
-                                                            <span className="text-sm font-medium text-[var(--foreground)] truncate" title={locValue}>{locValue}</span>
-                                                        </label>
-                                                    );
-                                                })}
+                                                {uniqueLocations.map(
+                                                    locValue => {
+                                                        const isChecked =
+                                                            Array.isArray(
+                                                                filters.location
+                                                            ) &&
+                                                            filters.location.includes(
+                                                                locValue
+                                                            );
+                                                        return (
+                                                            <label
+                                                                key={locValue}
+                                                                className="flex items-center gap-3 cursor-pointer group"
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    className="hidden"
+                                                                    checked={
+                                                                        isChecked
+                                                                    }
+                                                                    onChange={() =>
+                                                                        handleLocationChange(
+                                                                            locValue
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <div
+                                                                    className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
+                                                                        isChecked
+                                                                            ? 'bg-indigo-600 border-indigo-600'
+                                                                            : 'border border-slate-300 bg-white group-hover:border-indigo-400'
+                                                                    }`}
+                                                                >
+                                                                    {isChecked && (
+                                                                        <svg
+                                                                            className="w-3 h-3 text-white"
+                                                                            fill="none"
+                                                                            viewBox="0 0 24 24"
+                                                                            stroke="currentColor"
+                                                                            strokeWidth={
+                                                                                3
+                                                                            }
+                                                                        >
+                                                                            <path
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                d="M5 13l4 4L19 7"
+                                                                            />
+                                                                        </svg>
+                                                                    )}
+                                                                </div>
+                                                                <span
+                                                                    className="text-sm font-medium text-[var(--foreground)] truncate"
+                                                                    title={
+                                                                        locValue
+                                                                    }
+                                                                >
+                                                                    {locValue}
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    }
+                                                )}
                                             </div>
                                         </div>
                                     )}
@@ -158,36 +204,81 @@ const CollegeListingPage = () => {
                                                 Course
                                             </label>
                                             <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                                {uniqueCourses.map(courseValue => {
-                                                    const isChecked = Array.isArray(filters.course) && filters.course.includes(courseValue);
-                                                    return (
-                                                        <label key={courseValue} className="flex items-center gap-3 cursor-pointer group">
-                                                            <input 
-                                                                type="checkbox" 
-                                                                className="hidden" 
-                                                                checked={isChecked}
-                                                                onChange={() => handleCourseChange(courseValue)}
-                                                            />
-                                                            <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
-                                                                isChecked 
-                                                                    ? 'bg-indigo-600 border-indigo-600' 
-                                                                    : 'border border-slate-300 bg-white group-hover:border-indigo-400'
-                                                            }`}>
-                                                                {isChecked && (
-                                                                    <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                                                                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                                                                    </svg>
-                                                                )}
-                                                            </div>
-                                                            <span className="text-sm font-medium text-[var(--foreground)] truncate" title={courseValue}>{courseValue}</span>
-                                                        </label>
-                                                    );
-                                                })}
+                                                {uniqueCourses.map(
+                                                    courseValue => {
+                                                        const isChecked =
+                                                            Array.isArray(
+                                                                filters.course
+                                                            ) &&
+                                                            filters.course.includes(
+                                                                courseValue
+                                                            );
+                                                        return (
+                                                            <label
+                                                                key={
+                                                                    courseValue
+                                                                }
+                                                                className="flex items-center gap-3 cursor-pointer group"
+                                                            >
+                                                                <input
+                                                                    type="checkbox"
+                                                                    className="hidden"
+                                                                    checked={
+                                                                        isChecked
+                                                                    }
+                                                                    onChange={() =>
+                                                                        handleCourseChange(
+                                                                            courseValue
+                                                                        )
+                                                                    }
+                                                                />
+                                                                <div
+                                                                    className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
+                                                                        isChecked
+                                                                            ? 'bg-indigo-600 border-indigo-600'
+                                                                            : 'border border-slate-300 bg-white group-hover:border-indigo-400'
+                                                                    }`}
+                                                                >
+                                                                    {isChecked && (
+                                                                        <svg
+                                                                            className="w-3 h-3 text-white"
+                                                                            fill="none"
+                                                                            viewBox="0 0 24 24"
+                                                                            stroke="currentColor"
+                                                                            strokeWidth={
+                                                                                3
+                                                                            }
+                                                                        >
+                                                                            <path
+                                                                                strokeLinecap="round"
+                                                                                strokeLinejoin="round"
+                                                                                d="M5 13l4 4L19 7"
+                                                                            />
+                                                                        </svg>
+                                                                    )}
+                                                                </div>
+                                                                <span
+                                                                    className="text-sm font-medium text-[var(--foreground)] truncate"
+                                                                    title={
+                                                                        courseValue
+                                                                    }
+                                                                >
+                                                                    {
+                                                                        courseValue
+                                                                    }
+                                                                </span>
+                                                            </label>
+                                                        );
+                                                    }
+                                                )}
                                             </div>
                                         </div>
                                     )}
 
-                                    {((Array.isArray(filters.location) && filters.location.length > 0) || (Array.isArray(filters.course) && filters.course.length > 0)) && (
+                                    {((Array.isArray(filters.location) &&
+                                        filters.location.length > 0) ||
+                                        (Array.isArray(filters.course) &&
+                                            filters.course.length > 0)) && (
                                         <button
                                             onClick={() => {
                                                 setFilters({

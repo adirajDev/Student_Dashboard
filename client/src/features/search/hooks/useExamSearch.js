@@ -71,10 +71,14 @@ const useExamSearch = (initialQuery = '') => {
         if (filters.mode && filters.mode !== 'all') {
             if (Array.isArray(filters.mode)) {
                 if (filters.mode.length > 0) {
-                    filtered = filtered.filter(exam => filters.mode.includes(exam.examMode));
+                    filtered = filtered.filter(exam =>
+                        filters.mode.includes(exam.examMode)
+                    );
                 }
             } else {
-                filtered = filtered.filter(exam => exam.examMode === filters.mode);
+                filtered = filtered.filter(
+                    exam => exam.examMode === filters.mode
+                );
             }
         }
 

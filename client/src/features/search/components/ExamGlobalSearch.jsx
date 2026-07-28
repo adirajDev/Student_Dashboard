@@ -4,7 +4,11 @@ import ExamFiltersDropdown from './ExamFiltersDropdown';
 import useClickOutside from '../../../hooks/useClickOutside';
 
 const ExamGlobalSearch = ({ query, setQuery, filters, setFilters }) => {
-    const { ref: filterRef, isOpen: showFilters, setIsOpen: setShowFilters } = useClickOutside(false);
+    const {
+        ref: filterRef,
+        isOpen: showFilters,
+        setIsOpen: setShowFilters,
+    } = useClickOutside(false);
 
     return (
         <div className="relative w-full max-w-2xl mx-4 flex flex-row gap-2 sm:gap-3">
@@ -22,7 +26,9 @@ const ExamGlobalSearch = ({ query, setQuery, filters, setFilters }) => {
                 <button
                     onClick={() => setShowFilters(!showFilters)}
                     className={`h-[50px] px-4 sm:px-6 rounded-full font-medium flex items-center justify-center gap-2 transition-all border shrink-0 ${
-                        showFilters || filters.status !== 'all' || filters.mode !== 'all'
+                        showFilters ||
+                        filters.status !== 'all' ||
+                        filters.mode !== 'all'
                             ? 'bg-indigo-600 text-white border-indigo-600 shadow-md hover:bg-indigo-700'
                             : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-slate-50'
                     }`}
@@ -35,10 +41,10 @@ const ExamGlobalSearch = ({ query, setQuery, filters, setFilters }) => {
                 </button>
 
                 {showFilters && (
-                    <ExamFiltersDropdown 
-                        filters={filters} 
-                        setFilters={setFilters} 
-                        onClose={() => setShowFilters(false)} 
+                    <ExamFiltersDropdown
+                        filters={filters}
+                        setFilters={setFilters}
+                        onClose={() => setShowFilters(false)}
                     />
                 )}
             </div>

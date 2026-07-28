@@ -49,7 +49,10 @@ const Topbar = ({ transparentOnTop = false }) => {
                         </button>
                     </div>
 
-                    <Link to="/" className="flex items-center gap-2 mr-auto md:mr-0 shrink-0">
+                    <Link
+                        to="/"
+                        className="flex items-center gap-2 mr-auto md:mr-0 shrink-0"
+                    >
                         <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
                             SD
                         </div>
@@ -85,10 +88,10 @@ const Topbar = ({ transparentOnTop = false }) => {
                     {/* Right side icons/buttons */}
                     <div className="flex items-center shrink-0">
                         {user ? (
-                            <UserDropdown 
-                                user={user} 
-                                handleLogout={handleLogout} 
-                                setIsSettingsOpen={setIsSettingsOpen} 
+                            <UserDropdown
+                                user={user}
+                                handleLogout={handleLogout}
+                                setIsSettingsOpen={setIsSettingsOpen}
                             />
                         ) : (
                             <Link

@@ -12,7 +12,10 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                     <div className="flex gap-4">
                         <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex flex-col items-center justify-center shrink-0">
                             <span className="text-xs font-bold uppercase">
-                                {new Date(exam.regStartingDate).toLocaleString('default', { month: 'short' })}
+                                {new Date(exam.regStartingDate).toLocaleString(
+                                    'default',
+                                    { month: 'short' }
+                                )}
                             </span>
                             <span className="text-lg font-black leading-none">
                                 {new Date(exam.regStartingDate).getDate()}
@@ -30,7 +33,10 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                     <div className="flex gap-4">
                         <div className="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex flex-col items-center justify-center shrink-0">
                             <span className="text-xs font-bold uppercase">
-                                {new Date(exam.regEndingDate).toLocaleString('default', { month: 'short' })}
+                                {new Date(exam.regEndingDate).toLocaleString(
+                                    'default',
+                                    { month: 'short' }
+                                )}
                             </span>
                             <span className="text-lg font-black leading-none">
                                 {new Date(exam.regEndingDate).getDate()}
@@ -65,12 +71,15 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                                     Exam Date
                                 </h4>
                                 <p className="text-sm font-medium text-[var(--ring)]">
-                                    {new Date(exam.examDate).toLocaleDateString(undefined, {
-                                        weekday: 'long',
-                                        year: 'numeric',
-                                        month: 'long',
-                                        day: 'numeric',
-                                    })}
+                                    {new Date(exam.examDate).toLocaleDateString(
+                                        undefined,
+                                        {
+                                            weekday: 'long',
+                                            year: 'numeric',
+                                            month: 'long',
+                                            day: 'numeric',
+                                        }
+                                    )}
                                 </p>
                             </div>
                         </div>
@@ -83,10 +92,17 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                                     Timing
                                 </h4>
                                 <p className="text-sm font-medium text-[var(--ring)]">
-                                    {formatTimeRange(exam.examTime, exam.examDuration)}
+                                    {formatTimeRange(
+                                        exam.examTime,
+                                        exam.examDuration
+                                    )}
                                     <span className="text-xs ml-2 px-2 py-0.5 bg-slate-100 rounded-full">
-                                        {exam.examDuration >= 60 ? `${Math.floor(exam.examDuration / 60)}hr ` : ''}
-                                        {exam.examDuration % 60 ? `${exam.examDuration % 60}m` : ''}
+                                        {exam.examDuration >= 60
+                                            ? `${Math.floor(exam.examDuration / 60)}hr `
+                                            : ''}
+                                        {exam.examDuration % 60
+                                            ? `${exam.examDuration % 60}m`
+                                            : ''}
                                     </span>
                                 </p>
                             </div>

@@ -15,7 +15,7 @@ const MobileMenu = ({
 
     return (
         <>
-            <div 
+            <div
                 className="md:hidden fixed inset-0 top-[72px] bg-black/20 backdrop-blur-sm z-40"
                 onClick={() => setIsOpen(false)}
             />

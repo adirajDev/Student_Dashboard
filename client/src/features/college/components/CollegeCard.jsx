@@ -1,16 +1,16 @@
 import { MapPin, BookOpen, Star, Building2 } from 'lucide-react';
 
-const formatPackage = (pkg) => {
+const formatPackage = pkg => {
     if (!pkg) return null;
     let str = String(pkg).trim();
-    
+
     const hasLetters = /[a-zA-Z]/.test(str);
     const hasCurrency = str.includes('₹') || str.toLowerCase().includes('rs');
-    
+
     let result = str;
     if (!hasCurrency) result = `₹${result}`;
     if (!hasLetters) result = `${result} LPA`;
-    
+
     return result;
 };
 
@@ -26,7 +26,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                 <div className="w-14 h-14 shrink-0 bg-slate-50  border border-slate-100 rounded-xl flex items-center justify-center text-indigo-500">
                     <Building2 className="w-7 h-7" />
                 </div>
-                
+
                 {/* Title, Location & Rating */}
                 <div className="flex-1 min-w-0">
                     <h3 className="text-xl text-indigo-700 text-[var(--foreground)] truncate">
@@ -55,18 +55,28 @@ const CollegeCard = ({ college, query = '', onClick }) => {
             <div className="grid grid-cols-3 gap-4">
                 {/* Courses */}
                 <div>
-                    <p className="text-sm text-slate-500 mb-1">Courses Offered</p>
+                    <p className="text-sm text-slate-500 mb-1">
+                        Courses Offered
+                    </p>
                     <div className="flex items-center text-[var(--foreground)] font-medium">
-                        <span>{college.availableCourses?.length || 0} Courses</span>
+                        <span>
+                            {college.availableCourses?.length || 0} Courses
+                        </span>
                     </div>
                 </div>
 
                 {/* Median Package */}
                 {college.placementDetails?.averagePackage && (
                     <div>
-                        <p className="text-sm text-slate-500 mb-1">Median Package</p>
+                        <p className="text-sm text-slate-500 mb-1">
+                            Median Package
+                        </p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            <span>{formatPackage(college.placementDetails.averagePackage)}</span>
+                            <span>
+                                {formatPackage(
+                                    college.placementDetails.averagePackage
+                                )}
+                            </span>
                         </div>
                     </div>
                 )}
@@ -74,58 +84,68 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                 {/* Highest Package */}
                 {college.placementDetails?.highestPackage && (
                     <div>
-                        <p className="text-sm text-slate-500 mb-1">Highest Package</p>
+                        <p className="text-sm text-slate-500 mb-1">
+                            Highest Package
+                        </p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            <span>{formatPackage(college.placementDetails.highestPackage)}</span>
+                            <span>
+                                {formatPackage(
+                                    college.placementDetails.highestPackage
+                                )}
+                            </span>
                         </div>
                     </div>
                 )}
             </div>
 
             {/* Matching Courses (Only shown if searching) */}
-            {college.availableCourses && college.availableCourses.length > 0 && query && (
-                <div className="mt-5 pt-4 border-t border-[var(--border)]">
-                    <div className="flex items-center text-sm font-medium text-slate-600 mb-2">
-                        <BookOpen className="w-4 h-4 mr-2 text-slate-400" />
-                        Matching Courses:
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                        {college.availableCourses.map(course => {
-                            const isMatch = course.name
-                                .toLowerCase()
-                                .includes(query.toLowerCase());
-                            if (!isMatch) return null;
-                            return (
-                                <span
-                                    key={course._id}
-                                    className="text-sm px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200"
-                                >
-                                    {course.name}
-                                </span>
-                            );
-                        })}
-                        {college.availableCourses.filter(
-                            c =>
-                                !c.name
+            {college.availableCourses &&
+                college.availableCourses.length > 0 &&
+                query && (
+                    <div className="mt-5 pt-4 border-t border-[var(--border)]">
+                        <div className="flex items-center text-sm font-medium text-slate-600 mb-2">
+                            <BookOpen className="w-4 h-4 mr-2 text-slate-400" />
+                            Matching Courses:
+                        </div>
+                        <div className="flex flex-wrap gap-2">
+                            {college.availableCourses.map(course => {
+                                const isMatch = course.name
                                     .toLowerCase()
-                                    .includes(query.toLowerCase())
-                        ).length > 0 && (
-                            <span className="text-sm px-3 py-1.5 rounded-lg bg-slate-50 text-slate-600 border border-[var(--border)]">
-                                +
-                                {
-                                    college.availableCourses.filter(
-                                        c =>
-                                            !c.name
-                                                .toLowerCase()
-                                                .includes(query.toLowerCase())
-                                    ).length
-                                }{' '}
-                                other courses
-                            </span>
-                        )}
+                                    .includes(query.toLowerCase());
+                                if (!isMatch) return null;
+                                return (
+                                    <span
+                                        key={course._id}
+                                        className="text-sm px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200"
+                                    >
+                                        {course.name}
+                                    </span>
+                                );
+                            })}
+                            {college.availableCourses.filter(
+                                c =>
+                                    !c.name
+                                        .toLowerCase()
+                                        .includes(query.toLowerCase())
+                            ).length > 0 && (
+                                <span className="text-sm px-3 py-1.5 rounded-lg bg-slate-50 text-slate-600 border border-[var(--border)]">
+                                    +
+                                    {
+                                        college.availableCourses.filter(
+                                            c =>
+                                                !c.name
+                                                    .toLowerCase()
+                                                    .includes(
+                                                        query.toLowerCase()
+                                                    )
+                                        ).length
+                                    }{' '}
+                                    other courses
+                                </span>
+                            )}
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
         </div>
     );
 };

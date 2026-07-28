@@ -16,7 +16,7 @@ const CourseCard = ({ course, fee }) => {
                     </span>
                 )}
             </div>
-            
+
             {course.specialization && (
                 <p className="text-sm text-[var(--ring)] mb-3 line-clamp-1">
                     {course.specialization}
@@ -33,13 +33,12 @@ const CourseCard = ({ course, fee }) => {
                 <div className="text-sm font-medium text-slate-500 flex items-center">
                     <Calendar className="w-4 h-4 mr-1.5" />
                     <span>
-                        {course.duration 
+                        {course.duration
                             ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}`
-                            : 'N/A'
-                        }
+                            : 'N/A'}
                     </span>
                 </div>
-                
+
                 {course.level && (
                     <span className="text-xs font-medium text-slate-400">
                         {course.level}

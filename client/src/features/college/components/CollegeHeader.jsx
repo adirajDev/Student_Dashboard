@@ -6,18 +6,18 @@ const CollegeHeader = ({ college }) => {
             <div className="relative z-10 flex flex-col md:flex-row gap-6 items-start">
                 {college.logo && (
                     <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white p-2 shadow-sm border border-slate-100 shrink-0 flex items-center justify-center overflow-hidden">
-                        <img 
-                            src={college.logo} 
-                            alt={`${college.name} logo`} 
+                        <img
+                            src={college.logo}
+                            alt={`${college.name} logo`}
                             className="w-full h-full object-contain"
-                            onError={(e) => {
+                            onError={e => {
                                 e.target.onerror = null;
                                 e.target.style.display = 'none';
                             }}
                         />
                     </div>
                 )}
-                
+
                 <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
                         <h1 className="text-3xl sm:text-4xl text-[var(--foreground)] font-bold">
@@ -41,7 +41,8 @@ const CollegeHeader = ({ college }) => {
                             <Building2 className="w-4 h-4 mr-1.5 text-blue-500" />
                             <span>
                                 Institution ID:{' '}
-                                {college.collegeId || college._id.substring(0, 8)}
+                                {college.collegeId ||
+                                    college._id.substring(0, 8)}
                             </span>
                         </div>
                     </div>

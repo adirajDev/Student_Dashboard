@@ -25,7 +25,23 @@ const ExamHeader = ({ exam, handleApply }) => {
                         )}
                         <span className="px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full flex items-center gap-2">
                             <Calendar className="w-4 h-4" />
-                            {new Date(exam.regStartingDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })} - {new Date(exam.regEndingDate).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}
+                            {new Date(exam.regStartingDate).toLocaleDateString(
+                                'en-GB',
+                                {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                }
+                            )}{' '}
+                            -{' '}
+                            {new Date(exam.regEndingDate).toLocaleDateString(
+                                'en-GB',
+                                {
+                                    day: 'numeric',
+                                    month: 'short',
+                                    year: 'numeric',
+                                }
+                            )}
                         </span>
                     </div>
                 </div>
@@ -33,7 +49,11 @@ const ExamHeader = ({ exam, handleApply }) => {
                 {exam.examLink && (
                     <div className="mt-6 md:mt-0 md:ml-auto">
                         <a
-                            href={exam.examLink.startsWith('http') ? exam.examLink : `https://${exam.examLink}`}
+                            href={
+                                exam.examLink.startsWith('http')
+                                    ? exam.examLink
+                                    : `https://${exam.examLink}`
+                            }
                             onClick={handleApply}
                             target="_blank"
                             rel="noopener noreferrer"

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import useExams from './useExams';
 
-const useExamDetails = (id) => {
+const useExamDetails = id => {
     const { getExamById } = useExams(false);
     const [exam, setExam] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
@@ -43,7 +43,9 @@ const useExamDetails = (id) => {
         const startFormatted = formatAMPM(startDate);
 
         if (durationMinutes) {
-            const endDate = new Date(startDate.getTime() + durationMinutes * 60000);
+            const endDate = new Date(
+                startDate.getTime() + durationMinutes * 60000
+            );
             const endFormatted = formatAMPM(endDate);
             return `${startFormatted} - ${endFormatted}`;
         }

@@ -5,7 +5,7 @@ const useClickOutside = (initialState = false) => {
     const ref = useRef(null);
 
     useEffect(() => {
-        const handleClickOutside = (event) => {
+        const handleClickOutside = event => {
             if (ref.current && !ref.current.contains(event.target)) {
                 setIsOpen(false);
             }

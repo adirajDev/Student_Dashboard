@@ -37,13 +37,15 @@ const CourseTable = ({
                 <div className="w-full sm:w-48 shrink-0">
                     <select
                         value={filterLevel}
-                        onChange={(e) => setFilterLevel(e.target.value)}
+                        onChange={e => setFilterLevel(e.target.value)}
                         className="w-full py-3 px-4 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
                     >
                         <option value="">All Levels</option>
                         <option value="Certificate">Certificate</option>
                         <option value="Diploma">Diploma</option>
-                        <option value="Advanced Diploma">Advanced Diploma</option>
+                        <option value="Advanced Diploma">
+                            Advanced Diploma
+                        </option>
                         <option value="Bachelor's">Bachelor's</option>
                         <option value="Master's">Master's</option>
                         <option value="Doctorate">Doctorate</option>
@@ -94,7 +96,10 @@ const CourseTable = ({
                                                     {course.name}
                                                 </div>
                                                 <div className="text-sm text-[var(--ring)] mt-1">
-                                                    {course.shortName} {course.specialization ? `- ${course.specialization}` : ''}
+                                                    {course.shortName}{' '}
+                                                    {course.specialization
+                                                        ? `- ${course.specialization}`
+                                                        : ''}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
@@ -110,7 +115,9 @@ const CourseTable = ({
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-sm text-[var(--ring)]">
-                                                {course.duration ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}` : 'N/A'}
+                                                {course.duration
+                                                    ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}`
+                                                    : 'N/A'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">

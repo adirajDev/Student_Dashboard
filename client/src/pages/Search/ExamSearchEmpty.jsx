@@ -10,8 +10,9 @@ const ExamSearchEmpty = ({ query, filters }) => {
                 No exams found
             </h3>
             <p className="text-[var(--ring)] max-w-md mx-auto">
-                We couldn't find any exams matching "{query}" with the current filters.
-                Try adjusting your search terms or clearing the filters.
+                We couldn't find any exams matching "{query}" with the current
+                filters. Try adjusting your search terms or clearing the
+                filters.
             </p>
         </div>
     );

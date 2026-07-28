@@ -36,8 +36,6 @@ const CollegeFormModal = ({
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-
-
     const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
@@ -130,7 +128,9 @@ const CollegeFormModal = ({
                                     onChange={handleChange}
                                     className="input-field"
                                 >
-                                    <option value="Government">Government</option>
+                                    <option value="Government">
+                                        Government
+                                    </option>
                                     <option value="Private">Private</option>
                                     <option value="Deemed">Deemed</option>
                                 </select>
@@ -161,8 +161,6 @@ const CollegeFormModal = ({
                                 className="input-field resize-none"
                             />
                         </div>
-
-
                     </form>
                 </div>
 
