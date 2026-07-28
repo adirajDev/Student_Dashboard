@@ -2,23 +2,21 @@ import CollegeUpdate from './collegeUpdate.model.js';
 import College from '../college/college.model.js';
 import Course from '../course/course.model.js';
 import AppError from '../../common/utils/AppError.js';
-import {validateProposedChanges} from "./collegeUpdate.validation.js";
-import {applyProposedChanges} from "./collegeUpdate.merge.js";
+import { validateProposedChanges } from './collegeUpdate.validation.js';
+import { applyProposedChanges } from './collegeUpdate.merge.js';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
         throw new AppError('You are not assigned to any college.', 400);
     }
 
-    const {error, value} = validateProposedChanges(proposedChanges)
+    const { error, value } = validateProposedChanges(proposedChanges);
     if (error) {
         throw new AppError(`Invalid update data: ${error}`, 400);
     }
 
     const collegeId =
         typeof user.college === 'object' ? user.college._id : user.college;
-
-
 
     const updateRequest = new CollegeUpdate({
         college: collegeId,
@@ -69,7 +67,9 @@ export const getAllUpdates = async (skip = 0, limit = 0) => {
 
             if (courseIds.length > 0) {
                 const uniqueIds = [...new Set(courseIds)];
-                const courses = await Course.find({ _id: { $in: uniqueIds } }).select('name shortName level specialization');
+                const courses = await Course.find({
+                    _id: { $in: uniqueIds },
+                }).select('name shortName level specialization');
                 cu.populatedCourses = courses;
             }
         }
