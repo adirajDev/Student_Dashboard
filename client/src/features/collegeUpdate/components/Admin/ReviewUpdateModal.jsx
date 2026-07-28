@@ -231,6 +231,36 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 update.college?.name,
                                 changes.name
                             )}
+                        {changes.type &&
+                            renderDiff(
+                                'College Type',
+                                update.college?.type,
+                                changes.type
+                            )}
+                        {changes.location &&
+                            renderDiff(
+                                'Location',
+                                update.college?.location,
+                                changes.location
+                            )}
+                        {changes.collegeId &&
+                            renderDiff(
+                                'College ID',
+                                update.college?.collegeId,
+                                changes.collegeId
+                            )}
+                        {changes.logo &&
+                            renderDiff(
+                                'Logo URL',
+                                update.college?.logo,
+                                changes.logo
+                            )}
+                        {changes.overview &&
+                            renderDiff(
+                                'Overview',
+                                'Current Overview Hidden (See DB)',
+                                changes.overview
+                            )}
                         {changes.description &&
                             renderDiff(
                                 'Description',
