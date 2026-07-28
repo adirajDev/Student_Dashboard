@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import collegeRoutes from './features/college/college.routes.js';
+import collegeGalleryRoutes from './features/collegeGallery/collegeGallery.routes.js';
 import courseRoutes from './features/course/course.routes.js';
 import authRoutes from './features/auth/auth.routes.js';
 import userRoutes from './features/user/user.routes.js';
@@ -17,6 +18,7 @@ const router = Router();
 router.use('/', authRoutes);
 router.use('/', userRoutes);
 router.use('/colleges', collegeRoutes);
+router.use('/colleges', collegeGalleryRoutes);
 router.use('/courses', courseRoutes);
 router.use('/students', studentRoutes);
 router.use('/ratings', ratingRoutes);

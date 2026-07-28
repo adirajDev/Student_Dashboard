@@ -21,8 +21,10 @@ const collegeSchema = new mongoose.Schema(
         ],
         videos: [
             {
-                type: String,
-                trim: true,
+                url: {
+                    type: String,
+                    trim: true,
+                }
             }
         ],
         type: {
