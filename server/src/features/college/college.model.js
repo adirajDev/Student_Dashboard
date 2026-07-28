@@ -13,6 +13,18 @@ const collegeSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
+        images: [
+            {
+                data: Buffer,
+                contentType: String,
+            }
+        ],
+        videos: [
+            {
+                type: String,
+                trim: true,
+            }
+        ],
         type: {
             type: String,
             enum: COLLEGE_TYPE,
@@ -53,9 +65,19 @@ const collegeSchema = new mongoose.Schema(
             },
         ],
         placementDetails: {
-            averagePackage: { type: String, trim: true },
-            highestPackage: { type: String, trim: true },
-            placementPercentage: { type: Number, min: 0, max: 100 },
+            averagePackage: {
+                type: String,
+                trim: true
+            },
+            highestPackage: {
+                type: String,
+                trim: true
+            },
+            placementPercentage: {
+                type: Number,
+                min: 0,
+                max: 100
+            },
         },
         recruiters: [
             {
