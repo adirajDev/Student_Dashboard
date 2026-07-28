@@ -11,9 +11,12 @@ const CourseList = ({ courses }) => {
 
             {courses && courses.length > 0 ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {courses.map(course => (
-                        <CourseCard key={course._id} course={course} />
-                    ))}
+                    {courses.map(item => {
+                        const courseData = item.course && typeof item.course === 'object' ? item.course : item;
+                        return (
+                            <CourseCard key={item._id || courseData._id} course={courseData} fee={item.fee} />
+                        );
+                    })}
                 </div>
             ) : (
                 <div className="p-8 text-center border border-[var(--border)] border-dashed rounded-xl text-[var(--ring)]">

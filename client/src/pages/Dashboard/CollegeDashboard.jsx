@@ -1,6 +1,7 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
 import EditCollegeTab from '../../features/collegeUpdate/components/EditCollegeTab';
 import UpdateHistoryTab from '../../features/collegeUpdate/components/UpdateHistoryTab';
+import CollegeCoursesTab from '../../features/collegeUpdate/components/CollegeCoursesTab';
 
 const CollegeDashboard = () => {
     const { user } = useOutletContext();
@@ -19,6 +20,7 @@ const CollegeDashboard = () => {
 
             {activeTab === 'edit' && <EditCollegeTab user={user} />}
             {activeTab === 'history' && <UpdateHistoryTab />}
+            {activeTab === 'courses' && <CollegeCoursesTab />}
         </main>
     );
 };

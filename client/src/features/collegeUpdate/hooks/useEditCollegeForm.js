@@ -15,6 +15,10 @@ const useEditCollegeForm = user => {
 
     const [formData, setFormData] = useState({
         name: '',
+        type: 'Private',
+        location: '',
+        collegeId: '',
+        logo: '',
         overview: '',
         description: '',
         placementDetails: {
@@ -44,6 +48,10 @@ const useEditCollegeForm = user => {
                 // Pre-fill form
                 setFormData({
                     name: data.name || '',
+                    type: data.type || 'Private',
+                    location: data.location || '',
+                    collegeId: data.collegeId || '',
+                    logo: data.logo || '',
                     overview: data.overview || '',
                     description: data.description || '',
                     placementDetails: data.placementDetails || {

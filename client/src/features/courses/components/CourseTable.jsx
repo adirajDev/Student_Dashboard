@@ -30,7 +30,7 @@ const CourseTable = ({
                         value={searchTerm}
                         onChange={setSearchTerm}
                         onClear={() => setSearchTerm('')}
-                        placeholder="Search by course name or level..."
+                        placeholder="Search by course name or specialization..."
                         className="relative"
                     />
                 </div>

@@ -18,6 +18,22 @@ export const proposedChangesSchema = Joi.object({
             fee: Joi.number().min(0).required(),
         })
     ),
+    
+    courseUpdates: Joi.object({
+        added: Joi.array().items(
+            Joi.object({
+                course: objectId.required(),
+                fee: Joi.number().min(0).required(),
+            })
+        ).default([]),
+        updated: Joi.array().items(
+            Joi.object({
+                course: objectId.required(),
+                fee: Joi.number().min(0).required(),
+            })
+        ).default([]),
+        removed: Joi.array().items(objectId).default([])
+    }),
 
     placementDetails: Joi.object({
         averagePackage: Joi.string().trim().allow(''),
