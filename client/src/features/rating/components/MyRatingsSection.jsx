@@ -39,7 +39,7 @@ const MyRatingsSection = () => {
         <div className="animate-fade-in">
             {!ratings || ratings.length === 0 ? (
                 <div className="bg-[var(--card)] p-8 rounded-3xl border border-dashed border-[var(--border)] flex flex-col items-center justify-center text-center">
-                    <div className="w-16 h-16 bg-blue-50 dark:bg-blue-900/20 rounded-full flex items-center justify-center mb-4 text-blue-500">
+                    <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mb-4 text-blue-500">
                         <Star className="w-8 h-8" />
                     </div>
                     <h4 className="text-lg text-[var(--foreground)] mb-2">
@@ -61,7 +61,7 @@ const MyRatingsSection = () => {
                                 <div className="flex-1 pr-4">
                                     <Link
                                         to={`/college/${rating.college?._id}`}
-                                        className="text-lg font-semibold text-blue-600 dark:text-blue-400 hover:underline mb-1 inline-block"
+                                        className="text-lg font-semibold text-blue-600 hover:underline mb-1 inline-block"
                                     >
                                         {rating.college?.name ||
                                             'Unknown College'}
@@ -71,7 +71,7 @@ const MyRatingsSection = () => {
                                             {[1, 2, 3, 4, 5].map(star => (
                                                 <Star
                                                     key={star}
-                                                    className={`w-4 h-4 ${star <= rating.stars ? 'fill-amber-400 text-amber-400' : 'text-slate-300 dark:text-slate-700'}`}
+                                                    className={`w-4 h-4 ${star <= rating.stars ? 'fill-amber-400 text-amber-400' : 'text-slate-300'}`}
                                                 />
                                             ))}
                                         </div>
@@ -89,7 +89,7 @@ const MyRatingsSection = () => {
                                             setEditingRating(rating);
                                             setShowFormModal(true);
                                         }}
-                                        className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                        className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                                         title="Edit Review"
                                     >
                                         <Pencil className="w-4 h-4" />
@@ -98,7 +98,7 @@ const MyRatingsSection = () => {
                                         onClick={() =>
                                             setDeletingRating(rating)
                                         }
-                                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                        className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                                         title="Delete Review"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -107,7 +107,7 @@ const MyRatingsSection = () => {
                             </div>
 
                             {rating.comment ? (
-                                <p className="text-slate-800 dark:text-slate-200 text-base leading-relaxed mt-2 flex-grow">
+                                <p className="text-slate-800 text-base leading-relaxed mt-2 flex-grow">
                                     {rating.comment}
                                 </p>
                             ) : (

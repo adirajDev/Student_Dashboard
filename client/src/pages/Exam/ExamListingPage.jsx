@@ -53,7 +53,7 @@ const ExamListingPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
-                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600 dark:text-slate-400">
+                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600">
                             <span>Showing {results.length} exams</span>
                         </div>
 
@@ -81,7 +81,7 @@ const ExamListingPage = () => {
                         <div className="sticky top-[100px]">
                             <div className="">
                                 <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
-                                    <Filter className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                                    <Filter className="w-5 h-5 text-indigo-600" />
                                     <h3 className="text-lg text-[var(--foreground)]">
                                         Filter Exams
                                     </h3>
@@ -93,15 +93,15 @@ const ExamListingPage = () => {
                                         <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
                                             Registration Status
                                         </label>
-                                        <div className="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-xl">
+                                        <div className="flex bg-slate-100 p-1 rounded-xl">
                                             {['all', 'live', 'upcoming'].map(statusOption => (
                                                 <button
                                                     key={statusOption}
                                                     onClick={() => setFilters({ ...filters, status: statusOption })}
                                                     className={`flex-1 py-2 text-sm font-medium rounded-lg capitalize transition-all ${
                                                         filters.status === statusOption
-                                                            ? 'bg-white dark:bg-slate-700 text-indigo-600 dark:text-indigo-400 shadow-sm'
-                                                            : 'text-slate-600 dark:text-slate-400 hover:text-[var(--foreground)]'
+                                                            ? 'bg-white text-indigo-600 shadow-sm'
+                                                            : 'text-slate-600 hover:text-[var(--foreground)]'
                                                     }`}
                                                 >
                                                     {statusOption === 'all' ? 'All' : statusOption}
@@ -129,7 +129,7 @@ const ExamListingPage = () => {
                                                         <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${
                                                             isChecked 
                                                                 ? 'bg-indigo-600 border-indigo-600' 
-                                                                : 'border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-indigo-400'
+                                                                : 'border border-slate-300 bg-white group-hover:border-indigo-400'
                                                         }`}>
                                                             {isChecked && (
                                                                 <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -157,7 +157,7 @@ const ExamListingPage = () => {
                                                     month: e.target.value,
                                                 })
                                             }
-                                            className="w-full bg-slate-50 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 rounded-xl px-4 py-3 text-sm text-[var(--foreground)] focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--foreground)] focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
                                         >
                                             <option value="all">Any Month</option>
                                             {MONTHS.map((m, i) => (
@@ -177,7 +177,7 @@ const ExamListingPage = () => {
                                                     month: 'all',
                                                 });
                                             }}
-                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/40 transition-colors"
+                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
                                         >
                                             Clear all filters
                                         </button>

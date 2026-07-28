@@ -70,7 +70,7 @@ const CollegeListingPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
-                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600 dark:text-slate-400">
+                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600">
                             <span>Showing {results.length} colleges</span>
                         </div>
 
@@ -108,7 +108,7 @@ const CollegeListingPage = () => {
                         <div className="sticky top-[100px]">
                             <div className="">
                                 <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
-                                    <Filter className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                                    <Filter className="w-5 h-5 text-indigo-600" />
                                     <h3 className="text-lg text-[var(--foreground)]">
                                         Filter Colleges
                                     </h3>
@@ -135,7 +135,7 @@ const CollegeListingPage = () => {
                                                             <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
                                                                 isChecked 
                                                                     ? 'bg-indigo-600 border-indigo-600' 
-                                                                    : 'border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-indigo-400'
+                                                                    : 'border border-slate-300 bg-white group-hover:border-indigo-400'
                                                             }`}>
                                                                 {isChecked && (
                                                                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -171,7 +171,7 @@ const CollegeListingPage = () => {
                                                             <div className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
                                                                 isChecked 
                                                                     ? 'bg-indigo-600 border-indigo-600' 
-                                                                    : 'border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 group-hover:border-indigo-400'
+                                                                    : 'border border-slate-300 bg-white group-hover:border-indigo-400'
                                                             }`}>
                                                                 {isChecked && (
                                                                     <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
@@ -195,7 +195,7 @@ const CollegeListingPage = () => {
                                                     course: [],
                                                 });
                                             }}
-                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 dark:text-red-400 dark:bg-red-900/20 dark:hover:bg-red-900/40 transition-colors"
+                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
                                         >
                                             Clear all filters
                                         </button>

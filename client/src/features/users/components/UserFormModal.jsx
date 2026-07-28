@@ -19,7 +19,7 @@ const UserFormModal = ({
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-2 text-[var(--ring)] hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <svg
                             className="w-5 h-5"

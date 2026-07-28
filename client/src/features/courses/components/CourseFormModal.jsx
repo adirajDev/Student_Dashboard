@@ -81,7 +81,7 @@ const CourseFormModal = ({
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-2 text-[var(--ring)] hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <svg
                             className="w-5 h-5"
@@ -101,7 +101,7 @@ const CourseFormModal = ({
 
                 <div className="p-6">
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl text-sm border border-red-100 dark:border-red-900/30">
+                        <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm border border-red-100">
                             {error}
                         </div>
                     )}
@@ -193,7 +193,7 @@ const CourseFormModal = ({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 transition-colors"
                                 disabled={loading}
                             >
                                 Cancel

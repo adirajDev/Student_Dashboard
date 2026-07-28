@@ -13,8 +13,8 @@ const NavItem = ({
                 cursor-pointer flex items-center p-3 rounded-full transition-all duration-200 justify-start px-4
                 ${
                     isActive && !hideActive
-                        ? 'text-blue-600 dark:text-blue-400 font-medium'
-                        : 'text-[var(--foreground)] hover:bg-slate-100/50 dark:hover:bg-slate-800/50'
+                        ? 'text-blue-600 font-medium'
+                        : 'text-[var(--foreground)] hover:bg-slate-100/50'
                 }
                 ${className}
             `}

@@ -89,7 +89,7 @@ const PendingUpdatesSection = ({ title }) => {
                             {updates.map(update => (
                                 <tr
                                     key={update._id}
-                                    className="border-b border-[var(--border)] last:border-0 hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors"
+                                    className="border-b border-[var(--border)] last:border-0 hover:bg-slate-50 transition-colors"
                                 >
                                     <td className="py-4 text-sm font-medium">
                                         {update.college?.name ||
@@ -108,7 +108,7 @@ const PendingUpdatesSection = ({ title }) => {
                                             onClick={() =>
                                                 setSelectedUpdate(update)
                                             }
-                                            className="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 dark:text-blue-400 rounded-xl text-sm font-medium transition-colors"
+                                            className="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-sm font-medium transition-colors"
                                         >
                                             Review
                                         </button>

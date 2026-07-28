@@ -66,7 +66,7 @@ const CollegeDetails = () => {
                             <Building className="w-5 h-5 mr-2 text-blue-500" />
                             Overview
                         </h2>
-                        <div className="prose dark:prose-invert max-w-none text-[var(--foreground)] opacity-90 whitespace-pre-wrap">
+                        <div className="prose max-w-none text-[var(--foreground)] opacity-90 whitespace-pre-wrap">
                             {college.overview}
                         </div>
                     </div>
@@ -81,31 +81,31 @@ const CollegeDetails = () => {
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {college.placementDetails.averagePackage && (
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
                                     <p className="text-sm text-[var(--ring)] mb-1">
                                         Median Package
                                     </p>
-                                    <p className="text-2xl font-semibold text-green-600 dark:text-green-400">
+                                    <p className="text-2xl font-semibold text-green-600">
                                         {formatPackage(college.placementDetails.averagePackage)}
                                     </p>
                                 </div>
                             )}
                             {college.placementDetails.highestPackage && (
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700">
+                                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100">
                                     <p className="text-sm text-[var(--ring)] mb-1">
                                         Highest Package
                                     </p>
-                                    <p className="text-2xl font-semibold text-blue-600 dark:text-blue-400">
+                                    <p className="text-2xl font-semibold text-blue-600">
                                         {formatPackage(college.placementDetails.highestPackage)}
                                     </p>
                                 </div>
                             )}
                             {college.placementDetails.placementPercentage && (
-                                <div className="bg-slate-50 dark:bg-slate-800/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 sm:col-span-2">
+                                <div className="bg-slate-50 p-5 rounded-2xl border border-slate-100 sm:col-span-2">
                                     <p className="text-sm text-[var(--ring)] mb-1">
                                         Placement Rate
                                     </p>
-                                    <p className="text-2xl font-semibold text-purple-600 dark:text-purple-400 flex items-center">
+                                    <p className="text-2xl font-semibold text-purple-600 flex items-center">
                                         {college.placementDetails.placementPercentage}
                                         <Percent className="w-5 h-5 ml-1" />
                                     </p>
@@ -127,7 +127,7 @@ const CollegeDetails = () => {
                         {college.recruiters.map((recruiter, idx) => (
                             <span
                                 key={idx}
-                                className="px-4 py-2 bg-blue-50 text-blue-700 dark:bg-blue-900/20 dark:text-blue-300 rounded-full text-sm font-medium border border-blue-100 dark:border-blue-800"
+                                className="px-4 py-2 bg-blue-50 text-blue-700 rounded-full text-sm font-medium border border-blue-100"
                             >
                                 {recruiter}
                             </span>
@@ -149,9 +149,9 @@ const CollegeDetails = () => {
                         {college.faculty.map((member, idx) => (
                             <div
                                 key={idx}
-                                className="p-4 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-700 flex items-start gap-4"
+                                className="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex items-start gap-4"
                             >
-                                <div className="w-12 h-12 rounded-full bg-slate-200 dark:bg-slate-700 flex items-center justify-center text-lg font-semibold text-[var(--ring)] shrink-0">
+                                <div className="w-12 h-12 rounded-full bg-slate-200 flex items-center justify-center text-lg font-semibold text-[var(--ring)] shrink-0">
                                     {member.name.charAt(0).toUpperCase()}
                                 </div>
                                 <div>
@@ -164,7 +164,7 @@ const CollegeDetails = () => {
                                         </p>
                                     )}
                                     {member.role && (
-                                        <p className="text-sm font-medium text-slate-500 dark:text-slate-400 mt-1 capitalize">
+                                        <p className="text-sm font-medium text-slate-500 mt-1 capitalize">
                                             {member.role}
                                         </p>
                                     )}

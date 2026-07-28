@@ -24,8 +24,8 @@ const AdminDashboard = () => {
                         Here is an overview of your management portal.
                     </p>
 
-                    <div className="mt-8 p-8 border-2 border-dashed border-slate-200 dark:border-slate-800 rounded-3xl text-center text-[var(--ring)] flex flex-col items-center justify-center min-h-[300px]">
-                        <LayoutDashboard className="w-12 h-12 mb-4 text-slate-300 dark:text-slate-700" />
+                    <div className="mt-8 p-8 border-2 border-dashed border-slate-200 rounded-3xl text-center text-[var(--ring)] flex flex-col items-center justify-center min-h-[300px]">
+                        <LayoutDashboard className="w-12 h-12 mb-4 text-slate-300" />
                         <p className="text-lg">
                             Select an option from the sidebar to manage users.
                         </p>

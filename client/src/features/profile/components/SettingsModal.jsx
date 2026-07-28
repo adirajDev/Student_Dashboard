@@ -22,14 +22,14 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-1 hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
                 </div>
 
                 <div className="p-6">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-900 dark:text-slate-100 items-start">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-sm text-slate-900 items-start">
                         <div>
                             <span className="block text-slate-500 mb-1">
                                 Name
@@ -60,7 +60,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                         )}
                     </div>
 
-                    <hr className="my-6 border-slate-200 dark:border-slate-800" />
+                    <hr className="my-6 border-slate-200" />
 
                     {error && (
                         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded-2xl text-sm">

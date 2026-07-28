@@ -18,7 +18,7 @@ const BottomSection = ({ onSettingsOpen, onLogout, setIsMobileOpen }) => {
                     setIsMobileOpen(false);
                 }}
                 hideActive
-                className="text-red-500 hover:bg-red-50 dark:hover:bg-red-900/20"
+                className="text-red-500 hover:bg-red-50"
             />
         </div>
     );

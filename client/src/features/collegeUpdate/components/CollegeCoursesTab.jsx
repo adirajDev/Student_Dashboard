@@ -6,13 +6,13 @@ import useCollegeCoursesForm from '../hooks/useCollegeCoursesForm';
 import useCourseManagement from '../../courses/hooks/useCourseManagement';
 
 const CourseCard = ({ course, actionButton }) => (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)] hover:border-blue-200 dark:hover:border-blue-900 transition-colors gap-4">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)] hover:border-blue-200 transition-colors gap-4">
         <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
                 <h4 className="font-medium text-[var(--foreground)]">
                     {course.shortName || course.name}
                 </h4>
-                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700">
                     {course.level}
                 </span>
             </div>
@@ -108,7 +108,7 @@ const CollegeCoursesTab = () => {
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Left Side: Global Search */}
-                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden h-[600px]">
+                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 overflow-hidden h-[600px]">
                         <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
                             <h4 className="font-medium mb-3">Global Courses</h4>
                             <div className="flex flex-col gap-3">
@@ -152,7 +152,7 @@ const CollegeCoursesTab = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => addCourse(course._id, 0, course)}
-                                                className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 rounded-xl transition-colors flex items-center gap-1 text-sm font-medium"
+                                                className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition-colors flex items-center gap-1 text-sm font-medium"
                                             >
                                                 <Plus className="w-4 h-4" />
                                                 <span>Add</span>
@@ -165,7 +165,7 @@ const CollegeCoursesTab = () => {
                     </div>
 
                     {/* Right Side: Selected Courses */}
-                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden h-[600px]">
+                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 overflow-hidden h-[600px]">
                         <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
                             <h4 className="font-medium mb-1">Your Selected Courses</h4>
                             <p className="text-xs text-[var(--ring)]">Set the fee for each selected course</p>
@@ -181,7 +181,7 @@ const CollegeCoursesTab = () => {
                                     const fallbackName = `Course ID: ${String(sc.course).substring(0,6)}`;
 
                                     return (
-                                        <div key={sc.course} className="p-4 border border-blue-100 dark:border-blue-900/40 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex flex-col gap-3">
+                                        <div key={sc.course} className="p-4 border border-blue-100 rounded-2xl bg-white shadow-sm flex flex-col gap-3">
                                             <div className="flex justify-between items-start gap-2">
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-1">
@@ -189,7 +189,7 @@ const CollegeCoursesTab = () => {
                                                             {courseDetails.shortName || courseDetails.name || fallbackName}
                                                         </h4>
                                                         {courseDetails.level && (
-                                                            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+                                                            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700">
                                                                 {courseDetails.level}
                                                             </span>
                                                         )}
@@ -203,12 +203,12 @@ const CollegeCoursesTab = () => {
                                                 <button
                                                     type="button"
                                                     onClick={() => removeCourse(sc.course)}
-                                                    className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                                                    className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </div>
-                                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2 rounded-xl">
+                                            <div className="flex items-center gap-2 bg-slate-50 p-2 rounded-xl">
                                                 <span className="text-sm font-medium text-[var(--ring)] ml-2">Fee (₹):</span>
                                                 <input
                                                     type="number"

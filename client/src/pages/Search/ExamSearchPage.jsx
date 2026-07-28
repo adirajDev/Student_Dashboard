@@ -50,7 +50,7 @@ const ExamSearchPage = () => {
                                 <button
                                     key={i}
                                     onClick={() => setQuery(term)}
-                                    className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-2"
+                                    className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
                                 >
                                     {term}
                                 </button>
@@ -65,7 +65,7 @@ const ExamSearchPage = () => {
                                     ? 'Search Results'
                                     : 'All Exams'}
                             </h2>
-                            <span className="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-semibold text-[var(--ring)]">
+                            <span className="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-semibold text-[var(--ring)]">
                                 {results.length} found
                             </span>
                         </div>

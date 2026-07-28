@@ -7,7 +7,7 @@ const ExamDescription = ({ description }) => {
                 <Book className="w-6 h-6 text-indigo-500" />
                 About the Exam
             </h2>
-            <div className="prose dark:prose-invert max-w-none text-[var(--foreground)]">
+            <div className="prose max-w-none text-[var(--foreground)]">
                 <p className="whitespace-pre-line leading-relaxed text-lg">
                     {description}
                 </p>

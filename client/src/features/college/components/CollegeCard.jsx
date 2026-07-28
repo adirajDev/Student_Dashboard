@@ -18,12 +18,12 @@ const CollegeCard = ({ college, query = '', onClick }) => {
     return (
         <div
             onClick={() => onClick(college)}
-            className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-[var(--border)] hover:border-indigo-500 dark:hover:border-indigo-400 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
+            className="p-5 bg-white rounded-2xl border border-[var(--border)] hover:border-indigo-500 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
         >
             {/* Top Header Section */}
             <div className="flex items-start gap-4 mb-4">
                 {/* Generic Logo Placeholder */}
-                <div className="w-14 h-14 shrink-0 bg-slate-50  border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center text-indigo-500">
+                <div className="w-14 h-14 shrink-0 bg-slate-50  border border-slate-100 rounded-xl flex items-center justify-center text-indigo-500">
                     <Building2 className="w-7 h-7" />
                 </div>
                 
@@ -34,13 +34,13 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                     </h3>
                     <div className="flex items-center gap-4 mt-1">
                         {college.location && (
-                            <div className="flex items-center text-sm text-slate-500 dark:text-slate-400">
+                            <div className="flex items-center text-sm text-slate-500">
                                 <MapPin className="w-4 h-4 mr-1" />
                                 {college.location}
                             </div>
                         )}
                         {college.averageRating > 0 && (
-                            <div className="flex items-center text-sm font-medium text-slate-700 dark:text-slate-300">
+                            <div className="flex items-center text-sm font-medium text-slate-700">
                                 <Star className="w-4 h-4 text-amber-400 mr-1 fill-amber-400" />
                                 {college.averageRating.toFixed(1)}
                             </div>
@@ -55,7 +55,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
             <div className="grid grid-cols-3 gap-4">
                 {/* Courses */}
                 <div>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Courses Offered</p>
+                    <p className="text-sm text-slate-500 mb-1">Courses Offered</p>
                     <div className="flex items-center text-[var(--foreground)] font-medium">
                         <span>{college.availableCourses?.length || 0} Courses</span>
                     </div>
@@ -64,7 +64,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                 {/* Median Package */}
                 {college.placementDetails?.averagePackage && (
                     <div>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Median Package</p>
+                        <p className="text-sm text-slate-500 mb-1">Median Package</p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
                             <span>{formatPackage(college.placementDetails.averagePackage)}</span>
                         </div>
@@ -74,7 +74,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                 {/* Highest Package */}
                 {college.placementDetails?.highestPackage && (
                     <div>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Highest Package</p>
+                        <p className="text-sm text-slate-500 mb-1">Highest Package</p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
                             <span>{formatPackage(college.placementDetails.highestPackage)}</span>
                         </div>
@@ -85,8 +85,8 @@ const CollegeCard = ({ college, query = '', onClick }) => {
             {/* Matching Courses (Only shown if searching) */}
             {college.availableCourses && college.availableCourses.length > 0 && query && (
                 <div className="mt-5 pt-4 border-t border-[var(--border)]">
-                    <div className="flex items-center text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
-                        <BookOpen className="w-4 h-4 mr-2 text-slate-400 dark:text-slate-500" />
+                    <div className="flex items-center text-sm font-medium text-slate-600 mb-2">
+                        <BookOpen className="w-4 h-4 mr-2 text-slate-400" />
                         Matching Courses:
                     </div>
                     <div className="flex flex-wrap gap-2">
@@ -98,7 +98,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                             return (
                                 <span
                                     key={course._id}
-                                    className="text-sm px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800"
+                                    className="text-sm px-3 py-1.5 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200"
                                 >
                                     {course.name}
                                 </span>
@@ -110,7 +110,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                                     .toLowerCase()
                                     .includes(query.toLowerCase())
                         ).length > 0 && (
-                            <span className="text-sm px-3 py-1.5 rounded-lg bg-slate-50 text-slate-600 dark:bg-slate-800 dark:text-slate-400 border border-[var(--border)]">
+                            <span className="text-sm px-3 py-1.5 rounded-lg bg-slate-50 text-slate-600 border border-[var(--border)]">
                                 +
                                 {
                                     college.availableCourses.filter(

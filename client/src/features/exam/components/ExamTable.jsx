@@ -62,7 +62,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Exam Name
                                         </th>
@@ -81,7 +81,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                     {paginatedExams.map(exam => (
                                         <tr
                                             key={exam._id}
-                                            className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <span className="font-medium text-[var(--foreground)]">
@@ -92,12 +92,12 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                                 <div className="flex items-center gap-1.5">
                                                     {exam.examMode ===
                                                     'Online' ? (
-                                                        <span className="px-2.5 py-1 bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-full text-xs font-semibold flex items-center gap-1">
+                                                        <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold flex items-center gap-1">
                                                             <Monitor className="w-3 h-3" />{' '}
                                                             Online
                                                         </span>
                                                     ) : (
-                                                        <span className="px-2.5 py-1 bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400 rounded-full text-xs font-semibold flex items-center gap-1">
+                                                        <span className="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold flex items-center gap-1">
                                                             <Book className="w-3 h-3" />{' '}
                                                             Offline
                                                         </span>
@@ -131,7 +131,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                                             onClick={() =>
                                                                 onEdit(exam)
                                                             }
-                                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                                                             title="Edit Exam"
                                                         >
                                                             <Pencil className="w-4 h-4" />
@@ -142,7 +142,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                                             onClick={() =>
                                                                 onDelete(exam)
                                                             }
-                                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                                                             title="Delete Exam"
                                                         >
                                                             <Trash2 className="w-4 h-4" />

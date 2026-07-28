@@ -36,7 +36,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
             {/* Mobile Toggle Button */}
             <button
                 onClick={() => setIsMobileOpen(true)}
-                className="md:hidden fixed top-4 left-4 z-30 p-3 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-md text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="md:hidden fixed top-4 left-4 z-30 p-3 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-md text-[var(--foreground)] hover:bg-slate-100 transition-colors"
                 title="Open Menu"
             >
                 <Menu className="w-6 h-6" />
@@ -54,7 +54,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                 className={`
                     w-64 flex flex-col justify-between py-6 shrink-0 z-50
                     transition-transform duration-300 ease-in-out
-                    rounded-3xl border border-white/20 dark:border-slate-700/50 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)] dark:shadow-[0_4px_20px_-4px_rgba(0,0,0,0.2)] bg-gradient-to-b from-white/80 to-slate-50/60 dark:from-slate-900/80 dark:to-slate-800/60 backdrop-blur-md
+                    rounded-3xl border border-white/20 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)],0,0,0.2)] bg-gradient-to-b from-white/80 to-slate-50/60 backdrop-blur-md
                     
                     /* Mobile styles */
                     fixed inset-y-0 left-0 m-4

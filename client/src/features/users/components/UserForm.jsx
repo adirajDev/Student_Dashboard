@@ -29,7 +29,7 @@ const UserForm = ({
             </h3>
 
             {validationError && (
-                <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-2xl flex items-start gap-3">
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3">
                     <svg
                         className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"
                         fill="none"
@@ -43,7 +43,7 @@ const UserForm = ({
                             d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         />
                     </svg>
-                    <p className="text-sm text-red-700 dark:text-red-400">
+                    <p className="text-sm text-red-700">
                         {validationError}
                     </p>
                 </div>
@@ -136,7 +136,7 @@ const UserForm = ({
                             <div className="animate-fade-in md:col-span-2 mt-2">
                                 <label
                                     htmlFor="customCollege"
-                                    className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400"
+                                    className="block text-sm font-medium mb-1 text-blue-600"
                                 >
                                     College Name
                                 </label>
@@ -147,7 +147,7 @@ const UserForm = ({
                                     required
                                     value={formData.customCollege}
                                     onChange={handleChange}
-                                    className="input-field border-blue-300 dark:border-blue-700 focus:ring-blue-500"
+                                    className="input-field border-blue-300 focus:ring-blue-500"
                                     placeholder="Enter the college name"
                                 />
                             </div>

@@ -68,7 +68,7 @@ const CourseTable = ({
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Course
                                         </th>
@@ -87,7 +87,7 @@ const CourseTable = ({
                                     {courses.map(course => (
                                         <tr
                                             key={course._id}
-                                            className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-[var(--foreground)]">
@@ -100,10 +100,10 @@ const CourseTable = ({
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`px-3 py-1 text-xs font-medium rounded-full
-                                                ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
-                                                ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : ''}
-                                                ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : ''}
-                                                ${!course.level?.toLowerCase().includes('diploma') && !course.level?.toLowerCase().includes('bachelor') && !course.level?.toLowerCase().includes('master') && !course.level?.toLowerCase().includes('doctorate') ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : ''}
+                                                ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700' : ''}
+                                                ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700' : ''}
+                                                ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700' : ''}
+                                                ${!course.level?.toLowerCase().includes('diploma') && !course.level?.toLowerCase().includes('bachelor') && !course.level?.toLowerCase().includes('master') && !course.level?.toLowerCase().includes('doctorate') ? 'bg-green-100 text-green-700' : ''}
                                             `}
                                                 >
                                                     {course.level}
@@ -119,7 +119,7 @@ const CourseTable = ({
                                                             onClick={() =>
                                                                 onEdit(course)
                                                             }
-                                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                                                             title="Edit Course"
                                                         >
                                                             <Pencil className="w-4 h-4" />
@@ -130,7 +130,7 @@ const CourseTable = ({
                                                             onClick={() =>
                                                                 onDelete(course)
                                                             }
-                                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                                                             title="Delete Course"
                                                         >
                                                             <Trash2 className="w-4 h-4" />

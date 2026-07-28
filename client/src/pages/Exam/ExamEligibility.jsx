@@ -7,7 +7,7 @@ const ExamEligibility = ({ requirement }) => {
                 <GraduationCap className="w-6 h-6 text-emerald-500" />
                 Eligibility Criteria
             </h2>
-            <div className="p-6 bg-emerald-50 dark:bg-emerald-900/10 border border-emerald-100 dark:border-emerald-800/30 rounded-2xl">
+            <div className="p-6 bg-emerald-50 border border-emerald-100 rounded-2xl">
                 <p className="whitespace-pre-line text-[var(--foreground)] font-medium text-lg leading-relaxed">
                     {requirement}
                 </p>

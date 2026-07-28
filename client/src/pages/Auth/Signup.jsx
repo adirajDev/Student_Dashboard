@@ -16,9 +16,9 @@ const Signup = () => {
     } = useSignup();
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100 dark:from-slate-900 dark:to-slate-800">
+        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100">
             <div className="card w-full max-w-md">
-                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">
+                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)]">
                     Create Account
                 </h1>
 
@@ -92,7 +92,7 @@ const Signup = () => {
 
                     {formData.college === 'others' && (
                         <div className="animate-fade-in">
-                            <label className="block text-sm font-medium mb-1 text-blue-600 dark:text-blue-400">
+                            <label className="block text-sm font-medium mb-1 text-blue-600">
                                 College Name
                             </label>
                             <input
@@ -101,7 +101,7 @@ const Signup = () => {
                                 required
                                 value={formData.customCollege}
                                 onChange={handleChange}
-                                className="input-field rounded-xl border-blue-300 dark:border-blue-700 focus:ring-blue-500"
+                                className="input-field rounded-xl border-blue-300 focus:ring-blue-500"
                                 placeholder="Enter your college name"
                             />
                         </div>

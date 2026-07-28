@@ -11,7 +11,7 @@ const CourseCard = ({ course, fee }) => {
                     {course.name}
                 </h3>
                 {course.shortName && (
-                    <span className="shrink-0 px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400">
+                    <span className="shrink-0 px-2.5 py-1 text-xs font-semibold rounded-lg bg-indigo-50 text-indigo-700">
                         {course.shortName}
                     </span>
                 )}
@@ -24,13 +24,13 @@ const CourseCard = ({ course, fee }) => {
             )}
 
             {fee !== undefined && (
-                <div className="mb-4 inline-flex items-center px-3 py-1 bg-green-50 text-green-700 dark:bg-green-900/30 dark:text-green-400 rounded-lg text-sm font-semibold">
+                <div className="mb-4 inline-flex items-center px-3 py-1 bg-green-50 text-green-700 rounded-lg text-sm font-semibold">
                     Fee: ₹{Number(fee).toLocaleString()}
                 </div>
             )}
 
-            <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
-                <div className="text-sm font-medium text-slate-500 dark:text-slate-400 flex items-center">
+            <div className="mt-auto pt-4 flex items-center justify-between border-t border-slate-100">
+                <div className="text-sm font-medium text-slate-500 flex items-center">
                     <Calendar className="w-4 h-4 mr-1.5" />
                     <span>
                         {course.duration 

@@ -61,8 +61,8 @@ const ResetOtpPassword = () => {
         <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-4">
             <div className="w-full max-w-md animate-fade-in">
                 <div className="text-center mb-10">
-                    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-12 shadow-sm">
-                        <ShieldCheck className="w-8 h-8 text-blue-600 dark:text-blue-400 -rotate-12" />
+                    <div className="w-16 h-16 bg-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-12 shadow-sm">
+                        <ShieldCheck className="w-8 h-8 text-blue-600 -rotate-12" />
                     </div>
                     <h1 className="text-4xl mb-3 tracking-tight">
                         Account Setup
@@ -74,7 +74,7 @@ const ResetOtpPassword = () => {
 
                 <div className="card">
                     {error && (
-                        <div className="mb-6 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800 rounded-2xl text-sm font-medium text-center">
+                        <div className="mb-6 p-3 bg-red-100 text-red-700 border border-red-200 rounded-2xl text-sm font-medium text-center">
                             {error}
                         </div>
                     )}

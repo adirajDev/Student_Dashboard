@@ -22,7 +22,7 @@ const FacultyFields = ({
             {faculty.map((member, idx) => (
                 <div
                     key={idx}
-                    className="flex items-start gap-2 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl border border-[var(--border)]"
+                    className="flex items-start gap-2 bg-slate-50 p-4 rounded-2xl border border-[var(--border)]"
                 >
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 flex-1">
                         <div>

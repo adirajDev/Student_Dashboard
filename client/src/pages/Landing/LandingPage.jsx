@@ -106,7 +106,7 @@ const LandingPage = () => {
                         {/* Student Card */}
                         <div className="group relative bg-[var(--card)] rounded-3xl p-8 border border-[var(--border)] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
-                            <div className="w-14 h-14 bg-indigo-100 dark:bg-indigo-900/30 text-indigo-600 dark:text-indigo-400 rounded-2xl flex items-center justify-center mb-6">
+                            <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-2xl flex items-center justify-center mb-6">
                                 <User className="w-7 h-7" />
                             </div>
                             <h3 className="text-2xl mb-3">Student</h3>
@@ -117,7 +117,7 @@ const LandingPage = () => {
                             </p>
                             <Link
                                 to="/signup"
-                                className="inline-flex items-center gap-2 text-indigo-600 dark:text-indigo-400 font-semibold group-hover:gap-3 transition-all"
+                                className="inline-flex items-center gap-2 text-indigo-600 font-semibold group-hover:gap-3 transition-all"
                             >
                                 Join as Student{' '}
                                 <ArrowRight className="w-4 h-4" />
@@ -127,7 +127,7 @@ const LandingPage = () => {
                         {/* College Rep Card */}
                         <div className="group relative bg-[var(--card)] rounded-3xl p-8 border border-[var(--border)] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
-                            <div className="w-14 h-14 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 dark:text-emerald-400 rounded-2xl flex items-center justify-center mb-6">
+                            <div className="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center mb-6">
                                 <Building className="w-7 h-7" />
                             </div>
                             <h3 className="text-2xl mb-3">
@@ -140,7 +140,7 @@ const LandingPage = () => {
                             </p>
                             <Link
                                 to="/signup"
-                                className="inline-flex items-center gap-2 text-emerald-600 dark:text-emerald-400 font-semibold group-hover:gap-3 transition-all"
+                                className="inline-flex items-center gap-2 text-emerald-600 font-semibold group-hover:gap-3 transition-all"
                             >
                                 Register College{' '}
                                 <ArrowRight className="w-4 h-4" />
@@ -150,7 +150,7 @@ const LandingPage = () => {
                         {/* Admin Card */}
                         <div className="group relative bg-[var(--card)] rounded-3xl p-8 border border-[var(--border)] shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
                             <div className="absolute top-0 right-0 w-32 h-32 bg-rose-500/10 rounded-bl-full -z-10 group-hover:scale-110 transition-transform"></div>
-                            <div className="w-14 h-14 bg-rose-100 dark:bg-rose-900/30 text-rose-600 dark:text-rose-400 rounded-2xl flex items-center justify-center mb-6">
+                            <div className="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mb-6">
                                 <ShieldCheck className="w-7 h-7" />
                             </div>
                             <h3 className="text-2xl mb-3">
@@ -163,7 +163,7 @@ const LandingPage = () => {
                             </p>
                             <Link
                                 to="/signin"
-                                className="inline-flex items-center gap-2 text-rose-600 dark:text-rose-400 font-semibold group-hover:gap-3 transition-all"
+                                className="inline-flex items-center gap-2 text-rose-600 font-semibold group-hover:gap-3 transition-all"
                             >
                                 Admin Login <ArrowRight className="w-4 h-4" />
                             </Link>
