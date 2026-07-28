@@ -39,7 +39,7 @@ const useSignup = () => {
                     defaultCollege = collegeData[0]._id;
                     const availableCourses = courseData.filter(c =>
                         collegeData[0].availableCourses?.some(
-                            ac => (ac._id || ac) === c._id
+                            ac => (ac.course?._id || ac.course || ac._id || ac) === c._id
                         )
                     );
                     if (availableCourses.length > 0) {
@@ -68,7 +68,7 @@ const useSignup = () => {
                 if (selectedCollege) {
                     const availableCourses = courses.filter(c =>
                         selectedCollege.availableCourses?.some(
-                            ac => (ac._id || ac) === c._id
+                            ac => (ac.course?._id || ac.course || ac._id || ac) === c._id
                         )
                     );
                     const isCurrentCourseValid = availableCourses.some(

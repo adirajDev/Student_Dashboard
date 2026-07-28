@@ -134,7 +134,7 @@ const Signup = () => {
                                     if (selectedCollegeData) {
                                         displayedCourses = courses.filter(c =>
                                             selectedCollegeData.availableCourses?.some(
-                                                ac => (ac._id || ac) === c._id
+                                                ac => (ac.course?._id || ac.course || ac._id || ac) === c._id
                                             )
                                         );
                                     }
