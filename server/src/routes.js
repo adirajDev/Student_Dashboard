@@ -18,7 +18,7 @@ const router = Router();
 router.use('/', authRoutes);
 router.use('/', userRoutes);
 router.use('/colleges', collegeRoutes);
-router.use('/colleges', collegeGalleryRoutes);
+router.use('/college-gallery', collegeGalleryRoutes);
 router.use('/courses', courseRoutes);
 router.use('/students', studentRoutes);
 router.use('/ratings', ratingRoutes);

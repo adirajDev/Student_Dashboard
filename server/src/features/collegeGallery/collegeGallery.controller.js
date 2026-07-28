@@ -3,7 +3,10 @@ import asyncHandler from '../../common/utils/asyncHandler.js';
 
 const checkOwnership = (user, collegeId) => {
     if (user.role === 'admin') return true;
-    if (user.role === 'college' && user.college?.toString() === collegeId) return true;
+    
+    const userCollegeId = typeof user.college === 'object' ? user.college?._id?.toString() : user.college?.toString();
+    
+    if (user.role === 'college' && userCollegeId === collegeId) return true;
     return false;
 };
 
