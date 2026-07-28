@@ -49,7 +49,7 @@ const useCollegeDetails = (id, locationHash) => {
                         'ring-blue-500',
                         'ring-opacity-50',
                         'bg-blue-50',
-                        'dark:bg-blue-900/20'
+                        ''
                     );
                     setTimeout(() => {
                         element.classList.remove(
@@ -57,7 +57,7 @@ const useCollegeDetails = (id, locationHash) => {
                             'ring-blue-500',
                             'ring-opacity-50',
                             'bg-blue-50',
-                            'dark:bg-blue-900/20'
+                            ''
                         );
                     }, 2000);
                 }, 100);

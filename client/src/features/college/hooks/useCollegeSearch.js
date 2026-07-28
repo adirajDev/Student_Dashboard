@@ -42,16 +42,20 @@ const useCollegeSearch = (initialQuery = '') => {
         // Apply text query
         if (query.trim()) {
             const q = query.toLowerCase();
-            filtered = filtered.filter(college =>
-                college.name.toLowerCase().includes(q) ||
-                (college.location && college.location.toLowerCase().includes(q))
+            filtered = filtered.filter(
+                college =>
+                    college.name.toLowerCase().includes(q) ||
+                    (college.location &&
+                        college.location.toLowerCase().includes(q))
             );
         }
 
         // Apply location filter
         if (filters.location && filters.location.length > 0) {
-            filtered = filtered.filter(college => 
-                college.location && filters.location.includes(college.location)
+            filtered = filtered.filter(
+                college =>
+                    college.location &&
+                    filters.location.includes(college.location)
             );
         }
 
@@ -60,8 +64,12 @@ const useCollegeSearch = (initialQuery = '') => {
             filtered = filtered.filter(college => {
                 if (!college.availableCourses) return false;
                 // if any course name includes any selected course filter
-                return filters.course.some(courseFilter => 
-                    college.availableCourses.some(c => c.name.toLowerCase().includes(courseFilter.toLowerCase()))
+                return filters.course.some(courseFilter =>
+                    college.availableCourses.some(c =>
+                        c.name
+                            .toLowerCase()
+                            .includes(courseFilter.toLowerCase())
+                    )
                 );
             });
         }

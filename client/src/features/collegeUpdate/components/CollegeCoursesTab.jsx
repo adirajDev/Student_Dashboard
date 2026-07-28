@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
 import { useOutletContext } from 'react-router-dom';
-import { Search, Plus, Trash2, Loader2, AlertCircle, CheckCircle2 } from 'lucide-react';
+import {
+    Search,
+    Plus,
+    Trash2,
+    Loader2,
+    AlertCircle,
+    CheckCircle2,
+} from 'lucide-react';
 import SearchBar from '../../search/components/SearchBar';
 import useCollegeCoursesForm from '../hooks/useCollegeCoursesForm';
 import useCourseManagement from '../../courses/hooks/useCourseManagement';
 
 const CourseCard = ({ course, actionButton }) => (
-    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)] hover:border-blue-200 dark:hover:border-blue-900 transition-colors gap-4">
+    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center p-4 border border-[var(--border)] rounded-2xl bg-[var(--card)] hover:border-blue-200 transition-colors gap-4">
         <div className="flex-1">
             <div className="flex items-center gap-2 mb-1">
                 <h4 className="font-medium text-[var(--foreground)]">
                     {course.shortName || course.name}
                 </h4>
-                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
+                <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700">
                     {course.level}
                 </span>
             </div>
@@ -22,12 +29,13 @@ const CourseCard = ({ course, actionButton }) => (
                 </div>
             )}
             <div className="text-xs text-[var(--ring)]">
-                Duration: {course.duration ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}` : 'N/A'}
+                Duration:{' '}
+                {course.duration
+                    ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}`
+                    : 'N/A'}
             </div>
         </div>
-        <div className="flex items-center gap-3 shrink-0">
-            {actionButton}
-        </div>
+        <div className="flex items-center gap-3 shrink-0">{actionButton}</div>
     </div>
 );
 
@@ -102,13 +110,14 @@ const CollegeCoursesTab = () => {
             <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] p-6 md:p-8 mb-6">
                 <h3 className="text-xl font-medium mb-2">Manage Courses</h3>
                 <p className="text-[var(--ring)] text-sm mb-8">
-                    Search for courses from the global registry, add them to your college, and set the tuition fees. 
-                    Once you're done, submit the changes for admin approval.
+                    Search for courses from the global registry, add them to
+                    your college, and set the tuition fees. Once you're done,
+                    submit the changes for admin approval.
                 </p>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {/* Left Side: Global Search */}
-                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden h-[600px]">
+                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 overflow-hidden h-[600px]">
                         <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
                             <h4 className="font-medium mb-3">Global Courses</h4>
                             <div className="flex flex-col gap-3">
@@ -120,17 +129,27 @@ const CollegeCoursesTab = () => {
                                 />
                                 <select
                                     value={filterLevel}
-                                    onChange={(e) => setFilterLevel(e.target.value)}
+                                    onChange={e =>
+                                        setFilterLevel(e.target.value)
+                                    }
                                     className="w-full py-2.5 px-3 bg-[var(--card)] border border-[var(--border)] rounded-xl shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 text-sm appearance-none"
                                 >
                                     <option value="">All Levels</option>
-                                    <option value="Certificate">Certificate</option>
+                                    <option value="Certificate">
+                                        Certificate
+                                    </option>
                                     <option value="Diploma">Diploma</option>
-                                    <option value="Advanced Diploma">Advanced Diploma</option>
-                                    <option value="Bachelor's">Bachelor's</option>
+                                    <option value="Advanced Diploma">
+                                        Advanced Diploma
+                                    </option>
+                                    <option value="Bachelor's">
+                                        Bachelor's
+                                    </option>
                                     <option value="Master's">Master's</option>
                                     <option value="Doctorate">Doctorate</option>
-                                    <option value="Post Doctorate">Post Doctorate</option>
+                                    <option value="Post Doctorate">
+                                        Post Doctorate
+                                    </option>
                                 </select>
                             </div>
                         </div>
@@ -141,7 +160,8 @@ const CollegeCoursesTab = () => {
                                 </div>
                             ) : availableGlobalCourses.length === 0 ? (
                                 <div className="text-center p-8 text-[var(--ring)] text-sm">
-                                    No courses found. Try a different search term.
+                                    No courses found. Try a different search
+                                    term.
                                 </div>
                             ) : (
                                 availableGlobalCourses.map(course => (
@@ -151,8 +171,14 @@ const CollegeCoursesTab = () => {
                                         actionButton={
                                             <button
                                                 type="button"
-                                                onClick={() => addCourse(course._id, 0, course)}
-                                                className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 dark:bg-blue-900/30 dark:text-blue-400 dark:hover:bg-blue-900/50 rounded-xl transition-colors flex items-center gap-1 text-sm font-medium"
+                                                onClick={() =>
+                                                    addCourse(
+                                                        course._id,
+                                                        0,
+                                                        course
+                                                    )
+                                                }
+                                                className="p-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-xl transition-colors flex items-center gap-1 text-sm font-medium"
                                             >
                                                 <Plus className="w-4 h-4" />
                                                 <span>Add</span>
@@ -165,55 +191,80 @@ const CollegeCoursesTab = () => {
                     </div>
 
                     {/* Right Side: Selected Courses */}
-                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 dark:bg-slate-900/20 overflow-hidden h-[600px]">
+                    <div className="flex flex-col border border-[var(--border)] rounded-2xl bg-slate-50/50 overflow-hidden h-[600px]">
                         <div className="p-4 border-b border-[var(--border)] bg-[var(--card)]">
-                            <h4 className="font-medium mb-1">Your Selected Courses</h4>
-                            <p className="text-xs text-[var(--ring)]">Set the fee for each selected course</p>
+                            <h4 className="font-medium mb-1">
+                                Your Selected Courses
+                            </h4>
+                            <p className="text-xs text-[var(--ring)]">
+                                Set the fee for each selected course
+                            </p>
                         </div>
                         <div className="flex-1 overflow-y-auto p-4 space-y-3">
                             {selectedCourses.length === 0 ? (
                                 <div className="text-center p-8 text-[var(--ring)] text-sm">
-                                    You haven't selected any courses yet. Add courses from the left.
+                                    You haven't selected any courses yet. Add
+                                    courses from the left.
                                 </div>
                             ) : (
                                 selectedCourses.map(sc => {
-                                    const courseDetails = sc.courseDetails || {};
-                                    const fallbackName = `Course ID: ${String(sc.course).substring(0,6)}`;
+                                    const courseDetails =
+                                        sc.courseDetails || {};
+                                    const fallbackName = `Course ID: ${String(sc.course).substring(0, 6)}`;
 
                                     return (
-                                        <div key={sc.course} className="p-4 border border-blue-100 dark:border-blue-900/40 rounded-2xl bg-white dark:bg-slate-800 shadow-sm flex flex-col gap-3">
+                                        <div
+                                            key={sc.course}
+                                            className="p-4 border border-blue-100 rounded-2xl bg-white shadow-sm flex flex-col gap-3"
+                                        >
                                             <div className="flex justify-between items-start gap-2">
                                                 <div>
                                                     <div className="flex items-center gap-2 mb-1">
                                                         <h4 className="font-medium text-[var(--foreground)]">
-                                                            {courseDetails.shortName || courseDetails.name || fallbackName}
+                                                            {courseDetails.shortName ||
+                                                                courseDetails.name ||
+                                                                fallbackName}
                                                         </h4>
                                                         {courseDetails.level && (
-                                                            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-400">
-                                                                {courseDetails.level}
+                                                            <span className="px-2 py-0.5 text-[10px] uppercase font-bold tracking-wider rounded-full bg-blue-100 text-blue-700">
+                                                                {
+                                                                    courseDetails.level
+                                                                }
                                                             </span>
                                                         )}
                                                     </div>
                                                     {courseDetails.specialization && (
                                                         <div className="text-xs text-[var(--ring)]">
-                                                            Specialization: {courseDetails.specialization}
+                                                            Specialization:{' '}
+                                                            {
+                                                                courseDetails.specialization
+                                                            }
                                                         </div>
                                                     )}
                                                 </div>
                                                 <button
                                                     type="button"
-                                                    onClick={() => removeCourse(sc.course)}
-                                                    className="p-1.5 text-red-500 hover:bg-red-50 dark:hover:bg-red-900/30 rounded-lg transition-colors"
+                                                    onClick={() =>
+                                                        removeCourse(sc.course)
+                                                    }
+                                                    className="p-1.5 text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                                                 >
                                                     <Trash2 className="w-4 h-4" />
                                                 </button>
                                             </div>
-                                            <div className="flex items-center gap-2 bg-slate-50 dark:bg-slate-900/50 p-2 rounded-xl">
-                                                <span className="text-sm font-medium text-[var(--ring)] ml-2">Fee (₹):</span>
+                                            <div className="flex items-center gap-2 bg-slate-50 p-2 rounded-xl">
+                                                <span className="text-sm font-medium text-[var(--ring)] ml-2">
+                                                    Fee (₹):
+                                                </span>
                                                 <input
                                                     type="number"
                                                     value={sc.fee || ''}
-                                                    onChange={e => updateFee(sc.course, e.target.value)}
+                                                    onChange={e =>
+                                                        updateFee(
+                                                            sc.course,
+                                                            e.target.value
+                                                        )
+                                                    }
                                                     placeholder="Enter fee amount"
                                                     className="flex-1 bg-transparent border-none focus:ring-0 text-sm font-medium px-2 py-1 text-right"
                                                     required

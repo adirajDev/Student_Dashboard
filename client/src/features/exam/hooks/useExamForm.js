@@ -30,7 +30,9 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
             setFormData({
                 name: editingExam.name || '',
                 requirement: editingExam.requirement || '',
-                regStartingDate: formatDateForInput(editingExam.regStartingDate),
+                regStartingDate: formatDateForInput(
+                    editingExam.regStartingDate
+                ),
                 regEndingDate: formatDateForInput(editingExam.regEndingDate),
                 examMode: editingExam.examMode || 'Offline',
                 examDescription: editingExam.examDescription || '',

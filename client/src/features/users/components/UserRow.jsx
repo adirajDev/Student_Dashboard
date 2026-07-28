@@ -2,7 +2,7 @@ import { Pencil, Trash2 } from 'lucide-react';
 
 const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
     return (
-        <tr className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors">
+        <tr className="hover:bg-slate-50 transition-colors">
             <td className="px-6 py-4">
                 <div className="font-medium text-[var(--foreground)]">
                     {user.name}
@@ -28,7 +28,7 @@ const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
                     <button
                         onClick={() => onEdit(user)}
                         title="Edit"
-                        className="p-2 text-indigo-600 dark:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-900/20 rounded-full transition cursor-pointer"
+                        className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition cursor-pointer"
                     >
                         <Pencil className="w-4 h-4" />
                     </button>
@@ -37,7 +37,7 @@ const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
                         <button
                             onClick={() => onDelete(user)}
                             title="Delete"
-                            className="p-2 text-red-500 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-full transition cursor-pointer"
+                            className="p-2 text-red-500 hover:bg-red-50 rounded-full transition cursor-pointer"
                         >
                             <Trash2 className="w-4 h-4" />
                         </button>

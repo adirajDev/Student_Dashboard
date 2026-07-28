@@ -65,7 +65,7 @@ const UpdateHistoryTab = () => {
 
                         {/* Inline renderers for the different change types */}
                         {update.proposedChanges?.name && (
-                            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
+                            <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
                                 <span className="text-xs font-semibold text-[var(--ring)] uppercase mb-1 block">
                                     College Name
                                 </span>
@@ -76,7 +76,7 @@ const UpdateHistoryTab = () => {
                         )}
 
                         {update.proposedChanges?.description && (
-                            <div className="bg-slate-50 dark:bg-slate-900 rounded-xl p-4 border border-slate-200 dark:border-slate-800">
+                            <div className="bg-slate-50 rounded-xl p-4 border border-slate-200">
                                 <span className="text-xs font-semibold text-[var(--ring)] uppercase mb-1 block">
                                     Description
                                 </span>
@@ -87,12 +87,12 @@ const UpdateHistoryTab = () => {
                         )}
 
                         {update.proposedChanges?.placementDetails && (
-                            <div className="bg-white dark:bg-slate-800/50 rounded-xl p-4 border border-[var(--border)]">
+                            <div className="bg-white rounded-xl p-4 border border-[var(--border)]">
                                 <span className="text-xs font-semibold text-[var(--ring)] uppercase mb-2 block">
                                     Placement Details
                                 </span>
                                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                                    <div className="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
                                         <p className="text-xs text-[var(--ring)] uppercase mb-1">
                                             Average Package
                                         </p>
@@ -103,7 +103,7 @@ const UpdateHistoryTab = () => {
                                                 : 'N/A'}
                                         </p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
                                         <p className="text-xs text-[var(--ring)] uppercase mb-1">
                                             Highest Package
                                         </p>
@@ -114,7 +114,7 @@ const UpdateHistoryTab = () => {
                                                 : 'N/A'}
                                         </p>
                                     </div>
-                                    <div className="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800">
+                                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
                                         <p className="text-xs text-[var(--ring)] uppercase mb-1">
                                             Placement %
                                         </p>
@@ -131,7 +131,7 @@ const UpdateHistoryTab = () => {
                         )}
 
                         {update.proposedChanges?.recruiters && (
-                            <div className="bg-white dark:bg-slate-800/50 rounded-xl p-4 border border-[var(--border)]">
+                            <div className="bg-white rounded-xl p-4 border border-[var(--border)]">
                                 <span className="text-xs font-semibold text-[var(--ring)] uppercase mb-2 block">
                                     Top Recruiters
                                 </span>
@@ -142,7 +142,7 @@ const UpdateHistoryTab = () => {
                                             (rec, i) => (
                                                 <span
                                                     key={i}
-                                                    className="px-3 py-1 bg-purple-50 dark:bg-purple-900/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-800/50 rounded-lg text-xs font-medium"
+                                                    className="px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 rounded-lg text-xs font-medium"
                                                 >
                                                     {rec}
                                                 </span>
@@ -158,7 +158,7 @@ const UpdateHistoryTab = () => {
                         )}
 
                         {update.proposedChanges?.faculty && (
-                            <div className="bg-white dark:bg-slate-800/50 rounded-xl p-4 border border-[var(--border)]">
+                            <div className="bg-white rounded-xl p-4 border border-[var(--border)]">
                                 <span className="text-xs font-semibold text-[var(--ring)] uppercase mb-2 block">
                                     Faculty Roster
                                 </span>
@@ -169,9 +169,9 @@ const UpdateHistoryTab = () => {
                                             (fac, i) => (
                                                 <div
                                                     key={i}
-                                                    className="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200 dark:border-slate-800 flex items-start gap-3"
+                                                    className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-start gap-3"
                                                 >
-                                                    <div className="w-8 h-8 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center text-orange-600 dark:text-orange-400 font-bold shrink-0 text-xs">
+                                                    <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0 text-xs">
                                                         {fac.name?.charAt(0) ||
                                                             '?'}
                                                     </div>
@@ -198,11 +198,11 @@ const UpdateHistoryTab = () => {
                     </div>
 
                     {update.status === 'rejected' && update.adminFeedback && (
-                        <div className="mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-xl">
-                            <h5 className="text-red-800 dark:text-red-300 font-medium text-sm mb-1">
+                        <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+                            <h5 className="text-red-800 font-medium text-sm mb-1">
                                 Admin Feedback:
                             </h5>
-                            <p className="text-red-700 dark:text-red-400 text-sm">
+                            <p className="text-red-700 text-sm">
                                 {update.adminFeedback}
                             </p>
                         </div>

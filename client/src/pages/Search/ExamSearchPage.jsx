@@ -14,15 +14,8 @@ const ExamSearchPage = () => {
     const [searchParams] = useSearchParams();
     const initialQuery = searchParams.get('q') || '';
 
-    const {
-        query,
-        setQuery,
-        filters,
-        setFilters,
-        results,
-        isLoading,
-        error,
-    } = useExamSearch(initialQuery);
+    const { query, setQuery, filters, setFilters, results, isLoading, error } =
+        useExamSearch(initialQuery);
 
     const handleExamClick = exam => {
         navigate(`/exam/${exam._id}`);
@@ -40,7 +33,9 @@ const ExamSearchPage = () => {
                     />
                 </div>
 
-                {!query.trim() && filters.status === 'all' && filters.mode === 'all' ? (
+                {!query.trim() &&
+                filters.status === 'all' &&
+                filters.mode === 'all' ? (
                     <div className="mt-8">
                         <h2 className="text-2xl mb-6 text-[var(--foreground)]">
                             Top Searches
@@ -50,7 +45,7 @@ const ExamSearchPage = () => {
                                 <button
                                     key={i}
                                     onClick={() => setQuery(term)}
-                                    className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-2"
+                                    className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
                                 >
                                     {term}
                                 </button>
@@ -61,11 +56,13 @@ const ExamSearchPage = () => {
                     <div className="mt-4">
                         <div className="flex items-center justify-between mb-8">
                             <h2 className="text-2xl text-[var(--foreground)]">
-                                {query || filters.status !== 'all' || filters.mode !== 'all'
+                                {query ||
+                                filters.status !== 'all' ||
+                                filters.mode !== 'all'
                                     ? 'Search Results'
                                     : 'All Exams'}
                             </h2>
-                            <span className="px-4 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-full text-sm font-semibold text-[var(--ring)]">
+                            <span className="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-semibold text-[var(--ring)]">
                                 {results.length} found
                             </span>
                         </div>

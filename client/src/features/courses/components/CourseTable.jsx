@@ -37,13 +37,15 @@ const CourseTable = ({
                 <div className="w-full sm:w-48 shrink-0">
                     <select
                         value={filterLevel}
-                        onChange={(e) => setFilterLevel(e.target.value)}
+                        onChange={e => setFilterLevel(e.target.value)}
                         className="w-full py-3 px-4 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
                     >
                         <option value="">All Levels</option>
                         <option value="Certificate">Certificate</option>
                         <option value="Diploma">Diploma</option>
-                        <option value="Advanced Diploma">Advanced Diploma</option>
+                        <option value="Advanced Diploma">
+                            Advanced Diploma
+                        </option>
                         <option value="Bachelor's">Bachelor's</option>
                         <option value="Master's">Master's</option>
                         <option value="Doctorate">Doctorate</option>
@@ -68,7 +70,7 @@ const CourseTable = ({
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Course
                                         </th>
@@ -87,30 +89,35 @@ const CourseTable = ({
                                     {courses.map(course => (
                                         <tr
                                             key={course._id}
-                                            className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-[var(--foreground)]">
                                                     {course.name}
                                                 </div>
                                                 <div className="text-sm text-[var(--ring)] mt-1">
-                                                    {course.shortName} {course.specialization ? `- ${course.specialization}` : ''}
+                                                    {course.shortName}{' '}
+                                                    {course.specialization
+                                                        ? `- ${course.specialization}`
+                                                        : ''}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`px-3 py-1 text-xs font-medium rounded-full
-                                                ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : ''}
-                                                ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' : ''}
-                                                ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400' : ''}
-                                                ${!course.level?.toLowerCase().includes('diploma') && !course.level?.toLowerCase().includes('bachelor') && !course.level?.toLowerCase().includes('master') && !course.level?.toLowerCase().includes('doctorate') ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : ''}
+                                                ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700' : ''}
+                                                ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700' : ''}
+                                                ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700' : ''}
+                                                ${!course.level?.toLowerCase().includes('diploma') && !course.level?.toLowerCase().includes('bachelor') && !course.level?.toLowerCase().includes('master') && !course.level?.toLowerCase().includes('doctorate') ? 'bg-green-100 text-green-700' : ''}
                                             `}
                                                 >
                                                     {course.level}
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4 text-sm text-[var(--ring)]">
-                                                {course.duration ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}` : 'N/A'}
+                                                {course.duration
+                                                    ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}`
+                                                    : 'N/A'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">
@@ -119,7 +126,7 @@ const CourseTable = ({
                                                             onClick={() =>
                                                                 onEdit(course)
                                                             }
-                                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                                                             title="Edit Course"
                                                         >
                                                             <Pencil className="w-4 h-4" />
@@ -130,7 +137,7 @@ const CourseTable = ({
                                                             onClick={() =>
                                                                 onDelete(course)
                                                             }
-                                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                                                             title="Delete Course"
                                                         >
                                                             <Trash2 className="w-4 h-4" />

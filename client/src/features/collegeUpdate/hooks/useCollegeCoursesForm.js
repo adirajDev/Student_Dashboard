@@ -37,21 +37,23 @@ const useCollegeCoursesForm = user => {
                 const currentCourses = (data.availableCourses || []).map(ac => {
                     const courseId = ac.course?._id || ac.course;
                     let cDetails = ac.course;
-                    
+
                     if (!cDetails || typeof cDetails === 'string') {
-                        cDetails = { 
-                            name: 'Populating...', 
-                            shortName: 'Loading ID: ' + String(courseId).substring(0, 4) 
+                        cDetails = {
+                            name: 'Populating...',
+                            shortName:
+                                'Loading ID: ' +
+                                String(courseId).substring(0, 4),
                         };
                     }
-                    
+
                     return {
                         course: courseId,
                         courseDetails: cDetails,
                         fee: ac.fee,
                     };
                 });
-                
+
                 setOriginalCourses(currentCourses);
                 setSelectedCourses(currentCourses);
             } catch (err) {
@@ -68,7 +70,10 @@ const useCollegeCoursesForm = user => {
         setSelectedCourses(prev => {
             // Prevent duplicates
             if (prev.some(c => c.course === courseId)) return prev;
-            return [...prev, { course: courseId, fee: Number(fee) || 0, courseDetails }];
+            return [
+                ...prev,
+                { course: courseId, fee: Number(fee) || 0, courseDetails },
+            ];
         });
     };
 
@@ -95,7 +100,9 @@ const useCollegeCoursesForm = user => {
 
         // Find added and updated
         selectedCourses.forEach(sc => {
-            const original = originalCourses.find(oc => oc.course === sc.course);
+            const original = originalCourses.find(
+                oc => oc.course === sc.course
+            );
             if (!original) {
                 // Remove courseDetails from payload
                 added.push({ course: sc.course, fee: sc.fee });
@@ -111,8 +118,12 @@ const useCollegeCoursesForm = user => {
             }
         });
 
-        if (added.length === 0 && updated.length === 0 && removed.length === 0) {
-            setError("No changes were made to courses.");
+        if (
+            added.length === 0 &&
+            updated.length === 0 &&
+            removed.length === 0
+        ) {
+            setError('No changes were made to courses.');
             return;
         }
 
@@ -120,8 +131,8 @@ const useCollegeCoursesForm = user => {
             courseUpdates: {
                 added,
                 updated,
-                removed
-            }
+                removed,
+            },
         };
 
         try {

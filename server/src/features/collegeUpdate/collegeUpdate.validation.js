@@ -18,21 +18,25 @@ export const proposedChangesSchema = Joi.object({
             fee: Joi.number().min(0).required(),
         })
     ),
-    
+
     courseUpdates: Joi.object({
-        added: Joi.array().items(
-            Joi.object({
-                course: objectId.required(),
-                fee: Joi.number().min(0).required(),
-            })
-        ).default([]),
-        updated: Joi.array().items(
-            Joi.object({
-                course: objectId.required(),
-                fee: Joi.number().min(0).required(),
-            })
-        ).default([]),
-        removed: Joi.array().items(objectId).default([])
+        added: Joi.array()
+            .items(
+                Joi.object({
+                    course: objectId.required(),
+                    fee: Joi.number().min(0).required(),
+                })
+            )
+            .default([]),
+        updated: Joi.array()
+            .items(
+                Joi.object({
+                    course: objectId.required(),
+                    fee: Joi.number().min(0).required(),
+                })
+            )
+            .default([]),
+        removed: Joi.array().items(objectId).default([]),
     }),
 
     placementDetails: Joi.object({
@@ -49,14 +53,14 @@ export const proposedChangesSchema = Joi.object({
             department: Joi.string().trim().allow(''),
             role: Joi.string().trim().allow(''),
         })
-    )
-}).min(1)          // reject a request that proposes nothing
+    ),
+}).min(1); // reject a request that proposes nothing
 
 console.log('Joi.object type:', typeof Joi.object);
 console.log('Joi.object({}).min type:', typeof Joi.object({}).min);
 
 // small helper so both service functions validate the same way
-export const validateProposedChanges = (data) => {
+export const validateProposedChanges = data => {
     const { error, value } = proposedChangesSchema.validate(data, {
         abortEarly: false,
         stripUnknown: true,

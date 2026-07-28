@@ -34,7 +34,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors"
                 title="Previous Page"
             >
                 <ChevronLeft className="w-5 h-5" />
@@ -56,7 +56,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
                                 page === currentPage
                                     ? 'bg-blue-600 text-white shadow-md'
                                     : typeof page === 'number'
-                                      ? 'hover:bg-slate-100 dark:hover:bg-slate-800 text-[var(--foreground)] border border-[var(--border)] bg-[var(--card)]'
+                                      ? 'hover:bg-slate-100 text-[var(--foreground)] border border-[var(--border)] bg-[var(--card)]'
                                       : 'text-[var(--ring)] cursor-default'
                             }
                         `}
@@ -69,7 +69,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors"
                 title="Next Page"
             >
                 <ChevronRight className="w-5 h-5" />

@@ -72,7 +72,7 @@ const CollegeTable = ({
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             College Name
                                         </th>
@@ -94,7 +94,7 @@ const CollegeTable = ({
                                     {colleges.map(college => (
                                         <tr
                                             key={college._id}
-                                            className="hover:bg-slate-50/50 dark:hover:bg-slate-800/20 transition-colors group"
+                                            className="hover:bg-slate-50/50 transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <span className="font-medium text-[var(--foreground)]">
@@ -113,11 +113,17 @@ const CollegeTable = ({
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                                                    college.type === 'Government' ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' :
-                                                    college.type === 'Private' ? 'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400' :
-                                                    'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400'
-                                                }`}>
+                                                <span
+                                                    className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                                        college.type ===
+                                                        'Government'
+                                                            ? 'bg-emerald-100 text-emerald-700'
+                                                            : college.type ===
+                                                                'Private'
+                                                              ? 'bg-blue-100 text-blue-700'
+                                                              : 'bg-purple-100 text-purple-700'
+                                                    }`}
+                                                >
                                                     {college.type || 'Private'}
                                                 </span>
                                             </td>
@@ -148,7 +154,7 @@ const CollegeTable = ({
                                                             onClick={() =>
                                                                 onEdit(college)
                                                             }
-                                                            className="p-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
                                                             title="Edit College"
                                                         >
                                                             <Pencil className="w-4 h-4" />
@@ -161,7 +167,7 @@ const CollegeTable = ({
                                                                     college
                                                                 )
                                                             }
-                                                            className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-xl transition-colors"
+                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
                                                             title="Delete College"
                                                         >
                                                             <Trash2 className="w-4 h-4" />

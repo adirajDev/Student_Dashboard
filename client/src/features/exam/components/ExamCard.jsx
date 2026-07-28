@@ -7,15 +7,15 @@ const ExamCard = ({ exam, onClick }) => {
     return (
         <div
             onClick={() => onClick(exam)}
-            className="p-5 bg-white dark:bg-slate-900 rounded-2xl border border-[var(--border)] hover:border-indigo-500 dark:hover:border-indigo-400 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
+            className="p-5 bg-white rounded-2xl border border-[var(--border)] hover:border-indigo-500 shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer group"
         >
             {/* Top Header Section */}
             <div className="flex items-center gap-4 mb-4">
                 {/* Generic Logo Placeholder */}
-                <div className="w-14 h-14 shrink-0 bg-slate-50 dark:bg-slate-800 border border-slate-100 dark:border-slate-700 rounded-xl flex items-center justify-center text-indigo-500">
+                <div className="w-14 h-14 shrink-0 bg-slate-50 border border-slate-100 rounded-xl flex items-center justify-center text-indigo-500">
                     <FileText className="w-7 h-7" />
                 </div>
-                
+
                 {/* Title & Badge */}
                 <div className="flex-1 min-w-0 flex justify-between items-center">
                     <div className="flex-1 pr-4">
@@ -23,7 +23,9 @@ const ExamCard = ({ exam, onClick }) => {
                             {exam.name}
                         </h3>
                     </div>
-                    <div className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold ${statusClass}`}>
+                    <div
+                        className={`shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold ${statusClass}`}
+                    >
                         {statusText}
                     </div>
                 </div>
@@ -36,9 +38,16 @@ const ExamCard = ({ exam, onClick }) => {
                 {/* Exam Date */}
                 {exam.examDate && (
                     <div>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Exam Date</p>
+                        <p className="text-sm text-slate-500 mb-1">Exam Date</p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            {new Date(exam.examDate).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
+                            {new Date(exam.examDate).toLocaleDateString(
+                                'en-US',
+                                {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                }
+                            )}
                         </div>
                     </div>
                 )}
@@ -46,7 +55,7 @@ const ExamCard = ({ exam, onClick }) => {
                 {/* Exam Mode */}
                 {exam.examMode && (
                     <div>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Mode</p>
+                        <p className="text-sm text-slate-500 mb-1">Mode</p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
                             {exam.examMode}
                         </div>
@@ -56,10 +65,12 @@ const ExamCard = ({ exam, onClick }) => {
                 {/* Exam Duration */}
                 {exam.examDuration && (
                     <div>
-                        <p className="text-sm text-slate-500 dark:text-slate-400 mb-1">Duration</p>
+                        <p className="text-sm text-slate-500 mb-1">Duration</p>
                         <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            {exam.examDuration >= 60 && `${Math.floor(exam.examDuration / 60)} Hour${Math.floor(exam.examDuration / 60) > 1 ? 's' : ''} `}
-                            {exam.examDuration % 60 > 0 && `${exam.examDuration % 60} Minutes`}
+                            {exam.examDuration >= 60 &&
+                                `${Math.floor(exam.examDuration / 60)} Hour${Math.floor(exam.examDuration / 60) > 1 ? 's' : ''} `}
+                            {exam.examDuration % 60 > 0 &&
+                                `${exam.examDuration % 60} Minutes`}
                         </div>
                     </div>
                 )}

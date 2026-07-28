@@ -62,7 +62,7 @@ const SearchableSelect = ({
                             <div
                                 key={opt._id}
                                 onClick={() => handleSelect(opt._id)}
-                                className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === opt._id ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
+                                className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 transition-colors ${value === opt._id ? 'bg-blue-50 text-blue-600 font-medium' : 'text-[var(--foreground)]'}`}
                             >
                                 {opt.name}
                             </div>
@@ -78,7 +78,7 @@ const SearchableSelect = ({
                         <div className="border-t border-[var(--border)]">
                             <div
                                 onClick={() => handleSelect(customOption.value)}
-                                className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors ${value === customOption.value ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium' : 'text-[var(--foreground)]'}`}
+                                className={`px-4 py-2.5 cursor-pointer hover:bg-slate-100 transition-colors ${value === customOption.value ? 'bg-blue-50 text-blue-600 font-medium' : 'text-[var(--foreground)]'}`}
                             >
                                 {customOption.displayLabel ||
                                     customOption.label}

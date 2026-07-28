@@ -1,5 +1,13 @@
 import { createPortal } from 'react-dom';
-import { X, Calendar, Type, Link as LinkIcon, FileText, CheckSquare, GraduationCap } from 'lucide-react';
+import {
+    X,
+    Calendar,
+    Type,
+    Link as LinkIcon,
+    FileText,
+    CheckSquare,
+    GraduationCap,
+} from 'lucide-react';
 import useExamForm from '../hooks/useExamForm';
 
 const ExamFormFields = ({ formData, handleChange }) => {
@@ -25,7 +33,8 @@ const ExamFormFields = ({ formData, handleChange }) => {
 
             <div>
                 <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                    Eligibility Requirement <span className="text-red-500">*</span>
+                    Eligibility Requirement{' '}
+                    <span className="text-red-500">*</span>
                 </label>
                 <div className="relative">
                     <GraduationCap className="absolute left-4 top-3 w-5 h-5 text-[var(--ring)]" />
@@ -44,7 +53,8 @@ const ExamFormFields = ({ formData, handleChange }) => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                     <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Registration Start Date <span className="text-red-500">*</span>
+                        Registration Start Date{' '}
+                        <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                         <input
@@ -59,7 +69,8 @@ const ExamFormFields = ({ formData, handleChange }) => {
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Registration End Date <span className="text-red-500">*</span>
+                        Registration End Date{' '}
+                        <span className="text-red-500">*</span>
                     </label>
                     <div className="relative">
                         <input
@@ -199,12 +210,13 @@ const ExamFormFields = ({ formData, handleChange }) => {
 };
 
 const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
-    const { formData, isSubmitting, error, handleChange, handleSubmit } = useExamForm({
-        editingExam,
-        onAdd,
-        onUpdate,
-        onClose,
-    });
+    const { formData, isSubmitting, error, handleChange, handleSubmit } =
+        useExamForm({
+            editingExam,
+            onAdd,
+            onUpdate,
+            onClose,
+        });
 
     return createPortal(
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
@@ -213,7 +225,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                     <h2 className="text-xl">{title}</h2>
                     <button
                         onClick={onClose}
-                        className="p-2 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-2 hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>
@@ -221,13 +233,16 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
 
                 <div className="p-6 overflow-y-auto flex-1">
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-xl text-sm">
+                        <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-xl text-sm">
                             {error}
                         </div>
                     )}
 
                     <form id="exam-form" onSubmit={handleSubmit}>
-                        <ExamFormFields formData={formData} handleChange={handleChange} />
+                        <ExamFormFields
+                            formData={formData}
+                            handleChange={handleChange}
+                        />
                     </form>
                 </div>
 
@@ -235,7 +250,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-6 py-2.5 rounded-xl font-medium border border-[var(--border)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                        className="px-6 py-2.5 rounded-xl font-medium border border-[var(--border)] hover:bg-slate-100 transition-colors"
                         disabled={isSubmitting}
                     >
                         Cancel
@@ -246,7 +261,11 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                         className="btn-primary px-8 py-2.5"
                         disabled={isSubmitting}
                     >
-                        {isSubmitting ? 'Saving...' : editingExam ? 'Update Exam' : 'Create Exam'}
+                        {isSubmitting
+                            ? 'Saving...'
+                            : editingExam
+                              ? 'Update Exam'
+                              : 'Create Exam'}
                     </button>
                 </div>
             </div>

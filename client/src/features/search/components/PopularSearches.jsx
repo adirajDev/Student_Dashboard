@@ -25,7 +25,7 @@ const PopularSearches = () => {
                         onClick={() =>
                             navigate(`/search?q=${encodeURIComponent(term)}`)
                         }
-                        className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors shadow-sm flex items-center gap-2"
+                        className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
                     >
                         {term}
                     </button>

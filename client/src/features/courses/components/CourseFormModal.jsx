@@ -28,8 +28,12 @@ const CourseFormModal = ({
                 shortName: editingCourse.shortName || '',
                 specialization: editingCourse.specialization || '',
                 level: editingCourse.level || "Bachelor's",
-                durationYears: editingCourse.duration ? Math.floor(editingCourse.duration / 12) : '',
-                durationMonths: editingCourse.duration ? editingCourse.duration % 12 : '',
+                durationYears: editingCourse.duration
+                    ? Math.floor(editingCourse.duration / 12)
+                    : '',
+                durationMonths: editingCourse.duration
+                    ? editingCourse.duration % 12
+                    : '',
             });
         }
     }, [editingCourse]);
@@ -45,7 +49,9 @@ const CourseFormModal = ({
 
         const payload = {
             ...formData,
-            duration: (parseInt(formData.durationYears || 0) * 12) + parseInt(formData.durationMonths || 0)
+            duration:
+                parseInt(formData.durationYears || 0) * 12 +
+                parseInt(formData.durationMonths || 0),
         };
         // Clean up UI-only fields
         delete payload.durationYears;
@@ -81,7 +87,7 @@ const CourseFormModal = ({
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-2 text-[var(--ring)] hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-2 text-[var(--ring)] hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <svg
                             className="w-5 h-5"
@@ -101,7 +107,7 @@ const CourseFormModal = ({
 
                 <div className="p-6">
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 dark:bg-red-900/20 text-red-600 dark:text-red-400 rounded-2xl text-sm border border-red-100 dark:border-red-900/30">
+                        <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm border border-red-100">
                             {error}
                         </div>
                     )}
@@ -122,7 +128,7 @@ const CourseFormModal = ({
                             onChange={handleChange}
                             placeholder="e.g. B.Tech"
                         />
-                        
+
                         <FormField
                             label="Specialization (Optional)"
                             id="specialization"
@@ -148,14 +154,18 @@ const CourseFormModal = ({
                             >
                                 <option value="Certificate">Certificate</option>
                                 <option value="Diploma">Diploma</option>
-                                <option value="Advanced Diploma">Advanced Diploma</option>
+                                <option value="Advanced Diploma">
+                                    Advanced Diploma
+                                </option>
                                 <option value="Bachelor's">Bachelor's</option>
                                 <option value="Master's">Master's</option>
                                 <option value="Doctorate">Doctorate</option>
-                                <option value="Post Doctorate">Post Doctorate</option>
+                                <option value="Post Doctorate">
+                                    Post Doctorate
+                                </option>
                             </select>
                         </div>
-                        
+
                         <div>
                             <label className="block text-sm font-medium text-[var(--foreground)] mb-1">
                                 Duration
@@ -193,7 +203,7 @@ const CourseFormModal = ({
                             <button
                                 type="button"
                                 onClick={onClose}
-                                className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
+                                className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 transition-colors"
                                 disabled={loading}
                             >
                                 Cancel

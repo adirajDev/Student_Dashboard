@@ -54,7 +54,7 @@ const SearchPage = () => {
                             </p>
                         </div>
                     ) : error ? (
-                        <div className="p-8 bg-red-50 dark:bg-red-900/20 text-red-600 rounded-3xl border border-red-200 dark:border-red-800 text-center">
+                        <div className="p-8 bg-red-50 text-red-600 rounded-3xl border border-red-200 text-center">
                             <p className="text-lg">{error}</p>
                         </div>
                     ) : results.length > 0 ? (
@@ -70,12 +70,10 @@ const SearchPage = () => {
                         </div>
                     ) : (
                         <div className="p-12 text-center bg-[var(--card)] rounded-3xl border border-[var(--border)]">
-                            <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
                                 <Search className="w-8 h-8 text-[var(--ring)]" />
                             </div>
-                            <h3 className="text-xl mb-2">
-                                No results found
-                            </h3>
+                            <h3 className="text-xl mb-2">No results found</h3>
                             <p className="text-[var(--ring)]">
                                 We couldn't find any colleges or courses
                                 matching your search.

@@ -15,17 +15,17 @@ const MobileMenu = ({
 
     return (
         <>
-            <div 
+            <div
                 className="md:hidden fixed inset-0 top-[72px] bg-black/20 backdrop-blur-sm z-40"
                 onClick={() => setIsOpen(false)}
             />
-            <div className="md:hidden fixed top-[72px] left-4 right-4 mt-2 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-3xl border border-white/20 dark:border-slate-800 shadow-2xl py-6 px-6 flex flex-col gap-4 max-h-[calc(100vh-100px)] overflow-y-auto animate-fade-in-up z-50">
+            <div className="md:hidden fixed top-[72px] left-4 right-4 mt-2 bg-white/80 backdrop-blur-md rounded-3xl border border-white/20 shadow-2xl py-6 px-6 flex flex-col gap-4 max-h-[calc(100vh-100px)] overflow-y-auto animate-fade-in-up z-50">
                 <nav className="flex flex-col gap-4">
                     {navLinks.map(link => (
                         <Link
                             key={link.name}
                             to={link.href}
-                            className="text-lg font-medium text-slate-700 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400"
+                            className="text-lg font-medium text-slate-700 hover:text-indigo-600"
                             onClick={() => setIsOpen(false)}
                         >
                             {link.name}

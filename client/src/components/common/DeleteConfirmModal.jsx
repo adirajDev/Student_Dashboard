@@ -18,7 +18,7 @@ const DeleteConfirmModal = ({ studentName, onConfirm, onClose }) => {
                     </h2>
                     <button
                         onClick={onClose}
-                        className="p-1 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
+                        className="p-1 hover:bg-slate-100 rounded-full transition-colors"
                     >
                         <X className="w-5 h-5" />
                     </button>

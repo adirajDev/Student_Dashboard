@@ -18,9 +18,9 @@ const Signin = () => {
     } = useSignin();
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-tr from-blue-100 to-[var(--primary-50)] dark:from-slate-800 dark:to-slate-900">
+        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-tr from-blue-100 to-[var(--primary-50)]">
             <div className="card w-full max-w-md">
-                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)] dark:text-[var(--primary-400)]">
+                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)]">
                     Welcome Back
                 </h1>
 
@@ -65,7 +65,7 @@ const Signin = () => {
                         onSubmit={handleAuth}
                         className="space-y-4 animate-fade-in"
                     >
-                        <div className="flex items-center justify-between mb-4 text-sm text-[var(--ring)] bg-slate-100 dark:bg-slate-800 p-2 rounded">
+                        <div className="flex items-center justify-between mb-4 text-sm text-[var(--ring)] bg-slate-100 p-2 rounded">
                             <span>{email}</span>
                             <button
                                 type="button"
@@ -77,7 +77,7 @@ const Signin = () => {
                         </div>
 
                         {!hasPassword && (
-                            <div className="mb-4 p-3 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-2xl text-sm">
+                            <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded-2xl text-sm">
                                 It looks like this is your first time signing
                                 in. Please set a password to continue.
                             </div>

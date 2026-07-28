@@ -5,7 +5,7 @@ const UserTableGrid = ({ users, onEdit, onDelete, showCourse }) => (
         <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
                 <thead>
-                    <tr className="bg-slate-50 dark:bg-slate-800/50 border-b border-[var(--border)]">
+                    <tr className="bg-slate-50 border-b border-[var(--border)]">
                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                             Name
                         </th>
