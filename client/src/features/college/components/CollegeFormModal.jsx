@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import FormField from '../../../components/common/FormField';
-import useCourseManagement from '../../courses/hooks/useCourseManagement';
 
 const CollegeFormModal = ({
     onAdd,
@@ -11,14 +10,12 @@ const CollegeFormModal = ({
     onClose,
     title,
 }) => {
-    const { courses } = useCourseManagement(true);
-
     const [formData, setFormData] = useState({
         name: '',
         collegeId: '',
+        type: 'Private',
         location: '',
         description: '',
-        availableCourses: [],
     });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
@@ -28,10 +25,9 @@ const CollegeFormModal = ({
             setFormData({
                 name: editingCollege.name || '',
                 collegeId: editingCollege.collegeId || '',
+                type: editingCollege.type || 'Private',
                 location: editingCollege.location || '',
                 description: editingCollege.description || '',
-                availableCourses:
-                    editingCollege.availableCourses?.map(c => c._id) || [],
             });
         }
     }, [editingCollege]);
@@ -40,24 +36,7 @@ const CollegeFormModal = ({
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleCourseToggle = courseId => {
-        setFormData(prev => {
-            const isSelected = prev.availableCourses.includes(courseId);
-            if (isSelected) {
-                return {
-                    ...prev,
-                    availableCourses: prev.availableCourses.filter(
-                        id => id !== courseId
-                    ),
-                };
-            } else {
-                return {
-                    ...prev,
-                    availableCourses: [...prev.availableCourses, courseId],
-                };
-            }
-        });
-    };
+
 
     const handleSubmit = async e => {
         e.preventDefault();
@@ -136,13 +115,34 @@ const CollegeFormModal = ({
                             />
                         </div>
 
-                        <FormField
-                            label="Location"
-                            id="location"
-                            value={formData.location}
-                            onChange={handleChange}
-                            placeholder="e.g. Stanford, California"
-                        />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                            <div>
+                                <label
+                                    htmlFor="type"
+                                    className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                                >
+                                    Type
+                                </label>
+                                <select
+                                    id="type"
+                                    name="type"
+                                    value={formData.type}
+                                    onChange={handleChange}
+                                    className="input-field"
+                                >
+                                    <option value="Government">Government</option>
+                                    <option value="Private">Private</option>
+                                    <option value="Deemed">Deemed</option>
+                                </select>
+                            </div>
+                            <FormField
+                                label="Location"
+                                id="location"
+                                value={formData.location}
+                                onChange={handleChange}
+                                placeholder="e.g. Stanford, California"
+                            />
+                        </div>
 
                         <div>
                             <label
@@ -162,49 +162,7 @@ const CollegeFormModal = ({
                             />
                         </div>
 
-                        <div>
-                            <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
-                                Available Courses
-                            </label>
-                            <div className="border border-[var(--border)] rounded-2xl p-4 max-h-48 overflow-y-auto bg-slate-50 dark:bg-slate-800/30">
-                                {courses.length === 0 ? (
-                                    <div className="text-sm text-[var(--ring)] text-center py-4">
-                                        No courses available. Create courses
-                                        first.
-                                    </div>
-                                ) : (
-                                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        {courses.map(course => (
-                                            <label
-                                                key={course._id}
-                                                className="flex items-center gap-3 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-700/50 cursor-pointer transition-colors"
-                                            >
-                                                <input
-                                                    type="checkbox"
-                                                    className="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-blue-500"
-                                                    checked={formData.availableCourses.includes(
-                                                        course._id
-                                                    )}
-                                                    onChange={() =>
-                                                        handleCourseToggle(
-                                                            course._id
-                                                        )
-                                                    }
-                                                />
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-[var(--foreground)]">
-                                                        {course.name}
-                                                    </span>
-                                                    <span className="text-xs text-[var(--ring)] capitalize">
-                                                        {course.level}
-                                                    </span>
-                                                </div>
-                                            </label>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </div>
+
                     </form>
                 </div>
 
