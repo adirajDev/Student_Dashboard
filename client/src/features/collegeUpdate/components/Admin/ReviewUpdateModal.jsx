@@ -9,11 +9,14 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import useCourseManagement from '../../../courses/hooks/useCourseManagement';
 
 const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
     const [feedback, setFeedback] = useState('');
     const [isRejecting, setIsRejecting] = useState(false);
 
+    const { courses: globalCourses } = useCourseManagement(true);
+    
     if (!update) return null;
 
     const changes = update.proposedChanges;
@@ -128,6 +131,68 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
         );
     };
 
+    const renderCourseUpdates = (courseUpdates) => {
+        if (!courseUpdates) return null;
+
+        const getCourseDetails = (id) => {
+            const course = globalCourses.find(c => c._id === id);
+            if (!course) return { name: id, shortName: id, level: '' };
+            return course;
+        };
+
+        return (
+            <div className="space-y-4 mt-2">
+                {courseUpdates.added?.length > 0 && (
+                    <div className="bg-emerald-50 dark:bg-emerald-900/10 p-4 rounded-xl border border-emerald-200 dark:border-emerald-800/30">
+                        <h4 className="text-sm font-semibold text-emerald-800 dark:text-emerald-400 mb-2">Added Courses</h4>
+                        <div className="grid gap-2">
+                            {courseUpdates.added.map((item, i) => {
+                                const course = getCourseDetails(item.course);
+                                return (
+                                    <div key={i} className="flex justify-between items-center text-sm">
+                                        <span>{course.shortName || course.name} <span className="text-xs opacity-70">({course.level})</span></span>
+                                        <span className="font-medium">Fee: ₹{item.fee}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+                {courseUpdates.updated?.length > 0 && (
+                    <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-200 dark:border-blue-800/30">
+                        <h4 className="text-sm font-semibold text-blue-800 dark:text-blue-400 mb-2">Updated Fees</h4>
+                        <div className="grid gap-2">
+                            {courseUpdates.updated.map((item, i) => {
+                                const course = getCourseDetails(item.course);
+                                return (
+                                    <div key={i} className="flex justify-between items-center text-sm">
+                                        <span>{course.shortName || course.name} <span className="text-xs opacity-70">({course.level})</span></span>
+                                        <span className="font-medium">New Fee: ₹{item.fee}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+                {courseUpdates.removed?.length > 0 && (
+                    <div className="bg-red-50 dark:bg-red-900/10 p-4 rounded-xl border border-red-200 dark:border-red-800/30">
+                        <h4 className="text-sm font-semibold text-red-800 dark:text-red-400 mb-2">Removed Courses</h4>
+                        <div className="grid gap-2">
+                            {courseUpdates.removed.map((id, i) => {
+                                const course = getCourseDetails(id);
+                                return (
+                                    <div key={i} className="text-sm line-through opacity-70 text-red-700 dark:text-red-300">
+                                        {course.shortName || course.name} ({course.level})
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return createPortal(
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex justify-center items-center p-4 sm:p-6 animate-fade-in">
             <div className="bg-[var(--card)] rounded-3xl w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
@@ -195,6 +260,16 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                     Faculty Roster (Proposed)
                                 </div>
                                 {renderFaculty(changes.faculty)}
+                            </div>
+                        )}
+
+                        {changes.courseUpdates && (
+                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white dark:bg-slate-800/50 shadow-sm">
+                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
+                                    <Presentation className="w-5 h-5 text-emerald-500" />{' '}
+                                    Course Updates (Proposed)
+                                </div>
+                                {renderCourseUpdates(changes.courseUpdates)}
                             </div>
                         )}
                     </div>

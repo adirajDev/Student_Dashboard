@@ -17,6 +17,8 @@ export const submitUpdate = async (user, proposedChanges) => {
     const collegeId =
         typeof user.college === 'object' ? user.college._id : user.college;
 
+
+
     const updateRequest = new CollegeUpdate({
         college: collegeId,
         requestedBy: user._id,
