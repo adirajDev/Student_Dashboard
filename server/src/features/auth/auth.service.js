@@ -20,22 +20,35 @@ export const signup = async data => {
     }
 
     let collegeId = college;
-    // If college is not a valid ObjectId, assume it's a new college name
+    let collegeDoc;
+
     if (!mongoose.Types.ObjectId.isValid(college)) {
-        const newCollege = new College({
+        collegeDoc = new College({
             name: college,
             collegeId: `C-${Date.now()}`,
+            availableCourses: [{ course, fee: 0 }], // placeholder fee, corrected later via CollegeUpdate
         });
-        await newCollege.save();
-        collegeId = newCollege._id;
+        await collegeDoc.save();
+        collegeId = collegeDoc._id;
+    } else {
+        collegeDoc = await College.findById(collegeId);
+        if (!collegeDoc) {
+            throw new AppError('College not found', 404);
+        }
+
+        const courseAllowed = collegeDoc.availableCourses.some(
+            ac => ac.course.toString() === course
+        );
+        if (!courseAllowed) {
+            throw new AppError('Selected course is not offered by this college', 400);
+        }
     }
 
     const user = new User({
         name,
         email,
         phone,
-        course,
-        college: collegeId,
+        applications: [{college: collegeId, course}],
     });
 
     await user.save();

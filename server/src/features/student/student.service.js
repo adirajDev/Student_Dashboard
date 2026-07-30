@@ -12,6 +12,9 @@ import {
 import Rating from '../rating/rating.model.js';
 import { recalculateCollegeRating } from '../../common/utils/rating.util.js';
 import AppError from '../../common/utils/AppError.js';
+import College from "../college/college.model.js";
+import mongoose from "mongoose";
+import User from "../user/user.model.js";
 
 export const getStudents = async (skip, limit, search) => {
     return await getUsersByRole('student', skip, limit, search);
@@ -69,4 +72,66 @@ export const deleteStudent = async id => {
         if (error.status) throw new AppError(error.message, error.status);
         throw error;
     }
+};
+
+export const applyToCollege = async (userId, collegeId) => {
+    if (!mongoose.Types.ObjectId.isValid(collegeId)) {
+        throw new AppError('Invalid college id', 400);
+    }
+
+    const college = await College.findById(collegeId);
+    if (!college) {
+        throw new AppError('College not found', 404);
+    }
+
+    const user = await User.findById(userId);
+
+    const pendingExists = user.applications.some(
+        app => app.college.toString() === collegeId && app.course === null
+    );
+    if (pendingExists) {
+        return { alreadyApplied: true, applications: user.applications };
+    }
+
+    if (user.applications.length >= 3) {
+        throw new AppError('You can have a maximum of 3 applications.', 400);
+    }
+
+    user.applications.push({ college: collegeId, course: null });
+    await user.save();
+    return { alreadyApplied: false, applications: user.applications };
+};
+
+export const setApplicationCourse = async (userId, applicationId, courseId) => {
+    if (!mongoose.Types.ObjectId.isValid(courseId)) {
+        throw new AppError('Invalid course id', 400);
+    }
+
+    const user = await User.findById(userId);
+    const application = user.applications.id(applicationId); // subdocument lookup by _id
+    if (!application) {
+        throw new AppError('Application not found', 404);
+    }
+
+    const college = await College.findById(application.college);
+    const courseAllowed = college.availableCourses.some(
+        ac => ac.course.toString() === courseId
+    );
+    if (!courseAllowed) {
+        throw new AppError('Selected course is not offered by this college', 400);
+    }
+
+    const duplicatePair = user.applications.some(
+        app =>
+            app._id.toString() !== applicationId &&
+            app.college.toString() === application.college.toString() &&
+            app.course?.toString() === courseId
+    );
+    if (duplicatePair) {
+        throw new AppError('You already have an application with this college and course', 400);
+    }
+
+    application.course = courseId;
+    await user.save();
+    return { applications: user.applications };
 };

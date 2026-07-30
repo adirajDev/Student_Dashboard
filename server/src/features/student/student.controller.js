@@ -32,3 +32,15 @@ export const deleteStudent = asyncHandler(async (req, res) => {
     await studentService.deleteStudent(req.params.id);
     res.status(200).json({ message: 'Student deleted successfully.' });
 });
+
+export const applyToCollege = async (req, res, next) => {
+        const result = await studentService.applyToCollege(req.user._id, req.params.collegeId);
+        res.status(200).json(result);
+};
+
+export const setApplicationCourse = async (req, res, next) => {
+        const { applicationId } = req.params;
+        const { courseId } = req.body;
+        const result = await studentService.setApplicationCourse(req.user._id, applicationId, courseId);
+        res.status(200).json(result);
+};
