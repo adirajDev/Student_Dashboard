@@ -56,9 +56,6 @@ export const proposedChangesSchema = Joi.object({
     ),
 }).min(1); // reject a request that proposes nothing
 
-console.log('Joi.object type:', typeof Joi.object);
-console.log('Joi.object({}).min type:', typeof Joi.object({}).min);
-
 // small helper so both service functions validate the same way
 export const validateProposedChanges = data => {
     const { error, value } = proposedChangesSchema.validate(data, {

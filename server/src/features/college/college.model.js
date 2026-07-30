@@ -118,5 +118,30 @@ const collegeSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
+// Prevent massive image buffers from being serialized in JSON responses
+collegeSchema.set('toJSON', {
+    transform: (doc, ret) => {
+        if (ret.images && Array.isArray(ret.images)) {
+            ret.images = ret.images.map(img => {
+                const { data, ...rest } = img;
+                return rest;
+            });
+        }
+        return ret;
+    }
+});
+
+collegeSchema.set('toObject', {
+    transform: (doc, ret) => {
+        if (ret.images && Array.isArray(ret.images)) {
+            ret.images = ret.images.map(img => {
+                const { data, ...rest } = img;
+                return rest;
+            });
+        }
+        return ret;
+    }
+});
+
 const College = mongoose.model('College', collegeSchema);
 export default College;
