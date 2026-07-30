@@ -16,8 +16,9 @@ export const getColleges = async (
         queryObj.averageRating = { $gte: Number(minRating) };
     }
 
+    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     if (search) {
-        const searchRegex = { $regex: search, $options: 'i' };
+        const searchRegex = { $regex: escapeRegex(search), $options: 'i' };
         const matchingCourses = await Course.find({ name: searchRegex }).select(
             '_id'
         );
@@ -26,7 +27,7 @@ export const getColleges = async (
         queryObj.$or = [
             { name: searchRegex },
             { location: searchRegex },
-            { availableCourses: { $in: courseIds } },
+            { 'availableCourses.course': { $in: courseIds } },
         ];
     }
 
@@ -34,6 +35,7 @@ export const getColleges = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
+            .select('-images.data')
             .populate(
                 'availableCourses.course',
                 'name level shortName specialization duration'
@@ -47,10 +49,12 @@ export const getColleges = async (
 };
 
 export const getCollegeById = async id => {
-    const college = await College.findById(id).populate({
-        path: 'availableCourses.course',
-        model: 'Course',
-    });
+    const college = await College.findById(id)
+        .select('-images.data')
+        .populate({
+            path: 'availableCourses.course',
+            model: 'Course',
+        });
     if (!college) {
         throw new AppError('College not found', 404);
     }

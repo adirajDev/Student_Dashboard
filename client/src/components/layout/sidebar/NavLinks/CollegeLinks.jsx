@@ -1,4 +1,4 @@
-import { LayoutDashboard, Star } from 'lucide-react';
+import { LayoutDashboard, Star, Image } from 'lucide-react';
 import NavItem from '../NavItem';
 
 const CollegeLinks = ({ activeTab, handleNav }) => {
@@ -35,6 +35,12 @@ const CollegeLinks = ({ activeTab, handleNav }) => {
                 label="Manage Courses"
                 isActive={activeTab === 'courses'}
                 onClick={() => handleNav('/college/dashboard?tab=courses')}
+            />
+            <NavItem
+                icon={<Image className="w-5 h-5" />}
+                label="Manage Gallery"
+                isActive={activeTab === 'gallery'}
+                onClick={() => handleNav('/college/dashboard?tab=gallery')}
             />
         </>
     );

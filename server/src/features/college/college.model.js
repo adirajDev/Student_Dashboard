@@ -13,6 +13,20 @@ const collegeSchema = new mongoose.Schema(
             type: String,
             trim: true,
         },
+        images: [
+            {
+                data: Buffer,
+                contentType: String,
+            }
+        ],
+        videos: [
+            {
+                url: {
+                    type: String,
+                    trim: true,
+                }
+            }
+        ],
         type: {
             type: String,
             enum: COLLEGE_TYPE,
@@ -53,9 +67,19 @@ const collegeSchema = new mongoose.Schema(
             },
         ],
         placementDetails: {
-            averagePackage: { type: String, trim: true },
-            highestPackage: { type: String, trim: true },
-            placementPercentage: { type: Number, min: 0, max: 100 },
+            averagePackage: {
+                type: String,
+                trim: true
+            },
+            highestPackage: {
+                type: String,
+                trim: true
+            },
+            placementPercentage: {
+                type: Number,
+                min: 0,
+                max: 100
+            },
         },
         recruiters: [
             {
@@ -93,6 +117,31 @@ const collegeSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+// Prevent massive image buffers from being serialized in JSON responses
+collegeSchema.set('toJSON', {
+    transform: (doc, ret) => {
+        if (ret.images && Array.isArray(ret.images)) {
+            ret.images = ret.images.map(img => {
+                const { data, ...rest } = img;
+                return rest;
+            });
+        }
+        return ret;
+    }
+});
+
+collegeSchema.set('toObject', {
+    transform: (doc, ret) => {
+        if (ret.images && Array.isArray(ret.images)) {
+            ret.images = ret.images.map(img => {
+                const { data, ...rest } = img;
+                return rest;
+            });
+        }
+        return ret;
+    }
+});
 
 const College = mongoose.model('College', collegeSchema);
 export default College;
