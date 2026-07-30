@@ -57,7 +57,7 @@ const CollegeDetails = () => {
     return (
         <>
             <div className="max-w-5xl mx-auto px-4 pb-8 animate-fade-in space-y-8">
-                <CollegeHeader college={college} onOpenGallery={() => setIsGalleryOpen(true)} />
+                <CollegeHeader college={college} onOpenGallery={() => setIsGalleryOpen(true)} user={user} />
 
                 {/* 1. Overview Section */}
                 {college.overview && (

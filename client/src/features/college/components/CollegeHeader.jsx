@@ -1,10 +1,13 @@
-import { MapPin, Building2, Image as ImageIcon } from 'lucide-react';
+import { MapPin, Building2, Image as ImageIcon, Send, CheckCircle, Loader2 } from 'lucide-react';
 import apiClient from '../../../services/apiClient';
+import useApplyToCollege from '../hooks/useApplyToCollege';
 
-const CollegeHeader = ({ college, onOpenGallery }) => {
+const CollegeHeader = ({ college, onOpenGallery, user }) => {
     const hasCoverImage = college.images && college.images.length > 0;
     const coverImageUrl = hasCoverImage ? `${apiClient.defaults.baseURL}/college-gallery/${college._id}/gallery/images/${college.images[0]._id}` : null;
     const mediaCount = (college.images?.length || 0) + (college.videos?.length || 0);
+
+    const { status, isApplying, error: applyError, apply } = useApplyToCollege(college._id, user);
 
     return (
         <div className="card mb-8 p-0 overflow-hidden bg-white border border-slate-100 shadow-sm">
@@ -50,7 +53,7 @@ const CollegeHeader = ({ college, onOpenGallery }) => {
 
                     {/* Details */}
                     <div className={`flex-1 ${!college.logo ? 'pt-6' : 'pt-4 sm:pt-4'}`}>
-                        <div className="flex items-center gap-3 mb-2">
+                        <div className="flex items-center gap-3 mb-2 flex-wrap">
                             <h1 className="text-2xl sm:text-3xl text-[var(--foreground)] font-bold leading-tight">
                                 {college.name}
                             </h1>
@@ -77,10 +80,36 @@ const CollegeHeader = ({ college, onOpenGallery }) => {
                         </div>
 
                         {college.description && (
-                            <div className="prose max-w-none text-slate-600 text-sm sm:text-base leading-relaxed">
+                            <div className="prose max-w-none text-slate-600 text-sm sm:text-base leading-relaxed mb-4">
                                 <p>{college.description}</p>
                             </div>
                         )}
+
+                        {/* Apply Button */}
+                        <div className="flex items-center gap-3 flex-wrap">
+                            {status === 'applied' ? (
+                                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-50 text-emerald-700 border border-emerald-200 text-sm font-semibold cursor-default">
+                                    <CheckCircle className="w-4 h-4" />
+                                    Applied
+                                </div>
+                            ) : (
+                                <button
+                                    onClick={apply}
+                                    disabled={isApplying}
+                                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white text-sm font-semibold shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+                                >
+                                    {isApplying ? (
+                                        <Loader2 className="w-4 h-4 animate-spin" />
+                                    ) : (
+                                        <Send className="w-4 h-4" />
+                                    )}
+                                    {isApplying ? 'Applying...' : 'Apply'}
+                                </button>
+                            )}
+                            {applyError && (
+                                <p className="text-sm text-red-600 font-medium">{applyError}</p>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -89,3 +118,4 @@ const CollegeHeader = ({ college, onOpenGallery }) => {
 };
 
 export default CollegeHeader;
+

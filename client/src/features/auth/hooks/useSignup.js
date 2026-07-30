@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import apiClient from '../../../services/apiClient';
 
 const useSignup = () => {
     const navigate = useNavigate();
+    const [searchParams] = useSearchParams();
+    const preselectedCollegeId = searchParams.get('collegeId');
+
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -32,10 +35,29 @@ const useSignup = () => {
                 setColleges(collegeData);
                 setCourses(courseData);
 
-                // Set defaults if available
+                // If a collegeId was passed in the URL, pre-select it
                 let defaultCollege = '';
                 let defaultCourse = '';
-                if (collegeData.length > 0) {
+
+                const preselected = preselectedCollegeId
+                    ? collegeData.find(c => c._id === preselectedCollegeId)
+                    : null;
+
+                if (preselected) {
+                    defaultCollege = preselected._id;
+                    const availableCourses = courseData.filter(c =>
+                        preselected.availableCourses?.some(
+                            ac =>
+                                (ac.course?._id ||
+                                    ac.course ||
+                                    ac._id ||
+                                    ac) === c._id
+                        )
+                    );
+                    if (availableCourses.length > 0) {
+                        defaultCourse = availableCourses[0]._id;
+                    }
+                } else if (collegeData.length > 0) {
                     defaultCollege = collegeData[0]._id;
                     const availableCourses = courseData.filter(c =>
                         collegeData[0].availableCourses?.some(
@@ -60,7 +82,7 @@ const useSignup = () => {
             }
         };
         fetchData();
-    }, []);
+    }, [preselectedCollegeId]);
 
     // Effect to handle resetting course when college changes
     useEffect(() => {
