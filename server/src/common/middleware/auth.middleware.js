@@ -11,7 +11,7 @@ export const requireAuth = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
-            .populate('course college')
+            .populate('college')
             .populate({
                 path: 'applications.college',
                 populate: {
@@ -44,7 +44,7 @@ export const checkAuth = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
-            .populate('course college')
+            .populate('college')
             .populate({
                 path: 'applications.college',
                 populate: {

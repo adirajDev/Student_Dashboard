@@ -19,10 +19,6 @@ const userSchema = new mongoose.Schema(
             required: true,
             trim: true,
         },
-        course: { // TODO: remove this after we remove all user.course in the codebase
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Course',
-        },
         college: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'College',
