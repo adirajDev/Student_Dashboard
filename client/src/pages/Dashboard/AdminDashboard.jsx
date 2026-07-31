@@ -52,6 +52,7 @@ const AdminDashboard = () => {
                         title="Student Directory"
                         role="student"
                         showCourse={true}
+                        showCourseInList={false}
                         canAdd={isAdmin}
                         canDelete={isAdmin}
                         shouldFetch={true}

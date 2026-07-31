@@ -17,6 +17,7 @@ const UserTable = ({
     setSearchTerm,
     onEdit,
     onDelete,
+    onViewDetails,
     showCourse,
 }) => {
     // UI State: Data Render
@@ -46,6 +47,7 @@ const UserTable = ({
                         showCourse={showCourse}
                         onEdit={onEdit}
                         onDelete={onDelete}
+                        onViewDetails={onViewDetails}
                     />
                     <div className="mt-6 border-t border-[var(--border)] pt-4">
                         <Pagination

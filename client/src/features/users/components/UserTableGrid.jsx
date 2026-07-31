@@ -1,6 +1,6 @@
 import UserRow from './UserRow';
 
-const UserTableGrid = ({ users, onEdit, onDelete, showCourse }) => (
+const UserTableGrid = ({ users, onEdit, onDelete, onViewDetails, showCourse }) => (
     <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
         <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse">
@@ -38,6 +38,7 @@ const UserTableGrid = ({ users, onEdit, onDelete, showCourse }) => (
                             showCourse={showCourse}
                             onEdit={onEdit}
                             onDelete={onDelete}
+                            onViewDetails={onViewDetails}
                         />
                     ))}
                 </tbody>

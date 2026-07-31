@@ -22,6 +22,7 @@ export const getUsersByRole = async (
         query
             .clone()
             .populate('course college')
+            .populate('applications.college applications.course')
             .select('-password')
             .sort({ name: 1 })
             .skip(skip)

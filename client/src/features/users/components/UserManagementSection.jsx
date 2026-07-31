@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import UserTable from './UserTable';
 import UserFormModal from './UserFormModal';
+import UserDetailsModal from './UserDetailsModal';
 import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
 import useUserManagement from '../hooks/useUserManagement';
 
@@ -9,6 +10,7 @@ const UserManagementSection = ({
     title,
     role,
     showCourse,
+    showCourseInList = showCourse,
     showCollegeOnly,
     canAdd,
     canDelete,
@@ -28,6 +30,7 @@ const UserManagementSection = ({
         deleteUser,
     } = useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
+    const [viewingUser, setViewingUser] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingUser, setDeletingUser] = useState(null);
 
@@ -62,13 +65,21 @@ const UserManagementSection = ({
                 onPageChange={setPage}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-                showCourse={showCourse}
+                showCourse={showCourseInList}
                 onDelete={canDelete ? setDeletingUser : null}
+                onViewDetails={u => setViewingUser(u)}
                 onEdit={u => {
                     setEditingUser(u);
                     setShowFormModal(true);
                 }}
             />
+
+            {viewingUser && (
+                <UserDetailsModal
+                    user={viewingUser}
+                    onClose={() => setViewingUser(null)}
+                />
+            )}
 
             {showFormModal && (
                 <UserFormModal
