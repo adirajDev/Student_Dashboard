@@ -12,6 +12,14 @@ export const requireAuth = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
             .populate('course college')
+            .populate({
+                path: 'applications.college',
+                populate: {
+                    path: 'availableCourses.course',
+                    model: 'Course'
+                }
+            })
+            .populate('applications.course')
             .select('-password');
 
         if (!user) {
@@ -37,6 +45,14 @@ export const checkAuth = async (req, res, next) => {
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
             .populate('course college')
+            .populate({
+                path: 'applications.college',
+                populate: {
+                    path: 'availableCourses.course',
+                    model: 'Course'
+                }
+            })
+            .populate('applications.course')
             .select('-password');
 
         req.user = user || null;

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Signup from './pages/Auth/Signup';
 import Signin from './pages/Auth/Signin';
 import StudentDashboard from './pages/Dashboard/StudentDashboard';
+import StudentApplications from './pages/Dashboard/StudentApplications';
 import ProtectedRoute from './routes/ProtectedRoute';
 import ResetOtpPassword from './pages/Auth/ResetOtpPassword';
 import CollegeDashboard from './pages/Dashboard/CollegeDashboard';
@@ -67,6 +68,10 @@ function App() {
                             <Route
                                 path="/dashboard"
                                 element={<StudentDashboard />}
+                            />
+                            <Route
+                                path="/applications"
+                                element={<StudentApplications />}
                             />
                         </Route>
                     </Route>

@@ -90,7 +90,14 @@ export const applyToCollege = async (userId, collegeId) => {
         app => app.college.toString() === collegeId && app.course === null
     );
     if (pendingExists) {
-        return { alreadyApplied: true, applications: user.applications };
+        const updatedUser = await User.findById(userId).populate([
+            {
+                path: 'applications.college',
+                populate: { path: 'availableCourses.course', model: 'Course' }
+            },
+            'applications.course'
+        ]);
+        return { alreadyApplied: true, applications: updatedUser.applications };
     }
 
     if (user.applications.length >= 3) {
@@ -99,7 +106,14 @@ export const applyToCollege = async (userId, collegeId) => {
 
     user.applications.push({ college: collegeId, course: null });
     await user.save();
-    return { alreadyApplied: false, applications: user.applications };
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    return { alreadyApplied: false, applications: updatedUser.applications };
 };
 
 export const setApplicationCourse = async (userId, applicationId, courseId) => {
@@ -133,5 +147,12 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
 
     application.course = courseId;
     await user.save();
-    return { applications: user.applications };
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    return { applications: updatedUser.applications };
 };

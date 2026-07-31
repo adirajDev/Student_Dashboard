@@ -82,7 +82,16 @@ export const updateApplicationCourse = async (userId, applicationId, courseId) =
 
     application.course = courseId;
     await user.save();
-    return { applications: user.applications };
+    
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    
+    return { applications: updatedUser.applications };
 };
 
 export const deleteApplication = async (userId, applicationId) => {
@@ -98,5 +107,14 @@ export const deleteApplication = async (userId, applicationId) => {
 
     application.deleteOne(); // Mongoose 6+ subdocument removal — pulls itself from the parent array
     await user.save();
-    return { applications: user.applications };
+    
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    
+    return { applications: updatedUser.applications };
 };
