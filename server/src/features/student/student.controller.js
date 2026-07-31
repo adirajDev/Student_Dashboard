@@ -44,3 +44,23 @@ export const setApplicationCourse = async (req, res, next) => {
         const result = await studentService.setApplicationCourse(req.user._id, applicationId, courseId);
         res.status(200).json(result);
 };
+
+export const addAdminStudentApplication = asyncHandler(async (req, res) => {
+    const { studentId } = req.params;
+    const { collegeId, courseId } = req.body;
+    const result = await studentService.addAdminStudentApplication(studentId, collegeId, courseId);
+    res.status(201).json(result);
+});
+
+export const updateAdminStudentApplicationCourse = asyncHandler(async (req, res) => {
+    const { studentId, applicationId } = req.params;
+    const { courseId } = req.body;
+    const result = await studentService.updateAdminStudentApplicationCourse(studentId, applicationId, courseId);
+    res.status(200).json(result);
+});
+
+export const deleteAdminStudentApplication = asyncHandler(async (req, res) => {
+    const { studentId, applicationId } = req.params;
+    const result = await studentService.deleteAdminStudentApplication(studentId, applicationId);
+    res.status(200).json(result);
+});

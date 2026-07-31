@@ -156,3 +156,136 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
     ]);
     return { applications: updatedUser.applications };
 };
+
+export const addAdminStudentApplication = async (studentId, collegeId, courseId = null) => {
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        throw new AppError('Invalid student ID format.', 400);
+    }
+    if (!mongoose.Types.ObjectId.isValid(collegeId)) {
+        throw new AppError('Invalid college ID format.', 400);
+    }
+
+    const student = await User.findOne({ _id: studentId, role: 'student' });
+    if (!student) {
+        throw new AppError('Student not found.', 404);
+    }
+
+    const college = await College.findById(collegeId);
+    if (!college) {
+        throw new AppError('College not found.', 404);
+    }
+
+    if (student.applications.length >= 3) {
+        throw new AppError('Student can have a maximum of 3 applications.', 400);
+    }
+
+    if (courseId) {
+        if (!mongoose.Types.ObjectId.isValid(courseId)) {
+            throw new AppError('Invalid course ID format.', 400);
+        }
+        const courseAllowed = college.availableCourses.some(
+            ac => ac.course.toString() === courseId
+        );
+        if (!courseAllowed) {
+            throw new AppError('Selected course is not offered by this college.', 400);
+        }
+    }
+
+    const duplicatePair = student.applications.some(
+        app =>
+            app.college.toString() === collegeId &&
+            (courseId ? app.course?.toString() === courseId : app.course === null)
+    );
+    if (duplicatePair) {
+        throw new AppError('An application with this college and course already exists for this student.', 400);
+    }
+
+    student.applications.push({ college: collegeId, course: courseId || null });
+    await student.save();
+
+    const updatedUser = await User.findById(studentId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    return { applications: updatedUser.applications };
+};
+
+export const updateAdminStudentApplicationCourse = async (studentId, applicationId, courseId) => {
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        throw new AppError('Invalid student ID format.', 400);
+    }
+    if (!mongoose.Types.ObjectId.isValid(courseId)) {
+        throw new AppError('Invalid course ID format.', 400);
+    }
+
+    const student = await User.findOne({ _id: studentId, role: 'student' });
+    if (!student) {
+        throw new AppError('Student not found.', 404);
+    }
+
+    const application = student.applications.id(applicationId);
+    if (!application) {
+        throw new AppError('Application not found.', 404);
+    }
+
+    const college = await College.findById(application.college);
+    const courseAllowed = college.availableCourses.some(
+        ac => ac.course.toString() === courseId
+    );
+    if (!courseAllowed) {
+        throw new AppError('Selected course is not offered by this college.', 400);
+    }
+
+    const duplicatePair = student.applications.some(
+        app =>
+            app._id.toString() !== applicationId &&
+            app.college.toString() === application.college.toString() &&
+            app.course?.toString() === courseId
+    );
+    if (duplicatePair) {
+        throw new AppError('An application with this college and course already exists for this student.', 400);
+    }
+
+    application.course = courseId;
+    await student.save();
+
+    const updatedUser = await User.findById(studentId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    return { applications: updatedUser.applications };
+};
+
+export const deleteAdminStudentApplication = async (studentId, applicationId) => {
+    if (!mongoose.Types.ObjectId.isValid(studentId)) {
+        throw new AppError('Invalid student ID format.', 400);
+    }
+
+    const student = await User.findOne({ _id: studentId, role: 'student' });
+    if (!student) {
+        throw new AppError('Student not found.', 404);
+    }
+
+    const application = student.applications.id(applicationId);
+    if (!application) {
+        throw new AppError('Application not found.', 404);
+    }
+
+    application.deleteOne();
+    await student.save();
+
+    const updatedUser = await User.findById(studentId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    return { applications: updatedUser.applications };
+};

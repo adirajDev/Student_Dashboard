@@ -6,6 +6,9 @@ import {
     deleteStudent,
     applyToCollege,
     setApplicationCourse,
+    addAdminStudentApplication,
+    updateAdminStudentApplicationCourse,
+    deleteAdminStudentApplication,
 } from './student.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
@@ -45,6 +48,23 @@ router.delete(
     '/delete-student/:id',
     requireRole('admin'),
     deleteStudent
+);
+
+// Admin application management for a student
+router.post(
+    '/:studentId/applications',
+    requireRole('admin'),
+    addAdminStudentApplication
+);
+router.patch(
+    '/:studentId/applications/:applicationId/course',
+    requireRole('admin'),
+    updateAdminStudentApplicationCourse
+);
+router.delete(
+    '/:studentId/applications/:applicationId',
+    requireRole('admin'),
+    deleteAdminStudentApplication
 );
 
 export default router;
