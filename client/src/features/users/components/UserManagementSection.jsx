@@ -10,7 +10,6 @@ const UserManagementSection = ({
     title,
     role,
     showCourse,
-    showCourseInList = showCourse,
     showCollegeOnly,
     canAdd,
     canDelete,
@@ -65,7 +64,7 @@ const UserManagementSection = ({
                 onPageChange={setPage}
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
-                showCourse={showCourseInList}
+                showCourse={showCourse}
                 onDelete={canDelete ? setDeletingUser : null}
                 onViewDetails={u => setViewingUser(u)}
                 onEdit={u => {
