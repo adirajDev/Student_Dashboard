@@ -21,7 +21,8 @@ export const getUsersByRole = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('course college')
+            .populate('college')
+            .populate('applications.college applications.course')
             .select('-password')
             .sort({ name: 1 })
             .skip(skip)
@@ -42,7 +43,7 @@ export const createUserByRole = async (payload, role) => {
 
     const user = await User.create({ ...payload, role });
     const populatedUser = await User.findById(user._id)
-        .populate('course college')
+        .populate('college')
         .select('-password');
     return populatedUser.toObject();
 };
@@ -65,7 +66,7 @@ export const updateUserByRole = async (id, payload, role) => {
         returnDocument: 'after',
         runValidators: true,
     })
-        .populate('course college')
+        .populate('college')
         .select('-password');
 
     if (!user)

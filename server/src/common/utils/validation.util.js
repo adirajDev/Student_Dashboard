@@ -4,7 +4,6 @@ const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
 export const normalizeUserPayload = ({
     name,
     email,
-    course,
     phone,
     college,
 } = {}) => {
@@ -13,20 +12,15 @@ export const normalizeUserPayload = ({
         email: email?.trim().toLowerCase(),
         phone: phone?.trim(),
     };
-    if (course) payload.course = course;
     if (college) payload.college = college;
     return payload;
 };
 
 export const validateUserPayload = (payload, role) => {
-    const { name, email, phone, course, college } = payload;
+    const { name, email, phone, college } = payload;
 
     if (!name || !email || !phone) {
         return 'Name, email, and phone number are required.';
-    }
-
-    if (role === 'student' && (!course || !college)) {
-        return 'Course and College are required for students.';
     }
 
     if (!EMAIL_REGEX.test(email)) {

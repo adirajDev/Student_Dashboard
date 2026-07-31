@@ -51,7 +51,7 @@ const AdminDashboard = () => {
                     <UserManagementSection
                         title="Student Directory"
                         role="student"
-                        showCourse={true}
+                        showCourse={false}
                         canAdd={isAdmin}
                         canDelete={isAdmin}
                         shouldFetch={true}

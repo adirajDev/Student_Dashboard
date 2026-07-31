@@ -1,6 +1,8 @@
 import User from './user.model.js';
+import College from "../college/college.model.js";
 import bcrypt from 'bcrypt';
 import AppError from '../../common/utils/AppError.js';
+import mongoose from "mongoose";
 
 export const updateSetting = async (userId, data) => {
     const { email, currentPassword, newPassword } = data;
@@ -44,4 +46,75 @@ export const updateSetting = async (userId, data) => {
     // Return updated user (without password)
     const updatedUser = await User.findById(user._id).select('-password');
     return updatedUser;
+};
+
+export const updateApplicationCourse = async (userId, applicationId, courseId) => {
+    if (!mongoose.Types.ObjectId.isValid(courseId)) {
+        throw new AppError('Invalid course id', 400);
+    }
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+        throw new AppError('Invalid application id', 400);
+    }
+
+    const user = await User.findById(userId);
+    const application = user.applications.id(applicationId);
+    if (!application) {
+        throw new AppError('Application not found', 404);
+    }
+
+    const college = await College.findById(application.college);
+    const courseAllowed = college.availableCourses.some(
+        ac => ac.course.toString() === courseId
+    );
+    if (!courseAllowed) {
+        throw new AppError('Selected course is not offered by this college', 400);
+    }
+
+    const duplicatePair = user.applications.some(
+        app =>
+            app._id.toString() !== applicationId &&
+            app.college.toString() === application.college.toString() &&
+            app.course?.toString() === courseId
+    );
+    if (duplicatePair) {
+        throw new AppError('You already have an application with this college and course', 400);
+    }
+
+    application.course = courseId;
+    await user.save();
+    
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    
+    return { applications: updatedUser.applications };
+};
+
+export const deleteApplication = async (userId, applicationId) => {
+    if (!mongoose.Types.ObjectId.isValid(applicationId)) {
+        throw new AppError('Invalid application id', 400);
+    }
+
+    const user = await User.findById(userId);
+    const application = user.applications.id(applicationId);
+    if (!application) {
+        throw new AppError('Application not found', 404);
+    }
+
+    application.deleteOne(); // Mongoose 6+ subdocument removal — pulls itself from the parent array
+    await user.save();
+    
+    const updatedUser = await User.findById(userId).populate([
+        {
+            path: 'applications.college',
+            populate: { path: 'availableCourses.course', model: 'Course' }
+        },
+        'applications.course'
+    ]);
+    
+    return { applications: updatedUser.applications };
 };

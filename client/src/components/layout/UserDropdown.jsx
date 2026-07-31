@@ -1,4 +1,4 @@
-import { Settings, LogOut, Star } from 'lucide-react';
+import { Settings, LogOut, Star, GraduationCap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useClickOutside from '../../hooks/useClickOutside';
 
@@ -26,16 +26,28 @@ const UserDropdown = ({ user, handleLogout, setIsSettingsOpen }) => {
                         </p>
                     </div>
                     {user.role === 'student' && (
-                        <button
-                            onClick={() => {
-                                setIsOpen(false);
-                                navigate('/dashboard');
-                            }}
-                            className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
-                        >
-                            <Star className="w-4 h-4 text-slate-400" />
-                            My Reviews
-                        </button>
+                        <>
+                            <button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    navigate('/applications');
+                                }}
+                                className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
+                            >
+                                <GraduationCap className="w-4 h-4 text-slate-400" />
+                                My Applications
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setIsOpen(false);
+                                    navigate('/dashboard');
+                                }}
+                                className="w-full text-left px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-3 transition-colors"
+                            >
+                                <Star className="w-4 h-4 text-slate-400" />
+                                My Reviews
+                            </button>
+                        </>
                     )}
                     <button
                         onClick={() => {

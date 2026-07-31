@@ -1,6 +1,6 @@
-import { Pencil, Trash2 } from 'lucide-react';
+import { Pencil, Trash2, Eye } from 'lucide-react';
 
-const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
+const UserRow = ({ user, onEdit, onDelete, onViewDetails, showCourse }) => {
     return (
         <tr className="hover:bg-slate-50 transition-colors">
             <td className="px-6 py-4">
@@ -25,6 +25,16 @@ const UserRow = ({ user, onEdit, onDelete, showCourse }) => {
 
             <td className="px-6 py-4">
                 <div className="flex items-center justify-end gap-2">
+                    {onViewDetails && (
+                        <button
+                            onClick={() => onViewDetails(user)}
+                            title="View Details"
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition cursor-pointer"
+                        >
+                            <Eye className="w-4 h-4" />
+                        </button>
+                    )}
+
                     <button
                         onClick={() => onEdit(user)}
                         title="Edit"
