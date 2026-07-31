@@ -37,6 +37,7 @@ export const createCollegeUser = async data => {
 
     // Convert to plain object so we can attach the OTP to the response
     const populatedUser = await User.findById(newCollegeUser._id)
+        .select('-password')
         .populate('college', 'name')
         .lean();
     return { ...populatedUser, generatedOtp: otp };
@@ -63,7 +64,10 @@ export const updateCollegeUser = async (id, data) => {
     user.college = college || user.college;
 
     await user.save();
-    return await User.findById(id).populate('college', 'name');
+    return await User.findById(id)
+        .select('-password')
+        .populate('college', 'name')
+        .lean();
 };
 
 export const deleteCollegeUser = async id => {

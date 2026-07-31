@@ -42,7 +42,8 @@ export const getColleges = async (
             )
             .sort({ name: 1 })
             .skip(skip)
-            .limit(limit),
+            .limit(limit)
+            .lean(),
         College.countDocuments(queryObj),
     ]);
     return { data, totalCount };
@@ -53,8 +54,10 @@ export const getCollegeById = async id => {
         .select('-images.data')
         .populate({
             path: 'availableCourses.course',
+            select: 'name level shortName specialization duration',
             model: 'Course',
-        });
+        })
+        .lean();
     if (!college) {
         throw new AppError('College not found', 404);
     }
@@ -93,7 +96,14 @@ export const updateCollege = async (id, data) => {
     const college = await College.findByIdAndUpdate(id, updateData, {
         returnDocument: 'after',
         runValidators: true,
-    }).populate('availableCourses', 'name level');
+    })
+        .select('-images.data')
+        .populate({
+            path: 'availableCourses.course',
+            select: 'name shortName level',
+            model: 'Course',
+        })
+        .lean();
 
     if (!college) {
         throw new AppError('College not found', 404);

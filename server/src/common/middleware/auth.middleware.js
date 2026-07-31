@@ -11,16 +11,18 @@ export const requireAuth = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
-            .populate('college')
+            .select('-password')
+            .populate('college', 'name logo location type')
             .populate({
                 path: 'applications.college',
+                select: 'name logo location type availableCourses',
                 populate: {
                     path: 'availableCourses.course',
+                    select: 'name',
                     model: 'Course'
                 }
             })
-            .populate('applications.course')
-            .select('-password');
+            .populate('applications.course', 'name');
 
         if (!user) {
             return res.status(401).json({ message: 'User not found' });
@@ -44,16 +46,18 @@ export const checkAuth = async (req, res, next) => {
 
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await User.findById(decoded.userId)
-            .populate('college')
+            .select('-password')
+            .populate('college', 'name logo location type')
             .populate({
                 path: 'applications.college',
+                select: 'name logo location type availableCourses',
                 populate: {
                     path: 'availableCourses.course',
+                    select: 'name',
                     model: 'Course'
                 }
             })
-            .populate('applications.course')
-            .select('-password');
+            .populate('applications.course', 'name');
 
         req.user = user || null;
         next();

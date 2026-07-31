@@ -90,14 +90,8 @@ export const applyToCollege = async (userId, collegeId) => {
         app => app.college.toString() === collegeId && app.course === null
     );
     if (pendingExists) {
-        const updatedUser = await User.findById(userId).populate([
-            {
-                path: 'applications.college',
-                populate: { path: 'availableCourses.course', model: 'Course' }
-            },
-            'applications.course'
-        ]);
-        return { alreadyApplied: true, applications: updatedUser.applications };
+        const applications = await getPopulatedStudentApplications(userId);
+        return { alreadyApplied: true, applications };
     }
 
     if (user.applications.length >= 3) {
@@ -106,14 +100,8 @@ export const applyToCollege = async (userId, collegeId) => {
 
     user.applications.push({ college: collegeId, course: null });
     await user.save();
-    const updatedUser = await User.findById(userId).populate([
-        {
-            path: 'applications.college',
-            populate: { path: 'availableCourses.course', model: 'Course' }
-        },
-        'applications.course'
-    ]);
-    return { alreadyApplied: false, applications: updatedUser.applications };
+    const applications = await getPopulatedStudentApplications(userId);
+    return { alreadyApplied: false, applications };
 };
 
 export const setApplicationCourse = async (userId, applicationId, courseId) => {
@@ -147,14 +135,8 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
 
     application.course = courseId;
     await user.save();
-    const updatedUser = await User.findById(userId).populate([
-        {
-            path: 'applications.college',
-            populate: { path: 'availableCourses.course', model: 'Course' }
-        },
-        'applications.course'
-    ]);
-    return { applications: updatedUser.applications };
+    const applications = await getPopulatedStudentApplications(userId);
+    return { applications };
 };
 
 export const addAdminStudentApplication = async (studentId, collegeId, courseId = null) => {
@@ -203,14 +185,8 @@ export const addAdminStudentApplication = async (studentId, collegeId, courseId 
     student.applications.push({ college: collegeId, course: courseId || null });
     await student.save();
 
-    const updatedUser = await User.findById(studentId).populate([
-        {
-            path: 'applications.college',
-            populate: { path: 'availableCourses.course', model: 'Course' }
-        },
-        'applications.course'
-    ]);
-    return { applications: updatedUser.applications };
+    const applications = await getPopulatedStudentApplications(studentId);
+    return { applications };
 };
 
 export const updateAdminStudentApplicationCourse = async (studentId, applicationId, courseId) => {
@@ -252,14 +228,8 @@ export const updateAdminStudentApplicationCourse = async (studentId, application
     application.course = courseId;
     await student.save();
 
-    const updatedUser = await User.findById(studentId).populate([
-        {
-            path: 'applications.college',
-            populate: { path: 'availableCourses.course', model: 'Course' }
-        },
-        'applications.course'
-    ]);
-    return { applications: updatedUser.applications };
+    const applications = await getPopulatedStudentApplications(studentId);
+    return { applications };
 };
 
 export const deleteAdminStudentApplication = async (studentId, applicationId) => {
@@ -280,12 +250,25 @@ export const deleteAdminStudentApplication = async (studentId, applicationId) =>
     application.deleteOne();
     await student.save();
 
-    const updatedUser = await User.findById(studentId).populate([
-        {
-            path: 'applications.college',
-            populate: { path: 'availableCourses.course', model: 'Course' }
-        },
-        'applications.course'
-    ]);
-    return { applications: updatedUser.applications };
+    const applications = await getPopulatedStudentApplications(studentId);
+    return { applications };
+};
+
+const getPopulatedStudentApplications = async (studentId) => {
+    const updatedUser = await User.findById(studentId)
+        .select('applications')
+        .populate([
+            {
+                path: 'applications.college',
+                select: 'name logo location availableCourses',
+                populate: {
+                    path: 'availableCourses.course',
+                    select: 'name',
+                    model: 'Course',
+                },
+            },
+            { path: 'applications.course', select: 'name' },
+        ])
+        .lean();
+    return updatedUser?.applications || [];
 };

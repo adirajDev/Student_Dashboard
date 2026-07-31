@@ -48,10 +48,12 @@ export const getRatingsByCollege = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
+            .select('student college stars comment isEdited createdAt updatedAt')
             .populate('student', 'name')
             .sort({ createdAt: -1 })
             .skip(skip)
-            .limit(limit),
+            .limit(limit)
+            .lean(),
         Rating.countDocuments(queryObj),
     ]);
     return { data, totalCount };
@@ -62,10 +64,12 @@ export const getMyRatings = async (studentId, skip = 0, limit = 0) => {
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('college', 'name location')
+            .select('student college stars comment isEdited createdAt updatedAt')
+            .populate('college', 'name location logo')
             .sort({ createdAt: -1 })
             .skip(skip)
-            .limit(limit),
+            .limit(limit)
+            .lean(),
         Rating.countDocuments({ student: studentId }),
     ]);
     return { data, totalCount };

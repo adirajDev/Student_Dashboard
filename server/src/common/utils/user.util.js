@@ -21,18 +21,24 @@ export const getUsersByRole = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
+            .select('name email phone role college applications createdAt updatedAt')
             .populate([
                 {
                     path: 'applications.college',
-                    populate: { path: 'availableCourses.course', model: 'Course' }
+                    select: 'name availableCourses',
+                    populate: {
+                        path: 'availableCourses.course',
+                        select: 'name',
+                        model: 'Course',
+                    },
                 },
-                'applications.course',
-                'college'
+                { path: 'applications.course', select: 'name' },
+                { path: 'college', select: 'name' },
             ])
-            .select('-password')
             .sort({ name: 1 })
             .skip(skip)
-            .limit(limit),
+            .limit(limit)
+            .lean(),
         User.countDocuments(queryObj),
     ]);
 
@@ -49,9 +55,10 @@ export const createUserByRole = async (payload, role) => {
 
     const user = await User.create({ ...payload, role });
     const populatedUser = await User.findById(user._id)
-        .populate('college')
-        .select('-password');
-    return populatedUser.toObject();
+        .select('-password')
+        .populate('college', 'name location type')
+        .lean();
+    return populatedUser;
 };
 
 export const updateUserByRole = async (id, payload, role) => {
@@ -72,8 +79,9 @@ export const updateUserByRole = async (id, payload, role) => {
         returnDocument: 'after',
         runValidators: true,
     })
-        .populate('college')
-        .select('-password');
+        .select('-password')
+        .populate('college', 'name location type')
+        .lean();
 
     if (!user)
         throw {
