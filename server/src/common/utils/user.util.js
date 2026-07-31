@@ -21,8 +21,14 @@ export const getUsersByRole = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('college')
-            .populate('applications.college applications.course')
+            .populate([
+                {
+                    path: 'applications.college',
+                    populate: { path: 'availableCourses.course', model: 'Course' }
+                },
+                'applications.course',
+                'college'
+            ])
             .select('-password')
             .sort({ name: 1 })
             .skip(skip)

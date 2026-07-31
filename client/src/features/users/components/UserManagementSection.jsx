@@ -26,6 +26,7 @@ const UserManagementSection = ({
         setSearchTerm,
         addUser,
         updateUser,
+        updateUserApplications,
         deleteUser,
     } = useUserManagement(role, shouldFetch);
     const [editingUser, setEditingUser] = useState(null);
@@ -77,6 +78,11 @@ const UserManagementSection = ({
                 <UserDetailsModal
                     user={viewingUser}
                     onClose={() => setViewingUser(null)}
+                    onUserApplicationsUpdate={(newApps) => {
+                        const userId = viewingUser._id || viewingUser.id;
+                        setViewingUser(prev => prev ? { ...prev, applications: newApps } : null);
+                        updateUserApplications(userId, newApps);
+                    }}
                 />
             )}
 

@@ -67,6 +67,17 @@ const useUserManagement = (role, shouldFetch = true) => {
         setUsers(prev => prev.filter(u => u._id !== id));
     };
 
+
+    const updateUserApplications = (userId, newApplications) => {
+        setUsers(prev =>
+            prev.map(u =>
+                (u._id === userId || u.id === userId)
+                    ? { ...u, applications: newApplications }
+                    : u
+            )
+        );
+    };
+
     return {
         users,
         isLoading,
@@ -78,6 +89,7 @@ const useUserManagement = (role, shouldFetch = true) => {
         setSearchTerm,
         addUser,
         updateUser,
+        updateUserApplications,
         deleteUser,
     };
 };
