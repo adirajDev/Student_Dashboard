@@ -15,7 +15,6 @@ const courseSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            index: true,
         },
 
         name: {
@@ -30,12 +29,7 @@ const courseSchema = new mongoose.Schema(
             default: null,
         },
 
-        // Duration in months for consistency.
-        // Examples:
-        // 6  = 6 months
-        // 24 = 2 years
-        // 48 = 4 years
-        // 66 = 5.5 years (MBBS)
+        // e.g. 66 = 5.5 years (MBBS)
         duration: {
             type: Number,
             required: true,

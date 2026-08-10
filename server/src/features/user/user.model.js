@@ -41,6 +41,7 @@ const userSchema = new mongoose.Schema(
             type: String,
             enum: ['admin', 'student', 'editor', 'college'],
             default: 'student',
+            index: true,
         },
         isFirstLogin: {
             type: Boolean,
