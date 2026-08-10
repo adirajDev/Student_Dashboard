@@ -33,7 +33,7 @@ const GalleryModal = ({ isOpen, onClose, collegeId, images, videos }) => {
     ];
 
     const modalContent = (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center surface-paper animate-in fade-in duration-300">
+        <div className="modal-overlay z-[100] flex items-center justify-center animate-in fade-in duration-300">
             {/* Close Button */}
             <button
                 onClick={onClose}

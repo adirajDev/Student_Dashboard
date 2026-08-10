@@ -79,8 +79,8 @@ const CourseFormModal = ({
     };
 
     return createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="relative w-full max-w-lg bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
+        <div className="modal-overlay flex items-center justify-center p-4">
+            <div className="surface-paper w-full max-w-lg rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up">
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
                     <h2 className="text-xl text-[var(--foreground)]">
                         {title}

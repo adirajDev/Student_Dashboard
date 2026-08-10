@@ -54,7 +54,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                 className={`
                     w-64 flex flex-col justify-between py-6 shrink-0 z-50
                     transition-transform duration-300 ease-in-out
-                    rounded-3xl border border-white/20 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.05)],0,0,0.2)] bg-gradient-to-b from-white/80 to-slate-50/60 backdrop-blur-md
+                    rounded-[var(--radius-xl)] border border-[var(--border)] shadow-xl surface-paper
                     
                     /* Mobile styles */
                     fixed inset-y-0 left-0 m-4

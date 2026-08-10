@@ -55,8 +55,8 @@ const UserDetailsModal = ({ user, onClose, onUserApplicationsUpdate }) => {
         }
     };
     return createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="relative w-full max-w-2xl bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden border border-[var(--border)] animate-slide-up">
+        <div className="modal-overlay flex items-center justify-center p-4">
+            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] bg-slate-50/50">
                     <div className="flex items-center gap-3">

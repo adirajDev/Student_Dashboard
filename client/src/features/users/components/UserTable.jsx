@@ -19,6 +19,7 @@ const UserTable = ({
     onDelete,
     onViewDetails,
     showCourse,
+    showCollegeOnly,
 }) => {
     // UI State: Data Render
     return (
@@ -45,6 +46,7 @@ const UserTable = ({
                     <UserTableGrid
                         users={users}
                         showCourse={showCourse}
+                        showCollegeOnly={showCollegeOnly}
                         onEdit={onEdit}
                         onDelete={onDelete}
                         onViewDetails={onViewDetails}

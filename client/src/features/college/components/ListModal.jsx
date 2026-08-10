@@ -5,8 +5,8 @@ const ListModal = ({ isOpen, onClose, title, type, data }) => {
     if (!isOpen) return null;
 
     const modalContent = (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-in fade-in duration-200 p-4">
-            <div className="surface-paper w-full max-w-2xl max-h-[85vh] rounded-[var(--radius-xl)] overflow-hidden flex flex-col shadow-2xl relative animate-in zoom-in-95 duration-200">
+        <div className="modal-overlay z-[100] flex items-center justify-center p-4">
+            <div className="surface-paper w-full max-w-2xl max-h-[85vh] rounded-[var(--radius-xl)] flex flex-col shadow-2xl relative overflow-hidden animate-in zoom-in-95 duration-200">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] bg-[var(--background)]/50">
                     <h2 className="text-xl sm:text-2xl font-display text-[var(--foreground)] flex items-center">

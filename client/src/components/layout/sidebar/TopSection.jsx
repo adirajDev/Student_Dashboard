@@ -9,7 +9,7 @@ const TopSection = ({ isAdmin, isEditor, handleNav, setIsMobileOpen }) => {
                         isAdmin || isEditor ? '/admin/dashboard' : '/dashboard'
                     )
                 }
-                className="cursor-pointer text-xl text-blue-600 hover:opacity-80 transition-opacity font-semibold"
+                className="cursor-pointer text-xl text-[var(--color-ink-950)] hover:text-[var(--color-ink-700)] font-display transition-colors font-bold"
             >
                 {isAdmin || isEditor ? 'AdminPanel' : 'StudentPortal'}
             </button>
