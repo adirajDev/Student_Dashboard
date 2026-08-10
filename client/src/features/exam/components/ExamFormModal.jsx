@@ -219,8 +219,8 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         });
 
     return createPortal(
-        <div className="modal-overlay flex items-center justify-center p-4">
-            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up max-h-[90vh] flex flex-col">
+        <div className="modal-overlay flex items-center justify-center p-4" onClick={onClose}>
+            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
                     <h2 className="text-xl">{title}</h2>
                     <button
@@ -246,11 +246,11 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                     </form>
                 </div>
 
-                <div className="p-6 border-t border-[var(--border)] bg-[var(--card)] flex justify-end gap-3 shrink-0">
+                <div className="p-6 pt-2 flex gap-4 shrink-0">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-6 py-2.5 rounded-xl font-medium border border-[var(--border)] hover:bg-slate-100 transition-colors"
+                        className="btn-secondary flex-1"
                         disabled={isSubmitting}
                     >
                         Cancel
@@ -258,7 +258,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                     <button
                         type="submit"
                         form="exam-form"
-                        className="btn-primary px-8 py-2.5"
+                        className="btn-primary flex-1"
                         disabled={isSubmitting}
                     >
                         {isSubmitting

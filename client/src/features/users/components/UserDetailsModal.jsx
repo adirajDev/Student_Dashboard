@@ -55,8 +55,8 @@ const UserDetailsModal = ({ user, onClose, onUserApplicationsUpdate }) => {
         }
     };
     return createPortal(
-        <div className="modal-overlay flex items-center justify-center p-4">
-            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up">
+        <div className="modal-overlay flex items-center justify-center p-4" onClick={onClose}>
+            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up" onClick={e => e.stopPropagation()}>
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] bg-slate-50/50">
                     <div className="flex items-center gap-3">
@@ -67,7 +67,7 @@ const UserDetailsModal = ({ user, onClose, onUserApplicationsUpdate }) => {
                             <h2 className="text-xl font-bold text-[var(--foreground)]">
                                 User Details
                             </h2>
-                            <p className="text-xs text-[var(--ring)]">
+                            <p className="text-xs text-[var(--muted)]">
                                 {formattedData.roleDisplay} Profile Information
                             </p>
                         </div>
@@ -400,7 +400,7 @@ const UserDetailsModal = ({ user, onClose, onUserApplicationsUpdate }) => {
                     )}
                 </div>
                 {/* Footer */}
-                <div className="p-4 border-t border-[var(--border)] bg-slate-50/50 flex justify-end">
+                <div className="p-6 pt-2 flex justify-end">
                     <button
                         onClick={onClose}
                         className="btn-secondary text-sm px-6"

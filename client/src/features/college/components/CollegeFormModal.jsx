@@ -57,8 +57,8 @@ const CollegeFormModal = ({
     };
 
     return createPortal(
-        <div className="modal-overlay flex items-center justify-center p-4">
-            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up max-h-[90vh] flex flex-col">
+        <div className="modal-overlay flex items-center justify-center p-4" onClick={onClose}>
+            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)] shrink-0">
                     <h2 className="text-xl text-[var(--foreground)]">
                         {title}
@@ -93,9 +93,9 @@ const CollegeFormModal = ({
                     <form
                         id="college-form"
                         onSubmit={handleSubmit}
-                        className="space-y-5"
+                        className="space-y-6"
                     >
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <FormField
                                 label="College Name"
                                 id="name"
@@ -113,11 +113,11 @@ const CollegeFormModal = ({
                             />
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
                                 <label
                                     htmlFor="type"
-                                    className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                                    className="block text-sm font-medium text-[var(--foreground)] mb-2"
                                 >
                                     Type
                                 </label>
@@ -147,7 +147,7 @@ const CollegeFormModal = ({
                         <div>
                             <label
                                 htmlFor="description"
-                                className="block text-sm font-medium text-[var(--foreground)] mb-1"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-2"
                             >
                                 Description
                             </label>
@@ -164,11 +164,11 @@ const CollegeFormModal = ({
                     </form>
                 </div>
 
-                <div className="p-6 border-t border-[var(--border)] shrink-0 flex justify-end gap-3 bg-[var(--card)]">
+                <div className="p-6 pt-2 shrink-0 flex gap-4">
                     <button
                         type="button"
                         onClick={onClose}
-                        className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 transition-colors"
+                        className="btn-secondary flex-1"
                         disabled={loading}
                     >
                         Cancel
@@ -177,7 +177,7 @@ const CollegeFormModal = ({
                         type="submit"
                         form="college-form"
                         disabled={loading}
-                        className="btn-primary px-8 py-2.5 flex items-center gap-2"
+                        className="btn-primary flex-1"
                     >
                         {loading && (
                             <Loader2 className="w-4 h-4 animate-spin" />

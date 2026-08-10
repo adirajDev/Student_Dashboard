@@ -10,7 +10,7 @@ const FormField = ({
     <div>
         <label
             htmlFor={id}
-            className="block text-sm font-medium text-[var(--foreground)] mb-1"
+            className="block text-sm font-medium text-[var(--foreground)] mb-2"
         >
             {label}
         </label>
