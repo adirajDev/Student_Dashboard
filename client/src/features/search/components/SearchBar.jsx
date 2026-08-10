@@ -8,7 +8,7 @@ const SearchBar = ({
     return (
         <div className={className}>
             <svg
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)] pointer-events-none"
+                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--muted)] pointer-events-none"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -26,13 +26,13 @@ const SearchBar = ({
                 value={value}
                 onChange={e => onChange(e.target.value)}
                 placeholder={placeholder}
-                className="w-full pl-11 pr-11 py-3 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] placeholder-[var(--ring)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition"
+                className="w-full pl-11 pr-11 py-3 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-sm text-[var(--foreground)] placeholder-[var(--muted)] focus:outline-none focus:border-[var(--color-ink-500)] focus:ring-1 focus:ring-[var(--color-ink-500)] transition"
             />
 
             {value && (
                 <button
                     onClick={onClear}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--ring)] hover:text-[var(--foreground)] transition"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--muted)] hover:text-[var(--foreground)] transition"
                     aria-label="Clear search"
                 >
                     <svg

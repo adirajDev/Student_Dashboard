@@ -34,7 +34,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
             <button
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
-                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--color-ink-50)] transition-colors"
                 title="Previous Page"
             >
                 <ChevronLeft className="w-5 h-5" />
@@ -51,13 +51,13 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
                             typeof page !== 'number' || page === currentPage
                         }
                         className={`
-                            w-10 h-10 flex items-center justify-center rounded-xl font-medium transition-colors
+                            w-10 h-10 flex items-center justify-center rounded-[var(--radius-md)] font-semibold transition-colors
                             ${
                                 page === currentPage
-                                    ? 'bg-blue-600 text-white shadow-md'
+                                    ? 'bg-[var(--color-ink-600)] text-white shadow-md'
                                     : typeof page === 'number'
-                                      ? 'hover:bg-slate-100 text-[var(--foreground)] border border-[var(--border)] bg-[var(--card)]'
-                                      : 'text-[var(--ring)] cursor-default'
+                                      ? 'hover:bg-[var(--color-ink-50)] text-[var(--foreground)] border border-[var(--border)] bg-[var(--card)]'
+                                      : 'text-[var(--muted)] cursor-default'
                             }
                         `}
                     >
@@ -69,7 +69,7 @@ const Pagination = ({ currentPage = 1, totalPages = 1, onPageChange }) => {
             <button
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className="p-2 rounded-xl border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-slate-100 transition-colors"
+                className="p-2 rounded-[var(--radius-md)] border border-[var(--border)] bg-[var(--card)] text-[var(--foreground)] disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[var(--color-ink-50)] transition-colors"
                 title="Next Page"
             >
                 <ChevronRight className="w-5 h-5" />

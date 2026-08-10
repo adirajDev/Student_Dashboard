@@ -74,8 +74,8 @@ const RatingList = ({ collegeId, currentUser }) => {
         <div className="mb-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
                 <div>
-                    <h3 className="text-2xl">Student Reviews</h3>
-                    <p className="text-[var(--ring)] text-sm mt-1">
+                    <h3 className="text-2xl font-display">Student Reviews</h3>
+                    <p className="text-[var(--muted)] text-sm mt-1">
                         {ratings.length}{' '}
                         {ratings.length === 1 ? 'review' : 'reviews'}
                     </p>
@@ -90,7 +90,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                                 setFilterStars(Number(e.target.value));
                                 setPage(1);
                             }}
-                            className="w-full px-4 py-2.5 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
+                            className="w-full px-4 py-2.5 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--color-ink-500)] focus:ring-1 focus:ring-[var(--color-ink-500)] appearance-none text-sm font-medium"
                         >
                             <option value={0}>All Stars</option>
                             <option value={5}>5 Stars only</option>
@@ -99,7 +99,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                             <option value={2}>2 Stars only</option>
                             <option value={1}>1 Star only</option>
                         </select>
-                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--ring)]">
+                        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-[var(--muted)]">
                             <svg
                                 className="fill-current h-4 w-4"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -125,7 +125,7 @@ const RatingList = ({ collegeId, currentUser }) => {
 
             <div className="flex flex-col gap-4">
                 {!ratings || ratings.length === 0 ? (
-                    <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-3xl bg-[var(--card)] text-[var(--ring)]">
+                    <div className="text-center py-12 border border-dashed border-[var(--border)] rounded-[var(--radius-xl)] bg-[var(--card)] text-[var(--muted)]">
                         {filterStars > 0
                             ? `No ${filterStars}-star reviews yet.`
                             : 'No reviews yet. Be the first to rate!'}
@@ -134,7 +134,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                     ratings.map(rating => (
                         <div
                             key={rating._id}
-                            className="p-6 bg-[var(--card)] border border-[var(--border)] rounded-3xl shadow-sm hover:shadow-md transition-shadow"
+                            className="card-interactive p-6 transition-shadow"
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex-1 pr-4">
@@ -148,13 +148,13 @@ const RatingList = ({ collegeId, currentUser }) => {
                                             ))}
                                         </div>
                                         {rating.isEdited && (
-                                            <span className="text-xs text-slate-400 italic">
+                                            <span className="text-xs text-[var(--muted)] italic">
                                                 (Edited)
                                             </span>
                                         )}
                                     </div>
-                                    <div className="flex items-center gap-2 text-xs text-slate-400">
-                                        <span className="font-medium text-slate-500">
+                                    <div className="flex items-center gap-2 text-xs text-[var(--muted)]">
+                                        <span className="font-display text-[var(--foreground)]">
                                             {rating.student?.name ||
                                                 'Anonymous User'}
                                         </span>
@@ -181,7 +181,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                                                     setEditingRating(rating);
                                                     setShowFormModal(true);
                                                 }}
-                                                className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
+                                                className="p-2 text-[var(--color-ink-600)] hover:bg-[var(--color-ink-50)] rounded-[var(--radius-sm)] transition-colors"
                                                 title="Edit Review"
                                             >
                                                 <Pencil className="w-4 h-4" />
@@ -190,7 +190,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                                                 onClick={() =>
                                                     setDeletingRating(rating)
                                                 }
-                                                className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
+                                                className="p-2 text-[var(--color-danger)] hover:bg-[var(--color-danger)]/10 rounded-[var(--radius-sm)] transition-colors"
                                                 title="Delete Review"
                                             >
                                                 <Trash2 className="w-4 h-4" />
@@ -200,7 +200,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                             </div>
 
                             {rating.comment && (
-                                <p className="text-slate-800 whitespace-pre-wrap text-base leading-relaxed mt-2">
+                                <p className="text-[var(--muted)] whitespace-pre-wrap text-base leading-relaxed mt-2">
                                     {rating.comment}
                                 </p>
                             )}

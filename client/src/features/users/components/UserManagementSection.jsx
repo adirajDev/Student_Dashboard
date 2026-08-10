@@ -78,9 +78,11 @@ const UserManagementSection = ({
                 <UserDetailsModal
                     user={viewingUser}
                     onClose={() => setViewingUser(null)}
-                    onUserApplicationsUpdate={(newApps) => {
+                    onUserApplicationsUpdate={newApps => {
                         const userId = viewingUser._id || viewingUser.id;
-                        setViewingUser(prev => prev ? { ...prev, applications: newApps } : null);
+                        setViewingUser(prev =>
+                            prev ? { ...prev, applications: newApps } : null
+                        );
                         updateUserApplications(userId, newApps);
                     }}
                 />

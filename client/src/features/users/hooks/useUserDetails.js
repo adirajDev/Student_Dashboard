@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 
-const useUserDetails = (user) => {
+const useUserDetails = user => {
     const formattedData = useMemo(() => {
         if (!user) return null;
 
@@ -8,21 +8,25 @@ const useUserDetails = (user) => {
             user.role === 'student'
                 ? 'Student'
                 : user.role === 'editor'
-                ? 'Editor'
-                : user.role === 'collegeUser'
-                ? 'College Admin'
-                : user.role === 'admin'
-                ? 'System Admin'
-                : user.role;
+                  ? 'Editor'
+                  : user.role === 'collegeUser'
+                    ? 'College Admin'
+                    : user.role === 'admin'
+                      ? 'System Admin'
+                      : user.role;
 
-        const primaryCollege = user.college?.name || user.college || 'Not Assigned';
-        const primaryCourse = user.course?.name || user.course || 'Not Assigned';
+        const primaryCollege =
+            user.college?.name || user.college || 'Not Assigned';
+        const primaryCourse =
+            user.course?.name || user.course || 'Not Assigned';
 
-        const applications = (user.applications || []).map((app) => ({
+        const applications = (user.applications || []).map(app => ({
             id: app._id,
             collegeName: app.college?.name || 'Unknown College',
             courseName: app.course?.name || 'No Course Selected',
-            status: app.course ? 'Active Application' : 'Pending Course Selection',
+            status: app.course
+                ? 'Active Application'
+                : 'Pending Course Selection',
         }));
 
         return {

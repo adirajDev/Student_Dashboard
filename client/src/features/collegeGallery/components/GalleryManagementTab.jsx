@@ -1,5 +1,12 @@
 import { useState, useRef } from 'react';
-import { Image as ImageIcon, Video, Trash2, Plus, Upload, X } from 'lucide-react';
+import {
+    Image as ImageIcon,
+    Video,
+    Trash2,
+    Plus,
+    Upload,
+    X,
+} from 'lucide-react';
 import useGalleryManagement from '../hooks/useGalleryManagement';
 import Loading from '../../../components/common/Loading';
 import apiClient from '../../../services/apiClient';
@@ -15,17 +22,17 @@ const GalleryManagementTab = ({ user }) => {
         uploadImages,
         deleteImage,
         addVideo,
-        deleteVideo
+        deleteVideo,
     } = useGalleryManagement(user);
 
     const [videoUrl, setVideoUrl] = useState('');
     const [uploadError, setUploadError] = useState('');
     const fileInputRef = useRef(null);
 
-    const handleFileSelect = async (e) => {
+    const handleFileSelect = async e => {
         setUploadError('');
         const files = Array.from(e.target.files);
-        
+
         if (files.length === 0) return;
 
         // Check for 2MB limit on frontend
@@ -46,7 +53,7 @@ const GalleryManagementTab = ({ user }) => {
         }
     };
 
-    const handleAddVideo = async (e) => {
+    const handleAddVideo = async e => {
         e.preventDefault();
         setUploadError('');
         if (!videoUrl) return;
@@ -77,7 +84,8 @@ const GalleryManagementTab = ({ user }) => {
                     <h3 className="text-2xl">Manage Images</h3>
                 </div>
                 <p className="text-sm text-[var(--ring)] mb-6">
-                    Upload images to showcase your college campus, events, and facilities. Maximum file size is 2MB.
+                    Upload images to showcase your college campus, events, and
+                    facilities. Maximum file size is 2MB.
                 </p>
 
                 {uploadError && (
@@ -90,8 +98,11 @@ const GalleryManagementTab = ({ user }) => {
                 )}
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
-                    {images.map((img) => (
-                        <div key={img._id} className="relative group rounded-xl overflow-hidden aspect-square border border-[var(--border)]">
+                    {images.map(img => (
+                        <div
+                            key={img._id}
+                            className="relative group rounded-xl overflow-hidden aspect-square border border-[var(--border)]"
+                        >
                             <img
                                 src={`${apiClient.defaults.baseURL}/college-gallery/${collegeId}/gallery/images/${img._id}`}
                                 alt="Gallery item"
@@ -108,10 +119,12 @@ const GalleryManagementTab = ({ user }) => {
                             </div>
                         </div>
                     ))}
-                    
+
                     <label className="border-2 border-dashed border-[var(--border)] rounded-xl aspect-square flex flex-col items-center justify-center cursor-pointer hover:border-blue-500 hover:bg-blue-50/5 transition-colors group">
                         <Upload className="w-8 h-8 text-[var(--ring)] group-hover:text-blue-500 mb-2 transition-colors" />
-                        <span className="text-sm text-[var(--ring)] group-hover:text-blue-500 font-medium">Upload Images</span>
+                        <span className="text-sm text-[var(--ring)] group-hover:text-blue-500 font-medium">
+                            Upload Images
+                        </span>
                         <input
                             type="file"
                             multiple
@@ -131,7 +144,8 @@ const GalleryManagementTab = ({ user }) => {
                     <h3 className="text-2xl">Manage Videos</h3>
                 </div>
                 <p className="text-sm text-[var(--ring)] mb-6">
-                    Add YouTube or Vimeo URLs to feature college tours and promotional videos.
+                    Add YouTube or Vimeo URLs to feature college tours and
+                    promotional videos.
                 </p>
 
                 <form onSubmit={handleAddVideo} className="flex gap-4 mb-8">
@@ -139,7 +153,7 @@ const GalleryManagementTab = ({ user }) => {
                         type="url"
                         placeholder="https://youtube.com/watch?v=..."
                         value={videoUrl}
-                        onChange={(e) => setVideoUrl(e.target.value)}
+                        onChange={e => setVideoUrl(e.target.value)}
                         required
                         className="input-field flex-1"
                         disabled={actionLoading}
@@ -154,11 +168,19 @@ const GalleryManagementTab = ({ user }) => {
                 </form>
 
                 <div className="space-y-4">
-                    {videos.map((vid) => (
-                        <div key={vid._id} className="flex items-center justify-between p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl">
+                    {videos.map(vid => (
+                        <div
+                            key={vid._id}
+                            className="flex items-center justify-between p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl"
+                        >
                             <div className="flex items-center gap-3 overflow-hidden">
                                 <Video className="w-5 h-5 text-[var(--ring)] flex-shrink-0" />
-                                <a href={vid.url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline truncate">
+                                <a
+                                    href={vid.url}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="text-blue-500 hover:underline truncate"
+                                >
                                     {vid.url}
                                 </a>
                             </div>
@@ -171,7 +193,7 @@ const GalleryManagementTab = ({ user }) => {
                             </button>
                         </div>
                     ))}
-                    
+
                     {videos.length === 0 && (
                         <div className="text-center py-8 text-[var(--ring)]">
                             No videos added yet.

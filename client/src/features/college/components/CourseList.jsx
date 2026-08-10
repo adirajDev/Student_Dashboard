@@ -4,8 +4,8 @@ import CourseCard from './CourseCard';
 const CourseList = ({ courses }) => {
     return (
         <div className="card mb-8">
-            <h2 className="text-2xl mb-6 text-[var(--foreground)] flex items-center">
-                <BookOpen className="w-5 h-5 mr-2 text-blue-500" />
+            <h2 className="text-2xl mb-6 text-[var(--foreground)] font-display flex items-center">
+                <BookOpen className="w-5 h-5 mr-2 text-[var(--color-ink-500)]" />
                 Offered Courses ({courses?.length || 0})
             </h2>
 
@@ -26,7 +26,7 @@ const CourseList = ({ courses }) => {
                     })}
                 </div>
             ) : (
-                <div className="p-8 text-center border border-[var(--border)] border-dashed rounded-xl text-[var(--ring)]">
+                <div className="p-8 text-center border border-[var(--border)] border-dashed rounded-[var(--radius-xl)] text-[var(--muted)]">
                     This college currently has no courses listed.
                 </div>
             )}

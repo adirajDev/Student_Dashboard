@@ -63,13 +63,13 @@ const CollegeListingPage = () => {
     }, [allColleges]);
 
     return (
-        <div className="min-h-screen bg-[var(--background)] animate-fade-in pb-12">
+        <div className="min-h-screen surface-paper animate-fade-in pb-12">
             <main className="max-w-6xl mx-auto px-4 mt-4">
                 <div className="mb-8">
-                    <h1 className="text-3xl text-[var(--foreground)] mb-2">
+                    <h1 className="text-3xl text-[var(--foreground)] font-display mb-2">
                         Top Colleges
                     </h1>
-                    <p className="text-[var(--ring)]">
+                    <p className="text-[var(--muted)]">
                         Explore and apply for top institutions
                     </p>
                 </div>
@@ -84,7 +84,7 @@ const CollegeListingPage = () => {
                         {error && <Error error={error} />}
 
                         {isLoading ? (
-                            <div className="flex flex-col items-center justify-center p-12 text-[var(--ring)]">
+                            <div className="flex flex-col items-center justify-center p-12 text-[var(--muted)]">
                                 <Loader2 className="w-8 h-8 animate-spin mb-4" />
                                 <p className="text-lg">Loading colleges...</p>
                             </div>
@@ -99,11 +99,11 @@ const CollegeListingPage = () => {
                                 ))}
                             </div>
                         ) : (
-                            <div className="p-12 text-center bg-[var(--card)] rounded-3xl border border-[var(--border)]">
-                                <h3 className="text-xl mb-2 text-[var(--foreground)]">
+                            <div className="p-12 text-center bg-[var(--card)] rounded-[var(--radius-xl)] border border-[var(--border)]">
+                                <h3 className="text-xl mb-2 text-[var(--foreground)] font-display">
                                     No colleges found
                                 </h3>
-                                <p className="text-[var(--ring)]">
+                                <p className="text-[var(--muted)]">
                                     Try adjusting your filters to see more
                                     results.
                                 </p>
@@ -116,8 +116,8 @@ const CollegeListingPage = () => {
                         <div className="sticky top-[100px]">
                             <div className="">
                                 <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
-                                    <Filter className="w-5 h-5 text-indigo-600" />
-                                    <h3 className="text-lg text-[var(--foreground)]">
+                                    <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
+                                    <h3 className="text-lg text-[var(--foreground)] font-display">
                                         Filter Colleges
                                     </h3>
                                 </div>
@@ -157,10 +157,10 @@ const CollegeListingPage = () => {
                                                                     }
                                                                 />
                                                                 <div
-                                                                    className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
+                                                                    className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors shrink-0 ${
                                                                         isChecked
-                                                                            ? 'bg-indigo-600 border-indigo-600'
-                                                                            : 'border border-slate-300 bg-white group-hover:border-indigo-400'
+                                                                            ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
+                                                                            : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
                                                                     }`}
                                                                 >
                                                                     {isChecked && (
@@ -286,7 +286,7 @@ const CollegeListingPage = () => {
                                                     course: [],
                                                 });
                                             }}
-                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
+                                            className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
                                         >
                                             Clear all filters
                                         </button>

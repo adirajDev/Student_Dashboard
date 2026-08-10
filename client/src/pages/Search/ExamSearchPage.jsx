@@ -22,7 +22,7 @@ const ExamSearchPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[var(--background)] animate-fade-in">
+        <div className="min-h-screen surface-paper animate-fade-in">
             <main className="max-w-4xl mx-auto px-4 py-8">
                 <div className="flex justify-center mb-10">
                     <ExamGlobalSearch
@@ -37,7 +37,7 @@ const ExamSearchPage = () => {
                 filters.status === 'all' &&
                 filters.mode === 'all' ? (
                     <div className="mt-8">
-                        <h2 className="text-2xl mb-6 text-[var(--foreground)]">
+                        <h2 className="text-2xl mb-6 font-display text-[var(--foreground)]">
                             Top Searches
                         </h2>
                         <div className="flex flex-wrap gap-3">
@@ -45,7 +45,7 @@ const ExamSearchPage = () => {
                                 <button
                                     key={i}
                                     onClick={() => setQuery(term)}
-                                    className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
+                                    className="px-5 py-3 rounded-[var(--radius-md)] bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors shadow-sm flex items-center gap-2"
                                 >
                                     {term}
                                 </button>
@@ -55,14 +55,14 @@ const ExamSearchPage = () => {
                 ) : (
                     <div className="mt-4">
                         <div className="flex items-center justify-between mb-8">
-                            <h2 className="text-2xl text-[var(--foreground)]">
+                            <h2 className="text-2xl font-display text-[var(--foreground)]">
                                 {query ||
                                 filters.status !== 'all' ||
                                 filters.mode !== 'all'
                                     ? 'Search Results'
                                     : 'All Exams'}
                             </h2>
-                            <span className="px-4 py-1.5 bg-slate-100 rounded-full text-sm font-semibold text-[var(--ring)]">
+                            <span className="px-4 py-1.5 bg-[var(--color-ink-50)] rounded-[var(--radius-sm)] text-sm font-semibold text-[var(--color-ink-600)]">
                                 {results.length} found
                             </span>
                         </div>

@@ -39,7 +39,7 @@ const SearchPage = () => {
                 <PopularSearches />
             ) : (
                 <div className="mt-4">
-                    <h2 className="text-xl text-[var(--ring)] mb-6">
+                    <h2 className="text-xl text-[var(--muted)] mb-6 font-display">
                         Search results for{' '}
                         <span className="text-[var(--foreground)] font-semibold">
                             "{query}"
@@ -47,14 +47,14 @@ const SearchPage = () => {
                     </h2>
 
                     {isLoading ? (
-                        <div className="flex flex-col items-center justify-center p-12 text-[var(--ring)]">
+                        <div className="flex flex-col items-center justify-center p-12 text-[var(--muted)]">
                             <Loader2 className="w-8 h-8 animate-spin mb-4" />
                             <p className="text-lg">
                                 Searching colleges and courses...
                             </p>
                         </div>
                     ) : error ? (
-                        <div className="p-8 bg-red-50 text-red-600 rounded-3xl border border-red-200 text-center">
+                        <div className="p-8 bg-[var(--color-danger)]/10 text-[var(--color-danger)] rounded-[var(--radius-xl)] border border-[var(--color-danger)]/20 text-center">
                             <p className="text-lg">{error}</p>
                         </div>
                     ) : results.length > 0 ? (
@@ -69,12 +69,14 @@ const SearchPage = () => {
                             ))}
                         </div>
                     ) : (
-                        <div className="p-12 text-center bg-[var(--card)] rounded-3xl border border-[var(--border)]">
-                            <div className="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <Search className="w-8 h-8 text-[var(--ring)]" />
+                        <div className="p-12 text-center bg-[var(--card)] rounded-[var(--radius-xl)] border border-[var(--border)]">
+                            <div className="w-16 h-16 bg-[var(--color-ink-50)] rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Search className="w-8 h-8 text-[var(--muted)]" />
                             </div>
-                            <h3 className="text-xl mb-2">No results found</h3>
-                            <p className="text-[var(--ring)]">
+                            <h3 className="text-xl mb-2 font-display">
+                                No results found
+                            </h3>
+                            <p className="text-[var(--muted)]">
                                 We couldn't find any colleges or courses
                                 matching your search.
                             </p>

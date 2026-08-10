@@ -17,7 +17,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
     return (
         <div className="mt-8 space-y-12">
             <div>
-                <h2 className="text-2xl mb-6 text-[var(--foreground)]">
+                <h2 className="text-2xl font-display mb-6 text-[var(--foreground)]">
                     Popular Searches
                 </h2>
                 <div className="flex flex-wrap gap-3">
@@ -27,7 +27,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                             onClick={() =>
                                 navigate(`/exams?q=${encodeURIComponent(term)}`)
                             }
-                            className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
+                            className="px-5 py-3 rounded-[var(--radius-md)] bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors shadow-sm flex items-center gap-2"
                         >
                             {term}
                         </button>
@@ -37,7 +37,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
 
             {latestLiveExams && latestLiveExams.length > 0 && (
                 <div>
-                    <h2 className="text-2xl mb-6 text-[var(--foreground)]">
+                    <h2 className="text-2xl font-display mb-6 text-[var(--foreground)]">
                         Latest Live Postings
                     </h2>
                     <div className="grid gap-4">
@@ -45,15 +45,15 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                             <div
                                 key={exam._id}
                                 onClick={() => navigate(`/exam/${exam._id}`)}
-                                className="p-6 bg-[var(--card)] rounded-3xl border border-[var(--border)] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                                className="p-6 bg-[var(--card)] rounded-[var(--radius-xl)] border border-[var(--border)] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             >
                                 <div>
-                                    <h3 className="text-lg text-blue-600 group-hover:underline">
+                                    <h3 className="text-lg text-[var(--color-ink-600)] font-display group-hover:underline">
                                         {exam.name}
                                     </h3>
-                                    <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-[var(--ring)]">
+                                    <div className="flex flex-wrap items-center gap-4 mt-2 text-sm text-[var(--muted)]">
                                         <div className="flex items-center gap-1.5 font-medium">
-                                            <Calendar className="w-4 h-4 text-indigo-500" />
+                                            <Calendar className="w-4 h-4 text-[var(--color-ink-500)]" />
                                             Reg Ends:{' '}
                                             {new Date(
                                                 exam.regEndingDate
@@ -61,12 +61,12 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                                         </div>
                                         <div className="flex items-center gap-1.5">
                                             {exam.examMode === 'Online' ? (
-                                                <span className="flex items-center gap-1 text-green-600">
+                                                <span className="flex items-center gap-1 text-[var(--color-success)]">
                                                     <Monitor className="w-4 h-4" />{' '}
                                                     Online
                                                 </span>
                                             ) : (
-                                                <span className="flex items-center gap-1 text-purple-600">
+                                                <span className="flex items-center gap-1 text-[var(--color-ink-600)]">
                                                     <Book className="w-4 h-4" />{' '}
                                                     Offline
                                                 </span>
@@ -75,7 +75,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                                     </div>
                                 </div>
                                 <div>
-                                    <span className="px-4 py-2 bg-green-100 text-green-700 rounded-full text-sm font-semibold shrink-0 animate-pulse">
+                                    <span className="px-4 py-2 bg-[var(--color-success)]/10 text-[var(--color-success)] rounded-full text-sm font-semibold shrink-0 animate-pulse">
                                         Live Now
                                     </span>
                                 </div>

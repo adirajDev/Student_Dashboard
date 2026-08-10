@@ -21,11 +21,14 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
             setIsLoadingColleges(true);
             apiClient
                 .get('/colleges?limit=1000')
-                .then((res) => {
-                    const list = res.data.data || res.data.colleges || (Array.isArray(res.data) ? res.data : []);
+                .then(res => {
+                    const list =
+                        res.data.data ||
+                        res.data.colleges ||
+                        (Array.isArray(res.data) ? res.data : []);
                     setColleges(list);
                 })
-                .catch((err) => {
+                .catch(err => {
                     console.error('Failed to fetch colleges list:', err);
                 })
                 .finally(() => {
@@ -42,12 +45,15 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
 
         setError('');
         setSuccess('');
-        setLoadingMap((prev) => ({ ...prev, add: true }));
+        setLoadingMap(prev => ({ ...prev, add: true }));
         try {
-            const res = await apiClient.post(`/students/${user._id || user.id}/applications`, {
-                collegeId,
-                courseId: courseId || null,
-            });
+            const res = await apiClient.post(
+                `/students/${user._id || user.id}/applications`,
+                {
+                    collegeId,
+                    courseId: courseId || null,
+                }
+            );
             setApplications(res.data.applications);
             if (onUserApplicationsUpdate) {
                 onUserApplicationsUpdate(res.data.applications);
@@ -56,17 +62,19 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
             setIsAdding(false);
             return true;
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to add application');
+            setError(
+                err.response?.data?.message || 'Failed to add application'
+            );
             return false;
         } finally {
-            setLoadingMap((prev) => ({ ...prev, add: false }));
+            setLoadingMap(prev => ({ ...prev, add: false }));
         }
     };
 
     const updateApplicationCourse = async (applicationId, courseId) => {
         setError('');
         setSuccess('');
-        setLoadingMap((prev) => ({ ...prev, [applicationId]: true }));
+        setLoadingMap(prev => ({ ...prev, [applicationId]: true }));
         try {
             const res = await apiClient.patch(
                 `/students/${user._id || user.id}/applications/${applicationId}/course`,
@@ -78,16 +86,19 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
             }
             setSuccess('Course updated successfully');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to update application course');
+            setError(
+                err.response?.data?.message ||
+                    'Failed to update application course'
+            );
         } finally {
-            setLoadingMap((prev) => ({ ...prev, [applicationId]: false }));
+            setLoadingMap(prev => ({ ...prev, [applicationId]: false }));
         }
     };
 
-    const deleteApplication = async (applicationId) => {
+    const deleteApplication = async applicationId => {
         setError('');
         setSuccess('');
-        setLoadingMap((prev) => ({ ...prev, [applicationId]: true }));
+        setLoadingMap(prev => ({ ...prev, [applicationId]: true }));
         try {
             const res = await apiClient.delete(
                 `/students/${user._id || user.id}/applications/${applicationId}`
@@ -98,9 +109,11 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
             }
             setSuccess('Application deleted successfully');
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to delete application');
+            setError(
+                err.response?.data?.message || 'Failed to delete application'
+            );
         } finally {
-            setLoadingMap((prev) => ({ ...prev, [applicationId]: false }));
+            setLoadingMap(prev => ({ ...prev, [applicationId]: false }));
         }
     };
 
