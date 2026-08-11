@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil, Trash2, Star, MapPin } from 'lucide-react';
+import ActionMenu from '../../../components/common/ActionMenu';
 import SearchBar from '../../search/components/SearchBar';
 import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
@@ -37,7 +38,7 @@ const CollegeTable = ({
                     <select
                         value={minRating}
                         onChange={e => setMinRating(e.target.value)}
-                        className="w-full px-4 py-3 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition appearance-none"
+                        className="w-full px-4 py-3 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-amber-500)] focus:border-[var(--color-amber-500)] transition appearance-none font-medium"
                     >
                         <option value="0">All Ratings</option>
                         <option value="3">3+ Stars</option>
@@ -68,11 +69,11 @@ const CollegeTable = ({
                 )
             ) : (
                 <>
-                    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
+                    <div className="bg-[var(--card)] rounded-[var(--radius-md)] shadow-sm border border-[var(--border)] overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
+                                    <tr className="bg-[var(--color-ink-50)]/50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             College Name
                                         </th>
@@ -94,27 +95,27 @@ const CollegeTable = ({
                                     {colleges.map(college => (
                                         <tr
                                             key={college._id}
-                                            className="hover:bg-slate-50/50 transition-colors group"
+                                            className="hover:bg-[var(--color-amber-50)] transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <span className="font-medium text-[var(--foreground)]">
                                                     {college.name}
                                                 </span>
                                                 {college.collegeId && (
-                                                    <div className="text-xs text-[var(--ring)] mt-1">
+                                                    <div className="text-xs text-[var(--muted)] mt-1">
                                                         ID: {college.collegeId}
                                                     </div>
                                                 )}
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="flex items-center text-[var(--ring)] text-sm">
+                                                <div className="flex items-center text-[var(--muted)] text-sm">
                                                     <MapPin className="w-3 h-3 mr-1" />
                                                     {college.location}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
-                                                    className={`px-3 py-1 text-xs font-medium rounded-full ${
+                                                    className={`status-pill ${
                                                         college.type ===
                                                         'Government'
                                                             ? 'bg-emerald-100 text-emerald-700'
@@ -128,51 +129,60 @@ const CollegeTable = ({
                                                 </span>
                                             </td>
                                             <td className="px-6 py-4">
-                                                <div className="flex flex-col">
-                                                    <div className="flex items-center text-amber-500 font-medium">
-                                                        <Star className="w-4 h-4 mr-1 fill-current" />
-                                                        {college.averageRating >
-                                                        0
-                                                            ? college.averageRating.toFixed(
-                                                                  1
-                                                              )
-                                                            : 'New'}
+                                                {college.totalRatings === 0 ? (
+                                                    <div className="text-sm text-[var(--muted)] italic">
+                                                        Unrated
                                                     </div>
-                                                    <div className="text-xs text-[var(--ring)] mt-1">
-                                                        {college.totalRatings}{' '}
-                                                        {college.totalRatings ===
-                                                        1
-                                                            ? 'rating'
-                                                            : 'ratings'}
+                                                ) : (
+                                                    <div className="flex flex-col">
+                                                        <div className="flex items-center text-amber-500 font-medium">
+                                                            <Star className="w-4 h-4 mr-1 fill-current" />
+                                                            {college.averageRating >
+                                                            0
+                                                                ? college.averageRating.toFixed(
+                                                                      1
+                                                                  )
+                                                                : 'New'}
+                                                        </div>
+                                                        <div className="text-xs text-[var(--muted)] mt-1">
+                                                            {
+                                                                college.totalRatings
+                                                            }{' '}
+                                                            {college.totalRatings ===
+                                                            1
+                                                                ? 'rating'
+                                                                : 'ratings'}
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                )}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">
-                                                    {onEdit && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onEdit(college)
-                                                            }
-                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                                                            title="Edit College"
-                                                        >
-                                                            <Pencil className="w-4 h-4" />
-                                                        </button>
-                                                    )}
-                                                    {onDelete && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onDelete(
-                                                                    college
-                                                                )
-                                                            }
-                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
-                                                            title="Delete College"
-                                                        >
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    )}
+                                                    <ActionMenu
+                                                        actions={[
+                                                            onEdit && {
+                                                                label: 'Edit',
+                                                                icon: (
+                                                                    <Pencil className="w-4 h-4" />
+                                                                ),
+                                                                onClick: () =>
+                                                                    onEdit(
+                                                                        college
+                                                                    ),
+                                                            },
+                                                            onDelete && {
+                                                                label: 'Delete',
+                                                                icon: (
+                                                                    <Trash2 className="w-4 h-4" />
+                                                                ),
+                                                                danger: true,
+                                                                onClick: () =>
+                                                                    onDelete(
+                                                                        college
+                                                                    ),
+                                                            },
+                                                        ].filter(Boolean)}
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>

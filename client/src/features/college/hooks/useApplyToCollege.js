@@ -11,7 +11,9 @@ const useApplyToCollege = (collegeId, user) => {
         if (!apps || !Array.isArray(apps)) return 'not-applied';
 
         const app = apps.find(
-            a => (a.college?._id || a.college)?.toString() === collegeId?.toString()
+            a =>
+                (a.college?._id || a.college)?.toString() ===
+                collegeId?.toString()
         );
         return app ? 'applied' : 'not-applied';
     };
@@ -35,7 +37,8 @@ const useApplyToCollege = (collegeId, user) => {
             setStatus('applied');
         } catch (err) {
             setError(
-                err.response?.data?.message || 'Failed to apply. Please try again.'
+                err.response?.data?.message ||
+                    'Failed to apply. Please try again.'
             );
         } finally {
             setIsApplying(false);

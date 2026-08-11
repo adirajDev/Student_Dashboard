@@ -50,7 +50,7 @@ const PendingUpdatesSection = ({ title }) => {
     };
 
     return (
-        <div className="bg-[var(--card)] rounded-3xl p-6 shadow-sm border border-[var(--border)]">
+        <div className="bg-[var(--color-amber-50)] rounded-[var(--radius-xl)] p-6 shadow-sm border border-[var(--border)]">
             <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl flex items-center gap-2">
                     <FileEdit className="w-5 h-5 text-blue-500" />
@@ -74,7 +74,7 @@ const PendingUpdatesSection = ({ title }) => {
                 <div className="overflow-x-auto">
                     <table className="w-full text-left border-collapse">
                         <thead>
-                            <tr className="border-b border-[var(--border)] text-sm text-[var(--ring)]">
+                            <tr className="border-b border-[var(--border)] text-sm text-[var(--color-ink-600)]">
                                 <th className="pb-3 font-medium">College</th>
                                 <th className="pb-3 font-medium">
                                     Requested By
@@ -89,7 +89,7 @@ const PendingUpdatesSection = ({ title }) => {
                             {updates.map(update => (
                                 <tr
                                     key={update._id}
-                                    className="border-b border-[var(--border)] last:border-0 hover:bg-slate-50 transition-colors"
+                                    className="border-b border-[var(--border)] last:border-0 hover:bg-[var(--color-amber-100)] transition-colors"
                                 >
                                     <td className="py-4 text-sm font-medium">
                                         {update.college?.name ||
@@ -108,7 +108,7 @@ const PendingUpdatesSection = ({ title }) => {
                                             onClick={() =>
                                                 setSelectedUpdate(update)
                                             }
-                                            className="px-4 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-xl text-sm font-medium transition-colors"
+                                            className="px-4 py-1.5 bg-[var(--color-amber-200)] hover:bg-[var(--color-amber-300)] text-[var(--color-amber-800)] rounded-xl text-sm font-bold transition-colors"
                                         >
                                             Review
                                         </button>

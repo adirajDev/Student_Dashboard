@@ -4,13 +4,13 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
     return (
         <div className="md:col-span-1 md:row-span-2 order-2 md:sticky md:top-24 self-start space-y-8 w-full">
             {/* Important Dates */}
-            <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-sm">
-                <h3 className="text-lg mb-6 pb-4 border-b border-[var(--border)]">
+            <div className="card p-6">
+                <h3 className="text-lg font-display mb-6 pb-4 border-b border-[var(--border)]">
                     Important Dates
                 </h3>
                 <div className="space-y-6">
                     <div className="flex gap-4">
-                        <div className="w-12 h-12 bg-blue-50 text-blue-500 rounded-xl flex flex-col items-center justify-center shrink-0">
+                        <div className="w-12 h-12 bg-[var(--color-ink-50)] text-[var(--color-ink-600)] rounded-[var(--radius-md)] flex flex-col items-center justify-center shrink-0">
                             <span className="text-xs font-bold uppercase">
                                 {new Date(exam.regStartingDate).toLocaleString(
                                     'default',
@@ -25,13 +25,13 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                             <h4 className="text-[var(--foreground)]">
                                 Registration Opens
                             </h4>
-                            <p className="text-sm text-[var(--ring)]">
+                            <p className="text-sm text-[var(--muted)]">
                                 {new Date(exam.regStartingDate).getFullYear()}
                             </p>
                         </div>
                     </div>
                     <div className="flex gap-4">
-                        <div className="w-12 h-12 bg-red-50 text-red-500 rounded-xl flex flex-col items-center justify-center shrink-0">
+                        <div className="w-12 h-12 bg-[var(--color-danger)]/10 text-[var(--color-danger)] rounded-[var(--radius-md)] flex flex-col items-center justify-center shrink-0">
                             <span className="text-xs font-bold uppercase">
                                 {new Date(exam.regEndingDate).toLocaleString(
                                     'default',
@@ -46,7 +46,7 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                             <h4 className="text-[var(--foreground)]">
                                 Registration Closes
                             </h4>
-                            <p className="text-sm text-[var(--ring)]">
+                            <p className="text-sm text-[var(--muted)]">
                                 {new Date(exam.regEndingDate).getFullYear()}
                             </p>
                         </div>
@@ -56,21 +56,21 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
 
             {/* Exam Schedule */}
             {exam.examDate && (
-                <div className="bg-[var(--card)] border border-[var(--border)] rounded-3xl p-6 shadow-sm">
-                    <h3 className="text-lg mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">
-                        <Clock className="w-5 h-5 text-indigo-500" />
+                <div className="card p-6">
+                    <h3 className="text-lg font-display mb-6 pb-4 border-b border-[var(--border)] flex items-center gap-2">
+                        <Clock className="w-5 h-5 text-[var(--color-ink-500)]" />
                         Exam Schedule
                     </h3>
                     <div className="space-y-4">
                         <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-indigo-50 text-indigo-500 rounded-xl flex items-center justify-center shrink-0">
+                            <div className="w-10 h-10 bg-[var(--color-ink-50)] text-[var(--color-ink-600)] rounded-[var(--radius-md)] flex items-center justify-center shrink-0">
                                 <Calendar className="w-5 h-5" />
                             </div>
                             <div>
                                 <h4 className="text-[var(--foreground)]">
                                     Exam Date
                                 </h4>
-                                <p className="text-sm font-medium text-[var(--ring)]">
+                                <p className="text-sm font-medium text-[var(--muted)]">
                                     {new Date(exam.examDate).toLocaleDateString(
                                         undefined,
                                         {
@@ -84,19 +84,19 @@ const ExamSidebar = ({ exam, formatTimeRange }) => {
                             </div>
                         </div>
                         <div className="flex items-start gap-4">
-                            <div className="w-10 h-10 bg-purple-50 text-purple-500 rounded-xl flex items-center justify-center shrink-0">
+                            <div className="w-10 h-10 bg-[var(--color-amber-50)] text-[var(--color-amber-600)] rounded-[var(--radius-md)] flex items-center justify-center shrink-0">
                                 <Clock className="w-5 h-5" />
                             </div>
                             <div>
                                 <h4 className="text-[var(--foreground)]">
                                     Timing
                                 </h4>
-                                <p className="text-sm font-medium text-[var(--ring)]">
+                                <p className="text-sm font-medium text-[var(--muted)]">
                                     {formatTimeRange(
                                         exam.examTime,
                                         exam.examDuration
                                     )}
-                                    <span className="text-xs ml-2 px-2 py-0.5 bg-slate-100 rounded-full">
+                                    <span className="text-xs ml-2 px-2 py-0.5 bg-[var(--color-ink-100)] text-[var(--color-ink-700)] rounded-[var(--radius-sm)]">
                                         {exam.examDuration >= 60
                                             ? `${Math.floor(exam.examDuration / 60)}hr `
                                             : ''}

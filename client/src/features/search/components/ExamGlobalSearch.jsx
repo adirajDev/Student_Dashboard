@@ -29,8 +29,8 @@ const ExamGlobalSearch = ({ query, setQuery, filters, setFilters }) => {
                         showFilters ||
                         filters.status !== 'all' ||
                         filters.mode !== 'all'
-                            ? 'bg-indigo-600 text-white border-indigo-600 shadow-md hover:bg-indigo-700'
-                            : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-slate-50'
+                            ? 'bg-[var(--color-ink-600)] text-white border-[var(--color-ink-600)] shadow-md hover:bg-[var(--color-ink-700)]'
+                            : 'bg-[var(--card)] text-[var(--foreground)] border-[var(--border)] hover:bg-[var(--color-ink-50)]'
                     }`}
                 >
                     <SlidersHorizontal className="w-5 h-5 sm:w-4 sm:h-4" />

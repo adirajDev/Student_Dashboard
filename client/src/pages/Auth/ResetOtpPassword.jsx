@@ -58,16 +58,16 @@ const ResetOtpPassword = () => {
     if (!email) return null;
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[var(--background)] px-4">
+        <div className="min-h-screen flex items-center justify-center surface-wash px-4">
             <div className="w-full max-w-md animate-fade-in">
                 <div className="text-center mb-10">
-                    <div className="w-16 h-16 bg-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-6 transform rotate-12 shadow-sm">
-                        <ShieldCheck className="w-8 h-8 text-blue-600 -rotate-12" />
+                    <div className="w-16 h-16 bg-[var(--color-amber-100)] rounded-[var(--radius-xl)] flex items-center justify-center mx-auto mb-6 transform rotate-12 shadow-sm">
+                        <ShieldCheck className="w-8 h-8 text-[var(--color-amber-600)] -rotate-12" />
                     </div>
-                    <h1 className="text-4xl mb-3 tracking-tight">
+                    <h1 className="text-4xl mb-3 tracking-tight font-display text-[var(--foreground)]">
                         Account Setup
                     </h1>
-                    <p className="text-[var(--ring)] text-lg">
+                    <p className="text-[var(--muted)] text-lg">
                         Enter your OTP and set a new password
                     </p>
                 </div>

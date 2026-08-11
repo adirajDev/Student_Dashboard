@@ -234,8 +234,8 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
     };
 
     return createPortal(
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[9999] flex justify-center items-center p-4 sm:p-6 animate-fade-in">
-            <div className="bg-[var(--card)] rounded-3xl w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
+        <div className="modal-overlay z-[9999] flex justify-center items-center p-4 sm:p-6">
+            <div className="surface-paper rounded-[var(--radius-xl)] w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
                     <h3 className="text-xl">Review: {update.college?.name}</h3>

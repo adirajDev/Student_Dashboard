@@ -11,8 +11,8 @@ const UserFormModal = ({
     title,
 }) => {
     return createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="relative w-full max-w-2xl bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
+        <div className="modal-overlay flex items-center justify-center p-4" onClick={onClose}>
+            <div className="surface-paper w-full max-w-2xl rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up max-h-[90vh] flex flex-col" onClick={e => e.stopPropagation()}>
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
                     <h2 className="text-xl text-[var(--foreground)]">
                         {title}
@@ -37,7 +37,7 @@ const UserFormModal = ({
                     </button>
                 </div>
 
-                <div className="p-6">
+                <div className="flex-1 overflow-hidden flex flex-col">
                     <UserForm
                         editingUser={editingUser}
                         showCourse={showCourse}

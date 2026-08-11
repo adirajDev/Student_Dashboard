@@ -32,24 +32,24 @@ const MyReviewsTab = ({ user }) => {
     return (
         <div className="animate-fade-in">
             <div className="mb-8">
-                <h2 className="text-3xl mb-2">My Reviews</h2>
-                <p className="text-[var(--ring)]">
+                <h2 className="text-3xl font-display mb-2">My Reviews</h2>
+                <p className="text-[var(--muted)]">
                     Manage the reviews you have left for colleges.
                 </p>
             </div>
 
             {/* Banner for Current College */}
             {userCollegeId && !hasRatedCollege && (
-                <div className="bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl p-6 md:p-8 text-white shadow-md mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div className="bg-[var(--color-ink-600)] rounded-[var(--radius-xl)] p-6 md:p-8 text-white shadow-md mb-8 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
                     <div className="flex items-center gap-4">
                         <div className="bg-white/20 p-3 rounded-2xl backdrop-blur-sm">
                             <GraduationCap className="w-8 h-8 text-white" />
                         </div>
                         <div>
-                            <h3 className="text-xl mb-1">
+                            <h3 className="text-xl font-display mb-1">
                                 Rate your current college
                             </h3>
-                            <p className="text-blue-100 text-sm">
+                            <p className="text-[var(--color-ink-200)] text-sm">
                                 Share your experience at{' '}
                                 <span className="font-semibold">
                                     {userCollegeName}
@@ -61,7 +61,7 @@ const MyReviewsTab = ({ user }) => {
 
                     <button
                         onClick={() => setShowFormModal(true)}
-                        className="bg-white text-slate-900 hover:bg-slate-50 px-6 py-3 rounded-full font-medium transition-colors whitespace-nowrap flex items-center gap-2"
+                        className="bg-[var(--color-amber-500)] text-[var(--color-ink-950)] hover:bg-[var(--color-amber-400)] px-6 py-3 rounded-[var(--radius-md)] font-semibold transition-colors whitespace-nowrap flex items-center gap-2 shadow-sm"
                     >
                         <Edit3 className="w-5 h-5" />
                         Write a Review

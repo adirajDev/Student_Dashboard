@@ -15,7 +15,7 @@ const PopularSearches = () => {
 
     return (
         <div className="mt-8">
-            <h2 className="text-2xl mb-6 text-[var(--foreground)]">
+            <h2 className="text-2xl font-display mb-6 text-[var(--foreground)]">
                 Popular Searches
             </h2>
             <div className="flex flex-wrap gap-3">
@@ -25,7 +25,7 @@ const PopularSearches = () => {
                         onClick={() =>
                             navigate(`/search?q=${encodeURIComponent(term)}`)
                         }
-                        className="px-5 py-3 rounded-full bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-slate-100 transition-colors shadow-sm flex items-center gap-2"
+                        className="px-5 py-3 rounded-[var(--radius-md)] bg-[var(--card)] border border-[var(--border)] text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors shadow-sm flex items-center gap-2"
                     >
                         {term}
                     </button>

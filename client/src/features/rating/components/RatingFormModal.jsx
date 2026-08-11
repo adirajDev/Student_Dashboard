@@ -65,15 +65,15 @@ const RatingFormModal = ({
     };
 
     return createPortal(
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
-            <div className="relative w-full max-w-lg bg-[var(--card)] rounded-3xl shadow-2xl overflow-hidden animate-slide-up">
+        <div className="modal-overlay flex items-center justify-center p-4">
+            <div className="surface-paper w-full max-w-lg rounded-[var(--radius-xl)] shadow-2xl relative overflow-hidden animate-slide-up">
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h2 className="text-xl text-[var(--foreground)]">
+                    <h2 className="text-xl text-[var(--foreground)] font-display">
                         {editingRating ? 'Edit Review' : 'Write a Review'}
                     </h2>
                     <button
                         onClick={() => onClose()}
-                        className="p-2 text-[var(--ring)] hover:bg-slate-100 rounded-full transition-colors"
+                        className="p-2 text-[var(--muted)] hover:bg-[var(--color-ink-50)] rounded-full transition-colors"
                     >
                         <svg
                             className="w-5 h-5"
@@ -93,7 +93,7 @@ const RatingFormModal = ({
 
                 <div className="p-6">
                     {error && (
-                        <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm border border-red-100">
+                        <div className="mb-6 p-4 bg-[var(--color-danger)]/10 text-[var(--color-danger)] rounded-[var(--radius-md)] text-sm border border-[var(--color-danger)]/20">
                             {error}
                         </div>
                     )}
@@ -151,7 +151,7 @@ const RatingFormModal = ({
                                 maxLength={500}
                                 className="input-field resize-none"
                             />
-                            <div className="text-right text-xs text-[var(--ring)] mt-1">
+                            <div className="text-right text-xs text-[var(--muted)] mt-1">
                                 {formData.comment.length} / 500
                             </div>
                         </div>
@@ -160,7 +160,7 @@ const RatingFormModal = ({
                             <button
                                 type="button"
                                 onClick={() => onClose()}
-                                className="px-6 py-2.5 rounded-full border border-[var(--border)] hover:bg-slate-100 transition-colors"
+                                className="btn-secondary px-6 rounded-[var(--radius-md)]"
                                 disabled={loading}
                             >
                                 Cancel

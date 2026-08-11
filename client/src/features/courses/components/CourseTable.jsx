@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
+import ActionMenu from '../../../components/common/ActionMenu';
 import SearchBar from '../../search/components/SearchBar';
 import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
@@ -38,7 +39,7 @@ const CourseTable = ({
                     <select
                         value={filterLevel}
                         onChange={e => setFilterLevel(e.target.value)}
-                        className="w-full py-3 px-4 bg-[var(--card)] border border-[var(--border)] rounded-full shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-indigo-500 appearance-none text-sm font-medium"
+                        className="w-full py-3 px-4 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-sm text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-[var(--color-amber-500)] appearance-none text-sm font-medium"
                     >
                         <option value="">All Levels</option>
                         <option value="Certificate">Certificate</option>
@@ -66,11 +67,11 @@ const CourseTable = ({
                 )
             ) : (
                 <>
-                    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
+                    <div className="bg-[var(--card)] rounded-[var(--radius-md)] shadow-sm border border-[var(--border)] overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
+                                    <tr className="bg-[var(--color-ink-50)]/50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Course
                                         </th>
@@ -89,13 +90,13 @@ const CourseTable = ({
                                     {courses.map(course => (
                                         <tr
                                             key={course._id}
-                                            className="hover:bg-slate-50/50 transition-colors group"
+                                            className="hover:bg-[var(--color-amber-50)] transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <div className="font-medium text-[var(--foreground)]">
                                                     {course.name}
                                                 </div>
-                                                <div className="text-sm text-[var(--ring)] mt-1">
+                                                <div className="text-sm text-[var(--muted)] mt-1">
                                                     {course.shortName}{' '}
                                                     {course.specialization
                                                         ? `- ${course.specialization}`
@@ -104,7 +105,7 @@ const CourseTable = ({
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
-                                                    className={`px-3 py-1 text-xs font-medium rounded-full
+                                                    className={`status-pill
                                                 ${course.level?.toLowerCase().includes('diploma') ? 'bg-orange-100 text-orange-700' : ''}
                                                 ${course.level?.toLowerCase().includes('bachelor') ? 'bg-blue-100 text-blue-700' : ''}
                                                 ${course.level?.toLowerCase().includes('master') || course.level?.toLowerCase().includes('doctorate') ? 'bg-purple-100 text-purple-700' : ''}
@@ -114,35 +115,38 @@ const CourseTable = ({
                                                     {course.level}
                                                 </span>
                                             </td>
-                                            <td className="px-6 py-4 text-sm text-[var(--ring)]">
+                                            <td className="px-6 py-4 text-sm text-[var(--muted)]">
                                                 {course.duration
                                                     ? `${Math.floor(course.duration / 12) > 0 ? `${Math.floor(course.duration / 12)} Yrs ` : ''}${course.duration % 12 > 0 ? `${course.duration % 12} Mos` : ''}`
                                                     : 'N/A'}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">
-                                                    {onEdit && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onEdit(course)
-                                                            }
-                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                                                            title="Edit Course"
-                                                        >
-                                                            <Pencil className="w-4 h-4" />
-                                                        </button>
-                                                    )}
-                                                    {onDelete && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onDelete(course)
-                                                            }
-                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
-                                                            title="Delete Course"
-                                                        >
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    )}
+                                                    <ActionMenu
+                                                        actions={[
+                                                            onEdit && {
+                                                                label: 'Edit',
+                                                                icon: (
+                                                                    <Pencil className="w-4 h-4" />
+                                                                ),
+                                                                onClick: () =>
+                                                                    onEdit(
+                                                                        course
+                                                                    ),
+                                                            },
+                                                            onDelete && {
+                                                                label: 'Delete',
+                                                                icon: (
+                                                                    <Trash2 className="w-4 h-4" />
+                                                                ),
+                                                                danger: true,
+                                                                onClick: () =>
+                                                                    onDelete(
+                                                                        course
+                                                                    ),
+                                                            },
+                                                        ].filter(Boolean)}
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>

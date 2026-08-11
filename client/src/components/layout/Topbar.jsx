@@ -29,7 +29,7 @@ const Topbar = ({ transparentOnTop = false }) => {
                 className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
                     isTransparent
                         ? 'bg-transparent py-5'
-                        : 'bg-white/80 backdrop-blur-md shadow-sm py-3 border-b border-slate-200'
+                        : 'bg-white/80 backdrop-blur-md shadow-sm py-3 border-b border-[var(--border)]'
                 }`}
             >
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center gap-3 md:gap-8">
@@ -39,7 +39,7 @@ const Topbar = ({ transparentOnTop = false }) => {
                             onClick={() =>
                                 setIsMobileMenuOpen(!isMobileMenuOpen)
                             }
-                            className={`p-2 -ml-2 rounded-lg ${isTransparent ? 'text-white' : 'text-slate-800'}`}
+                            className={`p-2 -ml-2 rounded-lg ${isTransparent ? 'text-white' : 'text-[var(--color-ink-800)]'}`}
                         >
                             {isMobileMenuOpen ? (
                                 <X className="w-6 h-6" />
@@ -53,16 +53,16 @@ const Topbar = ({ transparentOnTop = false }) => {
                         to="/"
                         className="flex items-center gap-2 mr-auto md:mr-0 shrink-0"
                     >
-                        <div className="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-lg">
+                        <div className="w-10 h-10 bg-[var(--color-ink-800)] rounded-xl flex items-center justify-center text-[var(--color-amber-300)] font-display font-bold text-xl shadow-lg">
                             SD
                         </div>
                         <span
-                            className={`text-xl font-bold hidden sm:block ${isTransparent ? 'text-white' : 'text-slate-900'}`}
+                            className={`text-xl font-display font-semibold hidden sm:block ${isTransparent ? 'text-white' : 'text-[var(--color-ink-950)]'}`}
                         >
                             Student Dashboard
                         </span>
                         <span
-                            className={`text-xl font-bold sm:hidden ${isTransparent ? 'text-white' : 'text-slate-900'}`}
+                            className={`text-xl font-display font-semibold sm:hidden ${isTransparent ? 'text-white' : 'text-[var(--color-ink-950)]'}`}
                         >
                             SD
                         </span>
@@ -74,10 +74,10 @@ const Topbar = ({ transparentOnTop = false }) => {
                             <Link
                                 key={link.name}
                                 to={link.href}
-                                className={`text-base font-medium hover:text-indigo-500 transition-colors ${
+                                className={`text-base font-medium hover:text-[var(--color-amber-600)] transition-colors ${
                                     isTransparent
                                         ? 'text-white/90'
-                                        : 'text-slate-700'
+                                        : 'text-[var(--foreground)]'
                                 }`}
                             >
                                 {link.name}
@@ -96,11 +96,11 @@ const Topbar = ({ transparentOnTop = false }) => {
                         ) : (
                             <Link
                                 to="/dashboard-redirect"
-                                className={`px-6 py-2.5 rounded-full text-base font-semibold transition-all ${
+                                className={
                                     isTransparent
-                                        ? 'bg-white text-indigo-900 hover:bg-slate-100'
-                                        : 'bg-indigo-600 text-white hover:bg-indigo-700 shadow-md hover:shadow-lg'
-                                }`}
+                                        ? 'px-6 py-2.5 rounded-[var(--radius-md)] text-base font-semibold transition-all bg-white text-[var(--color-ink-950)] hover:bg-[var(--color-amber-50)]'
+                                        : 'btn-primary'
+                                }
                             >
                                 Login
                             </Link>

@@ -49,9 +49,9 @@ const UserManagementSection = ({
                         className="btn-primary flex items-center gap-2"
                     >
                         <Plus className="w-4 h-4" />
-                        Add{' '}
-                        {role.replace('User', '').charAt(0).toUpperCase() +
-                            role.replace('User', '').slice(1)}
+                        {role === 'collegeUser'
+                            ? 'Add Admin'
+                            : `Add ${role.replace('User', '').charAt(0).toUpperCase() + role.replace('User', '').slice(1)}`}
                     </button>
                 )}
             </div>
@@ -66,6 +66,7 @@ const UserManagementSection = ({
                 searchTerm={searchTerm}
                 setSearchTerm={setSearchTerm}
                 showCourse={showCourse}
+                showCollegeOnly={showCollegeOnly}
                 onDelete={canDelete ? setDeletingUser : null}
                 onViewDetails={u => setViewingUser(u)}
                 onEdit={u => {
@@ -78,9 +79,11 @@ const UserManagementSection = ({
                 <UserDetailsModal
                     user={viewingUser}
                     onClose={() => setViewingUser(null)}
-                    onUserApplicationsUpdate={(newApps) => {
+                    onUserApplicationsUpdate={newApps => {
                         const userId = viewingUser._id || viewingUser.id;
-                        setViewingUser(prev => prev ? { ...prev, applications: newApps } : null);
+                        setViewingUser(prev =>
+                            prev ? { ...prev, applications: newApps } : null
+                        );
                         updateUserApplications(userId, newApps);
                     }}
                 />

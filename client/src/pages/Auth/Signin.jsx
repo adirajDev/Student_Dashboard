@@ -18,9 +18,9 @@ const Signin = () => {
     } = useSignin();
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-tr from-blue-100 to-[var(--primary-50)]">
+        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in surface-wash">
             <div className="card w-full max-w-md">
-                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)]">
+                <h1 className="text-3xl text-center mb-6 text-[var(--foreground)] font-display">
                     Welcome Back
                 </h1>
 
@@ -65,19 +65,19 @@ const Signin = () => {
                         onSubmit={handleAuth}
                         className="space-y-4 animate-fade-in"
                     >
-                        <div className="flex items-center justify-between mb-4 text-sm text-[var(--ring)] bg-slate-100 p-2 rounded">
+                        <div className="flex items-center justify-between mb-4 text-sm text-[var(--muted)] bg-[var(--color-ink-50)] p-2 rounded-[var(--radius-sm)]">
                             <span>{email}</span>
                             <button
                                 type="button"
                                 onClick={() => setStep(1)}
-                                className="text-blue-500 hover:underline"
+                                className="text-[var(--color-amber-600)] font-medium hover:underline"
                             >
                                 Change
                             </button>
                         </div>
 
                         {!hasPassword && (
-                            <div className="mb-4 p-3 bg-blue-50 text-blue-700 rounded-2xl text-sm">
+                            <div className="mb-4 p-3 bg-[var(--color-ink-50)] text-[var(--color-ink-700)] rounded-2xl text-sm">
                                 It looks like this is your first time signing
                                 in. Please set a password to continue.
                             </div>
@@ -139,11 +139,11 @@ const Signin = () => {
                     </form>
                 )}
 
-                <p className="mt-6 text-center text-sm text-[var(--ring)]">
+                <p className="mt-6 text-center text-sm text-[var(--muted)]">
                     Don't have an account?{' '}
                     <Link
                         to="/signup"
-                        className="text-blue-500 hover:underline"
+                        className="text-[var(--color-amber-600)] font-medium hover:underline"
                     >
                         Sign Up
                     </Link>

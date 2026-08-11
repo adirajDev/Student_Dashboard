@@ -44,13 +44,13 @@ const ExamListingPage = () => {
     };
 
     return (
-        <div className="min-h-screen bg-[var(--background)] animate-fade-in pt-2 pb-8">
+        <div className="min-h-screen surface-paper animate-fade-in pt-2 pb-8">
             <main className="max-w-6xl mx-auto px-4 mt-4">
                 <div className="mb-8">
-                    <h1 className="text-3xl text-[var(--foreground)] mb-2">
+                    <h1 className="text-3xl text-[var(--foreground)] font-display mb-2">
                         Available Exams
                     </h1>
-                    <p className="text-[var(--ring)]">
+                    <p className="text-[var(--muted)]">
                         Explore and apply for upcoming examinations
                     </p>
                 </div>
@@ -58,7 +58,7 @@ const ExamListingPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
-                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600">
+                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-[var(--muted)]">
                             <span>Showing {results.length} exams</span>
                         </div>
 
@@ -86,8 +86,8 @@ const ExamListingPage = () => {
                         <div className="sticky top-[100px]">
                             <div className="">
                                 <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
-                                    <Filter className="w-5 h-5 text-indigo-600" />
-                                    <h3 className="text-lg text-[var(--foreground)]">
+                                    <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
+                                    <h3 className="text-lg text-[var(--foreground)] font-display">
                                         Filter Exams
                                     </h3>
                                 </div>
@@ -98,7 +98,7 @@ const ExamListingPage = () => {
                                         <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
                                             Registration Status
                                         </label>
-                                        <div className="flex bg-slate-100 p-1 rounded-xl">
+                                        <div className="flex bg-[var(--color-ink-50)] p-1 rounded-[var(--radius-md)]">
                                             {['all', 'live', 'upcoming'].map(
                                                 statusOption => (
                                                     <button
@@ -109,11 +109,11 @@ const ExamListingPage = () => {
                                                                 status: statusOption,
                                                             })
                                                         }
-                                                        className={`flex-1 py-2 text-sm font-medium rounded-lg capitalize transition-all ${
+                                                        className={`flex-1 py-2 text-sm font-medium rounded-[var(--radius-sm)] capitalize transition-all ${
                                                             filters.status ===
                                                             statusOption
-                                                                ? 'bg-white text-indigo-600 shadow-sm'
-                                                                : 'text-slate-600 hover:text-[var(--foreground)]'
+                                                                ? 'bg-[var(--card)] text-[var(--color-ink-700)] shadow-sm'
+                                                                : 'text-[var(--muted)] hover:text-[var(--foreground)]'
                                                         }`}
                                                     >
                                                         {statusOption === 'all'
@@ -158,10 +158,10 @@ const ExamListingPage = () => {
                                                                 }
                                                             />
                                                             <div
-                                                                className={`w-5 h-5 rounded flex items-center justify-center transition-colors ${
+                                                                className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors ${
                                                                     isChecked
-                                                                        ? 'bg-indigo-600 border-indigo-600'
-                                                                        : 'border border-slate-300 bg-white group-hover:border-indigo-400'
+                                                                        ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
+                                                                        : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
                                                                 }`}
                                                             >
                                                                 {isChecked && (
@@ -205,7 +205,7 @@ const ExamListingPage = () => {
                                                     month: e.target.value,
                                                 })
                                             }
-                                            className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm text-[var(--foreground)] focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-colors"
+                                            className="w-full bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] px-4 py-3 text-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--color-ink-500)] focus:ring-1 focus:ring-[var(--color-ink-500)] transition-colors"
                                         >
                                             <option value="all">
                                                 Any Month
@@ -233,7 +233,7 @@ const ExamListingPage = () => {
                                                     month: 'all',
                                                 });
                                             }}
-                                            className="w-full py-3 mt-4 rounded-xl text-sm font-medium text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
+                                            className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
                                         >
                                             Clear all filters
                                         </button>

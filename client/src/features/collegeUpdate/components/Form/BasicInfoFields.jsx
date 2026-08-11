@@ -11,7 +11,7 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
         }
     }, [formData.logo]);
 
-    const handleLogoUpload = (e) => {
+    const handleLogoUpload = e => {
         const file = e.target.files[0];
         if (!file) return;
 
@@ -25,8 +25,8 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
             handleInputChange({
                 target: {
                     name: 'logo',
-                    value: reader.result
-                }
+                    value: reader.result,
+                },
             });
         };
         reader.readAsDataURL(file);
@@ -35,7 +35,7 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
     const clearLogo = () => {
         setPreviewUrl('');
         handleInputChange({
-            target: { name: 'logo', value: '' }
+            target: { name: 'logo', value: '' },
         });
         if (fileInputRef.current) {
             fileInputRef.current.value = '';
@@ -104,7 +104,7 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                     <label className="block text-sm font-medium mb-1">
                         College Logo
                     </label>
-                    
+
                     <div className="flex items-center gap-4 mt-2">
                         {previewUrl ? (
                             <div className="relative w-24 h-24 rounded-2xl bg-white p-2 shadow-md border border-slate-100 shrink-0 flex items-center justify-center overflow-visible">
@@ -124,7 +124,9 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                         ) : (
                             <label className="w-24 h-24 flex flex-col items-center justify-center border-2 border-dashed border-slate-300 rounded-2xl hover:bg-slate-50 hover:border-indigo-400 transition-colors cursor-pointer text-slate-500">
                                 <Upload className="w-6 h-6 mb-1" />
-                                <span className="text-[10px] font-medium uppercase tracking-wider">Upload</span>
+                                <span className="text-[10px] font-medium uppercase tracking-wider">
+                                    Upload
+                                </span>
                                 <input
                                     type="file"
                                     accept="image/*"
@@ -135,7 +137,8 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                             </label>
                         )}
                         <div className="flex-1 text-xs text-slate-500">
-                            Upload a clear logo image for your college. Safe preview is generated automatically.
+                            Upload a clear logo image for your college. Safe
+                            preview is generated automatically.
                         </div>
                     </div>
                 </div>

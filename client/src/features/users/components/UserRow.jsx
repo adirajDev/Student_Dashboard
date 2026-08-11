@@ -1,57 +1,64 @@
 import { Pencil, Trash2, Eye } from 'lucide-react';
+import ActionMenu from '../../../components/common/ActionMenu';
 
-const UserRow = ({ user, onEdit, onDelete, onViewDetails, showCourse }) => {
+const UserRow = ({
+    user,
+    onEdit,
+    onDelete,
+    onViewDetails,
+    showCourse,
+    showCollegeOnly,
+}) => {
     return (
-        <tr className="hover:bg-slate-50 transition-colors">
+        <tr className="hover:bg-[var(--color-amber-50)] transition-colors">
             <td className="px-6 py-4">
                 <div className="font-medium text-[var(--foreground)]">
                     {user.name}
                 </div>
             </td>
-            <td className="px-6 py-4 text-[var(--ring)]">{user.email}</td>
+            <td className="px-6 py-4 text-[var(--muted)]">{user.email}</td>
 
             {showCourse && (
                 <>
-                    <td className="px-6 py-4 text-[var(--ring)]">
+                    <td className="px-6 py-4 text-[var(--muted)]">
                         {user.course?.name || user.course || 'N/A'}
                     </td>
-                    <td className="px-6 py-4 text-[var(--ring)]">
+                    <td className="px-6 py-4 text-[var(--muted)]">
                         {user.college?.name || user.college || 'N/A'}
                     </td>
                 </>
             )}
 
-            <td className="px-6 py-4 text-[var(--ring)]">{user.phone}</td>
+            {showCollegeOnly && !showCourse && (
+                <td className="px-6 py-4 text-[var(--muted)]">
+                    {user.college?.name || user.college || 'N/A'}
+                </td>
+            )}
+
+            <td className="px-6 py-4 text-[var(--muted)]">{user.phone}</td>
 
             <td className="px-6 py-4">
                 <div className="flex items-center justify-end gap-2">
-                    {onViewDetails && (
-                        <button
-                            onClick={() => onViewDetails(user)}
-                            title="View Details"
-                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-full transition cursor-pointer"
-                        >
-                            <Eye className="w-4 h-4" />
-                        </button>
-                    )}
-
-                    <button
-                        onClick={() => onEdit(user)}
-                        title="Edit"
-                        className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-full transition cursor-pointer"
-                    >
-                        <Pencil className="w-4 h-4" />
-                    </button>
-
-                    {onDelete && (
-                        <button
-                            onClick={() => onDelete(user)}
-                            title="Delete"
-                            className="p-2 text-red-500 hover:bg-red-50 rounded-full transition cursor-pointer"
-                        >
-                            <Trash2 className="w-4 h-4" />
-                        </button>
-                    )}
+                    <ActionMenu
+                        actions={[
+                            onViewDetails && {
+                                label: 'View Details',
+                                icon: <Eye className="w-4 h-4" />,
+                                onClick: () => onViewDetails(user),
+                            },
+                            onEdit && {
+                                label: 'Edit',
+                                icon: <Pencil className="w-4 h-4" />,
+                                onClick: () => onEdit(user),
+                            },
+                            onDelete && {
+                                label: 'Delete',
+                                icon: <Trash2 className="w-4 h-4" />,
+                                danger: true,
+                                onClick: () => onDelete(user),
+                            },
+                        ].filter(Boolean)}
+                    />
                 </div>
             </td>
         </tr>

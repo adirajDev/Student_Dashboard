@@ -16,19 +16,16 @@ const UserForm = ({
         handleChange,
         handleSubmit,
         colleges,
-        courses,
     } = useUserForm(editingUser);
 
     return (
         <form
             onSubmit={e => handleSubmit(e, onAdd, onUpdate, showCourse)}
-            className="bg-[var(--card)] p-6 rounded-3xl shadow-sm border border-[var(--border)]"
+            className="flex flex-col h-full overflow-hidden"
+            id="user-form"
         >
-            <h3 className="text-xl mb-6 text-[var(--foreground)]">
-                {editingUser ? 'Edit User' : 'Add New User'}
-            </h3>
-
-            {validationError && (
+            <div className="p-6 overflow-y-auto flex-1">
+                {validationError && (
                 <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-2xl flex items-start gap-3">
                     <svg
                         className="w-5 h-5 text-red-500 mt-0.5 flex-shrink-0"
@@ -47,7 +44,7 @@ const UserForm = ({
                 </div>
             )}
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1">
                 <FormField
                     id="name"
                     label="Full Name"
@@ -180,19 +177,18 @@ const UserForm = ({
                     placeholder="e.g. +91 9876543210"
                 />
             </div>
+            </div>
 
-            <div className="mt-8 flex gap-3 justify-end">
-                {editingUser && (
-                    <button
-                        type="button"
-                        onClick={onCancelEdit}
-                        className="btn-secondary"
-                    >
-                        Cancel
-                    </button>
-                )}
-                <button type="submit" className="btn-primary">
-                    {editingUser ? 'Save Changes' : 'Add User'}
+            <div className="p-6 pt-2 flex gap-4 shrink-0">
+                <button
+                    type="button"
+                    onClick={onCancelEdit}
+                    className="btn-secondary flex-1"
+                >
+                    Cancel
+                </button>
+                <button type="submit" className="btn-primary flex-1">
+                    {editingUser ? 'Save Changes' : 'Create User'}
                 </button>
             </div>
         </form>

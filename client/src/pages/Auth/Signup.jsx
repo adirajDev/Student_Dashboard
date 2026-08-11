@@ -16,9 +16,9 @@ const Signup = () => {
     } = useSignup();
 
     return (
-        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in bg-gradient-to-br from-[var(--primary-50)] to-blue-100">
+        <div className="min-h-screen flex items-center justify-center p-4 relative animate-fade-in surface-wash">
             <div className="card w-full max-w-md">
-                <h1 className="text-3xl text-center mb-6 text-[var(--primary-600)]">
+                <h1 className="text-3xl text-center mb-6 text-[var(--foreground)] font-display">
                     Create Account
                 </h1>
 
@@ -92,7 +92,7 @@ const Signup = () => {
 
                     {formData.college === 'others' && (
                         <div className="animate-fade-in">
-                            <label className="block text-sm font-medium mb-1 text-blue-600">
+                            <label className="block text-sm font-medium mb-1 text-[var(--color-ink-700)]">
                                 College Name
                             </label>
                             <input
@@ -101,7 +101,7 @@ const Signup = () => {
                                 required
                                 value={formData.customCollege}
                                 onChange={handleChange}
-                                className="input-field rounded-xl border-blue-300 focus:ring-blue-500"
+                                className="input-field"
                                 placeholder="Enter your college name"
                             />
                         </div>
@@ -155,7 +155,7 @@ const Signup = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="btn-primary rounded-full w-full py-3 mt-4 text-lg flex justify-center items-center"
+                        className="btn-primary w-full mt-4 text-lg flex justify-center items-center"
                     >
                         {loading ? (
                             <Loader2 className="animate-spin w-5 h-5" />
@@ -165,11 +165,11 @@ const Signup = () => {
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-[var(--ring)]">
+                <p className="mt-6 text-center text-sm text-[var(--muted)]">
                     Already have an account?{' '}
                     <Link
                         to="/signin"
-                        className="text-blue-500 hover:underline"
+                        className="text-[var(--color-amber-600)] font-medium hover:underline"
                     >
                         Sign In
                     </Link>

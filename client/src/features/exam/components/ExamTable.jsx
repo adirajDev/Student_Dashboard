@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Pencil, Trash2, Calendar, Monitor, Book } from 'lucide-react';
+import ActionMenu from '../../../components/common/ActionMenu';
 import SearchBar from '../../search/components/SearchBar';
 import Loading from '../../../components/common/Loading';
 import EmptyTable from '../../../components/common/EmptyTable';
@@ -58,11 +59,11 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                 )
             ) : (
                 <>
-                    <div className="bg-[var(--card)] rounded-3xl shadow-sm border border-[var(--border)] overflow-hidden">
+                    <div className="bg-[var(--card)] rounded-[var(--radius-md)] shadow-sm border border-[var(--border)] overflow-hidden">
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="bg-slate-50 border-b border-[var(--border)]">
+                                    <tr className="bg-[var(--color-ink-50)]/50 border-b border-[var(--border)]">
                                         <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
                                             Exam Name
                                         </th>
@@ -81,7 +82,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                     {paginatedExams.map(exam => (
                                         <tr
                                             key={exam._id}
-                                            className="hover:bg-slate-50/50 transition-colors group"
+                                            className="hover:bg-[var(--color-amber-50)] transition-colors group"
                                         >
                                             <td className="px-6 py-4">
                                                 <span className="font-medium text-[var(--foreground)]">
@@ -92,13 +93,13 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                                 <div className="flex items-center gap-1.5">
                                                     {exam.examMode ===
                                                     'Online' ? (
-                                                        <span className="px-2.5 py-1 bg-green-100 text-green-700 rounded-full text-xs font-semibold flex items-center gap-1">
-                                                            <Monitor className="w-3 h-3" />{' '}
+                                                        <span className="status-pill bg-emerald-100 text-emerald-700">
+                                                            <Monitor className="w-3 h-3 shrink-0" />{' '}
                                                             Online
                                                         </span>
                                                     ) : (
-                                                        <span className="px-2.5 py-1 bg-purple-100 text-purple-700 rounded-full text-xs font-semibold flex items-center gap-1">
-                                                            <Book className="w-3 h-3" />{' '}
+                                                        <span className="status-pill bg-purple-100 text-purple-700">
+                                                            <Book className="w-3 h-3 shrink-0" />{' '}
                                                             Offline
                                                         </span>
                                                     )}
@@ -106,13 +107,13 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex flex-col text-[var(--foreground)] text-sm">
-                                                    <span className="font-semibold flex items-center gap-1.5">
-                                                        <Calendar className="w-4 h-4 text-indigo-500" />
+                                                    <span className="font-semibold flex items-center gap-2">
+                                                        <Calendar className="w-4 h-4 text-indigo-500 shrink-0" />
                                                         {new Date(
                                                             exam.examDate
                                                         ).toLocaleDateString()}
                                                     </span>
-                                                    <span className="text-[var(--ring)] text-xs mt-1 ml-5">
+                                                    <span className="text-[var(--muted)] text-xs mt-1 ml-6">
                                                         {exam.examTime} (
                                                         {exam.examDuration >= 60
                                                             ? `${Math.floor(exam.examDuration / 60)}hr `
@@ -126,28 +127,31 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
                                             </td>
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center justify-end gap-2">
-                                                    {onEdit && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onEdit(exam)
-                                                            }
-                                                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-xl transition-colors"
-                                                            title="Edit Exam"
-                                                        >
-                                                            <Pencil className="w-4 h-4" />
-                                                        </button>
-                                                    )}
-                                                    {onDelete && (
-                                                        <button
-                                                            onClick={() =>
-                                                                onDelete(exam)
-                                                            }
-                                                            className="p-2 text-red-600 hover:bg-red-50 rounded-xl transition-colors"
-                                                            title="Delete Exam"
-                                                        >
-                                                            <Trash2 className="w-4 h-4" />
-                                                        </button>
-                                                    )}
+                                                    <ActionMenu
+                                                        actions={[
+                                                            onEdit && {
+                                                                label: 'Edit',
+                                                                icon: (
+                                                                    <Pencil className="w-4 h-4" />
+                                                                ),
+                                                                onClick: () =>
+                                                                    onEdit(
+                                                                        exam
+                                                                    ),
+                                                            },
+                                                            onDelete && {
+                                                                label: 'Delete',
+                                                                icon: (
+                                                                    <Trash2 className="w-4 h-4" />
+                                                                ),
+                                                                danger: true,
+                                                                onClick: () =>
+                                                                    onDelete(
+                                                                        exam
+                                                                    ),
+                                                            },
+                                                        ].filter(Boolean)}
+                                                    />
                                                 </div>
                                             </td>
                                         </tr>
