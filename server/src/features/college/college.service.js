@@ -16,7 +16,7 @@ export const getColleges = async (
         queryObj.averageRating = { $gte: Number(minRating) };
     }
 
-    const escapeRegex = (str) => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const escapeRegex = str => str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     if (search) {
         const searchRegex = { $regex: escapeRegex(search), $options: 'i' };
         const matchingCourses = await Course.find({ name: searchRegex }).select(

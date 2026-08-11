@@ -21,7 +21,9 @@ export const getUsersByRole = async (
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .select('name email phone role college applications createdAt updatedAt')
+            .select(
+                'name email phone role college applications createdAt updatedAt'
+            )
             .populate([
                 {
                     path: 'applications.college',

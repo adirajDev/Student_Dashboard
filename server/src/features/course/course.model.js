@@ -6,7 +6,7 @@ const courseSchema = new mongoose.Schema(
         level: {
             type: String,
 
-       enum: COURSE_LEVELS,
+            enum: COURSE_LEVELS,
             required: true,
             default: "Bachelor's",
             index: true,

@@ -28,12 +28,12 @@ const userSchema = new mongoose.Schema(
                 college: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'College',
-                    required: true
+                    required: true,
                 },
                 course: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Course',
-                    default: null
+                    default: null,
                 },
             },
         ],

@@ -1,8 +1,8 @@
 import User from './user.model.js';
-import College from "../college/college.model.js";
+import College from '../college/college.model.js';
 import bcrypt from 'bcrypt';
 import AppError from '../../common/utils/AppError.js';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const updateSetting = async (userId, data) => {
     const { email, currentPassword, newPassword } = data;
@@ -48,7 +48,11 @@ export const updateSetting = async (userId, data) => {
     return updatedUser;
 };
 
-export const updateApplicationCourse = async (userId, applicationId, courseId) => {
+export const updateApplicationCourse = async (
+    userId,
+    applicationId,
+    courseId
+) => {
     if (!mongoose.Types.ObjectId.isValid(courseId)) {
         throw new AppError('Invalid course id', 400);
     }
@@ -67,7 +71,10 @@ export const updateApplicationCourse = async (userId, applicationId, courseId) =
         ac => ac.course.toString() === courseId
     );
     if (!courseAllowed) {
-        throw new AppError('Selected course is not offered by this college', 400);
+        throw new AppError(
+            'Selected course is not offered by this college',
+            400
+        );
     }
 
     const duplicatePair = user.applications.some(
@@ -77,12 +84,15 @@ export const updateApplicationCourse = async (userId, applicationId, courseId) =
             app.course?.toString() === courseId
     );
     if (duplicatePair) {
-        throw new AppError('You already have an application with this college and course', 400);
+        throw new AppError(
+            'You already have an application with this college and course',
+            400
+        );
     }
 
     application.course = courseId;
     await user.save();
-    
+
     const applications = await getPopulatedApplications(userId);
     return { applications };
 };
@@ -100,21 +110,25 @@ export const deleteApplication = async (userId, applicationId) => {
 
     application.deleteOne(); // Mongoose 6+ subdocument removal — pulls itself from the parent array
     await user.save();
-    
+
     const applications = await getPopulatedApplications(userId);
     return { applications };
 };
 
-const getPopulatedApplications = async (userId) => {
+const getPopulatedApplications = async userId => {
     const updatedUser = await User.findById(userId)
         .select('applications')
         .populate([
             {
                 path: 'applications.college',
                 select: 'name logo location availableCourses',
-                populate: { path: 'availableCourses.course', select: 'name', model: 'Course' }
+                populate: {
+                    path: 'availableCourses.course',
+                    select: 'name',
+                    model: 'Course',
+                },
             },
-            { path: 'applications.course', select: 'name' }
+            { path: 'applications.course', select: 'name' },
         ])
         .lean();
     return updatedUser?.applications || [];

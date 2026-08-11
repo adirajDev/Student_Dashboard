@@ -1,12 +1,7 @@
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
 
-export const normalizeUserPayload = ({
-    name,
-    email,
-    phone,
-    college,
-} = {}) => {
+export const normalizeUserPayload = ({ name, email, phone, college } = {}) => {
     const payload = {
         name: name?.trim(),
         email: email?.trim().toLowerCase(),

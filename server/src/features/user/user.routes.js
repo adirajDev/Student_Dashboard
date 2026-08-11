@@ -7,9 +7,9 @@ import {
     deleteApplication,
     getUser,
     updateApplicationCourse,
-    updateSetting
+    updateSetting,
 } from './user.controller.js';
-import {requireRole} from "../../common/middleware/role.middleware.js";
+import { requireRole } from '../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 
