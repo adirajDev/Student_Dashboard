@@ -1,5 +1,7 @@
 import College from '../college/college.model.js';
 import Course from '../course/course.model.js';
+import User from '../user/user.model.js';
+import Exam from '../exam/exam.model.js';
 
 export const globalSearch = async queryStr => {
     if (!queryStr || queryStr.trim() === '') {
@@ -29,4 +31,22 @@ export const globalSearch = async queryStr => {
         .lean();
 
     return colleges;
+};
+
+export const getStats = async () => {
+    const [students, editors, courses, colleges, exams] = await Promise.all([
+        User.countDocuments({ role: 'student' }),
+        User.countDocuments({ role: 'editor' }),
+        Course.countDocuments(),
+        College.countDocuments(),
+        Exam.countDocuments(),
+    ]);
+
+    return {
+        students,
+        editors,
+        courses,
+        colleges,
+        exams,
+    };
 };
