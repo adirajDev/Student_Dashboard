@@ -82,13 +82,16 @@ const CollegeDetails = () => {
                                 }
                                 className="mt-3 text-[var(--color-amber-600)] font-medium hover:text-[var(--color-amber-700)] hover:underline transition-all text-sm"
                             >
-                                {isOverviewExpanded ? 'Show Less' : 'Read More'}
+                                {isOverviewExpanded ? 'Show Less' : 'Read full overview →'}
                             </button>
                         )}
                     </div>
                 )}
 
-                {/* 2. Placement Details */}
+                {/* 2. Courses Section */}
+                <CourseList courses={college.availableCourses} />
+
+                {/* 3. Placement Details */}
                 {hasPlacements && (
                     <div className="card">
                         <h2 className="text-2xl mb-6 text-[var(--foreground)] font-display flex items-center">
@@ -140,10 +143,10 @@ const CollegeDetails = () => {
                     </div>
                 )}
 
-                {/* 3. People & Partners Grid */}
+                {/* 4. People & Partners Grid */}
                 {(college.recruiters?.length > 0 ||
                     college.faculty?.length > 0) && (
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div className="flex flex-col gap-8">
                         {/* Recruiters */}
                         {college.recruiters &&
                             college.recruiters.length > 0 && (
@@ -188,13 +191,13 @@ const CollegeDetails = () => {
                                     <Users className="w-5 h-5 mr-2 text-[var(--color-ink-500)]" />
                                     Notable Faculty
                                 </h2>
-                                <div className="flex flex-col gap-3 flex-1">
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-1">
                                     {college.faculty
-                                        .slice(0, 4)
+                                        .slice(0, 6)
                                         .map((member, idx) => (
                                             <div
                                                 key={idx}
-                                                className="p-4 surface-wash rounded-[var(--radius-md)] border border-[var(--border)] flex items-start gap-4 transition-colors hover:bg-[var(--color-ink-50)]"
+                                                className="p-4 bg-[var(--card)] rounded-[var(--radius-md)] border border-[var(--border)] flex items-start gap-4 transition-colors hover:bg-[var(--color-ink-50)]"
                                             >
                                                 <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-[var(--radius-sm)] bg-[var(--color-amber-100)] flex items-center justify-center text-lg font-display text-[var(--color-amber-600)] shrink-0">
                                                     {member.name
@@ -219,7 +222,7 @@ const CollegeDetails = () => {
                                             </div>
                                         ))}
                                 </div>
-                                {college.faculty.length > 4 && (
+                                {college.faculty.length > 6 && (
                                     <div className="mt-4 pt-4 border-t border-[var(--border)] flex justify-center">
                                         <button
                                             onClick={() =>
@@ -236,9 +239,6 @@ const CollegeDetails = () => {
                         )}
                     </div>
                 )}
-
-                {/* 4. Courses Section */}
-                <CourseList courses={college.availableCourses} />
 
                 {/* 5. Ratings/Reviews Section */}
                 <RatingList collegeId={college._id} currentUser={user} />

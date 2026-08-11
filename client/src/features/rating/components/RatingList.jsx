@@ -92,7 +92,7 @@ const RatingList = ({ collegeId, currentUser }) => {
                             }}
                             className="w-full px-4 py-2.5 bg-[var(--card)] border border-[var(--border)] rounded-[var(--radius-md)] shadow-sm text-[var(--foreground)] focus:outline-none focus:border-[var(--color-ink-500)] focus:ring-1 focus:ring-[var(--color-ink-500)] appearance-none text-sm font-medium"
                         >
-                            <option value={0}>All Stars</option>
+                            <option value={0}>Rating: All</option>
                             <option value={5}>5 Stars only</option>
                             <option value={4}>4 Stars only</option>
                             <option value={3}>3 Stars only</option>

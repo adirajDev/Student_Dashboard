@@ -6,6 +6,7 @@ import {
     CheckCircle,
     Loader2,
 } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import apiClient from '../../../services/apiClient';
 import useApplyToCollege from '../hooks/useApplyToCollege';
 
@@ -28,7 +29,7 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
         <div className="card mb-8 p-0 overflow-hidden">
             {/* Banner Section */}
             <div
-                className={`relative w-full h-48 sm:h-64 md:h-72 ${!hasCoverImage ? 'bg-gradient-to-r from-[var(--color-ink-50)] to-[var(--color-ink-100)]' : 'bg-slate-200'}`}
+                className={`relative w-full h-40 sm:h-48 md:h-56 ${!hasCoverImage ? 'bg-gradient-to-r from-[var(--color-ink-50)] to-[var(--color-ink-100)]' : 'bg-slate-200'}`}
             >
                 {hasCoverImage && (
                     <div
@@ -107,9 +108,14 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
                         {/* Apply Button */}
                         <div className="flex items-center gap-3 flex-wrap">
                             {status === 'applied' ? (
-                                <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20 text-sm font-semibold cursor-default">
-                                    <CheckCircle className="w-4 h-4" />
-                                    Applied
+                                <div className="flex items-center gap-3">
+                                    <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20 text-sm font-semibold cursor-default">
+                                        <CheckCircle className="w-4 h-4" />
+                                        Applied
+                                    </div>
+                                    <Link to="/applications" className="px-5 py-2.5 rounded-[var(--radius-md)] border border-[var(--border)] surface-wash text-[var(--foreground)] hover:bg-[var(--color-ink-50)] text-sm font-semibold transition-colors">
+                                        View Application
+                                    </Link>
                                 </div>
                             ) : (
                                 <button
@@ -122,7 +128,7 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
                                     ) : (
                                         <Send className="w-4 h-4" />
                                     )}
-                                    {isApplying ? 'Applying...' : 'Apply'}
+                                    {isApplying ? 'Applying...' : 'Apply Now'}
                                 </button>
                             )}
                             {applyError && (

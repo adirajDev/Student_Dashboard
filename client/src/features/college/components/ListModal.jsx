@@ -43,7 +43,7 @@ const ListModal = ({ isOpen, onClose, title, type, data }) => {
                             {data.map((member, idx) => (
                                 <div
                                     key={idx}
-                                    className="p-4 surface-wash rounded-[var(--radius-md)] border border-[var(--border)] flex items-start gap-4 hover:bg-[var(--color-ink-50)] transition-colors"
+                                    className="p-4 bg-[var(--card)] rounded-[var(--radius-md)] border border-[var(--border)] flex items-start gap-4 hover:bg-[var(--color-ink-50)] transition-colors"
                                 >
                                     <div className="w-12 h-12 rounded-[var(--radius-sm)] bg-[var(--color-amber-100)] flex items-center justify-center text-lg font-display text-[var(--color-amber-600)] shrink-0">
                                         {member.name.charAt(0).toUpperCase()}

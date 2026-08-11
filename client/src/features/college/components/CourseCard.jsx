@@ -8,7 +8,7 @@ const CourseCard = ({ course, fee }) => {
         >
             <div className="flex-1">
                 <div className="flex justify-between items-start mb-2 gap-2">
-                    <h3 className="text-lg text-[var(--foreground)] font-display line-clamp-2">
+                    <h3 className="text-lg text-[var(--foreground)] font-display">
                         {course.name}
                     </h3>
                     {course.shortName && (
