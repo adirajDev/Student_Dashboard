@@ -1,5 +1,5 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import { LayoutDashboard } from 'lucide-react';
+import OverviewSection from '../../features/overview/components/OverviewSection';
 import UserManagementSection from '../../features/users/components/UserManagementSection';
 import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
 import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
@@ -15,23 +15,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="p-8 max-w-5xl mx-auto">
-            {activeTab === 'overview' && (
-                <div className="mb-8 animate-fade-in">
-                    <h2 className="text-3xl mb-2">
-                        Welcome back, {user.name.split(' ')[0]}! 👋
-                    </h2>
-                    <p className="text-[var(--ring)]">
-                        Here is an overview of your management portal.
-                    </p>
-
-                    <div className="mt-8 p-8 border-2 border-dashed border-slate-200 rounded-3xl text-center text-[var(--ring)] flex flex-col items-center justify-center min-h-[300px]">
-                        <LayoutDashboard className="w-12 h-12 mb-4 text-slate-300" />
-                        <p className="text-lg">
-                            Select an option from the sidebar to manage users.
-                        </p>
-                    </div>
-                </div>
-            )}
+            <OverviewSection user={user} shouldFetch={activeTab === 'overview'} />
 
             {activeTab === 'editors' && isAdmin && (
                 <div className="animate-fade-in">
