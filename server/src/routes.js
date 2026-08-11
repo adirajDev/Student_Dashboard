@@ -11,6 +11,7 @@ import dataRoutes from './features/data/data.routes.js';
 import collegeUserRoutes from './features/collegeUser/collegeUser.routes.js';
 import collegeUpdateRoutes from './features/collegeUpdate/collegeUpdate.routes.js';
 import examRoutes from './features/exam/exam.routes.js';
+import bloggerUserRoutes from './features/bloggerUser/bloggerUser.routes.js';
 
 const router = Router();
 
@@ -27,5 +28,8 @@ router.use('/exams', examRoutes);
 router.use('/data', dataRoutes);
 router.use('/collegeUsers', collegeUserRoutes);
 router.use('/college-updates', collegeUpdateRoutes);
+
+// Blog relate routes
+router.use('/bloggerUser', bloggerUserRoutes);
 
 export default router;
