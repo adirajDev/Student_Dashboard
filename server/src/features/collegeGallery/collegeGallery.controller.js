@@ -15,11 +15,9 @@ const checkOwnership = (user, collegeId) => {
 
 export const addImages = asyncHandler(async (req, res) => {
     if (!checkOwnership(req.user, req.params.collegeId)) {
-        return res
-            .status(403)
-            .json({
-                message: 'Access denied. You can only modify your own college.',
-            });
+        return res.status(403).json({
+            message: 'Access denied. You can only modify your own college.',
+        });
     }
     if (!req.files || req.files.length === 0) {
         return res.status(400).json({ message: 'No files provided' });
