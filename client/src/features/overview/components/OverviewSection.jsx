@@ -55,7 +55,22 @@ const OverviewSection = ({ user, shouldFetch }) => {
                             <h3 className="stat-figure text-3xl mt-1">{stats.editors}</h3>
                         </div>
                     </div>
-                    <div 
+
+                    <div
+                        className="card-interactive flex items-center gap-5"
+                        onClick={() => navigate('?tab=bloggers')}
+                        role="button"
+                        tabIndex={0}
+                    >
+                        <div className="p-4 bg-[var(--color-ink-50)] text-[var(--color-ink-600)] rounded-[var(--radius-lg)]">
+                            <GraduationCap className="w-8 h-8" />
+                        </div>
+                        <div>
+                            <p className="stat-label">Total Bloggers</p>
+                            <h3 className="stat-figure text-3xl mt-1">{stats.bloggers}</h3>
+                        </div>
+                    </div>
+                    <div
                         className="card-interactive flex items-center gap-5"
                         onClick={() => navigate('?tab=colleges')}
                         role="button"

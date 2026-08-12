@@ -40,9 +40,10 @@ export const globalSearch = async queryStr => {
 */
 
 export const getStats = async () => {
-    const [students, editors, courses, colleges, exams] = await Promise.all([
+    const [students, editors, bloggers, courses, colleges, exams] = await Promise.all([
         User.countDocuments({ role: 'student' }),
         User.countDocuments({ role: 'editor' }),
+        User.countDocuments({role: 'blogger'}),
         Course.countDocuments(),
         College.countDocuments(),
         Exam.countDocuments(),
@@ -51,6 +52,7 @@ export const getStats = async () => {
     return {
         students,
         editors,
+        bloggers,
         courses,
         colleges,
         exams,
