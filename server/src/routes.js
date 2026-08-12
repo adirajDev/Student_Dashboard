@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import authRoutes from './features/auth/auth.routes.js';
 import accountRoutes from './features/user/account/account.routes.js';
-import { createUserRouter } from './features/user/admin/userAdmin.routes.js';
+import { createUserRouter } from './features/user/management/user.routes.js';
 import applicationRoutes from "./features/application/application.routes.js";
 import ratingRoutes from './features/rating/rating.routes.js';
 import statsRoutes from './features/stats/stats.routes.js';

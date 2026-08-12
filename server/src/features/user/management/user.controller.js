@@ -1,4 +1,4 @@
-import * as userService from './userAdmin.service.js';
+import * as userService from './user.service.js';
 import asyncHandler from '../../../common/utils/asyncHandler.js';
 
 export const makeUserController = role => ({

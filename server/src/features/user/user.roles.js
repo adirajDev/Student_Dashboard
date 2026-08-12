@@ -3,9 +3,9 @@ import {
     updateUserSchema,
     createCollegeUserSchema,
     updateCollegeUserSchema,
-} from './admin/userAdmin.validation.js';
+} from './management/user.validation.js';
 import AppError from '../../common/errors/AppError.js';
-import Blogger from "../blogger/blogger.model.js";
+import Blogger from "../blog/blogger/blogger.model.js";
 
 const BASE_SELECT = 'name email phone role createdAt updatedAt';
 

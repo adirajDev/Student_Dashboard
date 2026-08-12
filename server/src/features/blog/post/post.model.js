@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 export const IMAGE_SIZE_LIMIT_BYTES = 200 * 1024; // 200KB
 export const MAX_IMAGES_PER_BLOG = 10;
 
-const blogSchema = new mongoose.Schema(
+const postSchema = new mongoose.Schema(
     {
         title: {
             type: String,
@@ -65,9 +65,9 @@ const blogSchema = new mongoose.Schema(
     { timestamps: true }
 );
 
-blogSchema.index({ status: 1, publishedAt: -1 });
-blogSchema.index({ author: 1, status: 1 });
-blogSchema.index({ title: 'text', excerpt: 'text' });
+postSchema.index({ status: 1, publishedAt: -1 });
+postSchema.index({ author: 1, status: 1 });
+postSchema.index({ title: 'text', excerpt: 'text' });
 
-const Blog = mongoose.model('Blog', blogSchema);
-export default Blog;
+const Post = mongoose.model('Post', postSchema);
+export default Post;

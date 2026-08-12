@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { makeUserController } from './userAdmin.controller.js';
+import { makeUserController } from './user.controller.js';
 import { requireRole } from '../../../common/middleware/role.middleware.js';
 import { requireAuth } from '../../../common/middleware/auth.middleware.js';
 
