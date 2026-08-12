@@ -5,6 +5,7 @@ import {
     BookOpen,
     Library,
     FileEdit,
+    PenSquare,
 } from 'lucide-react';
 import NavItem from '../NavItem';
 
@@ -26,6 +27,15 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
                     label="Editors"
                     isActive={activeTab === 'editors'}
                     onClick={() => handleNav('/admin/dashboard?tab=editors')}
+                />
+            )}
+
+            {isAdmin && (
+                <NavItem
+                    icon={<PenSquare className="w-5 h-5" />}
+                    label="Bloggers"
+                    isActive={activeTab === 'bloggers'}
+                    onClick={() => handleNav('/admin/dashboard?tab=bloggers')}
                 />
             )}
 

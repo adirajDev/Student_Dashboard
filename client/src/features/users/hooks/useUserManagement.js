@@ -1,7 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 import apiClient from '../../../services/apiClient';
 
+const ROLE_URL_SEGMENTS = {
+    student: 'students',
+    editor: 'editors',
+    blogger: 'bloggers',
+    collegeUser: 'college-users',
+};
+
 const useUserManagement = (role, shouldFetch = true) => {
+    const urlSegment = ROLE_URL_SEGMENTS[role] || `${role}s`;
     const [users, setUsers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -24,7 +32,7 @@ const useUserManagement = (role, shouldFetch = true) => {
             setIsLoading(true);
             setError(null);
             const res = await apiClient.get(
-                `/${role}s/get-${role}s?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`
+                `/${urlSegment}?page=${page}&limit=10&search=${encodeURIComponent(debouncedSearchTerm)}`
             );
             const data = Array.isArray(res.data) ? res.data : res.data.data;
             setUsers(data);
@@ -43,27 +51,26 @@ const useUserManagement = (role, shouldFetch = true) => {
     }, [fetchUsers]);
 
     const addUser = async userData => {
-        const res = await apiClient.post(`/${role}s/create-${role}`, userData);
+        const res = await apiClient.post(`/${urlSegment}`, userData);
+        const newUser = res.data.data;
         setUsers(prev =>
-            [...prev, res.data].sort((a, b) => a.name.localeCompare(b.name))
+            [...prev, newUser].sort((a, b) => a.name.localeCompare(b.name))
         );
-        return res.data;
+        return newUser;
     };
 
     const updateUser = async (id, userData) => {
-        const res = await apiClient.put(
-            `/${role}s/update-${role}/${id}`,
-            userData
-        );
+        const res = await apiClient.put(`/${urlSegment}/${id}`, userData);
+        const updatedUser = res.data.data;
         setUsers(prev =>
             prev
-                .map(u => (u._id === id ? res.data : u))
+                .map(u => (u._id === id ? updatedUser : u))
                 .sort((a, b) => a.name.localeCompare(b.name))
         );
     };
 
     const deleteUser = async id => {
-        await apiClient.delete(`/${role}s/delete-${role}/${id}`);
+        await apiClient.delete(`/${urlSegment}/${id}`);
         setUsers(prev => prev.filter(u => u._id !== id));
     };
 

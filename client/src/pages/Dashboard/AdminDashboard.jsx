@@ -30,6 +30,19 @@ const AdminDashboard = () => {
                 </div>
             )}
 
+            {activeTab === 'bloggers' && isAdmin && (
+                <div className="animate-fade-in">
+                    <UserManagementSection
+                        title="Blogger Directory"
+                        role="blogger"
+                        showCourse={false}
+                        canAdd={isAdmin}
+                        canDelete={isAdmin}
+                        shouldFetch={isAdmin}
+                    />
+                </div>
+            )}
+
             {activeTab === 'students' && (
                 <div className="animate-fade-in">
                     <UserManagementSection

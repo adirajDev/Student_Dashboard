@@ -1,6 +1,6 @@
 import College from './college.model.js';
 import Rating from '../rating/rating.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 import Course from '../course/course.model.js';
 

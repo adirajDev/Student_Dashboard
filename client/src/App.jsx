@@ -14,7 +14,6 @@ import RootRedirect from './routes/RootRedirect';
 import CollegeDetails from './pages/College/CollegeDetails';
 import ExamDetails from './pages/Exam/ExamDetails';
 import LandingPage from './pages/Landing/LandingPage';
-import SearchPage from './pages/Search/SearchPage';
 import ExamSearchPage from './pages/Search/ExamSearchPage';
 import ExamListingPage from './pages/Exam/ExamListingPage';
 import CollegeListingPage from './pages/College/CollegeListingPage';
@@ -41,10 +40,6 @@ function App() {
 
                     {/* Public Routes and Student Dashboard with Topbar */}
                     <Route element={<PublicLayout />}>
-                        <Route
-                            path="/college-search"
-                            element={<SearchPage />}
-                        />
                         <Route
                             path="/college"
                             element={<CollegeListingPage />}
