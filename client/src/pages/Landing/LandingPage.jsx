@@ -66,7 +66,7 @@ const LandingPage = () => {
                             Get Started <ArrowRight className="w-5 h-5" />
                         </a>
                         <Link
-                            to="/search"
+                            to="/college"
                             className="px-8 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-md text-white border border-white/30 rounded-[var(--radius-md)] font-medium text-lg transition-all"
                         >
                             Explore Colleges

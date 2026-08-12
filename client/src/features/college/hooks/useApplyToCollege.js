@@ -33,7 +33,7 @@ const useApplyToCollege = (collegeId, user) => {
         setIsApplying(true);
         setError('');
         try {
-            await apiClient.post(`/students/${collegeId}/apply`);
+            await apiClient.post(`/applications/${collegeId}`);
             setStatus('applied');
         } catch (err) {
             setError(

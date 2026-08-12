@@ -13,7 +13,7 @@ const useOverviewStats = (shouldFetch) => {
         setIsLoading(true);
         setError(null);
 
-        apiClient.get('/data/stats')
+        apiClient.get('/stats/stats')
             .then(res => {
                 if (isMounted) setStats(res.data);
             })

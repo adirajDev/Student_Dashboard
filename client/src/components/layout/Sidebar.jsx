@@ -16,9 +16,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
 
     // Determine active tab based on current URL
     let activeTab = 'overview';
-    if (location.pathname === '/search') {
-        activeTab = 'search';
-    } else if (location.pathname === '/dashboard') {
+    if (location.pathname === '/dashboard') {
         activeTab = searchParams.get('tab') || 'overview';
     } else if (location.pathname.startsWith('/admin')) {
         activeTab = searchParams.get('tab') || 'overview';
