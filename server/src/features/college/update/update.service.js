@@ -1,9 +1,9 @@
-import CollegeUpdate from './collegeUpdate.model.js';
-import College from '../college/college.model.js';
-import Course from '../course/course.model.js';
-import AppError from '../../common/errors/AppError.js';
-import { validateProposedChanges } from './collegeUpdate.validation.js';
-import { applyProposedChanges } from './collegeUpdate.merge.js';
+import CollegeUpdate from './update.model.js';
+import College from '../college.model.js';
+import Course from '../../course/course.model.js';
+import AppError from '../../../common/errors/AppError.js';
+import { validateProposedChanges } from './update.validation.js';
+import { applyProposedChanges } from './update.merge.js';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {

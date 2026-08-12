@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import { COLLEGE_TYPE } from '../college/college.constants.js';
+import { COLLEGE_TYPE } from '../college.constants.js';
 
 const objectId = Joi.string().hex().length(24);
 

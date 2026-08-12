@@ -5,9 +5,9 @@ import {
     getAllUpdates,
     approveUpdate,
     rejectUpdate,
-} from './collegeUpdate.controller.js';
-import { requireAuth } from '../../common/middleware/auth.middleware.js';
-import { requireRole } from '../../common/middleware/role.middleware.js';
+} from './update.controller.js';
+import { requireAuth } from '../../../common/middleware/auth.middleware.js';
+import { requireRole } from '../../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 router.use(requireAuth);

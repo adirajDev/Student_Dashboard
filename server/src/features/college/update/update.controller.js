@@ -1,9 +1,9 @@
-import * as collegeUpdateService from './collegeUpdate.service.js';
-import asyncHandler from '../../common/utils/asyncHandler.js';
+import * as collegeUpdateService from './update.service.js';
+import asyncHandler from '../../../common/utils/asyncHandler.js';
 import {
     getPaginationOptions,
     formatPaginatedResponse,
-} from '../../common/utils/pagination.util.js';
+} from '../../../common/utils/pagination.util.js';
 
 export const submitUpdate = asyncHandler(async (req, res) => {
     const update = await collegeUpdateService.submitUpdate(req.user, req.body);

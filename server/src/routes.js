@@ -4,11 +4,11 @@ import accountRoutes from './features/user/account/account.routes.js';
 import { createUserRouter } from './features/user/admin/userAdmin.routes.js';
 import applicationRoutes from "./features/application/application.routes.js";
 import ratingRoutes from './features/rating/rating.routes.js';
-import dataRoutes from './features/data/data.routes.js';
-import collegeUpdateRoutes from './features/collegeUpdate/collegeUpdate.routes.js';
+import statsRoutes from './features/stats/stats.routes.js';
+import collegeUpdateRoutes from './features/college/update/update.routes.js';
 import examRoutes from './features/exam/exam.routes.js';
 import collegeRoutes from './features/college/college.routes.js';
-import collegeGalleryRoutes from './features/collegeGallery/collegeGallery.routes.js';
+import collegeGalleryRoutes from './features/college/gallery/gallery.routes.js';
 import courseRoutes from './features/course/course.routes.js';
 
 const ADMIN_ONLY = {
@@ -58,6 +58,6 @@ router.use('/courses', courseRoutes);
 router.use('/applications', applicationRoutes);
 router.use('/ratings', ratingRoutes);
 router.use('/exams', examRoutes);
-router.use('/data', dataRoutes);
+router.use('/stats', statsRoutes);
 
 export default router;

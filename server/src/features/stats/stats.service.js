@@ -3,6 +3,7 @@ import Course from '../course/course.model.js';
 import User from '../user/user.model.js';
 import Exam from '../exam/exam.model.js';
 
+/*
 export const globalSearch = async queryStr => {
     if (!queryStr || queryStr.trim() === '') {
         return [];
@@ -36,6 +37,7 @@ export const globalSearch = async queryStr => {
 
     return colleges;
 };
+*/
 
 export const getStats = async () => {
     const [students, editors, courses, colleges, exams] = await Promise.all([

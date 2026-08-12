@@ -1,14 +1,14 @@
 import express from 'express';
 import multer from 'multer';
-import { requireAuth } from '../../common/middleware/auth.middleware.js';
-import { requireRole } from '../../common/middleware/role.middleware.js';
+import { requireAuth } from '../../../common/middleware/auth.middleware.js';
+import { requireRole } from '../../../common/middleware/role.middleware.js';
 import {
     addImages,
     deleteImage,
     addVideo,
     deleteVideo,
     serveImage,
-} from './collegeGallery.controller.js';
+} from './gallery.controller.js';
 
 const upload = multer({
     storage: multer.memoryStorage(),
