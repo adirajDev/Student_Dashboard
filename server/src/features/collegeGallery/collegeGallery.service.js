@@ -1,5 +1,5 @@
 import College from '../college/college.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 export const addImages = async (collegeId, files) => {
     const college = await College.findById(collegeId);

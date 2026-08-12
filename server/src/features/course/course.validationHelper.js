@@ -1,6 +1,6 @@
 import { validateCourse } from './course.validation.js';
 import Course from './course.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 export const validateAndCheckDuplicate = async (data, excludeId = null) => {
     const validated = validateCourse(data);

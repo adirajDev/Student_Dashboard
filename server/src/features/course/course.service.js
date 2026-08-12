@@ -1,6 +1,6 @@
 import Course from './course.model.js';
 import College from '../college/college.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 import { validateAndCheckDuplicate } from './course.validationHelper.js';
 
 export const getCourses = async (

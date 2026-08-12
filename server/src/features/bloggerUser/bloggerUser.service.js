@@ -1,8 +1,8 @@
 import {
     normalizeUserPayload,
     validateUserPayload,
-} from '../../common/utils/validation.util.js';
-import AppError from '../../common/utils/AppError.js';
+} from '../../common/validation/validation.util.js';
+import AppError from '../../common/errors/AppError.js';
 import {
     createUserByRole,
     isDuplicateKeyError,

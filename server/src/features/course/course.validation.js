@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 import { COURSE_LEVELS, COURSE_LIMITS } from './course.constants.js';
 
 const courseSchema = Joi.object({

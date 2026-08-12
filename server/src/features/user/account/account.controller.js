@@ -1,5 +1,5 @@
-import * as userService from './user.service.js';
-import asyncHandler from '../../common/utils/asyncHandler.js';
+import * as userService from './account.service.js';
+import asyncHandler from '../../../common/utils/asyncHandler.js';
 
 export const getUser = asyncHandler(async (req, res) => {
     res.json(req.user);

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-import College from '../../features/college/college.model.js';
-import Rating from '../../features/rating/rating.model.js';
+import College from '../college/college.model.js';
+import Rating from './rating.model.js';
 
 export const recalculateCollegeRating = async collegeId => {
     const stats = await Rating.aggregate([

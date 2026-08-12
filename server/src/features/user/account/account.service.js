@@ -1,7 +1,7 @@
-import User from './user.model.js';
-import College from '../college/college.model.js';
+import User from '../user.model.js';
+import College from '../../college/college.model.js';
 import bcrypt from 'bcrypt';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../../common/errors/AppError.js';
 import mongoose from 'mongoose';
 
 export const updateSetting = async (userId, data) => {

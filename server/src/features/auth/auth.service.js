@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
 import User from '../user/user.model.js';
 import College from '../college/college.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 export const signup = async data => {
     const { name, email, phone, course, college } = data;

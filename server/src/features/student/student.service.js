@@ -1,7 +1,7 @@
 import {
     normalizeUserPayload,
     validateUserPayload,
-} from '../../common/utils/validation.util.js';
+} from '../../common/validation/validation.util.js';
 import {
     getUsersByRole,
     createUserByRole,
@@ -10,8 +10,8 @@ import {
     isDuplicateKeyError,
 } from '../../common/utils/user.util.js';
 import Rating from '../rating/rating.model.js';
-import { recalculateCollegeRating } from '../../common/utils/rating.util.js';
-import AppError from '../../common/utils/AppError.js';
+import { recalculateCollegeRating } from '../rating/rating.util.js';
+import AppError from '../../common/errors/AppError.js';
 import College from '../college/college.model.js';
 import mongoose from 'mongoose';
 import User from '../user/user.model.js';

@@ -1,5 +1,5 @@
 import User from '../user/user.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 import bcrypt from 'bcrypt';
 import { getUsersByRole } from '../../common/utils/user.util.js';
 

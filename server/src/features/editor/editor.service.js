@@ -1,7 +1,7 @@
 import {
     normalizeUserPayload,
     validateUserPayload,
-} from '../../common/utils/validation.util.js';
+} from '../../common/validation/validation.util.js';
 import {
     getUsersByRole,
     createUserByRole,
@@ -9,7 +9,7 @@ import {
     deleteUserByRole,
     isDuplicateKeyError,
 } from '../../common/utils/user.util.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 export const getEditors = async (skip, limit, search) => {
     return await getUsersByRole('editor', skip, limit, search);

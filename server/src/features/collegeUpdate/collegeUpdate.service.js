@@ -1,7 +1,7 @@
 import CollegeUpdate from './collegeUpdate.model.js';
 import College from '../college/college.model.js';
 import Course from '../course/course.model.js';
-import AppError from '../../common/utils/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 import { validateProposedChanges } from './collegeUpdate.validation.js';
 import { applyProposedChanges } from './collegeUpdate.merge.js';
 

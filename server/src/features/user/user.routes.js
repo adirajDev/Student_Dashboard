@@ -8,7 +8,7 @@ import {
     getUser,
     updateApplicationCourse,
     updateSetting,
-} from './user.controller.js';
+} from './account/account.controller.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 
 const router = express.Router();
