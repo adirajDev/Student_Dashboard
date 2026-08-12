@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import AppError from '../errors/AppError.js';
+import AppError from '../../common/errors/AppError.js';
 
 const examSchema = Joi.object({
     name: Joi.string().required(),

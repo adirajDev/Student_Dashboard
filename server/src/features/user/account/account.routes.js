@@ -2,14 +2,14 @@ import express from 'express';
 import {
     requireAuth,
     checkAuth,
-} from '../../common/middleware/auth.middleware.js';
+} from '../../../common/middleware/auth.middleware.js';
 import {
     deleteApplication,
     getUser,
     updateApplicationCourse,
     updateSetting,
-} from './account/account.controller.js';
-import { requireRole } from '../../common/middleware/role.middleware.js';
+} from './account.controller.js';
+import { requireRole } from '../../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 

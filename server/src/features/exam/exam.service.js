@@ -1,5 +1,5 @@
 import AppError from '../../common/errors/AppError.js';
-import { validateExam } from '../../common/validation/validateExam.util.js';
+import { validateExam } from './exam.validation.js';
 import Exam from './exam.model.js';
 
 export const getAllExams = async () => {
