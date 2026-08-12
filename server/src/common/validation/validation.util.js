@@ -1,30 +1,18 @@
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const PHONE_REGEX = /^[0-9+\-\s()]{7,20}$/;
+import AppError from '../errors/AppError.js';
 
-export const normalizeUserPayload = ({ name, email, phone, college } = {}) => {
-    const payload = {
-        name: name?.trim(),
-        email: email?.trim().toLowerCase(),
-        phone: phone?.trim(),
-    };
-    if (college) payload.college = college;
-    return payload;
+export const validate = (schema, data) => {
+    const { error, value } = schema.validate(data, {
+        abortEarly: false,
+        stripUnknown: true,
+    });
+    if (error) {
+        throw new AppError(error.details.map(d => d.message).join(', '), 400);
+    }
+    return value;
 };
 
-export const validateUserPayload = (payload, role) => {
-    const { name, email, phone, college } = payload;
-
-    if (!name || !email || !phone) {
-        return 'Name, email, and phone number are required.';
-    }
-
-    if (!EMAIL_REGEX.test(email)) {
-        return 'Invalid email format.';
-    }
-
-    if (!PHONE_REGEX.test(phone)) {
-        return 'Phone number must be 7-20 characters and contain only numbers, spaces, +, -, or parentheses.';
-    }
-
-    return '';
+// Validation middleware
+export const validateBody = schema => (req, res, next) => {
+    req.body = validate(req.body, schema);
+    next();
 };
