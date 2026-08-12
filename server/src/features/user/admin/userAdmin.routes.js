@@ -10,8 +10,8 @@ export const createUserRouter = ({ role, permissions }) => {
     router.use(requireAuth);
     router.get('/', requireRole(...permissions.list), controller.list);
     router.post('/', requireRole(...permissions.create), controller.create);
-    // router.put('/:id', requireRole(...permissions.update), controller.update);
-    // router.delete('/:id', requireRole(...permissions.remove), controller.remove);
+    router.put('/:id', requireRole(...permissions.update), controller.update);
+    router.delete('/:id', requireRole(...permissions.remove), controller.remove);
 
     return router;
 };

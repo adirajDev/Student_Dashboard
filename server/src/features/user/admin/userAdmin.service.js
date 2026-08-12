@@ -64,3 +64,58 @@ export const createUser = async (body, role) => {
         await session.endSession();
     }
 };
+
+const findDocForRole = async (id, role) => {
+    const user = await User.findOne({ _id: id, role });
+    if (!user) throw new AppError(`No ${role} found with this id.`, 404);
+    return user;
+};
+
+export const updateUser = async (id, body, role) => {
+    const config = getRoleConfig(role);
+    const payload = validate(config.update, body);
+
+    const user = await findDocForRole(id, role);
+
+    if (payload.email && payload.email !== user.email) {
+        const taken = await User.exists({
+            email: payload.email,
+            _id: { $ne: user._id },
+        });
+        if (taken) {
+            throw new AppError('A user with this email already exists.', 409);
+        }
+    }
+
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            user.set(payload);
+            await user.save({ session });
+            if (config.afterUpdate) await config.afterUpdate(user, session);
+        });
+        return findOneForRole(user._id, role, config);
+    } catch (error) {
+        if (error?.code === 11000) {
+            throw new AppError('A user with this email already exists.', 409);
+        }
+        throw error;
+    } finally {
+        await session.endSession();
+    }
+};
+
+export const deleteUser = async (id, role) => {
+    const config = getRoleConfig(role);
+    const user = await findDocForRole(id, role);
+
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            if (config.beforeDelete) await config.beforeDelete(user, session);
+            await user.deleteOne({ session });
+        });
+    } finally {
+        await session.endSession();
+    }
+};
