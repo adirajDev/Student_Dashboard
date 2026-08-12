@@ -10,6 +10,31 @@ const findOneForRole = (id, role, config) => {
     return query.lean();
 };
 
+export const listUsers = async (role, skip = 0, limit = 0, search = '') => {
+    const config = getRoleConfig(role);
+
+    const queryObj = { role };
+    if (search) {
+        queryObj.$or = [
+            { name: { $regex: search, $options: 'i' } },
+            { email: { $regex: search, $options: 'i' } },
+        ];
+    }
+
+    const [data, totalCount] = await Promise.all([
+        User.find(queryObj)
+            .select(config.select)
+            .populate(config.populate)
+            .sort({ name: 1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+        User.countDocuments(queryObj),
+    ]);
+
+    return { data, totalCount };
+};
+
 export const createUser = async (body, role) => {
     const config = getRoleConfig(role);
     const payload = validate(config.create, body);

@@ -7,12 +7,20 @@ import {
 import AppError from '../../common/errors/AppError.js';
 import Blogger from "../blogger/blogger.model.js";
 
+const BASE_SELECT = 'name email phone role createdAt updatedAt';
+
 export const ROLE_CONFIG = {
-    editor: { create: createUserSchema, update: updateUserSchema },
-    student: { create: createUserSchema, update: updateUserSchema },
+    editor: {
+        create: createUserSchema,
+        update: updateUserSchema,
+        select: BASE_SELECT,
+        populate: [],
+    },
     blogger: {
         create: createUserSchema,
         update: updateUserSchema,
+        select: BASE_SELECT,
+        populate: [],
         afterCreate: async (user, session) => {
             await Blogger.create([{ user: user._id }], { session });
         },
@@ -20,10 +28,28 @@ export const ROLE_CONFIG = {
             await Blogger.deleteOne({ user: user._id }, { session });
         },
     },
+    student: {
+        create: createUserSchema,
+        update: updateUserSchema,
+        select: `${BASE_SELECT} applications`,
+        populate: [
+            {
+                path: 'applications.college',
+                select: 'name availableCourses',
+                populate: {
+                    path: 'availableCourses.course',
+                    select: 'name',
+                    model: 'Course',
+                },
+            },
+            { path: 'applications.course', select: 'name' },
+        ],
+    },
     college: {
         create: createCollegeUserSchema,
         update: updateCollegeUserSchema,
-        populate: { path: 'college', select: 'name location type' },
+        select: `${BASE_SELECT} college`,
+        populate: [{ path: 'college', select: 'name location type' }],
     },
 };
 
