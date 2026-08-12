@@ -1,9 +1,5 @@
-import * as studentService from './student.service.js';
+import * as studentService from './application.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
-import {
-    getPaginationOptions,
-    formatPaginatedResponse,
-} from '../../common/utils/pagination.util.js';
 
 export const applyToCollege = async (req, res, next) => {
     const result = await studentService.applyToCollege(

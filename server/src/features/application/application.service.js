@@ -1,14 +1,3 @@
-import {
-    normalizeUserPayload,
-    validateUserPayload,
-} from '../../common/validation/validation.util.js';
-import {
-    getUsersByRole,
-    createUserByRole,
-    updateUserByRole,
-    deleteUserByRole,
-    isDuplicateKeyError,
-} from '../../common/utils/user.util.js';
 import Rating from '../rating/rating.model.js';
 import { recalculateCollegeRating } from '../rating/rating.util.js';
 import AppError from '../../common/errors/AppError.js';

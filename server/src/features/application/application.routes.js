@@ -1,15 +1,11 @@
 import express from 'express';
 import {
-    getStudents,
-    createStudent,
-    updateStudent,
-    deleteStudent,
     applyToCollege,
     setApplicationCourse,
     addAdminStudentApplication,
     updateAdminStudentApplicationCourse,
     deleteAdminStudentApplication,
-} from './student.controller.js';
+} from './application.controller.js';
 import { requireAuth } from '../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../common/middleware/role.middleware.js';
 
@@ -17,27 +13,27 @@ const router = express.Router();
 
 router.use(requireAuth);
 
-router.post('/:collegeId/apply', requireRole('student'), applyToCollege);
+router.post('/:collegeId', requireRole('student'), applyToCollege);
 
 router.patch(
-    '/applications/:applicationId/course',
+    '/:applicationId/course',
     requireRole('student'),
     setApplicationCourse
 );
 
 // Admin application management for a student
 router.post(
-    '/:studentId/applications',
+    '/:studentId',
     requireRole('admin'),
     addAdminStudentApplication
 );
 router.patch(
-    '/:studentId/applications/:applicationId/course',
+    '/:studentId/:applicationId/course',
     requireRole('admin'),
     updateAdminStudentApplicationCourse
 );
 router.delete(
-    '/:studentId/applications/:applicationId',
+    '/:studentId/:applicationId',
     requireRole('admin'),
     deleteAdminStudentApplication
 );
