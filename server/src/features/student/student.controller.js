@@ -5,34 +5,6 @@ import {
     formatPaginatedResponse,
 } from '../../common/utils/pagination.util.js';
 
-export const getStudents = asyncHandler(async (req, res) => {
-    const { page, limit, skip } = getPaginationOptions(req);
-    const search = req.query.search || '';
-    const { data, totalCount } = await studentService.getStudents(
-        skip,
-        limit,
-        search
-    );
-    res.status(200).json(
-        formatPaginatedResponse(data, totalCount, page, limit)
-    );
-});
-
-export const createStudent = asyncHandler(async (req, res) => {
-    const student = await studentService.createStudent(req.body);
-    res.status(201).json(student);
-});
-
-export const updateStudent = asyncHandler(async (req, res) => {
-    const student = await studentService.updateStudent(req.params.id, req.body);
-    res.status(200).json(student);
-});
-
-export const deleteStudent = asyncHandler(async (req, res) => {
-    await studentService.deleteStudent(req.params.id);
-    res.status(200).json({ message: 'Student deleted successfully.' });
-});
-
 export const applyToCollege = async (req, res, next) => {
     const result = await studentService.applyToCollege(
         req.user._id,
