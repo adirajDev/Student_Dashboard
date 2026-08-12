@@ -19,8 +19,8 @@ export const requireAuth = async (req, res, next) => {
                 populate: {
                     path: 'availableCourses.course',
                     select: 'name',
-                    model: 'Course'
-                }
+                    model: 'Course',
+                },
             })
             .populate('applications.course', 'name');
 
@@ -54,8 +54,8 @@ export const checkAuth = async (req, res, next) => {
                 populate: {
                     path: 'availableCourses.course',
                     select: 'name',
-                    model: 'Course'
-                }
+                    model: 'Course',
+                },
             })
             .populate('applications.course', 'name');
 

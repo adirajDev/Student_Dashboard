@@ -14,7 +14,11 @@ export const updateApplicationCourse = async (req, res, next) => {
     try {
         const { applicationId } = req.params;
         const { courseId } = req.body;
-        const result = await userService.updateApplicationCourse(req.user._id, applicationId, courseId);
+        const result = await userService.updateApplicationCourse(
+            req.user._id,
+            applicationId,
+            courseId
+        );
         res.status(200).json(result);
     } catch (err) {
         next(err);
@@ -24,7 +28,10 @@ export const updateApplicationCourse = async (req, res, next) => {
 export const deleteApplication = async (req, res, next) => {
     try {
         const { applicationId } = req.params;
-        const result = await userService.deleteApplication(req.user._id, applicationId);
+        const result = await userService.deleteApplication(
+            req.user._id,
+            applicationId
+        );
         res.status(200).json(result);
     } catch (err) {
         next(err);

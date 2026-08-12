@@ -28,18 +28,18 @@ const userSchema = new mongoose.Schema(
                 college: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'College',
-                    required: true
+                    required: true,
                 },
                 course: {
                     type: mongoose.Schema.Types.ObjectId,
                     ref: 'Course',
-                    default: null
+                    default: null,
                 },
             },
         ],
         role: {
             type: String,
-            enum: ['admin', 'student', 'editor', 'college'],
+            enum: ['admin', 'student', 'editor', 'college', 'blogger'],
             default: 'student',
             index: true,
         },

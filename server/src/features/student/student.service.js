@@ -12,9 +12,9 @@ import {
 import Rating from '../rating/rating.model.js';
 import { recalculateCollegeRating } from '../../common/utils/rating.util.js';
 import AppError from '../../common/utils/AppError.js';
-import College from "../college/college.model.js";
-import mongoose from "mongoose";
-import User from "../user/user.model.js";
+import College from '../college/college.model.js';
+import mongoose from 'mongoose';
+import User from '../user/user.model.js';
 
 export const getStudents = async (skip, limit, search) => {
     return await getUsersByRole('student', skip, limit, search);
@@ -120,7 +120,10 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
         ac => ac.course.toString() === courseId
     );
     if (!courseAllowed) {
-        throw new AppError('Selected course is not offered by this college', 400);
+        throw new AppError(
+            'Selected course is not offered by this college',
+            400
+        );
     }
 
     const duplicatePair = user.applications.some(
@@ -130,7 +133,10 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
             app.course?.toString() === courseId
     );
     if (duplicatePair) {
-        throw new AppError('You already have an application with this college and course', 400);
+        throw new AppError(
+            'You already have an application with this college and course',
+            400
+        );
     }
 
     application.course = courseId;
@@ -139,7 +145,11 @@ export const setApplicationCourse = async (userId, applicationId, courseId) => {
     return { applications };
 };
 
-export const addAdminStudentApplication = async (studentId, collegeId, courseId = null) => {
+export const addAdminStudentApplication = async (
+    studentId,
+    collegeId,
+    courseId = null
+) => {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
         throw new AppError('Invalid student ID format.', 400);
     }
@@ -158,7 +168,10 @@ export const addAdminStudentApplication = async (studentId, collegeId, courseId 
     }
 
     if (student.applications.length >= 3) {
-        throw new AppError('Student can have a maximum of 3 applications.', 400);
+        throw new AppError(
+            'Student can have a maximum of 3 applications.',
+            400
+        );
     }
 
     if (courseId) {
@@ -169,17 +182,25 @@ export const addAdminStudentApplication = async (studentId, collegeId, courseId 
             ac => ac.course.toString() === courseId
         );
         if (!courseAllowed) {
-            throw new AppError('Selected course is not offered by this college.', 400);
+            throw new AppError(
+                'Selected course is not offered by this college.',
+                400
+            );
         }
     }
 
     const duplicatePair = student.applications.some(
         app =>
             app.college.toString() === collegeId &&
-            (courseId ? app.course?.toString() === courseId : app.course === null)
+            (courseId
+                ? app.course?.toString() === courseId
+                : app.course === null)
     );
     if (duplicatePair) {
-        throw new AppError('An application with this college and course already exists for this student.', 400);
+        throw new AppError(
+            'An application with this college and course already exists for this student.',
+            400
+        );
     }
 
     student.applications.push({ college: collegeId, course: courseId || null });
@@ -189,7 +210,11 @@ export const addAdminStudentApplication = async (studentId, collegeId, courseId 
     return { applications };
 };
 
-export const updateAdminStudentApplicationCourse = async (studentId, applicationId, courseId) => {
+export const updateAdminStudentApplicationCourse = async (
+    studentId,
+    applicationId,
+    courseId
+) => {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
         throw new AppError('Invalid student ID format.', 400);
     }
@@ -212,7 +237,10 @@ export const updateAdminStudentApplicationCourse = async (studentId, application
         ac => ac.course.toString() === courseId
     );
     if (!courseAllowed) {
-        throw new AppError('Selected course is not offered by this college.', 400);
+        throw new AppError(
+            'Selected course is not offered by this college.',
+            400
+        );
     }
 
     const duplicatePair = student.applications.some(
@@ -222,7 +250,10 @@ export const updateAdminStudentApplicationCourse = async (studentId, application
             app.course?.toString() === courseId
     );
     if (duplicatePair) {
-        throw new AppError('An application with this college and course already exists for this student.', 400);
+        throw new AppError(
+            'An application with this college and course already exists for this student.',
+            400
+        );
     }
 
     application.course = courseId;
@@ -232,7 +263,10 @@ export const updateAdminStudentApplicationCourse = async (studentId, application
     return { applications };
 };
 
-export const deleteAdminStudentApplication = async (studentId, applicationId) => {
+export const deleteAdminStudentApplication = async (
+    studentId,
+    applicationId
+) => {
     if (!mongoose.Types.ObjectId.isValid(studentId)) {
         throw new AppError('Invalid student ID format.', 400);
     }
@@ -254,7 +288,7 @@ export const deleteAdminStudentApplication = async (studentId, applicationId) =>
     return { applications };
 };
 
-const getPopulatedStudentApplications = async (studentId) => {
+const getPopulatedStudentApplications = async studentId => {
     const updatedUser = await User.findById(studentId)
         .select('applications')
         .populate([

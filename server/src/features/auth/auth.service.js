@@ -40,7 +40,10 @@ export const signup = async data => {
             ac => ac.course.toString() === course
         );
         if (!courseAllowed) {
-            throw new AppError('Selected course is not offered by this college', 400);
+            throw new AppError(
+                'Selected course is not offered by this college',
+                400
+            );
         }
     }
 
@@ -48,7 +51,7 @@ export const signup = async data => {
         name,
         email,
         phone,
-        applications: [{college: collegeId, course}],
+        applications: [{ college: collegeId, course }],
     });
 
     await user.save();

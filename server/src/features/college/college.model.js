@@ -17,15 +17,15 @@ const collegeSchema = new mongoose.Schema(
             {
                 data: Buffer,
                 contentType: String,
-            }
+            },
         ],
         videos: [
             {
                 url: {
                     type: String,
                     trim: true,
-                }
-            }
+                },
+            },
         ],
         type: {
             type: String,
@@ -69,16 +69,16 @@ const collegeSchema = new mongoose.Schema(
         placementDetails: {
             averagePackage: {
                 type: String,
-                trim: true
+                trim: true,
             },
             highestPackage: {
                 type: String,
-                trim: true
+                trim: true,
             },
             placementPercentage: {
                 type: Number,
                 min: 0,
-                max: 100
+                max: 100,
             },
         },
         recruiters: [
@@ -128,7 +128,7 @@ collegeSchema.set('toJSON', {
             });
         }
         return ret;
-    }
+    },
 });
 
 collegeSchema.set('toObject', {
@@ -140,7 +140,7 @@ collegeSchema.set('toObject', {
             });
         }
         return ret;
-    }
+    },
 });
 
 const College = mongoose.model('College', collegeSchema);
