@@ -13,6 +13,6 @@ export const validate = (schema, data) => {
 
 // Validation middleware
 export const validateBody = schema => (req, res, next) => {
-    req.body = validate(req.body, schema);
+    req.body = validate(schema, req.body);
     next();
 };

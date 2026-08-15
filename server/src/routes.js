@@ -2,7 +2,7 @@ import { Router } from 'express';
 import authRoutes from './features/auth/auth.routes.js';
 import accountRoutes from './features/user/account/account.routes.js';
 import { createUserRouter } from './features/user/management/user.routes.js';
-import applicationRoutes from "./features/application/application.routes.js";
+import applicationRoutes from './features/application/application.routes.js';
 import ratingRoutes from './features/rating/rating.routes.js';
 import statsRoutes from './features/stats/stats.routes.js';
 import collegeUpdateRoutes from './features/college/update/update.routes.js';
@@ -10,6 +10,7 @@ import examRoutes from './features/exam/exam.routes.js';
 import collegeRoutes from './features/college/college.routes.js';
 import collegeGalleryRoutes from './features/college/gallery/gallery.routes.js';
 import courseRoutes from './features/course/course.routes.js';
+import postRoutes from "./features/blog/post/post.routes.js";
 
 const ADMIN_ONLY = {
     list: ['admin'],
@@ -52,6 +53,9 @@ router.use(
 router.use('/colleges', collegeRoutes);
 router.use('/college-gallery', collegeGalleryRoutes);
 router.use('/college-updates', collegeUpdateRoutes);
+
+// Blog routes
+router.use('/posts', postRoutes);
 
 // Other routes
 router.use('/courses', courseRoutes);

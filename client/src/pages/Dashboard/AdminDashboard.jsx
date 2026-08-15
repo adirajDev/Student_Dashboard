@@ -5,6 +5,7 @@ import CourseManagementSection from '../../features/courses/components/CourseMan
 import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
 import PendingUpdatesSection from '../../features/collegeUpdate/components/Admin/PendingUpdatesSection';
 import ExamManagementSection from '../../features/exam/components/ExamManagementSection';
+import PendingPostsSection from '../../features/blog/components/Admin/PendingPostsSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -91,6 +92,12 @@ const AdminDashboard = () => {
             {activeTab === 'approvals' && isAdmin && (
                 <div className="animate-fade-in">
                     <PendingUpdatesSection title="Approval Requests" />
+                </div>
+            )}
+
+            {activeTab === 'blogApprovals' && isAdmin && (
+                <div className="animate-fade-in">
+                    <PendingPostsSection title="Blog Approvals" />
                 </div>
             )}
         </div>
