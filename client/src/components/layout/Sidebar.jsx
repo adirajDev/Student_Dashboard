@@ -22,6 +22,8 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
         activeTab = searchParams.get('tab') || 'overview';
     } else if (location.pathname === '/college/dashboard') {
         activeTab = searchParams.get('tab') || 'edit';
+    } else if (location.pathname === '/blogger/dashboard') {
+        activeTab = searchParams.get('tab') || 'write';
     }
 
     const handleNav = path => {
