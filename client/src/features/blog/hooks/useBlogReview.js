@@ -11,11 +11,15 @@ const useBlogReview = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.get(`/posts/admin/pending?page=${page}&limit=10`);
+            const res = await apiClient.get(
+                `/posts/admin/pending?page=${page}&limit=10`
+            );
             if (res.data.totalPages) setTotalPages(res.data.totalPages);
             return res.data.data || [];
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch pending posts');
+            setError(
+                err.response?.data?.message || 'Failed to fetch pending posts'
+            );
             return [];
         } finally {
             setLoading(false);
@@ -40,7 +44,9 @@ const useBlogReview = () => {
         setLoading(true);
         setError('');
         try {
-            const res = await apiClient.patch(`/posts/${id}/reject`, { reviewNote });
+            const res = await apiClient.patch(`/posts/${id}/reject`, {
+                reviewNote,
+            });
             return res.data.data;
         } catch (err) {
             setError(err.response?.data?.message || 'Failed to reject post');

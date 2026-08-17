@@ -9,8 +9,14 @@ const WritePostTab = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const postId = searchParams.get('postId');
 
-    const { createPost, updatePost, submitForReview, getPostById, loading, error } =
-        useBlogPosts();
+    const {
+        createPost,
+        updatePost,
+        submitForReview,
+        getPostById,
+        loading,
+        error,
+    } = useBlogPosts();
     const [post, setPost] = useState(null);
     const [loadingPost, setLoadingPost] = useState(Boolean(postId));
     const [successMsg, setSuccessMsg] = useState('');
@@ -75,7 +81,9 @@ const WritePostTab = () => {
             <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2 text-[var(--foreground)]">
                     <PenSquare className="w-5 h-5 text-[var(--color-amber-600)]" />
-                    <h3 className="text-xl">{postId ? 'Editing Post' : 'New Post'}</h3>
+                    <h3 className="text-xl">
+                        {postId ? 'Editing Post' : 'New Post'}
+                    </h3>
                 </div>
                 {postId && (
                     <button
@@ -89,7 +97,9 @@ const WritePostTab = () => {
             </div>
 
             {successMsg && (
-                <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-xl">{successMsg}</div>
+                <div className="mb-6 p-4 bg-green-100 text-green-700 rounded-xl">
+                    {successMsg}
+                </div>
             )}
 
             <BlogEditor

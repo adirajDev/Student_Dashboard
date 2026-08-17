@@ -6,8 +6,14 @@ import Pagination from '../../../../components/common/Pagination';
 import ReviewPostModal from './ReviewPostModal';
 
 const PendingPostsSection = ({ title }) => {
-    const { page, setPage, totalPages, getPendingPosts, approvePost, rejectPost } =
-        useBlogReview();
+    const {
+        page,
+        setPage,
+        totalPages,
+        getPendingPosts,
+        approvePost,
+        rejectPost,
+    } = useBlogReview();
     const [posts, setPosts] = useState([]);
     const [loading, setLoading] = useState(true);
     const [selectedPost, setSelectedPost] = useState(null);
@@ -73,7 +79,9 @@ const PendingPostsSection = ({ title }) => {
                                 <th className="pb-3 font-medium">Title</th>
                                 <th className="pb-3 font-medium">Author</th>
                                 <th className="pb-3 font-medium">Submitted</th>
-                                <th className="pb-3 font-medium text-right">Action</th>
+                                <th className="pb-3 font-medium text-right">
+                                    Action
+                                </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -82,16 +90,22 @@ const PendingPostsSection = ({ title }) => {
                                     key={post._id}
                                     className="border-b border-[var(--border)] last:border-0 hover:bg-[var(--color-amber-100)] transition-colors"
                                 >
-                                    <td className="py-4 text-sm font-medium">{post.title}</td>
+                                    <td className="py-4 text-sm font-medium">
+                                        {post.title}
+                                    </td>
                                     <td className="py-4 text-sm text-[var(--ring)]">
                                         {post.author?.name}
                                     </td>
                                     <td className="py-4 text-sm text-[var(--ring)]">
-                                        {new Date(post.updatedAt).toLocaleDateString()}
+                                        {new Date(
+                                            post.updatedAt
+                                        ).toLocaleDateString()}
                                     </td>
                                     <td className="py-4 text-right">
                                         <button
-                                            onClick={() => setSelectedPost(post)}
+                                            onClick={() =>
+                                                setSelectedPost(post)
+                                            }
                                             className="px-4 py-1.5 bg-[var(--color-amber-200)] hover:bg-[var(--color-amber-300)] text-[var(--color-amber-800)] rounded-xl text-sm font-bold transition-colors"
                                         >
                                             Review

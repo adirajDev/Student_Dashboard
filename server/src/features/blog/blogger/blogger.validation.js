@@ -5,7 +5,7 @@ const OBJECT_ID_PATTERN = /^[0-9a-fA-F]{24}$/;
 const profileImageSchema = Joi.object({
     data: Joi.string().required(), // base64 payload
     mimeType: Joi.string()
-        .valid('image/jpeg', 'image/png', 'image/webp')
+        .valid('image/jpeg', 'image/png', 'image/webp', 'image/svg+xml')
         .required(),
     sizeBytes: Joi.number()
         .positive()

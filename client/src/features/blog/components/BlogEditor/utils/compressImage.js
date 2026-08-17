@@ -20,7 +20,10 @@ const dataUrlByteLength = dataUrl => {
     return Math.ceil((base64.length * 3) / 4) - padding;
 };
 
-export const compressImage = async (file, { maxBytes = DEFAULT_MAX_BYTES } = {}) => {
+export const compressImage = async (
+    file,
+    { maxBytes = DEFAULT_MAX_BYTES } = {}
+) => {
     const img = await loadImage(file);
 
     let width = img.width;

@@ -86,20 +86,29 @@ const ViewPostsTab = () => {
                     >
                         <div className="flex items-start justify-between gap-4">
                             <div>
-                                <h4 className="text-lg text-[var(--foreground)] mb-1">{post.title}</h4>
+                                <h4 className="text-lg text-[var(--foreground)] mb-1">
+                                    {post.title}
+                                </h4>
                                 <span className="text-sm text-[var(--ring)]">
-                                    Updated {new Date(post.updatedAt).toLocaleDateString()}
+                                    Updated{' '}
+                                    {new Date(
+                                        post.updatedAt
+                                    ).toLocaleDateString()}
                                 </span>
                             </div>
                             <div className="flex items-center gap-2 shrink-0">
-                                <span className={`status-pill ${STATUS_CLASSES[post.status] || ''}`}>
+                                <span
+                                    className={`status-pill ${STATUS_CLASSES[post.status] || ''}`}
+                                >
                                     {STATUS_LABELS[post.status] || post.status}
                                 </span>
                                 <ActionMenu
                                     actions={[
                                         editable && {
                                             label: 'Edit',
-                                            icon: <Pencil className="w-4 h-4" />,
+                                            icon: (
+                                                <Pencil className="w-4 h-4" />
+                                            ),
                                             onClick: () =>
                                                 navigate(
                                                     `/blogger/dashboard?tab=write&postId=${post._id}`
@@ -107,14 +116,20 @@ const ViewPostsTab = () => {
                                         },
                                         editable && {
                                             label: 'Delete',
-                                            icon: <Trash2 className="w-4 h-4" />,
+                                            icon: (
+                                                <Trash2 className="w-4 h-4" />
+                                            ),
                                             danger: true,
-                                            onClick: () => setDeletingPost(post),
+                                            onClick: () =>
+                                                setDeletingPost(post),
                                         },
                                         post.status === 'published' && {
                                             label: 'Unpublish',
-                                            icon: <EyeOff className="w-4 h-4" />,
-                                            onClick: () => handleUnpublish(post),
+                                            icon: (
+                                                <EyeOff className="w-4 h-4" />
+                                            ),
+                                            onClick: () =>
+                                                handleUnpublish(post),
                                         },
                                         {
                                             label: expanded ? 'Hide' : 'View',
@@ -124,7 +139,9 @@ const ViewPostsTab = () => {
                                                 <Eye className="w-4 h-4" />
                                             ),
                                             onClick: () =>
-                                                setExpandedId(expanded ? null : post._id),
+                                                setExpandedId(
+                                                    expanded ? null : post._id
+                                                ),
                                         },
                                     ].filter(Boolean)}
                                 />
@@ -133,8 +150,12 @@ const ViewPostsTab = () => {
 
                         {post.status === 'rejected' && post.reviewNote && (
                             <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-xl">
-                                <h5 className="text-red-800 font-medium text-sm mb-1">Admin Feedback:</h5>
-                                <p className="text-red-700 text-sm">{post.reviewNote}</p>
+                                <h5 className="text-red-800 font-medium text-sm mb-1">
+                                    Admin Feedback:
+                                </h5>
+                                <p className="text-red-700 text-sm">
+                                    {post.reviewNote}
+                                </p>
                             </div>
                         )}
 

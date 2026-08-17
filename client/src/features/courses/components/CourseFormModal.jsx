@@ -79,8 +79,14 @@ const CourseFormModal = ({
     };
 
     return createPortal(
-        <div className="modal-overlay flex items-center justify-center p-4" onClick={onClose}>
-            <div className="surface-paper w-full max-w-lg rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up" onClick={e => e.stopPropagation()}>
+        <div
+            className="modal-overlay flex items-center justify-center p-4"
+            onClick={onClose}
+        >
+            <div
+                className="surface-paper w-full max-w-lg rounded-[var(--radius-xl)] shadow-2xl border border-[var(--border)] relative overflow-hidden animate-slide-up"
+                onClick={e => e.stopPropagation()}
+            >
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
                     <h2 className="text-xl text-[var(--foreground)]">
                         {title}

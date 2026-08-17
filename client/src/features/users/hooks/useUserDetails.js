@@ -12,10 +12,10 @@ const useUserDetails = user => {
                   : user.role === 'blogger'
                     ? 'Blogger'
                     : user.role === 'collegeUser'
-                    ? 'College Admin'
-                    : user.role === 'admin'
-                      ? 'System Admin'
-                      : user.role;
+                      ? 'College Admin'
+                      : user.role === 'admin'
+                        ? 'System Admin'
+                        : user.role;
 
         const primaryCollege =
             user.college?.name || user.college || 'Not Assigned';

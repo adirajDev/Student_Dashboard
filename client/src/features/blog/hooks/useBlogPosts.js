@@ -42,7 +42,10 @@ const useBlogPosts = () => {
             const res = await apiClient.patch(`/posts/${id}/submit`);
             return res.data.data;
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to submit post for review');
+            setError(
+                err.response?.data?.message ||
+                    'Failed to submit post for review'
+            );
             throw err;
         } finally {
             setLoading(false);
@@ -83,7 +86,9 @@ const useBlogPosts = () => {
             const res = await apiClient.get('/posts/mine');
             return res.data.data || [];
         } catch (err) {
-            setError(err.response?.data?.message || 'Failed to fetch your posts');
+            setError(
+                err.response?.data?.message || 'Failed to fetch your posts'
+            );
             return [];
         } finally {
             setLoading(false);

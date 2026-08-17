@@ -21,12 +21,20 @@ const slugify = value =>
         .replace(/[^a-z0-9]+/g, '-')
         .replace(/^-+|-+$/g, '');
 
-const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting, error }) => {
+const BlogEditor = ({
+    initialPost,
+    onSaveDraft,
+    onSubmitForReview,
+    isSubmitting,
+    error,
+}) => {
     const [title, setTitle] = useState(initialPost?.title || '');
     const [slug, setSlug] = useState(initialPost?.slug || '');
     const [slugTouched, setSlugTouched] = useState(Boolean(initialPost?.slug));
     const [excerpt, setExcerpt] = useState(initialPost?.excerpt || '');
-    const [coverImage, setCoverImage] = useState(initialPost?.coverImage || null);
+    const [coverImage, setCoverImage] = useState(
+        initialPost?.coverImage || null
+    );
     const [coverError, setCoverError] = useState('');
     const coverInputRef = useRef(null);
 
@@ -92,7 +100,8 @@ const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting,
                     <AlertTriangle className="w-5 h-5 text-[var(--color-danger)] shrink-0 mt-0.5" />
                     <div>
                         <h5 className="text-[var(--color-danger)] font-medium text-sm mb-1">
-                            This post was rejected — editing will move it back to draft
+                            This post was rejected — editing will move it back
+                            to draft
                         </h5>
                         <p className="text-[var(--color-danger)] text-sm opacity-90">
                             {initialPost.reviewNote}
@@ -102,14 +111,25 @@ const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting,
             )}
 
             {error && (
-                <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-xl">{error}</div>
+                <div className="mb-6 p-4 bg-red-100 text-red-700 rounded-xl">
+                    {error}
+                </div>
             )}
 
             <div className="space-y-6">
-                <FormField label="Title" id="title" value={title} onChange={handleTitleChange} placeholder="Post title" />
+                <FormField
+                    label="Title"
+                    id="title"
+                    value={title}
+                    onChange={handleTitleChange}
+                    placeholder="Post title"
+                />
 
                 <div>
-                    <label htmlFor="slug" className="block text-sm font-medium text-[var(--foreground)] mb-2">
+                    <label
+                        htmlFor="slug"
+                        className="block text-sm font-medium text-[var(--foreground)] mb-2"
+                    >
                         Slug
                     </label>
                     <input
@@ -124,7 +144,10 @@ const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting,
                 </div>
 
                 <div>
-                    <label htmlFor="excerpt" className="block text-sm font-medium text-[var(--foreground)] mb-2">
+                    <label
+                        htmlFor="excerpt"
+                        className="block text-sm font-medium text-[var(--foreground)] mb-2"
+                    >
                         Excerpt
                     </label>
                     <textarea
@@ -158,7 +181,11 @@ const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting,
                             </button>
                         </div>
                     ) : (
-                        <button type="button" onClick={handleCoverPick} className="btn-secondary flex items-center gap-2">
+                        <button
+                            type="button"
+                            onClick={handleCoverPick}
+                            className="btn-secondary flex items-center gap-2"
+                        >
                             <ImagePlus className="w-4 h-4" /> Upload Cover Image
                         </button>
                     )}
@@ -169,11 +196,17 @@ const BlogEditor = ({ initialPost, onSaveDraft, onSubmitForReview, isSubmitting,
                         className="hidden"
                         onChange={handleCoverChange}
                     />
-                    {coverError && <p className="mt-2 text-xs text-[var(--color-danger)]">{coverError}</p>}
+                    {coverError && (
+                        <p className="mt-2 text-xs text-[var(--color-danger)]">
+                            {coverError}
+                        </p>
+                    )}
                 </div>
 
                 <div>
-                    <label className="block text-sm font-medium text-[var(--foreground)] mb-2">Content</label>
+                    <label className="block text-sm font-medium text-[var(--foreground)] mb-2">
+                        Content
+                    </label>
                     <div className="border border-[var(--border)] rounded-[var(--radius-md)] overflow-hidden">
                         <Toolbar editor={editor} />
                         <EditorContent

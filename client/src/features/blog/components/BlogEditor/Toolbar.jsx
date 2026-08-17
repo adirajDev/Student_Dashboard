@@ -78,7 +78,10 @@ const Toolbar = ({ editor }) => {
             editor
                 .chain()
                 .focus()
-                .insertContent({ type: 'image', attrs: { src: dataUrl, mimeType, sizeBytes } })
+                .insertContent({
+                    type: 'image',
+                    attrs: { src: dataUrl, mimeType, sizeBytes },
+                })
                 .run();
         } catch (err) {
             setImageError(err.message || 'Could not process that image.');
@@ -91,7 +94,11 @@ const Toolbar = ({ editor }) => {
             setYoutubeError('Enter a valid YouTube URL or video ID.');
             return;
         }
-        editor.chain().focus().insertContent({ type: 'youtube', attrs: { videoId } }).run();
+        editor
+            .chain()
+            .focus()
+            .insertContent({ type: 'youtube', attrs: { videoId } })
+            .run();
         setYoutubeUrl('');
         setYoutubeError('');
         setShowYoutubeInput(false);
@@ -105,7 +112,12 @@ const Toolbar = ({ editor }) => {
             editor.chain().focus().extendMarkRange('link').unsetLink().run();
             return;
         }
-        editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
+        editor
+            .chain()
+            .focus()
+            .extendMarkRange('link')
+            .setLink({ href: url })
+            .run();
     };
 
     return (
@@ -128,7 +140,9 @@ const Toolbar = ({ editor }) => {
                 <ToolbarButton
                     title="Underline"
                     isActive={editor.isActive('underline')}
-                    onClick={() => editor.chain().focus().toggleUnderline().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleUnderline().run()
+                    }
                 >
                     <UnderlineIcon className="w-4 h-4" />
                 </ToolbarButton>
@@ -146,7 +160,11 @@ const Toolbar = ({ editor }) => {
                 >
                     <Code className="w-4 h-4" />
                 </ToolbarButton>
-                <ToolbarButton title="Link" isActive={editor.isActive('link')} onClick={setLink}>
+                <ToolbarButton
+                    title="Link"
+                    isActive={editor.isActive('link')}
+                    onClick={setLink}
+                >
                     <Link2 className="w-4 h-4" />
                 </ToolbarButton>
 
@@ -155,21 +173,27 @@ const Toolbar = ({ editor }) => {
                 <ToolbarButton
                     title="Heading 1"
                     isActive={editor.isActive('heading', { level: 1 })}
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 1 }).run()
+                    }
                 >
                     <Heading1 className="w-4 h-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Heading 2"
                     isActive={editor.isActive('heading', { level: 2 })}
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 2 }).run()
+                    }
                 >
                     <Heading2 className="w-4 h-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Heading 3"
                     isActive={editor.isActive('heading', { level: 3 })}
-                    onClick={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleHeading({ level: 3 }).run()
+                    }
                 >
                     <Heading3 className="w-4 h-4" />
                 </ToolbarButton>
@@ -179,27 +203,35 @@ const Toolbar = ({ editor }) => {
                 <ToolbarButton
                     title="Bullet List"
                     isActive={editor.isActive('bulletList')}
-                    onClick={() => editor.chain().focus().toggleBulletList().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleBulletList().run()
+                    }
                 >
                     <List className="w-4 h-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Numbered List"
                     isActive={editor.isActive('orderedList')}
-                    onClick={() => editor.chain().focus().toggleOrderedList().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleOrderedList().run()
+                    }
                 >
                     <ListOrdered className="w-4 h-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Blockquote"
                     isActive={editor.isActive('blockquote')}
-                    onClick={() => editor.chain().focus().toggleBlockquote().run()}
+                    onClick={() =>
+                        editor.chain().focus().toggleBlockquote().run()
+                    }
                 >
                     <Quote className="w-4 h-4" />
                 </ToolbarButton>
                 <ToolbarButton
                     title="Horizontal Rule"
-                    onClick={() => editor.chain().focus().setHorizontalRule().run()}
+                    onClick={() =>
+                        editor.chain().focus().setHorizontalRule().run()
+                    }
                 >
                     <Minus className="w-4 h-4" />
                 </ToolbarButton>
@@ -207,7 +239,11 @@ const Toolbar = ({ editor }) => {
                 <div className="w-px h-6 bg-[var(--border)] mx-1" />
 
                 <ToolbarButton
-                    title={atImageLimit ? `Limit of ${MAX_IMAGES_PER_BLOG} images reached` : 'Insert Image'}
+                    title={
+                        atImageLimit
+                            ? `Limit of ${MAX_IMAGES_PER_BLOG} images reached`
+                            : 'Insert Image'
+                    }
                     disabled={atImageLimit}
                     onClick={handleImagePick}
                 >
@@ -250,7 +286,11 @@ const Toolbar = ({ editor }) => {
                 />
             </div>
 
-            {imageError && <p className="px-2 pb-2 text-xs text-[var(--color-danger)]">{imageError}</p>}
+            {imageError && (
+                <p className="px-2 pb-2 text-xs text-[var(--color-danger)]">
+                    {imageError}
+                </p>
+            )}
 
             {showYoutubeInput && (
                 <div className="flex items-center gap-2 px-2 pb-2">
@@ -267,12 +307,20 @@ const Toolbar = ({ editor }) => {
                             }
                         }}
                     />
-                    <button type="button" onClick={handleYoutubeSubmit} className="btn-secondary py-1.5 px-4 text-sm">
+                    <button
+                        type="button"
+                        onClick={handleYoutubeSubmit}
+                        className="btn-secondary py-1.5 px-4 text-sm"
+                    >
                         Embed
                     </button>
                 </div>
             )}
-            {youtubeError && <p className="px-2 pb-2 text-xs text-[var(--color-danger)]">{youtubeError}</p>}
+            {youtubeError && (
+                <p className="px-2 pb-2 text-xs text-[var(--color-danger)]">
+                    {youtubeError}
+                </p>
+            )}
         </div>
     );
 };

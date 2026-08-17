@@ -24,12 +24,15 @@ const ReviewPostModal = ({ post, onClose, onApprove, onReject }) => {
 
                 <div className="p-6 overflow-y-auto flex-1 space-y-6">
                     <div className="p-4 bg-blue-50 text-blue-800 rounded-2xl text-sm border border-blue-200">
-                        By <strong>{post.author?.name}</strong> ({post.author?.email}) on{' '}
+                        By <strong>{post.author?.name}</strong> (
+                        {post.author?.email}) on{' '}
                         {new Date(post.createdAt).toLocaleDateString()}
                     </div>
 
                     {post.excerpt && (
-                        <p className="italic text-[var(--muted)]">{post.excerpt}</p>
+                        <p className="italic text-[var(--muted)]">
+                            {post.excerpt}
+                        </p>
                     )}
 
                     {post.coverImage?.data && (

@@ -1,4 +1,12 @@
-import { LayoutDashboard, Users, GraduationCap, School, BookOpen, FileText, Loader2 } from 'lucide-react';
+import {
+    LayoutDashboard,
+    Users,
+    GraduationCap,
+    School,
+    BookOpen,
+    FileText,
+    Loader2,
+} from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import useOverviewStats from '../hooks/useOverviewStats';
 
@@ -27,7 +35,7 @@ const OverviewSection = ({ user, shouldFetch }) => {
                 </div>
             ) : stats ? (
                 <div className="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div 
+                    <div
                         className="card-interactive flex items-center gap-5"
                         onClick={() => navigate('?tab=students')}
                         role="button"
@@ -38,10 +46,12 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Students</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.students}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.students}
+                            </h3>
                         </div>
                     </div>
-                    <div 
+                    <div
                         className="card-interactive flex items-center gap-5"
                         onClick={() => navigate('?tab=editors')}
                         role="button"
@@ -52,7 +62,9 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Editors</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.editors}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.editors}
+                            </h3>
                         </div>
                     </div>
 
@@ -67,7 +79,9 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Bloggers</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.bloggers}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.bloggers}
+                            </h3>
                         </div>
                     </div>
                     <div
@@ -81,10 +95,12 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Colleges</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.colleges}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.colleges}
+                            </h3>
                         </div>
                     </div>
-                    <div 
+                    <div
                         className="card-interactive flex items-center gap-5"
                         onClick={() => navigate('?tab=courses')}
                         role="button"
@@ -95,10 +111,12 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Courses</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.courses}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.courses}
+                            </h3>
                         </div>
                     </div>
-                    <div 
+                    <div
                         className="card-interactive flex items-center gap-5"
                         onClick={() => navigate('?tab=exams')}
                         role="button"
@@ -109,7 +127,9 @@ const OverviewSection = ({ user, shouldFetch }) => {
                         </div>
                         <div>
                             <p className="stat-label">Total Exams</p>
-                            <h3 className="stat-figure text-3xl mt-1">{stats.exams}</h3>
+                            <h3 className="stat-figure text-3xl mt-1">
+                                {stats.exams}
+                            </h3>
                         </div>
                     </div>
                 </div>
