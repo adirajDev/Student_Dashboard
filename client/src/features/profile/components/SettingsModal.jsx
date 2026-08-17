@@ -5,15 +5,15 @@ import { useState } from 'react';
 
 const CopyableId = ({ text }) => {
     const [copied, setCopied] = useState(false);
-    
+
     if (!text || typeof text !== 'string' || text.length !== 24) return text;
-    
+
     const display = `${text.slice(0, 6)}...${text.slice(-4)}`;
-    
+
     return (
         <span className="flex items-center gap-2 text-[var(--foreground)] font-mono text-xs bg-slate-100 px-2 py-1 rounded w-fit">
             {display}
-            <button 
+            <button
                 type="button"
                 onClick={() => {
                     navigator.clipboard.writeText(text);
@@ -23,7 +23,11 @@ const CopyableId = ({ text }) => {
                 className="text-[var(--muted)] hover:text-indigo-600 transition-colors"
                 title="Copy ID"
             >
-                {copied ? <Check className="w-3.5 h-3.5 text-green-600" /> : <Copy className="w-3.5 h-3.5" />}
+                {copied ? (
+                    <Check className="w-3.5 h-3.5 text-green-600" />
+                ) : (
+                    <Copy className="w-3.5 h-3.5" />
+                )}
             </button>
         </span>
     );
@@ -74,7 +78,9 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                                 <span className="block text-[var(--muted)] mb-2">
                                     Course
                                 </span>
-                                {user.course?.name || <CopyableId text={user.course} />}
+                                {user.course?.name || (
+                                    <CopyableId text={user.course} />
+                                )}
                             </div>
                         )}
                         {user.college && (
@@ -82,7 +88,9 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                                 <span className="block text-[var(--muted)] mb-2">
                                     College
                                 </span>
-                                {user.college?.name || <CopyableId text={user.college} />}
+                                {user.college?.name || (
+                                    <CopyableId text={user.college} />
+                                )}
                             </div>
                         )}
                     </div>

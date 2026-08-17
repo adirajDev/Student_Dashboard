@@ -6,6 +6,7 @@ import {
     Library,
     FileEdit,
     PenSquare,
+    Newspaper,
 } from 'lucide-react';
 import NavItem from '../NavItem';
 
@@ -90,6 +91,14 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
                         isActive={activeTab === 'approvals'}
                         onClick={() =>
                             handleNav('/admin/dashboard?tab=approvals')
+                        }
+                    />
+                    <NavItem
+                        icon={<Newspaper className="w-5 h-5" />}
+                        label="Blog Approvals"
+                        isActive={activeTab === 'blogApprovals'}
+                        onClick={() =>
+                            handleNav('/admin/dashboard?tab=blogApprovals')
                         }
                     />
                 </>

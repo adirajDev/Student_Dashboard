@@ -113,7 +113,10 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
                                         <CheckCircle className="w-4 h-4" />
                                         Applied
                                     </div>
-                                    <Link to="/applications" className="px-5 py-2.5 rounded-[var(--radius-md)] border border-[var(--border)] surface-wash text-[var(--foreground)] hover:bg-[var(--color-ink-50)] text-sm font-semibold transition-colors">
+                                    <Link
+                                        to="/applications"
+                                        className="px-5 py-2.5 rounded-[var(--radius-md)] border border-[var(--border)] surface-wash text-[var(--foreground)] hover:bg-[var(--color-ink-50)] text-sm font-semibold transition-colors"
+                                    >
                                         View Application
                                     </Link>
                                 </div>

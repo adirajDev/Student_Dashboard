@@ -6,6 +6,7 @@ import StudentApplications from './pages/Dashboard/StudentApplications';
 import ProtectedRoute from './routes/ProtectedRoute';
 import ResetOtpPassword from './pages/Auth/ResetOtpPassword';
 import CollegeDashboard from './pages/Dashboard/CollegeDashboard';
+import BloggerDashboard from './pages/Dashboard/BloggerDashboard';
 import AdminDashboard from './pages/Dashboard/AdminDashboard';
 import WrongUrl from './pages/NotFound/WrongUrl';
 import PublicLayout from './components/layout/PublicLayout';
@@ -93,6 +94,16 @@ function App() {
                             <Route
                                 path="/admin/dashboard"
                                 element={<AdminDashboard />}
+                            />
+                        </Route>
+                        <Route
+                            element={
+                                <ProtectedRoute allowedRoles={['blogger']} />
+                            }
+                        >
+                            <Route
+                                path="/blogger/dashboard"
+                                element={<BloggerDashboard />}
                             />
                         </Route>
                     </Route>

@@ -31,6 +31,14 @@ const RootRedirect = () => {
         return <Navigate to="/admin/dashboard" replace />;
     }
 
+    if (auth.role === 'college') {
+        return <Navigate to="/college/dashboard" replace />;
+    }
+
+    if (auth.role === 'blogger') {
+        return <Navigate to="/blogger/dashboard" replace />;
+    }
+
     return <Navigate to="/dashboard" replace />;
 };
 

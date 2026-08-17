@@ -22,11 +22,7 @@ router.patch(
 );
 
 // Admin application management for a student
-router.post(
-    '/:studentId',
-    requireRole('admin'),
-    addAdminStudentApplication
-);
+router.post('/:studentId', requireRole('admin'), addAdminStudentApplication);
 router.patch(
     '/:studentId/:applicationId/course',
     requireRole('admin'),

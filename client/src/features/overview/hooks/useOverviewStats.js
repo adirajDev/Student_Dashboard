@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import apiClient from '../../../services/apiClient';
 
-const useOverviewStats = (shouldFetch) => {
+const useOverviewStats = shouldFetch => {
     const [stats, setStats] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -13,7 +13,8 @@ const useOverviewStats = (shouldFetch) => {
         setIsLoading(true);
         setError(null);
 
-        apiClient.get('/stats/stats')
+        apiClient
+            .get('/stats/stats')
             .then(res => {
                 if (isMounted) setStats(res.data);
             })

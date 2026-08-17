@@ -82,7 +82,9 @@ const CollegeDetails = () => {
                                 }
                                 className="mt-3 text-[var(--color-amber-600)] font-medium hover:text-[var(--color-amber-700)] hover:underline transition-all text-sm"
                             >
-                                {isOverviewExpanded ? 'Show Less' : 'Read full overview →'}
+                                {isOverviewExpanded
+                                    ? 'Show Less'
+                                    : 'Read full overview →'}
                             </button>
                         )}
                     </div>

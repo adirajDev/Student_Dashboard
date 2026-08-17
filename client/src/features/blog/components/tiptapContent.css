@@ -1,0 +1,89 @@
+/* Shared typography for rendered/edited Tiptap doc content.
+   Tailwind's preflight resets heading font-size/weight and list-style to
+   nothing, and this codebase has no @tailwindcss/typography plugin (no
+   `.prose` styles actually exist) — so both the live editor and the
+   read-only post renderer need these rules to look like rich text at all. */
+
+.tiptap-content h1,
+.tiptap-content h2,
+.tiptap-content h3 {
+    color: var(--foreground);
+    font-family: var(--font-display);
+    font-weight: 700;
+}
+
+.tiptap-content h1 {
+    font-size: 1.875rem;
+    line-height: 2.25rem;
+    margin: 1.5rem 0 0.75rem;
+}
+
+.tiptap-content h2 {
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin: 1.25rem 0 0.625rem;
+}
+
+.tiptap-content h3 {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    margin: 1rem 0 0.5rem;
+}
+
+.tiptap-content p {
+    margin-bottom: 0.75rem;
+}
+
+.tiptap-content ul,
+.tiptap-content ol {
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.tiptap-content ul {
+    list-style: disc;
+}
+
+.tiptap-content ol {
+    list-style: decimal;
+}
+
+.tiptap-content li {
+    margin-bottom: 0.25rem;
+}
+
+.tiptap-content li p {
+    margin-bottom: 0;
+}
+
+.tiptap-content blockquote {
+    border-left: 4px solid var(--color-amber-300);
+    padding-left: 1rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 0.75rem;
+}
+
+.tiptap-content hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 1.5rem 0;
+}
+
+.tiptap-content code {
+    background: var(--color-ink-100);
+    padding: 0.125rem 0.375rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.875em;
+}
+
+.tiptap-content a {
+    color: var(--color-amber-700);
+    text-decoration: underline;
+}
+
+.tiptap-content img {
+    border-radius: var(--radius-md);
+    max-width: 100%;
+    margin: 1rem 0;
+}
