@@ -8,6 +8,9 @@ export const getBloggerByUserId = asyncHandler(async (req, res) => {
 });
 
 export const updateBloggerByUserId = asyncHandler(async (req, res) => {
-    const blogger = await bloggerService.updateBloggerByUserId(req.user.id, req.body);
+    const blogger = await bloggerService.updateBloggerByUserId(
+        req.user.id,
+        req.body
+    );
     res.status(200).json({ success: true, data: blogger });
-})
+});

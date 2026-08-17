@@ -1,7 +1,7 @@
 import Blogger from './blogger.model.js';
 import AppError from '../../../common/errors/AppError.js';
-import {validate} from "../../../common/validation/validation.util.js";
-import {updateBloggerSchema} from "./blogger.validation.js";
+import { validate } from '../../../common/validation/validation.util.js';
+import { updateBloggerSchema } from './blogger.validation.js';
 
 export const getBloggerByUserId = async userId => {
     const blogger = await Blogger.findOne({
@@ -26,12 +26,12 @@ export const updateBloggerByUserId = async (userId, updates) => {
 
     const blogger = await Blogger.findOneAndUpdate(
         { user: userId },
-        { $set: payload},
-    ).lean()
+        { $set: payload }
+    ).lean();
 
     if (!blogger) {
         throw new AppError('Blogger profile not found', 404);
     }
 
     return blogger;
-}
+};

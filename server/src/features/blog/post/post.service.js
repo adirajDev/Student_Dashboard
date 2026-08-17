@@ -211,7 +211,17 @@ export const getPublishedPosts = async ({ skip = 0, limit = 0 }) => {
 };
 
 export const getPublishedPostBySlug = async slug => {
-    const post = await Post.findOne({ slug, status: 'published' });
+    const post = await Post.findOne({ slug, status: 'published' })
+        .populate({
+            path: 'author',
+            select: 'name email phone',
+            populate: {
+                path: 'bloggerProfile',
+                select: 'profileImage postCount -user',
+            },
+        })
+        .lean();
+
     if (!post) {
         throw new AppError('Post not found.', 404);
     }

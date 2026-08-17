@@ -52,8 +52,16 @@ const userSchema = new mongoose.Schema(
             // Optional initially because they set it on first login
         },
     },
+    { toJSON: { virtuals: true }, toObject: { virtuals: true } },
     { timestamps: true }
 );
+
+userSchema.virtual('bloggerProfile', {
+    ref: 'Blogger',
+    localField: '_id',
+    foreignField: 'user',
+    justOne: true,
+});
 
 userSchema.path('applications').validate(function (arr) {
     return arr.length <= 3;
