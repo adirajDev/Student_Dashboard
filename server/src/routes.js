@@ -10,7 +10,8 @@ import examRoutes from './features/exam/exam.routes.js';
 import collegeRoutes from './features/college/college.routes.js';
 import collegeGalleryRoutes from './features/college/gallery/gallery.routes.js';
 import courseRoutes from './features/course/course.routes.js';
-import postRoutes from "./features/blog/post/post.routes.js";
+import postRoutes from './features/blog/post/post.routes.js';
+import bloggerRoutes from './features/blog/blogger/blogger.routes.js';
 
 const ADMIN_ONLY = {
     list: ['admin'],
@@ -56,6 +57,7 @@ router.use('/college-updates', collegeUpdateRoutes);
 
 // Blog routes
 router.use('/posts', postRoutes);
+router.use('/blogger', bloggerRoutes);
 
 // Other routes
 router.use('/courses', courseRoutes);

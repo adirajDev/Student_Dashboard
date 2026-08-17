@@ -163,6 +163,7 @@ export const getPendingReviewPosts = async ({ skip = 0, limit = 0 }) => {
     return { data, totalCount };
 };
 
+// TODO: update postCount for blogger's profile db whose post got approved
 export const approvePost = async postId => {
     const post = await Post.findById(postId);
     if (!post) {
