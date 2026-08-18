@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import apiClient from '../services/apiClient';
-import Loading from '../components/common/Loading';
+import apiClient from '@/services/apiClient';
+import Loading from '@/components/common/Loading';
 
 const RootRedirect = () => {
     const [auth, setAuth] = useState({ loading: true, role: null });

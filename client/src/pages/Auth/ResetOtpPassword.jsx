@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ShieldCheck, Loader2 } from 'lucide-react';
-import apiClient from '../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const ResetOtpPassword = () => {
     const navigate = useNavigate();

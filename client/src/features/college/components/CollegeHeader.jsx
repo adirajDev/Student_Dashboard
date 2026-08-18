@@ -7,7 +7,7 @@ import {
     Loader2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 import useApplyToCollege from '../hooks/useApplyToCollege';
 
 const CollegeHeader = ({ college, onOpenGallery, user }) => {

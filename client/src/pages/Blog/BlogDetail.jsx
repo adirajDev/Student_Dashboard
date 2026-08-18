@@ -1,18 +1,18 @@
 import { useEffect, useMemo, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 
-import usePostBySlug from '../../features/blog/hooks/usePostBySlug.js';
-import useReadingTime from '../../features/blog/hooks/useReadingTime.js';
+import usePostBySlug from '@/features/blog/hooks/usePostBySlug.js';
+import useReadingTime from '@/features/blog/hooks/useReadingTime.js';
 
-import PostAuthorCard from '../../features/blog/components/PostRender/PostAuthorCard.jsx';
-import PostBody from '../../features/blog/components/PostRender/PostBody.jsx';
-import PostCover from '../../features/blog/components/PostRender/PostCover.jsx';
-import PostErrorState from '../../features/blog/components/PostRender/PostErrorState.jsx';
-import PostMasthead from '../../features/blog/components/PostRender/PostMasthead.jsx';
-import PostSkeleton from '../../features/blog/components/PostRender/PostSkeleton.jsx';
-import ReadingProgressBar from '../../features/blog/components/PostRender/ReadingProgressBar.jsx';
+import PostAuthorCard from '@/features/blog/components/PostRender/PostAuthorCard.jsx';
+import PostBody from '@/features/blog/components/PostRender/PostBody.jsx';
+import PostCover from '@/features/blog/components/PostRender/PostCover.jsx';
+import PostErrorState from '@/features/blog/components/PostRender/PostErrorState.jsx';
+import PostMasthead from '@/features/blog/components/PostRender/PostMasthead.jsx';
+import PostSkeleton from '@/features/blog/components/PostRender/PostSkeleton.jsx';
+import ReadingProgressBar from '@/features/blog/components/PostRender/ReadingProgressBar.jsx';
 
-import { authorOf } from '../../features/blog/components/PostRender/utils/postFormatters.js';
+import { authorOf } from '@/features/blog/components/PostRender/utils/postFormatters.js';
 
 const BlogDetail = () => {
     const { slug } = useParams();

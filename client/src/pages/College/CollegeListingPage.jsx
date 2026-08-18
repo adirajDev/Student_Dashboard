@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter, Loader2 } from 'lucide-react';
-import CollegeCard from '../../features/college/components/CollegeCard';
-import useCollegeSearch from '../../features/college/hooks/useCollegeSearch';
-import Error from '../../components/common/Error';
+import CollegeCard from '@/features/college/components/CollegeCard';
+import useCollegeSearch from '@/features/college/hooks/useCollegeSearch';
+import Error from '@/components/common/Error';
 
 const CollegeListingPage = () => {
     const navigate = useNavigate();

@@ -1,5 +1,5 @@
 import { useOutletContext, Link } from 'react-router-dom';
-import useApplications from '../../features/student/hooks/useApplications';
+import useApplications from '@/features/student/hooks/useApplications';
 import { Loader2, X, GraduationCap, Building2 } from 'lucide-react';
 
 const StudentApplications = () => {

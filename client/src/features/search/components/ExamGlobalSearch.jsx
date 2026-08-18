@@ -1,7 +1,7 @@
 import { SlidersHorizontal } from 'lucide-react';
 import SearchBar from './SearchBar';
 import ExamFiltersDropdown from './ExamFiltersDropdown';
-import useClickOutside from '../../../hooks/useClickOutside';
+import useClickOutside from '@/hooks/useClickOutside';
 
 const ExamGlobalSearch = ({ query, setQuery, filters, setFilters }) => {
     const {

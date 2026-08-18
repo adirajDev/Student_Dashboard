@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Star, Pencil, Trash2 } from 'lucide-react';
 import useRatings from '../hooks/useRatings';
 import RatingFormModal from './RatingFormModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
-import Loading from '../../../components/common/Loading';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
+import Loading from '@/components/common/Loading';
 
 const MyRatingsSection = () => {
     const { ratings, isLoading, getMyRatings, updateRating, deleteRating } =

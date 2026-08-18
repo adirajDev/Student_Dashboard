@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useSignin = () => {
     const navigate = useNavigate();

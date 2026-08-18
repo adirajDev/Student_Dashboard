@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
-import useSignup from '../../features/auth/hooks/useSignup';
+import useSignup from '@/features/auth/hooks/useSignup';
 
-import SearchableSelect from '../../features/search/components/SearchableSelect';
+import SearchableSelect from '@/features/search/components/SearchableSelect';
 
 const Signup = () => {
     const {

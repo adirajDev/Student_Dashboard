@@ -1,5 +1,5 @@
 import useUserForm from '../hooks/useUserForm';
-import FormField from '../../../components/common/FormField';
+import FormField from '@/components/common/FormField';
 import SearchableSelect from '../../search/components/SearchableSelect';
 
 const UserForm = ({

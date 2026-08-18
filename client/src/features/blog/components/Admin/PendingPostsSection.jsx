@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Newspaper, CheckCircle2 } from 'lucide-react';
 import useBlogReview from '../../hooks/useBlogReview';
-import Loading from '../../../../components/common/Loading';
-import Pagination from '../../../../components/common/Pagination';
+import Loading from '@/components/common/Loading';
+import Pagination from '@/components/common/Pagination';
 import ReviewPostModal from './ReviewPostModal';
 
 const PendingPostsSection = ({ title }) => {

@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Pencil, Trash2, EyeOff, Eye, ChevronUp } from 'lucide-react';
 import useBlogPosts from '../../blog/hooks/useBlogPosts';
-import Loading from '../../../components/common/Loading';
-import ActionMenu from '../../../components/common/ActionMenu';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
+import Loading from '@/components/common/Loading';
+import ActionMenu from '@/components/common/ActionMenu';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import renderPostContent from '../../blog/components/renderPostContent';
 
 const EDITABLE_STATUSES = ['draft', 'rejected'];

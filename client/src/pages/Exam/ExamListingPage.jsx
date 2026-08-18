@@ -1,9 +1,9 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter } from 'lucide-react';
-import ExamCard from '../../features/exam/components/ExamCard';
-import useExamSearch from '../../features/search/hooks/useExamSearch';
-import Error from '../../components/common/Error';
+import ExamCard from '@/features/exam/components/ExamCard';
+import useExamSearch from '@/features/search/hooks/useExamSearch';
+import Error from '@/components/common/Error';
 import ExamSearchLoading from '../Search/ExamSearchLoading';
 import ExamSearchEmpty from '../Search/ExamSearchEmpty';
 

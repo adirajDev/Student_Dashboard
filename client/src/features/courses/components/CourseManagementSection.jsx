@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import CourseTable from './CourseTable';
 import CourseFormModal from './CourseFormModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import useCourseManagement from '../hooks/useCourseManagement';
 
 const CourseManagementSection = ({ title }) => {

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import apiClient from '../../../services/apiClient.js';
+import apiClient from '@/services/apiClient.js';
 
 const isCanceled = err =>
     err?.code === 'ERR_CANCELED' ||

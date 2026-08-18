@@ -1,11 +1,11 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import OverviewSection from '../../features/overview/components/OverviewSection';
-import UserManagementSection from '../../features/users/components/UserManagementSection';
-import CourseManagementSection from '../../features/courses/components/CourseManagementSection';
-import CollegeManagementSection from '../../features/college/components/CollegeManagementSection';
-import PendingUpdatesSection from '../../features/collegeUpdate/components/Admin/PendingUpdatesSection';
-import ExamManagementSection from '../../features/exam/components/ExamManagementSection';
-import PendingPostsSection from '../../features/blog/components/Admin/PendingPostsSection';
+import OverviewSection from '@/features/overview/components/OverviewSection';
+import UserManagementSection from '@/features/users/components/UserManagementSection';
+import CourseManagementSection from '@/features/courses/components/CourseManagementSection';
+import CollegeManagementSection from '@/features/college/components/CollegeManagementSection';
+import PendingUpdatesSection from '@/features/collegeUpdate/components/Admin/PendingUpdatesSection';
+import ExamManagementSection from '@/features/exam/components/ExamManagementSection';
+import PendingPostsSection from '@/features/blog/components/Admin/PendingPostsSection';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();

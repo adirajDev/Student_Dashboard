@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FileEdit, CheckCircle2 } from 'lucide-react';
 import useCollegeUpdates from '../../hooks/useCollegeUpdates';
-import Loading from '../../../../components/common/Loading';
-import Pagination from '../../../../components/common/Pagination';
+import Loading from '@/components/common/Loading';
+import Pagination from '@/components/common/Pagination';
 import ReviewUpdateModal from './ReviewUpdateModal';
 
 const PendingUpdatesSection = ({ title }) => {

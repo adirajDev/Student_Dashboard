@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, Navigate } from 'react-router-dom';
 import { ArrowRight, User, Building, ShieldCheck } from 'lucide-react';
-import Topbar from '../../components/layout/Topbar';
-import useAuth from '../../features/auth/hooks/useAuth';
+import Topbar from '@/components/layout/Topbar';
+import useAuth from '@/features/auth/hooks/useAuth';
 
 const LandingPage = () => {
     const navLinks = [

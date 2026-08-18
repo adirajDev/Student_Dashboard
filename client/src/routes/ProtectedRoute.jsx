@@ -1,5 +1,5 @@
 import { Navigate, Outlet, useOutletContext } from 'react-router-dom';
-import Loading from '../components/common/Loading';
+import Loading from '@/components/common/Loading';
 
 const ProtectedRoute = ({ allowedRoles }) => {
     const context = useOutletContext();

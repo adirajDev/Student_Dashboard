@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
-import FormField from '../../../components/common/FormField';
+import FormField from '@/components/common/FormField';
 
 const CourseFormModal = ({
     onAdd,

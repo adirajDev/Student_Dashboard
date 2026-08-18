@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { PenSquare } from 'lucide-react';
 import useBlogPosts from '../../blog/hooks/useBlogPosts';
 import BlogEditor from '../../blog/components/BlogEditor/BlogEditor';
-import Loading from '../../../components/common/Loading';
+import Loading from '@/components/common/Loading';
 
 const WritePostTab = () => {
     const [searchParams, setSearchParams] = useSearchParams();

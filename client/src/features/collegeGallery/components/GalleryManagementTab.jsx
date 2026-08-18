@@ -8,8 +8,8 @@ import {
     X,
 } from 'lucide-react';
 import useGalleryManagement from '../hooks/useGalleryManagement';
-import Loading from '../../../components/common/Loading';
-import apiClient from '../../../services/apiClient';
+import Loading from '@/components/common/Loading';
+import apiClient from '@/services/apiClient';
 
 const GalleryManagementTab = ({ user }) => {
     const {

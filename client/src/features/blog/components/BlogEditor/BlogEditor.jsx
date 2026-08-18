@@ -9,7 +9,7 @@ import Toolbar from './Toolbar';
 import ImageNode from './extensions/ImageNode';
 import YoutubeNode from './extensions/YoutubeNode';
 import { compressImage } from './utils/compressImage';
-import FormField from '../../../../components/common/FormField';
+import FormField from '@/components/common/FormField';
 import '../tiptapContent.css';
 
 const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };

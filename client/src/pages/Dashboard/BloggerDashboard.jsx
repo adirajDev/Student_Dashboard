@@ -1,7 +1,7 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import WritePostTab from '../../features/blogger/components/WritePostTab';
-import UpdateProfileTab from '../../features/blogger/components/UpdateProfileTab';
-import ViewPostsTab from '../../features/blogger/components/ViewPostsTab';
+import WritePostTab from '@/features/blogger/components/WritePostTab';
+import UpdateProfileTab from '@/features/blogger/components/UpdateProfileTab';
+import ViewPostsTab from '@/features/blogger/components/ViewPostsTab';
 
 const BloggerDashboard = () => {
     const { user } = useOutletContext();

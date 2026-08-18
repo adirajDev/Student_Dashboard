@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useCollegeSearch = (initialQuery = '') => {
     const [query, setQuery] = useState(initialQuery);
