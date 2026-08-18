@@ -4,7 +4,7 @@ import { useEditBloggerForm } from '../hooks/useEditBloggerForm';
 import ArrayListField from './ProfileEditFields/ArrayListField';
 import ProfileImageField from './ProfileEditFields/ProfileImageField';
 
-const UpdateProfileTab = ({user}) => {
+const UpdateProfileTab = ({ user }) => {
     const {
         formData,
         loading,
