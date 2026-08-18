@@ -2,7 +2,12 @@ import { useState, useEffect, useCallback } from 'react';
 import apiClient from '../../../services/apiClient.js';
 
 const MAX_IMAGE_BYTES = 1 * 1024 * 1024; // 1MB — keep in sync with backend Joi schema
-const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/svg+xml'];
+const ALLOWED_IMAGE_TYPES = [
+    'image/jpeg',
+    'image/png',
+    'image/webp',
+    'image/svg+xml',
+];
 
 const EMPTY_FORM = {
     about: '',
@@ -27,7 +32,6 @@ export const useEditBloggerForm = user => {
             setLoading(false);
             return;
         }
-
 
         let cancelled = false;
 

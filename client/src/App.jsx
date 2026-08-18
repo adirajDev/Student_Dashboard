@@ -18,6 +18,7 @@ import LandingPage from './pages/Landing/LandingPage';
 import ExamSearchPage from './pages/Search/ExamSearchPage';
 import ExamListingPage from './pages/Exam/ExamListingPage';
 import CollegeListingPage from './pages/College/CollegeListingPage';
+import BlogDetail from './pages/Blog/BlogDetail.jsx';
 
 function App() {
     return (
@@ -55,6 +56,7 @@ function App() {
                             element={<CollegeDetails />}
                         />
                         <Route path="/exam/:id" element={<ExamDetails />} />
+                        <Route path="/blog/:slug" element={<BlogDetail />} />
 
                         <Route
                             element={

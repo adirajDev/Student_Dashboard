@@ -204,7 +204,19 @@ export const rejectPost = async (postId, reviewNote) => {
 export const getPublishedPosts = async ({ skip = 0, limit = 0 }) => {
     const queryObj = { status: 'published' };
     const [data, totalCount] = await Promise.all([
-        Post.find(queryObj).sort({ publishedAt: -1 }).skip(skip).limit(limit),
+        Post.find(queryObj)
+            .select('title slug excerpt')
+            .populate({
+                path: 'author',
+                select: 'name',
+                populate: {
+                    path: 'bloggerProfile',
+                    select: 'profileImage postCount -user'
+                }
+            })
+            .sort({ publishedAt: -1 })
+            .skip(skip)
+            .limit(limit),
         Post.countDocuments(queryObj),
     ]);
     return { data, totalCount };
