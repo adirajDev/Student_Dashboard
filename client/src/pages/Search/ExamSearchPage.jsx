@@ -1,9 +1,9 @@
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Search } from 'lucide-react';
-import ExamGlobalSearch from '../../features/search/components/ExamGlobalSearch';
-import ExamCard from '../../features/exam/components/ExamCard';
-import useExamSearch from '../../features/search/hooks/useExamSearch';
-import Error from '../../components/common/Error';
+import ExamGlobalSearch from '@/features/search/components/ExamGlobalSearch';
+import ExamCard from '@/features/exam/components/ExamCard';
+import useExamSearch from '@/features/search/hooks/useExamSearch';
+import Error from '@/components/common/Error';
 import ExamSearchLoading from './ExamSearchLoading';
 import ExamSearchEmpty from './ExamSearchEmpty';
 

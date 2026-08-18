@@ -1,5 +1,5 @@
 import { UserCircle, Save } from 'lucide-react';
-import Loading from '../../../components/common/Loading.jsx'; // adjust path to match your project
+import Loading from '@/components/common/Loading.jsx'; // adjust path to match your project
 import { useEditBloggerForm } from '../hooks/useEditBloggerForm';
 import ArrayListField from './ProfileEditFields/ArrayListField';
 import ProfileImageField from './ProfileEditFields/ProfileImageField';

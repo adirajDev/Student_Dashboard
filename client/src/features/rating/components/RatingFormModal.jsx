@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Loader2, Star } from 'lucide-react';
-import FormField from '../../../components/common/FormField';
 
 const RatingFormModal = ({
     onAdd,

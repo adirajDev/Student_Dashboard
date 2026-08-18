@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useSettings = (user, onUpdate, onClose) => {
     const [formData, setFormData] = useState({

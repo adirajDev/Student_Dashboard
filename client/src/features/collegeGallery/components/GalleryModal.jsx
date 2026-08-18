@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { X, Video } from 'lucide-react';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const GalleryModal = ({ isOpen, onClose, collegeId, images, videos }) => {
     const [selectedMedia, setSelectedMedia] = useState(null);

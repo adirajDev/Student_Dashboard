@@ -6,14 +6,14 @@ import {
     useOutletContext,
 } from 'react-router-dom';
 import { Briefcase, Users, Building, Percent, TrendingUp } from 'lucide-react';
-import Loading from '../../components/common/Loading';
-import Error from '../../components/common/Error';
-import CollegeHeader from '../../features/college/components/CollegeHeader';
-import CourseList from '../../features/college/components/CourseList';
-import RatingList from '../../features/rating/components/RatingList';
-import useCollegeDetails from '../../features/college/hooks/useCollegeDetails';
-import GalleryModal from '../../features/collegeGallery/components/GalleryModal';
-import ListModal from '../../features/college/components/ListModal';
+import Loading from '@/components/common/Loading';
+import Error from '@/components/common/Error';
+import CollegeHeader from '@/features/college/components/CollegeHeader';
+import CourseList from '@/features/college/components/CourseList';
+import RatingList from '@/features/rating/components/RatingList';
+import useCollegeDetails from '@/features/college/hooks/useCollegeDetails';
+import GalleryModal from '@/features/collegeGallery/components/GalleryModal';
+import ListModal from '@/features/college/components/ListModal';
 
 const formatPackage = pkg => {
     if (!pkg) return null;

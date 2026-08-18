@@ -1,7 +1,7 @@
 import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
-import useExamDetails from '../../features/exam/hooks/useExamDetails';
-import Loading from '../../components/common/Loading';
-import Error from '../../components/common/Error';
+import useExamDetails from '@/features/exam/hooks/useExamDetails';
+import Loading from '@/components/common/Loading';
+import Error from '@/components/common/Error';
 import ExamHeader from './ExamHeader';
 import ExamSidebar from './ExamSidebar';
 import ExamEligibility from './ExamEligibility';

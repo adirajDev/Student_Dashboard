@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import apiClient from '../../../services/apiClient.js';
+import apiClient from '@/services/apiClient.js';
 
 const MAX_IMAGE_BYTES = 1 * 1024 * 1024; // 1MB — keep in sync with backend Joi schema
 const ALLOWED_IMAGE_TYPES = [

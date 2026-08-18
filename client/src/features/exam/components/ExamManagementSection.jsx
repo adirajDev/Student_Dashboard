@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import ExamTable from './ExamTable';
 import ExamFormModal from './ExamFormModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import useExams from '../hooks/useExams';
 
 const ExamManagementSection = ({ title }) => {

@@ -1,6 +1,6 @@
 import { Building2, Save } from 'lucide-react';
 import useEditCollegeForm from '../hooks/useEditCollegeForm';
-import Loading from '../../../components/common/Loading';
+import Loading from '@/components/common/Loading';
 import BasicInfoFields from './Form/BasicInfoFields';
 import PlacementFields from './Form/PlacementFields';
 import RecruiterFields from './Form/RecruiterFields';

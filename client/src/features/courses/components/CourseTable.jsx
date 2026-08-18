@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { Pencil, Trash2 } from 'lucide-react';
-import ActionMenu from '../../../components/common/ActionMenu';
+import ActionMenu from '@/components/common/ActionMenu';
 import SearchBar from '../../search/components/SearchBar';
-import Loading from '../../../components/common/Loading';
-import EmptyTable from '../../../components/common/EmptyTable';
-import NoResultsFound from '../../../components/common/NoResultsFound';
-import Error from '../../../components/common/Error';
-import Pagination from '../../../components/common/Pagination';
+import Loading from '@/components/common/Loading';
+import EmptyTable from '@/components/common/EmptyTable';
+import NoResultsFound from '@/components/common/NoResultsFound';
+import Error from '@/components/common/Error';
+import Pagination from '@/components/common/Pagination';
 
 const CourseTable = ({
     courses,

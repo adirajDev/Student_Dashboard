@@ -1,8 +1,15 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "oxc"],
+  "plugins": ["react", "oxc", "import"],
   "rules": {
     "react/rules-of-hooks": "error",
     "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  },
+  "settings": {
+    "import/resolver": {
+      "oxc": {
+        "tsconfig": { "configFile": "./jsconfig.json" }
+      }
+    }
   }
 }

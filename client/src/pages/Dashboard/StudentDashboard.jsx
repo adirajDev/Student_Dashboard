@@ -1,5 +1,5 @@
 import { useOutletContext } from 'react-router-dom';
-import MyReviewsTab from '../../features/rating/components/MyReviewsTab';
+import MyReviewsTab from '@/features/rating/components/MyReviewsTab';
 
 const StudentDashboard = () => {
     const { user } = useOutletContext();

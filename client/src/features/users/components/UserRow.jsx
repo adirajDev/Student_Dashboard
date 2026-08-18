@@ -1,5 +1,5 @@
 import { Pencil, Trash2, Eye } from 'lucide-react';
-import ActionMenu from '../../../components/common/ActionMenu';
+import ActionMenu from '@/components/common/ActionMenu';
 
 const UserRow = ({
     user,

@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { Star, Pencil, Trash2, Edit3 } from 'lucide-react';
 import useRatings from '../hooks/useRatings';
 import RatingFormModal from './RatingFormModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
-import Loading from '../../../components/common/Loading';
-import Pagination from '../../../components/common/Pagination';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
+import Loading from '@/components/common/Loading';
+import Pagination from '@/components/common/Pagination';
 
 const RatingList = ({ collegeId, currentUser }) => {
     const {

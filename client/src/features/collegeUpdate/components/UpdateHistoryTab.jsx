@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Clock, CheckCircle2, XCircle } from 'lucide-react';
 import useCollegeUpdates from '../hooks/useCollegeUpdates';
-import Loading from '../../../components/common/Loading';
-import Pagination from '../../../components/common/Pagination';
+import Loading from '@/components/common/Loading';
+import Pagination from '@/components/common/Pagination';
 
 const UpdateHistoryTab = () => {
     const { page, setPage, totalPages, getMyUpdates } = useCollegeUpdates();

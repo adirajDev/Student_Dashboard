@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useSignup = () => {
     const navigate = useNavigate();

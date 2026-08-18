@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import CollegeTable from './CollegeTable';
 import CollegeFormModal from './CollegeFormModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import useCollegeManagement from '../hooks/useCollegeManagement';
 
 const CollegeManagementSection = ({ title }) => {

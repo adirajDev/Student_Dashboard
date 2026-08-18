@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useCollegeManagement = (shouldFetch = true) => {
     const [colleges, setColleges] = useState([]);

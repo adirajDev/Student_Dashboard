@@ -3,7 +3,7 @@ import { Plus } from 'lucide-react';
 import UserTable from './UserTable';
 import UserFormModal from './UserFormModal';
 import UserDetailsModal from './UserDetailsModal';
-import DeleteConfirmModal from '../../../components/common/DeleteConfirmModal';
+import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import useUserManagement from '../hooks/useUserManagement';
 
 const UserManagementSection = ({

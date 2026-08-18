@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
     const [applications, setApplications] = useState(user?.applications || []);

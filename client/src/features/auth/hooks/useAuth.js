@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import apiClient from '../../../services/apiClient';
+import apiClient from '@/services/apiClient';
 
 const useAuth = (requireAuth = false) => {
     const navigate = useNavigate();
