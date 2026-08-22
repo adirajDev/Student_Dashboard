@@ -20,6 +20,7 @@ import ExamListingPage from './pages/Exam/ExamListingPage';
 import CollegeListingPage from './pages/College/CollegeListingPage';
 import BlogDetail from './pages/Blog/BlogDetail.jsx';
 import PostListing from '@/pages/Blog/PostListing.jsx';
+import BloggerProfilePage from '@/pages/Blog/BloggerProfilePage.jsx';
 
 function App() {
     return (
@@ -59,6 +60,10 @@ function App() {
                         <Route path="/exam/:id" element={<ExamDetails />} />
                         <Route path="/blog/:slug" element={<BlogDetail />} />
                         <Route path="/blog" element={<PostListing />} />
+                        <Route
+                            path="/blogger/:userId"
+                            element={<BloggerProfilePage />}
+                        />
 
                         <Route
                             element={
