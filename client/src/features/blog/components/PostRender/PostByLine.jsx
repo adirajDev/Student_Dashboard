@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { formatDate, initialsOf } from './utils/postFormatters';
 
 /**
@@ -25,18 +26,20 @@ const PostByline = ({ author, publishedAt }) => {
             )}
 
             <div className="leading-tight">
-                <p className="text-sm font-semibold text-[var(--color-ink-800)]">
-                    {name}
-                </p>
-                {(date || showCount) && (
-                    <p className="text-sm text-[var(--muted)]">
-                        {date}
-                        {date && showCount && (
-                            <span aria-hidden="true"> · </span>
-                        )}
-                        {showCount && `${author.postCount} articles`}
+                <Link to={`/blogger/${author.id}`}>
+                    <p className="text-sm font-semibold text-[var(--color-ink-800)]">
+                        {name}
                     </p>
-                )}
+                    {(date || showCount) && (
+                        <p className="text-sm text-[var(--muted)]">
+                            {date}
+                            {date && showCount && (
+                                <span aria-hidden="true"> · </span>
+                            )}
+                            {showCount && `${author.postCount} articles`}
+                        </p>
+                    )}
+                </Link>
             </div>
         </div>
     );
