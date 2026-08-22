@@ -12,11 +12,10 @@ const PostListing = () => {
                         The Journal
                     </p>
                     <h1 className="stagger-in stagger-2 mt-3 max-w-2xl text-4xl leading-tight md:text-5xl">
-                        Guidance, written by people who have sat on both sides
-                        of the admissions desk.
+                        Guidance and latest news about college admissions, and exams.
                     </h1>
                     <p className="stagger-in stagger-3 mt-5 max-w-xl text-base leading-relaxed text-[var(--muted)]">
-                        Cut-offs, placement numbers, campus realities and
+                        Cut-offs, placement numbers, campus realities, upcoming exams and
                         application strategy — explained without the brochure
                         gloss.
                     </p>
