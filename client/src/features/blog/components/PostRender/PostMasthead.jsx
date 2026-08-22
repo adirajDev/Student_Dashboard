@@ -3,7 +3,6 @@ import PostByline from './PostByLine.jsx';
 import useShareLink from '../../hooks/useShareLink.js';
 
 const PostMasthead = ({ title, excerpt, author, publishedAt, readingTime }) => {
-    const { share, copied } = useShareLink(title);
 
     return (
         <header className="surface-wash border-b border-[var(--border)]">
@@ -31,13 +30,6 @@ const PostMasthead = ({ title, excerpt, author, publishedAt, readingTime }) => {
 
                 <div className="mt-8 flex flex-wrap items-center justify-between gap-4 stagger-in stagger-4">
                     <PostByline author={author} publishedAt={publishedAt} />
-                    <button
-                        type="button"
-                        onClick={share}
-                        className="btn-secondary py-2 text-sm"
-                    >
-                        {copied ? 'Link copied' : 'Share'}
-                    </button>
                 </div>
             </div>
         </header>
