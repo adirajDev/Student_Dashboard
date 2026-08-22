@@ -26,7 +26,8 @@ import {
 
 const router = express.Router();
 
-router.get('/', validateQuery(paginationQuerySchema), getPublishedPosts);
+router.get('/', getPublishedPosts);
+// router.get('/', validateQuery(paginationQuerySchema), getPublishedPosts);
 router.get('/slug/:slug', getPostBySlug);
 
 router.get('/mine', requireAuth, requireRole('blogger'), getMyPosts);
