@@ -201,6 +201,7 @@ export const rejectPost = async (postId, reviewNote) => {
     return post;
 };
 
+/* removing pagination for now
 export const getPublishedPosts = async ({ skip = 0, limit = 0 }) => {
     const queryObj = { status: 'published' };
     const [data, totalCount] = await Promise.all([
@@ -220,6 +221,25 @@ export const getPublishedPosts = async ({ skip = 0, limit = 0 }) => {
         Post.countDocuments(queryObj),
     ]);
     return { data, totalCount };
+};
+*/
+
+export const getPublishedPosts = async () => {
+    const queryObj = { status: 'published' };
+
+    const posts = await Post.find(queryObj)
+        .select('title slug excerpt')
+        .populate({
+            path: 'author',
+            select: 'name',
+            populate: {
+                path: 'bloggerProfile',
+                select: 'profileImage postCount -user',
+            },
+        })
+        .sort({ publishedAt: -1 });
+
+    return posts;
 };
 
 export const getPublishedPostBySlug = async slug => {

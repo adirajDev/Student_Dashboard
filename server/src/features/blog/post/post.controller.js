@@ -73,14 +73,16 @@ export const rejectPost = asyncHandler(async (req, res) => {
 });
 
 export const getPublishedPosts = asyncHandler(async (req, res) => {
-    const { page, limit, skip } = getPaginationOptions(req);
-    const { data, totalCount } = await postService.getPublishedPosts({
-        skip,
-        limit,
-    });
+    // const { page, limit, skip } = getPaginationOptions(req);
+    // const { data, totalCount } = await postService.getPublishedPosts({
+    //     skip,
+    //     limit,
+    // });
+    const data = await postService.getPublishedPosts();
     res.status(200).json({
         success: true,
-        ...formatPaginatedResponse(data, totalCount, page, limit),
+        data: data,
+        // ...formatPaginatedResponse(data, totalCount, page, limit),
     });
 });
 
