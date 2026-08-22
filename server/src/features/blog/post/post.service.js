@@ -1,9 +1,12 @@
+import mongoose from 'mongoose';
+
 import Post from './post.model.js';
 import AppError from '../../../common/errors/AppError.js';
 import {
     validatePostContent,
     validateCoverImage,
 } from './post.content-validator.js';
+import Blogger from "../blogger/blogger.model.js";
 
 const EDITABLE_STATUSES = ['draft', 'rejected'];
 
@@ -23,13 +26,29 @@ const loadOwnedPost = async (postId, authorId) => {
     if (!post) {
         throw new AppError('Post not found.', 404);
     }
-    if (String(post.author) !== String(authorId)) {
+    if (!post.author.equals(authorId)) {
         throw new AppError(
             'You do not have permission to modify this post.',
             403
         );
     }
     return post;
+};
+
+const updatePostCount = async (userId, delta = 1) => {
+    const blogger = await Blogger.findOneAndUpdate(
+        { user: userId },
+        { $inc: { postCount: delta } },
+        { returnDocument: 'after' }
+    );
+
+    if (!blogger) {
+        // Author has no blogger profile (shouldn't normally happen per your
+        // data model, but don't let a missing profile break the approval flow)
+        throw new AppError(`No blogger profile found for user ${userId}; postCount not updated.`, 404);
+    }
+
+    return blogger;
 };
 
 export const createPost = async (authorId, payload) => {
@@ -113,9 +132,17 @@ export const unpublishPost = async (postId, authorId) => {
         throw new AppError('Only published posts can be unpublished.', 409);
     }
 
-    post.status = 'draft';
-    post.publishedAt = null;
-    await post.save();
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            post.status = 'draft';
+            post.publishedAt = null;
+            await updatePostCount(post.author, -1);
+            await post.save();
+        })
+    } finally {
+        await session.endSession();
+    }
     return post;
 };
 
@@ -133,7 +160,9 @@ export const deletePost = async (postId, authorId) => {
 };
 
 export const getMyPosts = async authorId => {
-    return Post.find({ author: authorId }).sort({ updatedAt: -1 });
+    return Post.find({ author: authorId })
+               .sort({ updatedAt: -1 })
+        .lean();
 };
 
 export const getPostForOwnerOrAdmin = async (postId, requestingUser) => {
@@ -142,7 +171,7 @@ export const getPostForOwnerOrAdmin = async (postId, requestingUser) => {
         throw new AppError('Post not found.', 404);
     }
 
-    const isOwner = String(post.author) === String(requestingUser._id);
+    const isOwner = post.author.equals(requestingUser._id);
     const isAdmin = requestingUser.role === 'admin';
     if (!isOwner && !isAdmin) {
         throw new AppError(
@@ -163,7 +192,6 @@ export const getPendingReviewPosts = async ({ skip = 0, limit = 0 }) => {
     return { data, totalCount };
 };
 
-// TODO: update postCount for blogger's profile db whose post got approved
 export const approvePost = async postId => {
     const post = await Post.findById(postId);
     if (!post) {
@@ -174,10 +202,19 @@ export const approvePost = async postId => {
     }
 
     const now = new Date();
-    post.status = 'published';
-    post.publishedAt = now;
-    post.reviewedAt = now;
-    await post.save();
+    const session = await mongoose.startSession();
+    try {
+        await session.withTransaction(async () => {
+            post.status = 'published';
+            post.publishedAt = now;
+            post.reviewedAt = now;
+            await post.save({ session });
+            await updatePostCount(post.author, 1);
+        });
+    } finally {
+        await session.endSession();
+    }
+
     return post;
 };
 
@@ -201,29 +238,7 @@ export const rejectPost = async (postId, reviewNote) => {
     return post;
 };
 
-/* removing pagination for now
-export const getPublishedPosts = async ({ skip = 0, limit = 0 }) => {
-    const queryObj = { status: 'published' };
-    const [data, totalCount] = await Promise.all([
-        Post.find(queryObj)
-            .select('title slug excerpt')
-            .populate({
-                path: 'author',
-                select: 'name',
-                populate: {
-                    path: 'bloggerProfile',
-                    select: 'profileImage postCount -user'
-                }
-            })
-            .sort({ publishedAt: -1 })
-            .skip(skip)
-            .limit(limit),
-        Post.countDocuments(queryObj),
-    ]);
-    return { data, totalCount };
-};
-*/
-
+// TODO: re-add pagination (see git history)
 export const getPublishedPosts = async () => {
     const queryObj = { status: 'published' };
 
@@ -237,7 +252,8 @@ export const getPublishedPosts = async () => {
                 select: 'profileImage postCount -user',
             },
         })
-        .sort({ publishedAt: -1 });
+        .sort({ publishedAt: -1 })
+        .lean();
 
     return posts;
 };

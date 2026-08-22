@@ -61,9 +61,6 @@ export const useBloggerProfile = userId => {
                 signal: controller.signal,
             });
             setRaw(data?.data ?? data ?? null);
-
-            // todo: remove after debugging
-            console.log(raw);
         } catch (err) {
             if (err?.code === 'ERR_CANCELED') return;
             if (err?.response?.status === 404) {
