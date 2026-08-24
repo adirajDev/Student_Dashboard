@@ -37,7 +37,6 @@ app.use(
     })
 );
 
-
 // Routes
 
 app.use('/api', apiRoutes);

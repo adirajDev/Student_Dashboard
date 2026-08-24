@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 // Reusable image sub-schema — used wherever an image appears in Tiptap JSON attrs
-export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 200KB
+export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 500KB
 export const MAX_IMAGES_PER_BLOG = 10;
 
 const postSchema = new mongoose.Schema(
@@ -37,7 +37,7 @@ const postSchema = new mongoose.Schema(
             data: { type: String }, // base64 string
             mimeType: {
                 type: String,
-                enum: ['image/jpeg', 'image/png', 'image/webp'],
+                enum: ['image/jpeg', 'image/png', 'image/webp', 'image/avif'],
             },
             sizeBytes: { type: Number },
         },

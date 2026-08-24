@@ -6,7 +6,7 @@ import {
     validatePostContent,
     validateCoverImage,
 } from './post.content-validator.js';
-import Blogger from "../blogger/blogger.model.js";
+import Blogger from '../blogger/blogger.model.js';
 
 const EDITABLE_STATUSES = ['draft', 'rejected'];
 
@@ -45,7 +45,10 @@ const updatePostCount = async (userId, delta = 1) => {
     if (!blogger) {
         // Author has no blogger profile (shouldn't normally happen per your
         // data model, but don't let a missing profile break the approval flow)
-        throw new AppError(`No blogger profile found for user ${userId}; postCount not updated.`, 404);
+        throw new AppError(
+            `No blogger profile found for user ${userId}; postCount not updated.`,
+            404
+        );
     }
 
     return blogger;
@@ -139,7 +142,7 @@ export const unpublishPost = async (postId, authorId) => {
             post.publishedAt = null;
             await updatePostCount(post.author, -1);
             await post.save();
-        })
+        });
     } finally {
         await session.endSession();
     }
@@ -160,9 +163,7 @@ export const deletePost = async (postId, authorId) => {
 };
 
 export const getMyPosts = async authorId => {
-    return Post.find({ author: authorId })
-               .sort({ updatedAt: -1 })
-        .lean();
+    return Post.find({ author: authorId }).sort({ updatedAt: -1 }).lean();
 };
 
 export const getPostForOwnerOrAdmin = async (postId, requestingUser) => {

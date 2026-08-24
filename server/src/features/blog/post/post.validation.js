@@ -11,7 +11,7 @@ const SLUG_PATTERN = /^[a-z0-9-]+$/;
 const coverImageSchema = Joi.object({
     data: Joi.string().required(),
     mimeType: Joi.string()
-        .valid('image/jpeg', 'image/png', 'image/webp')
+        .valid('image/jpeg', 'image/png', 'image/webp', 'image/avif')
         .required(),
     sizeBytes: Joi.number().required(),
 });
