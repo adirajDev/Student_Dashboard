@@ -16,6 +16,7 @@ const newsSchema = new mongoose.Schema({
             type: String,
             enum: [
                 'image/jpg',
+                'image/jpeg',
                 'image/png',
                 'image/webp',
                 'image/avif',
