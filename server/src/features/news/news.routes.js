@@ -13,11 +13,12 @@ import { requireRole } from '../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 
+router.get('/', getNews);
+router.get('/:id', getNewsById);
+
 router.use(requireAuth);
 router.use(requireRole('admin'));
 
-router.get('/', getNews);
-router.get('/:id', getNewsById);
 router.post('/', validateBody(createNewsSchema), createNews);
 router.put('/:id', validateBody(updateNewsSchema), updateNews);
 router.delete('/:id', deleteNewsById);
