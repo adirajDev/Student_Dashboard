@@ -12,6 +12,7 @@ const navLinks = [
     { name: 'About Us', href: '/#about' },
     { name: 'Colleges', href: '/college' },
     { name: 'Exams', href: '/exams' },
+    { name: 'News', href: '/news' },
     { name: 'Blogs', href: '/blog' },
     { name: 'Contact Us', href: '/#contact' },
 ];

@@ -21,6 +21,8 @@ import CollegeListingPage from './pages/College/CollegeListingPage';
 import BlogDetail from './pages/Blog/BlogDetail.jsx';
 import PostListing from '@/pages/Blog/PostListing.jsx';
 import BloggerProfilePage from '@/pages/Blog/BloggerProfilePage.jsx';
+import NewsListingPage from "@/pages/News/NewsListingPage.jsx";
+import NewsDetail from "@/pages/News/NewsDetail.jsx";
 
 function App() {
     return (
@@ -53,11 +55,13 @@ function App() {
                             element={<ExamSearchPage />}
                         />
                         <Route path="/exams" element={<ExamListingPage />} />
+                        <Route path="/exam/:id" element={<ExamDetails />} />
+                        <Route path="/news" element={<NewsListingPage />} />
+                        <Route path="/news/:id" element={<NewsDetail />} />
                         <Route
                             path="/college/:id"
                             element={<CollegeDetails />}
                         />
-                        <Route path="/exam/:id" element={<ExamDetails />} />
                         <Route path="/blog/:slug" element={<BlogDetail />} />
                         <Route path="/blog" element={<PostListing />} />
                         <Route
