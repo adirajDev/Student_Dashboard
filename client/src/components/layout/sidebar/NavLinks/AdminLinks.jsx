@@ -68,6 +68,15 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
             )}
 
             {isAdmin && (
+                <NavItem
+                    icon={<Newspaper className="w-5 h-5" />}
+                    label="News"
+                    isActive={activeTab === 'news'}
+                    onClick={() => handleNav('/admin/dashboard?tab=news')}
+                />
+            )}
+
+            {isAdmin && (
                 <>
                     <NavItem
                         icon={<Library className="w-5 h-5" />}
