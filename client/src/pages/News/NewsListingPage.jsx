@@ -53,6 +53,7 @@ const NewsListingPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
+                        {/*
                         <div className="mb-4">
                             <SearchBar
                                 value={filters.query}
@@ -69,6 +70,7 @@ const NewsListingPage = () => {
                         <div className="mb-4 flex justify-between items-center text-sm font-medium text-[var(--muted)]">
                             <span>Showing {results.length} articles</span>
                         </div>
+                        */}
 
                         {error && <Error error={error} />}
 
@@ -141,53 +143,6 @@ const NewsListingPage = () => {
                                                 </button>
                                             ))}
                                         </div>
-                                    </div>
-
-                                    {/* Cover Image (Checkbox) */}
-                                    <div>
-                                        <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
-                                            Media
-                                        </label>
-                                        <label className="flex items-center gap-3 cursor-pointer group">
-                                            <input
-                                                type="checkbox"
-                                                className="hidden"
-                                                checked={filters.withCover}
-                                                onChange={() =>
-                                                    setFilters({
-                                                        ...filters,
-                                                        withCover:
-                                                            !filters.withCover,
-                                                    })
-                                                }
-                                            />
-                                            <div
-                                                className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors ${
-                                                    filters.withCover
-                                                        ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
-                                                        : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
-                                                }`}
-                                            >
-                                                {filters.withCover && (
-                                                    <svg
-                                                        className="w-3 h-3 text-white"
-                                                        fill="none"
-                                                        viewBox="0 0 24 24"
-                                                        stroke="currentColor"
-                                                        strokeWidth={3}
-                                                    >
-                                                        <path
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            d="M5 13l4 4L19 7"
-                                                        />
-                                                    </svg>
-                                                )}
-                                            </div>
-                                            <span className="text-sm font-medium text-[var(--foreground)]">
-                                                With cover image
-                                            </span>
-                                        </label>
                                     </div>
 
                                     {/* Month (Select Dropdown) */}

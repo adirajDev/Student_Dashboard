@@ -2,10 +2,10 @@ import { useParams, useNavigate, useOutletContext } from 'react-router-dom';
 import useExamDetails from '@/features/exam/hooks/useExamDetails';
 import Loading from '@/components/common/Loading';
 import Error from '@/components/common/Error';
-import ExamHeader from './ExamHeader';
-import ExamSidebar from './ExamSidebar';
-import ExamEligibility from './ExamEligibility';
-import ExamDescription from './ExamDescription';
+import ExamHeader from '../../features/exam/components/ExamDetail/ExamHeader.jsx';
+import ExamSidebar from '../../features/exam/components/ExamDetail/ExamSidebar.jsx';
+import ExamEligibility from '../../features/exam/components/ExamDetail/ExamEligibility.jsx';
+import ExamDescription from '../../features/exam/components/ExamDetail/ExamDescription.jsx';
 
 const ExamDetails = () => {
     const { id } = useParams();
