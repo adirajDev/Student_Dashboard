@@ -75,7 +75,7 @@ const NewsListingPage = () => {
                         {isLoading ? (
                             <Loading />
                         ) : results.length > 0 ? (
-                            <div className="grid sm:grid-cols-2 gap-6">
+                            <div className="flex flex-col gap-6">
                                 {results.map(item => (
                                     <NewsCard
                                         key={item._id}
