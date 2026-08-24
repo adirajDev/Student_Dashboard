@@ -19,7 +19,8 @@ export const updateNewsById = async (id, payload) => {
     if (!news) {
         throw new AppError('No news is found with this id', 404);
     }
-    return news.set(payload);
+    await news.set(payload);
+    return await news.save();
 };
 
 export const deleteNewsById = async id => {
