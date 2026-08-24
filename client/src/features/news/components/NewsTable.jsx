@@ -7,7 +7,11 @@ import EmptyTable from '@/components/common/EmptyTable';
 import NoResultsFound from '@/components/common/NoResultsFound';
 import Error from '@/components/common/Error';
 import Pagination from '@/components/common/Pagination';
-import { getImageSrc, getExcerpt, formatPublishedDate } from '../utils/newsUtils';
+import {
+    getImageSrc,
+    getExcerpt,
+    formatPublishedDate,
+} from '../utils/newsUtils';
 
 const NewsTable = ({ news, isLoading, error, onEdit, onDelete }) => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -63,102 +67,102 @@ const NewsTable = ({ news, isLoading, error, onEdit, onDelete }) => {
                         <div className="overflow-x-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                <tr className="bg-[var(--color-ink-50)]/50 border-b border-[var(--border)]">
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Title
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Cover
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
-                                        Published
-                                    </th>
-                                    <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
-                                        Actions
-                                    </th>
-                                </tr>
+                                    <tr className="bg-[var(--color-ink-50)]/50 border-b border-[var(--border)]">
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Title
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Cover
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)]">
+                                            Published
+                                        </th>
+                                        <th className="px-6 py-4 text-sm font-semibold text-[var(--foreground)] text-right">
+                                            Actions
+                                        </th>
+                                    </tr>
                                 </thead>
                                 <tbody className="divide-y divide-[var(--border)]">
-                                {paginatedNews.map(item => {
-                                    const imageSrc = getImageSrc(
-                                        item.coverImage
-                                    );
+                                    {paginatedNews.map(item => {
+                                        const imageSrc = getImageSrc(
+                                            item.coverImage
+                                        );
 
-                                    return (
-                                        <tr
-                                            key={item._id}
-                                            className="hover:bg-[var(--color-amber-50)] transition-colors group"
-                                        >
-                                            <td className="px-6 py-4">
-                                                <div className="flex flex-col max-w-md">
+                                        return (
+                                            <tr
+                                                key={item._id}
+                                                className="hover:bg-[var(--color-amber-50)] transition-colors group"
+                                            >
+                                                <td className="px-6 py-4">
+                                                    <div className="flex flex-col max-w-md">
                                                         <span className="font-medium text-[var(--foreground)] truncate">
                                                             {item.title}
                                                         </span>
-                                                    <span className="text-[var(--muted)] text-xs mt-1 truncate">
+                                                        <span className="text-[var(--muted)] text-xs mt-1 truncate">
                                                             {getExcerpt(
                                                                 item.content,
                                                                 90
                                                             )}
                                                         </span>
-                                                </div>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                {imageSrc ? (
-                                                    <img
-                                                        src={imageSrc}
-                                                        alt={item.title}
-                                                        loading="lazy"
-                                                        className="w-16 h-10 object-cover rounded-[var(--radius-md)] border border-[var(--border)]"
-                                                    />
-                                                ) : (
-                                                    <span className="status-pill bg-slate-100 text-slate-600">
+                                                    </div>
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    {imageSrc ? (
+                                                        <img
+                                                            src={imageSrc}
+                                                            alt={item.title}
+                                                            loading="lazy"
+                                                            className="w-16 h-10 object-cover rounded-[var(--radius-md)] border border-[var(--border)]"
+                                                        />
+                                                    ) : (
+                                                        <span className="status-pill bg-slate-100 text-slate-600">
                                                             <ImageOff className="w-3 h-3 shrink-0" />{' '}
-                                                        None
+                                                            None
                                                         </span>
-                                                )}
-                                            </td>
-                                            <td className="px-6 py-4">
+                                                    )}
+                                                </td>
+                                                <td className="px-6 py-4">
                                                     <span className="font-semibold flex items-center gap-2 text-[var(--foreground)] text-sm">
                                                         <Calendar className="w-4 h-4 text-indigo-500 shrink-0" />
                                                         {formatPublishedDate(
                                                             item
                                                         )}
                                                     </span>
-                                            </td>
-                                            <td className="px-6 py-4">
-                                                <div className="flex items-center justify-end gap-2">
-                                                    <ActionMenu
-                                                        actions={[
-                                                            onEdit && {
-                                                                label: 'Edit',
-                                                                icon: (
-                                                                    <Pencil className="w-4 h-4" />
-                                                                ),
-                                                                onClick:
-                                                                    () =>
-                                                                        onEdit(
-                                                                            item
-                                                                        ),
-                                                            },
-                                                            onDelete && {
-                                                                label: 'Delete',
-                                                                icon: (
-                                                                    <Trash2 className="w-4 h-4" />
-                                                                ),
-                                                                danger: true,
-                                                                onClick:
-                                                                    () =>
-                                                                        onDelete(
-                                                                            item
-                                                                        ),
-                                                            },
-                                                        ].filter(Boolean)}
-                                                    />
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+                                                </td>
+                                                <td className="px-6 py-4">
+                                                    <div className="flex items-center justify-end gap-2">
+                                                        <ActionMenu
+                                                            actions={[
+                                                                onEdit && {
+                                                                    label: 'Edit',
+                                                                    icon: (
+                                                                        <Pencil className="w-4 h-4" />
+                                                                    ),
+                                                                    onClick:
+                                                                        () =>
+                                                                            onEdit(
+                                                                                item
+                                                                            ),
+                                                                },
+                                                                onDelete && {
+                                                                    label: 'Delete',
+                                                                    icon: (
+                                                                        <Trash2 className="w-4 h-4" />
+                                                                    ),
+                                                                    danger: true,
+                                                                    onClick:
+                                                                        () =>
+                                                                            onDelete(
+                                                                                item
+                                                                            ),
+                                                                },
+                                                            ].filter(Boolean)}
+                                                        />
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
                                 </tbody>
                             </table>
                         </div>

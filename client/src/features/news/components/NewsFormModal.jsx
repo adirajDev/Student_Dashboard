@@ -77,8 +77,8 @@ const NewsFormModal = ({ editingNews, title, onAdd, onUpdate, onClose }) => {
                         {isSubmitting
                             ? 'Saving...'
                             : editingNews
-                                ? 'Update News'
-                                : 'Publish News'}
+                              ? 'Update News'
+                              : 'Publish News'}
                     </button>
                 </div>
             </div>

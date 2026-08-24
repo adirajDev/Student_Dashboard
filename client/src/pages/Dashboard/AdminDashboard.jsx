@@ -6,7 +6,7 @@ import CollegeManagementSection from '@/features/college/components/CollegeManag
 import PendingUpdatesSection from '@/features/collegeUpdate/components/Admin/PendingUpdatesSection';
 import ExamManagementSection from '@/features/exam/components/ExamManagementSection';
 import PendingPostsSection from '@/features/blog/components/Admin/PendingPostsSection';
-import NewsManagementSection from "@/features/news/components/NewsManagementSection.jsx";
+import NewsManagementSection from '@/features/news/components/NewsManagementSection.jsx';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();

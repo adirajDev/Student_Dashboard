@@ -38,9 +38,7 @@ const useNews = (shouldFetch = true) => {
         const { data } = await apiClient.put(`${NEWS_ENDPOINT}/${id}`, payload);
         const updated = data?.data;
         setNews(prev =>
-            prev.map(item =>
-                item._id === id ? { ...item, ...updated } : item
-            )
+            prev.map(item => (item._id === id ? { ...item, ...updated } : item))
         );
         return updated;
     }, []);

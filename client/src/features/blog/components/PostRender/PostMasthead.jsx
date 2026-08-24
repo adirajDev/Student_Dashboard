@@ -3,7 +3,6 @@ import PostByline from './PostByLine.jsx';
 import useShareLink from '../../hooks/useShareLink.js';
 
 const PostMasthead = ({ title, excerpt, author, publishedAt, readingTime }) => {
-
     return (
         <header className="surface-wash border-b border-[var(--border)]">
             <div className="mx-auto max-w-3xl px-5 pt-10 pb-14">

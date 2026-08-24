@@ -9,13 +9,13 @@ import {
 } from '../utils/newsUtils';
 
 const NewsFormFields = ({
-                            formData,
-                            isReadingImage,
-                            coverError,
-                            handleChange,
-                            handleCoverChange,
-                            removeCoverImage,
-                        }) => {
+    formData,
+    isReadingImage,
+    coverError,
+    handleChange,
+    handleCoverChange,
+    removeCoverImage,
+}) => {
     const coverInputRef = useRef(null);
     const previewSrc = getImageSrc(formData.coverImage);
 
