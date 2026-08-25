@@ -29,7 +29,7 @@ const newsSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-}, { timestamps: true }
+    }, { timestamps: true }
 );
 
 const News = mongoose.model('News', newsSchema);
