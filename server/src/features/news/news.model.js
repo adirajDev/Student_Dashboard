@@ -11,7 +11,7 @@ const newsSchema = new mongoose.Schema({
         unique: true,
     },
     coverImage: {
-        data: { type: String },
+        data: {type: String},
         mimeType: {
             type: String,
             enum: [
@@ -23,13 +23,14 @@ const newsSchema = new mongoose.Schema({
                 'image/gif',
             ],
         },
-        sizeBytes: { type: Number },
+        sizeBytes: {type: Number},
     },
     content: {
         type: String,
         required: true,
     },
-});
+}, { timestamps: true }
+);
 
 const News = mongoose.model('News', newsSchema);
 export default News;

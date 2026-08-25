@@ -4,6 +4,7 @@ import {
     toImageSrc,
     toInitials,
 } from '@/features/blogger/components/util/media';
+import { getExcerpt, getErrorMessage } from '../utils/postUtils';
 
 const normalizePost = post => {
     const author = post?.author ?? {};
@@ -11,11 +12,26 @@ const normalizePost = post => {
     const authorName = author?.name ?? 'Unknown author';
 
     return {
+        // Keep the raw id AND the display id — postUtils falls back to the
+        // ObjectId timestamp when no date field is present.
+        _id: post?._id ?? null,
         id: post?._id ?? post?.id ?? post?.slug,
         title: post?.title ?? 'Untitled',
         slug: post?.slug ?? '',
-        excerpt: post?.excerpt ?? '',
+        excerpt: post?.excerpt || getExcerpt(post?.content ?? ''),
         href: `/blog/${post?.slug ?? ''}`,
+
+        // Filterable fields — usePostFilters searches and sorts on these, so
+        // they have to survive normalisation.
+        subtitle: post?.subtitle ?? '',
+        category: post?.category ?? '',
+        tags: Array.isArray(post?.tags) ? post.tags : [],
+        content: post?.content ?? '',
+        publishedAt: post?.publishedAt ?? null,
+        publishedOn: post?.publishedOn ?? null,
+        createdAt: post?.createdAt ?? null,
+        date: post?.date ?? null,
+
         authorName,
         authorInitials: toInitials(authorName),
         authorImage: toImageSrc(profile?.profileImage),
@@ -33,9 +49,9 @@ const extractList = payload => {
     return [];
 };
 
-export const usePublishedPosts = () => {
+export const usePublishedPosts = (shouldFetch = true) => {
     const [rawPosts, setRawPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
+    const [isLoading, setIsLoading] = useState(shouldFetch);
     const [error, setError] = useState(null);
     const controllerRef = useRef(null);
 
@@ -55,8 +71,10 @@ export const usePublishedPosts = () => {
         } catch (err) {
             if (err?.code === 'ERR_CANCELED') return;
             setError(
-                err?.response?.data?.message ??
+                getErrorMessage(
+                    err,
                     "We couldn't load the posts. Check your connection and try again."
+                )
             );
         } finally {
             if (!controller.signal.aborted) setIsLoading(false);
@@ -64,9 +82,9 @@ export const usePublishedPosts = () => {
     }, []);
 
     useEffect(() => {
-        fetchPosts();
+        if (shouldFetch) fetchPosts();
         return () => controllerRef.current?.abort();
-    }, [fetchPosts]);
+    }, [shouldFetch, fetchPosts]);
 
     const posts = useMemo(() => rawPosts.map(normalizePost), [rawPosts]);
 

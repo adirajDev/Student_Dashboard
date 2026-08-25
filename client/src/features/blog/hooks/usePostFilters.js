@@ -1,31 +1,40 @@
 import { useMemo, useState } from 'react';
-import { getPublishedDate, stripMarkup } from '../utils/newsUtils';
+import { getPublishedDate, stripMarkup } from '../utils/postUtils';
 
 export const DEFAULT_FILTERS = {
     query: '',
     sort: 'newest',
     month: 'all',
-    withCover: false,
 };
 
-// Everything is client-side: GET /news returns the full list with no query
+// Everything is client-side: GET /posts returns the full list with no query
 // params, so there is nothing to push to the server.
-const useNewsFilters = news => {
+const usePostFilters = posts => {
     const [filters, setFilters] = useState(DEFAULT_FILTERS);
 
     const results = useMemo(() => {
         const query = filters.query.trim().toLowerCase();
 
-        const filtered = (news || []).filter(item => {
+        const filtered = (posts || []).filter(post => {
             if (query) {
-                const haystack = `${item.title} ${stripMarkup(
-                    item.content
-                )}`.toLowerCase();
+                const haystack = [
+                    post.title,
+                    post.subtitle,
+                    post.excerpt,
+                    post.category,
+                    post.authorName,
+                    ...(Array.isArray(post.tags) ? post.tags : []),
+                    stripMarkup(post.content || ''),
+                ]
+                    .filter(Boolean)
+                    .join(' ')
+                    .toLowerCase();
+
                 if (!haystack.includes(query)) return false;
             }
 
             if (filters.month !== 'all') {
-                const date = getPublishedDate(item);
+                const date = getPublishedDate(post);
                 if (!date || date.getMonth() !== Number(filters.month)) {
                     return false;
                 }
@@ -39,7 +48,7 @@ const useNewsFilters = news => {
             const bTime = getPublishedDate(b)?.getTime() || 0;
             return filters.sort === 'oldest' ? aTime - bTime : bTime - aTime;
         });
-    }, [news, filters]);
+    }, [posts, filters]);
 
     const hasActiveFilters =
         Boolean(filters.query) ||
@@ -51,4 +60,4 @@ const useNewsFilters = news => {
     return { filters, setFilters, results, hasActiveFilters, clearFilters };
 };
 
-export default useNewsFilters;
+export default usePostFilters;
