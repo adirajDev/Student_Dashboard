@@ -4,6 +4,7 @@ import Course from '../../course/course.model.js';
 import AppError from '../../../common/errors/AppError.js';
 import { validateProposedChanges } from './update.validation.js';
 import { applyProposedChanges } from './update.merge.js';
+import mongoose from "mongoose";
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
@@ -106,15 +107,20 @@ export const approveUpdate = async updateId => {
 
     applyProposedChanges(college, changes);
 
+    const session = await mongoose.startSession();
     try {
-        await college.save();
+        await session.withTransaction(async () => {
+            await college.save({ session });
+            updateRequest.status = 'approved';
+            await updateRequest.save({ session });
+        })
     } catch (err) {
-        throw new AppError(`Failed to approve update: ${err.message}`, 400);
+        if (err instanceof AppError) throw err;
+        if (err.name === 'ValidationError' || err.code === 11000) throw err;
+        throw new AppError(`Failed to approve update: ${err.message}`, 500);
+    } finally {
+        await session.endSession();
     }
-
-    // Mark request as approved
-    updateRequest.status = 'approved';
-    await updateRequest.save();
 
     return updateRequest;
 };

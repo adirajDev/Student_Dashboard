@@ -2,6 +2,7 @@ import Course from './course.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/errors/AppError.js';
 import { validateAndCheckDuplicate } from './course.validationHelper.js';
+import { buildSearchRegex} from "../../common/utils/regex.util.js";
 
 export const getCourses = async (
     skip = 0,
@@ -13,12 +14,15 @@ export const getCourses = async (
     if (level) {
         queryObj.level = level;
     }
-    if (search) {
+
+    const searchRegex = buildSearchRegex(search);
+    if (searchRegex) {
         queryObj.$or = [
-            { name: { $regex: search, $options: 'i' } },
-            { specialization: { $regex: search, $options: 'i' } },
+            { name: searchRegex },
+            { specialization: searchRegex },
         ];
     }
+
     const query = Course.find(queryObj);
     const [data, totalCount] = await Promise.all([
         query.clone().sort({ name: 1 }).skip(skip).limit(limit),
