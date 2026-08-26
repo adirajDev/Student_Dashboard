@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose from 'mongoose';
 
 const faqSchema = new mongoose.Schema(
     {
@@ -6,19 +6,26 @@ const faqSchema = new mongoose.Schema(
             type: String,
             required: true,
             trim: true,
-            maxLength: [300, "Maximum length of questions can't exceed 300 chars."],
+            maxLength: [
+                300,
+                "Maximum length of questions can't exceed 300 chars.",
+            ],
         },
         answer: {
             type: String,
             required: true,
             trim: true,
-            maxLength: [5000, "Maximum length of questions can't exceed 300 chars."],
+            maxLength: [
+                5000,
+                "Maximum length of questions can't exceed 300 chars.",
+            ],
         },
         order: {
             type: Number,
             default: 0,
-        }
-    }, {_id: true, timestamps: true}
-)
+        },
+    },
+    { _id: true, timestamps: true }
+);
 
 export default faqSchema;

@@ -2,7 +2,7 @@ import Course from './course.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/errors/AppError.js';
 import { validateAndCheckDuplicate } from './course.validationHelper.js';
-import { buildSearchRegex} from "../../common/utils/regex.util.js";
+import { buildSearchRegex } from '../../common/utils/regex.util.js';
 
 export const getCourses = async (
     skip = 0,
@@ -17,10 +17,7 @@ export const getCourses = async (
 
     const searchRegex = buildSearchRegex(search);
     if (searchRegex) {
-        queryObj.$or = [
-            { name: searchRegex },
-            { specialization: searchRegex },
-        ];
+        queryObj.$or = [{ name: searchRegex }, { specialization: searchRegex }];
     }
 
     const query = Course.find(queryObj);

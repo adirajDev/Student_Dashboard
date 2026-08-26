@@ -10,6 +10,6 @@ export const buildSearchRegex = search => {
 
     return {
         $regex: escapeRegex(trimmed.slice(0, MAX_SEARCH_LENGTH)),
-        $options: 'i'
+        $options: 'i',
     };
 };

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { COLLEGE_TYPE, STATES } from './college.constants.js';
-import faqSchema from "../../common/faq_feat/faqSchema.js";
+import faqSchema from '../../common/faq_feat/faqSchema.js';
 
 const collegeSchema = new mongoose.Schema(
     {
@@ -39,7 +39,7 @@ const collegeSchema = new mongoose.Schema(
             trim: true,
             enum: STATES,
             default: 'Delhi NCR',
-            required: true
+            required: true,
         },
         city: {
             type: String,
@@ -128,9 +128,9 @@ const collegeSchema = new mongoose.Schema(
             default: [],
             validate: {
                 validator: v => v.length <= 5,
-                message: "Can't have more than 5 faqs"
-            }
-        }
+                message: "Can't have more than 5 faqs",
+            },
+        },
     },
     { timestamps: true }
 );

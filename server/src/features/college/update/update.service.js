@@ -4,7 +4,7 @@ import Course from '../../course/course.model.js';
 import AppError from '../../../common/errors/AppError.js';
 import { validateProposedChanges } from './update.validation.js';
 import { applyProposedChanges } from './update.merge.js';
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
@@ -113,7 +113,7 @@ export const approveUpdate = async updateId => {
             await college.save({ session });
             updateRequest.status = 'approved';
             await updateRequest.save({ session });
-        })
+        });
     } catch (err) {
         if (err instanceof AppError) throw err;
         if (err.name === 'ValidationError' || err.code === 11000) throw err;

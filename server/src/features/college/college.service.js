@@ -3,7 +3,7 @@ import Rating from '../rating/rating.model.js';
 import AppError from '../../common/errors/AppError.js';
 
 import Course from '../course/course.model.js';
-import {buildSearchRegex} from "../../common/utils/regex.util.js";
+import { buildSearchRegex } from '../../common/utils/regex.util.js';
 
 export const getColleges = async (
     skip = 0,
@@ -19,7 +19,7 @@ export const getColleges = async (
 
     const searchRegex = buildSearchRegex(search);
     if (searchRegex) {
-        const matchingCourses = await Course.find({name: searchRegex}).select(
+        const matchingCourses = await Course.find({ name: searchRegex }).select(
             '_id'
         );
         const courseId = matchingCourses.map(c => c._id);
