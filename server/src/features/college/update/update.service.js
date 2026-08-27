@@ -70,7 +70,7 @@ export const getAllUpdates = async (skip = 0, limit = 0) => {
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('college', 'name')
+            .populate('college', 'name faqs')
             .populate('requestedBy', 'name email')
             .sort({ createdAt: -1 })
             .skip(skip)

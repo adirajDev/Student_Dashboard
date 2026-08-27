@@ -72,7 +72,7 @@ const FIELD_HANDLERS = {
         }
     },
 
-    faqUpdates: (college, value) => {
+    faqs: (college, value) => {
         // Order matters: remove, then update, then add — so the 10-item cap
         // is evaluated against the final state, not an inflated interim one.
         if (value.removed?.length > 0) {

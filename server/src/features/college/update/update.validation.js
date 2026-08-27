@@ -60,8 +60,7 @@ export const proposedChangesSchema = Joi.object({
         })
     ),
 
-    // todo: add faq update validation
-    faqUpdates: Joi.object({
+    faqs: Joi.object({
         added: Joi.array()
             .items(
                 Joi.object({
