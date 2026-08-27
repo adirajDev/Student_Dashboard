@@ -1,5 +1,9 @@
 import Joi from 'joi';
 import { COLLEGE_TYPE } from '../college.constants.js';
+import {
+    FAQ_ANSWER_MAX,
+    FAQ_QUESTION_MAX,
+} from '../../../common/faq_feat/faq.constants.js';
 
 const objectId = Joi.string().hex().length(24);
 
@@ -57,6 +61,35 @@ export const proposedChangesSchema = Joi.object({
     ),
 
     // todo: add faq update validation
+    faqUpdates: Joi.object({
+        added: Joi.array()
+            .items(
+                Joi.object({
+                    question: Joi.string()
+                        .trim()
+                        .max(FAQ_QUESTION_MAX)
+                        .required(),
+                    answer: Joi.string().trim().max(FAQ_ANSWER_MAX).required(),
+                    order: Joi.number().integer().min(0).default(0),
+                })
+            )
+            .default([]),
+
+        updated: Joi.array()
+            .items(
+                Joi.object({
+                    _id: objectId.required(),
+                    question: Joi.string().trim().max(FAQ_QUESTION_MAX),
+                    answer: Joi.string().trim().max(FAQ_ANSWER_MAX),
+                    order: Joi.number().integer().min(0),
+                })
+                    // _id plus at least one field actually being changed
+                    .min(2)
+            )
+            .default([]),
+
+        removed: Joi.array().items(objectId).default([]),
+    }).min(1), // reject faqUpdates: {} — it proposes nothing
 })
     .min(1)
     .oxor('availableCourses', 'courseUpdates') // reject a request that proposes nothing

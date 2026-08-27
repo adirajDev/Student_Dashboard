@@ -16,7 +16,8 @@ const useEditCollegeForm = user => {
     const [formData, setFormData] = useState({
         name: '',
         type: 'Private',
-        location: '',
+        city: '',
+        state: '',
         collegeId: '',
         logo: '',
         overview: '',
@@ -49,7 +50,8 @@ const useEditCollegeForm = user => {
                 setFormData({
                     name: data.name || '',
                     type: data.type || 'Private',
-                    location: data.location || '',
+                    city: data.city || '',
+                    state: data.state || '',
                     collegeId: data.collegeId || '',
                     logo: data.logo || '',
                     overview: data.overview || '',
