@@ -9,6 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 import apiClient from '@/services/apiClient';
 import useApplyToCollege from '../hooks/useApplyToCollege';
+import { formatLocation } from '@/constants/states.js';
 
 const CollegeHeader = ({ college, onOpenGallery, user }) => {
     const hasCoverImage = college.images && college.images.length > 0;
@@ -83,12 +84,10 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
                         </div>
 
                         <div className="flex flex-wrap items-center gap-4 text-[var(--muted)] mb-4 text-sm font-medium">
-                            {college.location && (
-                                <div className="flex items-center gap-1.5">
-                                    <MapPin className="w-4 h-4 text-[var(--color-ink-400)]" />
-                                    <span>{college.location}</span>
-                                </div>
-                            )}
+                            <div className="flex items-center gap-1.5">
+                                <MapPin className="w-4 h-4 text-[var(--color-ink-400)]" />
+                                <span>{formatLocation(college)}</span>
+                            </div>
                             <div className="flex items-center gap-1.5">
                                 <Building2 className="w-4 h-4 text-[var(--color-ink-400)]" />
                                 <span>
