@@ -3,6 +3,7 @@ import { validate } from '../../../common/validation/validation.util.js';
 import mongoose from 'mongoose';
 import { getRoleConfig } from '../user.roles.js';
 import AppError from '../../../common/errors/AppError.js';
+import { buildSearchRegex } from '../../../common/utils/regex.util.js';
 
 const findOneForRole = (id, role, config) => {
     const query = User.findOne({ _id: id, role }).select('-password');
@@ -14,11 +15,9 @@ export const listUsers = async (role, skip = 0, limit = 0, search = '') => {
     const config = getRoleConfig(role);
 
     const queryObj = { role };
-    if (search) {
-        queryObj.$or = [
-            { name: { $regex: search, $options: 'i' } },
-            { email: { $regex: search, $options: 'i' } },
-        ];
+    const searchRegex = buildSearchRegex(search);
+    if (searchRegex) {
+        queryObj.$or = [{ name: searchRegex }, { email: searchRegex }];
     }
 
     const [data, totalCount] = await Promise.all([

@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser';
 
 import apiRoutes from './routes.js';
 import errorMiddleware from './common/middleware/error.middleware.js';
+import { apiLimiter } from './common/middleware/rateLimit.middleware.js';
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -38,7 +39,7 @@ app.use(
 );
 
 // Routes
-
+app.use(apiLimiter);
 app.use('/api', apiRoutes);
 
 // Database connection

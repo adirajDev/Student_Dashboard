@@ -3,7 +3,13 @@ import Joi from 'joi';
 const coverImageSchema = Joi.object({
     data: Joi.string().required(),
     mimeType: Joi.string()
-        .valid('image/jpeg', 'image/jpg', 'image/png', 'image/webp', 'image/avif')
+        .valid(
+            'image/jpeg',
+            'image/jpg',
+            'image/png',
+            'image/webp',
+            'image/avif'
+        )
         .required(),
     sizeBytes: Joi.number().required(),
 });

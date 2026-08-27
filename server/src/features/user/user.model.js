@@ -52,8 +52,11 @@ const userSchema = new mongoose.Schema(
             // Optional initially because they set it on first login
         },
     },
-    { toJSON: { virtuals: true }, toObject: { virtuals: true } },
-    { timestamps: true }
+    {
+        timestamps: true,
+        toJSON: { virtuals: true },
+        toObject: { virtuals: true },
+    }
 );
 
 userSchema.virtual('bloggerProfile', {
