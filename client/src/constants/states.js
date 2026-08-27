@@ -1,5 +1,3 @@
-export const COLLEGE_TYPE = ['Government', 'Private', 'Deemed'];
-
 export const STATES = [
     // 28 States
     'Andhra Pradesh',
@@ -41,3 +39,6 @@ export const STATES = [
     'Lakshadweep',
     'Puducherry',
 ];
+
+export const formatLocation = c =>
+    [c?.city, c?.state].filter(Boolean).join(', ');

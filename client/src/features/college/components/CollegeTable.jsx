@@ -8,6 +8,7 @@ import EmptyTable from '@/components/common/EmptyTable';
 import NoResultsFound from '@/components/common/NoResultsFound';
 import Error from '@/components/common/Error';
 import Pagination from '@/components/common/Pagination';
+import { formatLocation } from '@/constants/states.js';
 
 const CollegeTable = ({
     colleges,
@@ -110,7 +111,7 @@ const CollegeTable = ({
                                             <td className="px-6 py-4">
                                                 <div className="flex items-center text-[var(--muted)] text-sm">
                                                     <MapPin className="w-3 h-3 mr-1" />
-                                                    {college.location}
+                                                    {formatLocation(college)}
                                                 </div>
                                             </td>
                                             <td className="px-6 py-4">

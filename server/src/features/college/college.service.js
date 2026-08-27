@@ -65,7 +65,7 @@ export const getCollegeById = async id => {
 };
 
 export const createCollege = async data => {
-    const { name, type, location, description, collegeId } = data;
+    const { name, type, city, state, description, collegeId } = data;
 
     if (!name) {
         throw new AppError('Name is required', 400);
@@ -79,7 +79,8 @@ export const createCollege = async data => {
     const college = new College({
         name,
         type,
-        location,
+        state,
+        city,
         description,
         collegeId,
     });
