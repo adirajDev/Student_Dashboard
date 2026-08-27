@@ -127,8 +127,8 @@ const collegeSchema = new mongoose.Schema(
             type: [faqSchema],
             default: [],
             validate: {
-                validator: v => v.length <= 5,
-                message: "Can't have more than 5 faqs",
+                validator: v => v.length <= 10,
+                message: "Can't have more than 10 faqs",
             },
         },
     },

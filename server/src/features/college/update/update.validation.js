@@ -6,6 +6,7 @@ const objectId = Joi.string().hex().length(24);
 export const proposedChangesSchema = Joi.object({
     name: Joi.string().trim(),
     type: Joi.string().valid(...COLLEGE_TYPE),
+    // todo: change location with city and state
     location: Joi.string().trim(),
     collegeId: Joi.string().trim().allow(''),
     description: Joi.string().trim().allow(''),
@@ -54,7 +55,15 @@ export const proposedChangesSchema = Joi.object({
             role: Joi.string().trim().allow(''),
         })
     ),
-}).min(1); // reject a request that proposes nothing
+
+    // todo: add faq update validation
+})
+    .min(1)
+    .oxor('availableCourses', 'courseUpdates') // reject a request that proposes nothing
+    .messages({
+        'object.oxor':
+            'Send either availableCourses (full replacement) or courseUpdates (delta), not both.',
+    });
 
 // small helper so both service functions validate the same way
 export const validateProposedChanges = data => {

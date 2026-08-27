@@ -8,7 +8,7 @@ const faqSchema = new mongoose.Schema(
             trim: true,
             maxLength: [
                 300,
-                "Maximum length of questions can't exceed 300 chars.",
+                "Maximum length of question can't exceed 300 chars.",
             ],
         },
         answer: {
@@ -17,7 +17,7 @@ const faqSchema = new mongoose.Schema(
             trim: true,
             maxLength: [
                 5000,
-                "Maximum length of questions can't exceed 300 chars.",
+                "Maximum length of answer can't exceed 5000 chars.",
             ],
         },
         order: {

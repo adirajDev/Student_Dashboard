@@ -77,6 +77,7 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                     </select>
                 </div>
                 <div>
+                     {/*todo: change location with state(drop-down) and city*/}
                     <label className="block text-sm font-medium mb-1">
                         Location
                     </label>

@@ -81,6 +81,8 @@ const EditCollegeTab = ({ user }) => {
                     removeFaculty={removeFaculty}
                 />
 
+                {/*todo: add FAQFields component*/}
+
                 <div className="pt-4">
                     <button
                         type="submit"

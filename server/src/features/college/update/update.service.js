@@ -29,7 +29,7 @@ export const submitUpdate = async (user, proposedChanges) => {
     try {
         await updateRequest.save();
     } catch (error) {
-        throw new AppError(`Failed to submit update: ${err.message}`, 400);
+        throw new AppError(`Failed to submit update: ${error.message}`, 400);
     }
     return updateRequest;
 };
