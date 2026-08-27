@@ -6,6 +6,7 @@ import {
     TrendingUp,
     Users,
     Presentation,
+    HelpCircle
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -233,6 +234,95 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
         );
     };
 
+    const renderFaqs = faqs => {
+        if (!faqs) return null;
+
+        // updated/removed carry only an _id, so resolve the current text
+        // from the populated college. Requires `.populate('college', 'name faqs')`.
+        const currentFaqs = update.college?.faqs || [];
+        const findCurrent = id => currentFaqs.find(f => f._id === id);
+
+        return (
+            <div className="space-y-4 mt-2">
+                {faqs.added?.length > 0 && (
+                    <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
+                        <h4 className="text-sm font-semibold text-emerald-800 mb-2">
+                            Added FAQs
+                        </h4>
+                        <div className="grid gap-3">
+                            {faqs.added.map((item, i) => (
+                                <div key={i} className="text-sm">
+                                    <p className="font-medium">
+                                        {item.question}
+                                    </p>
+                                    <p className="text-xs opacity-80 mt-1 whitespace-pre-wrap">
+                                        {item.answer}
+                                    </p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {faqs.updated?.length > 0 && (
+                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
+                        <h4 className="text-sm font-semibold text-blue-800 mb-2">
+                            Edited FAQs
+                        </h4>
+                        <div className="grid gap-4">
+                            {faqs.updated.map((item, i) => {
+                                const before = findCurrent(item._id);
+                                return (
+                                    <div key={i} className="text-sm space-y-2">
+                                        {item.question !== undefined &&
+                                            renderDiff(
+                                                'Question',
+                                                before?.question ??
+                                                'FAQ no longer exists',
+                                                item.question
+                                            )}
+                                        {item.answer !== undefined &&
+                                            renderDiff(
+                                                'Answer',
+                                                before?.answer ??
+                                                'FAQ no longer exists',
+                                                item.answer
+                                            )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+
+                {faqs.removed?.length > 0 && (
+                    <div className="bg-red-50 p-4 rounded-xl border border-red-200">
+                        <h4 className="text-sm font-semibold text-red-800 mb-2">
+                            Removed FAQs
+                        </h4>
+                        <div className="grid gap-2">
+                            {faqs.removed.map((id, i) => {
+                                const before = findCurrent(id);
+                                return (
+                                    <div
+                                        key={i}
+                                        className="text-sm line-through opacity-70 text-red-700"
+                                    >
+                                        {before?.question || (
+                                            <span className="italic">
+                                                Already deleted ({id})
+                                            </span>
+                                        )}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </div>
+                )}
+            </div>
+        );
+    };
+
     return createPortal(
         <div className="modal-overlay z-[9999] flex justify-center items-center p-4 sm:p-6">
             <div className="surface-paper rounded-[var(--radius-xl)] w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
@@ -338,6 +428,16 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                     Course Updates (Proposed)
                                 </div>
                                 {renderCourseUpdates(changes.courseUpdates)}
+                            </div>
+                        )}
+
+                        {changes.faqs && (
+                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
+                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
+                                    <HelpCircle className="w-5 h-5 text-indigo-500" />{' '}
+                                    FAQs (Proposed)
+                                </div>
+                                {renderFaqs(changes.faqs)}
                             </div>
                         )}
                     </div>

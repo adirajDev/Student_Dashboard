@@ -63,6 +63,11 @@ const useEditCollegeForm = user => {
                     },
                     recruiters: data.recruiters || [],
                     faculty: data.faculty || [],
+                    faqs: (data.faqs || []).map(f => ({
+                        _id: f._id,
+                        question: f.question || '',
+                        answer: f.answer || '',
+                    })),
                 });
             } catch (err) {
                 setError('Failed to load college data.');
@@ -119,6 +124,68 @@ const useEditCollegeForm = user => {
         setFormData(prev => ({ ...prev, faculty: updated }));
     };
 
+    // FAQ handlers. _key gives unsaved rows a stable React key.
+    const addFaq = () =>
+        setFormData(prev => ({
+            ...prev,
+            faqs: [
+                ...prev.faqs,
+                { _key: crypto.randomUUID(), question: '', answer: '' },
+            ],
+        }));
+    const updateFaq = (index, field, value) => {
+        const updated = [...formData.faqs];
+        updated[index] = { ...updated[index], [field]: value };
+        setFormData(prev => ({ ...prev, faqs: updated }));
+    };
+    const removeFaq = index => {
+        const updated = formData.faqs.filter((_, i) => i !== index);
+        setFormData(prev => ({ ...prev, faqs: updated }));
+    };
+
+    // The backend takes FAQs as a delta, but the form holds a flat array.
+    // Diff the edited list against what was loaded to work out the delta.
+    const buildFaqDelta = () => {
+        const original = college?.faqs || [];
+
+        const live = formData.faqs.filter(
+            f => f.question.trim() !== '' && f.answer.trim() !== ''
+        );
+
+        const added = live
+            .filter(f => !f._id)
+            .map((f, i) => ({
+                question: f.question.trim(),
+                answer: f.answer.trim(),
+                order: live.indexOf(f),
+            }));
+
+        const updated = live
+            .filter(f => {
+                if (!f._id) return false;
+                const before = original.find(o => o._id === f._id);
+                if (!before) return false;
+                return (
+                    before.question !== f.question.trim() ||
+                    before.answer !== f.answer.trim()
+                );
+            })
+            .map(f => ({
+                _id: f._id,
+                question: f.question.trim(),
+                answer: f.answer.trim(),
+            }));
+
+        const liveIds = new Set(live.filter(f => f._id).map(f => f._id));
+        const removed = original
+            .filter(o => !liveIds.has(o._id))
+            .map(o => o._id);
+
+        if (!added.length && !updated.length && !removed.length) return null;
+
+        return { added, updated, removed };
+    };
+
     const handleSubmit = async e => {
         e.preventDefault();
         setSuccessMsg('');
@@ -129,6 +196,14 @@ const useEditCollegeForm = user => {
             recruiters: formData.recruiters.filter(r => r.trim() !== ''),
             faculty: formData.faculty.filter(f => f.name.trim() !== ''),
         };
+
+        const faqDelta = buildFaqDelta();
+        if (faqDelta) {
+            cleanData.faqs = faqDelta;
+        } else {
+            // Omit entirely when unchanged — sending {} fails Joi's .min(1)
+            delete cleanData.faqs;
+        }
 
         try {
             await submitUpdate(cleanData);
@@ -155,6 +230,9 @@ const useEditCollegeForm = user => {
         addFaculty,
         updateFaculty,
         removeFaculty,
+        addFaq,
+        updateFaq,
+        removeFaq,
         handleSubmit,
     };
 };
