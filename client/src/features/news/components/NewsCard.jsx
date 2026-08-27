@@ -45,7 +45,9 @@ const NewsCard = ({ news, onClick }) => {
                 <div className="flex items-center gap-4 text-sm text-[var(--muted)] mt-3 pt-3 border-t border-[var(--border)]">
                     <span className="flex items-center gap-2 truncate">
                         <Calendar className="w-4 h-4 text-indigo-500 shrink-0" />
-                        <span className="truncate">{formatPublishedDate(news)}</span>
+                        <span className="truncate">
+                            {formatPublishedDate(news)}
+                        </span>
                     </span>
                     <span className="flex items-center gap-2 shrink-0">
                         <Clock className="w-4 h-4 shrink-0" />

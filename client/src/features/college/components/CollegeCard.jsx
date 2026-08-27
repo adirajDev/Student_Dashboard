@@ -1,4 +1,5 @@
 import { MapPin, BookOpen, Star, Building2 } from 'lucide-react';
+import { formatLocation } from '@/constants/states.js';
 
 const formatPackage = pkg => {
     if (!pkg) return null;
@@ -33,12 +34,10 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                         {college.name}
                     </h3>
                     <div className="flex items-center gap-4 mt-1">
-                        {college.location && (
-                            <div className="flex items-center text-sm text-[var(--muted)]">
-                                <MapPin className="w-4 h-4 mr-1" />
-                                {college.location}
-                            </div>
-                        )}
+                        <div className="flex items-center text-sm text-[var(--muted)]">
+                            <MapPin className="w-4 h-4 mr-1" />
+                            {formatLocation(college)}
+                        </div>
                         {college.averageRating > 0 && (
                             <div className="flex items-center text-sm font-medium text-[var(--foreground)]">
                                 <Star className="w-4 h-4 text-amber-400 mr-1 fill-amber-400" />

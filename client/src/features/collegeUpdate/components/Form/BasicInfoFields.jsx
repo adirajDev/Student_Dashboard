@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Upload, X } from 'lucide-react';
+import {STATES} from "@/constants/states.js";
 
 const BasicInfoFields = ({ formData, handleInputChange }) => {
     const fileInputRef = useRef(null);
@@ -77,16 +78,42 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                     </select>
                 </div>
                 <div>
+                     {/*todo: change location with state(drop-down) and city*/}
                     <label className="block text-sm font-medium mb-1">
-                        Location
+                        City
                     </label>
                     <input
                         type="text"
-                        name="location"
-                        value={formData.location}
+                        name="city"
+                        value={formData.city}
                         onChange={handleInputChange}
                         className="input-field"
                     />
+                </div>
+                <div>
+                    <label
+                        htmlFor="state"
+                        className="block text-sm font-medium mb-1"
+                    >
+                        State / UT
+                    </label>
+                    <select
+                        id="state"
+                        name="state"
+                        value={formData.state}
+                        onChange={handleInputChange}
+                        required
+                        className="input-field"
+                    >
+                        <option value="" disabled>
+                            Select a state or union territory
+                        </option>
+                        {STATES.map(s => (
+                            <option key={s} value={s}>
+                                {s}
+                            </option>
+                        ))}
+                    </select>
                 </div>
                 <div>
                     <label className="block text-sm font-medium mb-1">

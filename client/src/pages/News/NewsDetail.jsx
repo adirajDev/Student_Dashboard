@@ -47,10 +47,7 @@ const NewsDetail = () => {
                     readingTime={getReadingTime(news.content)}
                 />
                 <div className="mx-auto max-w-3xl px-5">
-                    <NewsCover
-                        coverImage={news.coverImage}
-                        alt={news.title}
-                    />
+                    <NewsCover coverImage={news.coverImage} alt={news.title} />
                     <NewsBody content={news.content} />
                     <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6">
                         <p className="text-sm text-[var(--muted)]">

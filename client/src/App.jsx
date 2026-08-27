@@ -21,8 +21,8 @@ import CollegeListingPage from './pages/College/CollegeListingPage';
 import BlogDetail from './pages/Blog/BlogDetail.jsx';
 import PostListing from '@/pages/Blog/PostListing.jsx';
 import BloggerProfilePage from '@/pages/Blog/BloggerProfilePage.jsx';
-import NewsListingPage from "@/pages/News/NewsListingPage.jsx";
-import NewsDetail from "@/pages/News/NewsDetail.jsx";
+import NewsListingPage from '@/pages/News/NewsListingPage.jsx';
+import NewsDetail from '@/pages/News/NewsDetail.jsx';
 
 function App() {
     return (

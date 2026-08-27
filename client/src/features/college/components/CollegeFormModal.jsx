@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import FormField from '@/components/common/FormField';
+import { STATES } from '@/constants/states';
 
 const CollegeFormModal = ({
     onAdd,
@@ -14,7 +15,8 @@ const CollegeFormModal = ({
         name: '',
         collegeId: '',
         type: 'Private',
-        location: '',
+        city: '',
+        state: '',
         description: '',
     });
     const [loading, setLoading] = useState(false);
@@ -22,11 +24,19 @@ const CollegeFormModal = ({
 
     useEffect(() => {
         if (editingCollege) {
+            // fall back to legacy `location` for any doc the migration missed
+            const [legacyCity = '', legacyState = ''] = (
+                editingCollege.location || ''
+            )
+                .split(',')
+                .map(s => s.trim());
+
             setFormData({
                 name: editingCollege.name || '',
                 collegeId: editingCollege.collegeId || '',
                 type: editingCollege.type || 'Private',
-                location: editingCollege.location || '',
+                city: editingCollege.city || legacyCity,
+                state: editingCollege.state || legacyState,
                 description: editingCollege.description || '',
             });
         }
@@ -41,11 +51,16 @@ const CollegeFormModal = ({
         setLoading(true);
         setError('');
 
+        const payload = {
+            ...formData,
+            city: formData.city.trim(),
+        };
+
         let res;
         if (editingCollege) {
-            res = await onUpdate(editingCollege._id, formData);
+            res = await onUpdate(editingCollege._id, payload);
         } else {
-            res = await onAdd(formData);
+            res = await onAdd(payload);
         }
 
         if (res?.success) {
@@ -142,12 +157,38 @@ const CollegeFormModal = ({
                                 </select>
                             </div>
                             <FormField
-                                label="Location"
-                                id="location"
-                                value={formData.location}
+                                label="City"
+                                id="city"
+                                value={formData.city}
                                 onChange={handleChange}
-                                placeholder="e.g. Stanford, California"
+                                placeholder="e.g. New Delhi"
                             />
+                        </div>
+
+                        <div>
+                            <label
+                                htmlFor="state"
+                                className="block text-sm font-medium text-[var(--foreground)] mb-2"
+                            >
+                                State / UT
+                            </label>
+                            <select
+                                id="state"
+                                name="state"
+                                value={formData.state}
+                                onChange={handleChange}
+                                required
+                                className="input-field"
+                            >
+                                <option value="" disabled>
+                                    Select a state or union territory
+                                </option>
+                                {STATES.map(s => (
+                                    <option key={s} value={s}>
+                                        {s}
+                                    </option>
+                                ))}
+                            </select>
                         </div>
 
                         <div>

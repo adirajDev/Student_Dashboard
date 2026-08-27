@@ -14,6 +14,7 @@ import RatingList from '@/features/rating/components/RatingList';
 import useCollegeDetails from '@/features/college/hooks/useCollegeDetails';
 import GalleryModal from '@/features/collegeGallery/components/GalleryModal';
 import ListModal from '@/features/college/components/ListModal';
+import FaqSection from "@/features/college/components/FaqSection.jsx";
 
 const formatPackage = pkg => {
     if (!pkg) return null;
@@ -147,7 +148,8 @@ const CollegeDetails = () => {
 
                 {/* 4. People & Partners Grid */}
                 {(college.recruiters?.length > 0 ||
-                    college.faculty?.length > 0) && (
+                    college.faculty?.length > 0 ||
+                    college.faqs?.length > 0) && (
                     <div className="flex flex-col gap-8">
                         {/* Recruiters */}
                         {college.recruiters &&
@@ -183,6 +185,7 @@ const CollegeDetails = () => {
                                             </button>
                                         )}
                                     </div>
+
                                 </div>
                             )}
 
@@ -238,6 +241,11 @@ const CollegeDetails = () => {
                                     </div>
                                 )}
                             </div>
+                        )}
+
+                        {/* Faqs */}
+                        {college.faqs && college.faqs.length > 0 && (
+                            <FaqSection faqs={college.faqs} />
                         )}
                     </div>
                 )}
