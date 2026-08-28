@@ -1,5 +1,5 @@
 import { BookOpen } from 'lucide-react';
-import CourseCard from './CourseCard';
+import CourseCard from './CourseCard.jsx';
 
 const CourseList = ({ courses }) => {
     return (

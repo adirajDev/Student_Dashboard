@@ -1,5 +1,5 @@
 import { HelpCircle } from 'lucide-react';
-import Accordion from '@/components/common/Accordion';
+import Accordion from '@/components/common/Accordion.jsx';
 
 const FaqSection = ({ faqs }) => {
     if (!faqs || faqs.length === 0) return null;

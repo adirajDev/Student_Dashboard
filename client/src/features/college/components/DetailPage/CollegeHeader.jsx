@@ -7,8 +7,8 @@ import {
     Loader2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import apiClient from '@/services/apiClient';
-import useApplyToCollege from '../hooks/useApplyToCollege';
+import apiClient from '@/services/apiClient.js';
+import useApplyToCollege from '../../hooks/useApplyToCollege.js';
 import { formatLocation } from '@/constants/states.js';
 
 const CollegeHeader = ({ college, onOpenGallery, user }) => {
