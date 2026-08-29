@@ -37,7 +37,7 @@ const Accordion = ({ items, allowMultiple = false, defaultOpenId = null }) => {
                 return (
                     <div
                         key={item.id}
-                        className="rounded-[var(--radius-md)] border border-[var(--border)] overflow-hidden transition-colors"
+                        className="bg-[var(--card)] rounded-[var(--radius-lg)] border border-[var(--border)] overflow-hidden transition-colors"
                     >
                         <button
                             type="button"
@@ -56,7 +56,9 @@ const Accordion = ({ items, allowMultiple = false, defaultOpenId = null }) => {
                         </button>
 
                         {isOpen && (
-                            <div className="px-4 py-4 -mt-1">{item.content}</div>
+                            <div className="px-4 py-4 -mt-1">
+                                {item.content}
+                            </div>
                         )}
                     </div>
                 );
