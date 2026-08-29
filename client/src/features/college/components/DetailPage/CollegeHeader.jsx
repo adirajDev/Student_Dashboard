@@ -18,7 +18,8 @@ import { formatLocation } from '@/constants/states.js';
  * `overflow-hidden` (needed to clip the banner corners), which would kill
  * position:sticky on any descendant.
  */
-const CollegeHeader = ({ college, onViewGallery, user }) => {
+const CollegeHeader = ({ college, onViewGallery, user, apply: applyState}) => {
+    const { status, isApplying, error: applyError, apply } = applyState || {};
     const hasCoverImage = college.images && college.images.length > 0;
     const coverImageUrl = hasCoverImage
         ? `${apiClient.defaults.baseURL}/college-gallery/${college._id}/gallery/images/${college.images[0]._id}`
@@ -29,13 +30,6 @@ const CollegeHeader = ({ college, onViewGallery, user }) => {
     const mediaCount = imageCount + videoCount;
 
     const hasRating = college.totalRatings > 0;
-
-    const {
-        status,
-        isApplying,
-        error: applyError,
-        apply,
-    } = useApplyToCollege(college._id, user);
 
     return (
         <div className="card p-0 overflow-hidden rounded-b-none border-b-0">

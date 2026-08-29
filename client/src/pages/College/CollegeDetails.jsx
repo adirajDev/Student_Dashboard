@@ -1,12 +1,15 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useParams, useLocation, useOutletContext } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import Error from '@/components/common/Error';
 import CollegeHeader from '@/features/college/components/DetailPage/CollegeHeader';
-import CollegeTabNav from '@/features/college/components/DetailPage/CollegeTabNav';
+import CollegeStickyBar from '@/features/college/components/DetailPage/CollegeStickyBar';
 import { TAB_PANELS } from '@/features/college/components/DetailPage/tabs';
 import useCollegeDetails from '@/features/college/hooks/useCollegeDetails';
 import useCollegeTabs from '@/features/college/hooks/useCollegeTabs';
+import useApplyToCollege from '@/features/college/hooks/useApplyToCollege';
+import useIsStuck from '@/hooks/useIsStuck';
+import useTopbarHeight from '@/hooks/useTopbarHeight';
 import { prefetchCollegeGallery } from '@/features/collegeGallery/hooks/useCollegeGallery';
 
 const CollegeDetails = () => {
@@ -16,22 +19,42 @@ const CollegeDetails = () => {
 
     const { college, isLoading, error } = useCollegeDetails(id, location.hash);
     const { tabs, activeTab, setTab, navRef } = useCollegeTabs(college);
+    // Measured, not hardcoded — the pin offset and the observer's trigger
+    // point have to be the same number or the condensed row expands early.
+    const topbarHeight = useTopbarHeight();
+    const { sentinelRef, isStuck } = useIsStuck(topbarHeight);
+
+    // One instance, shared by the header and the sticky bar. The hook keeps
+    // `status` in local state, so two instances would drift apart the moment
+    // someone applies from either one.
+    const apply = useApplyToCollege(id, user);
+
+    // One node, two consumers: useIsStuck needs it as an observer target,
+    // useCollegeTabs needs it as a scroll anchor. Memoised so the callback
+    // ref isn't torn down and re-attached on every render.
+    const setStickyAnchor = useCallback(
+        node => {
+            navRef.current = node;
+            sentinelRef(node);
+        },
+        [navRef, sentinelRef]
+    );
 
     // Warm the gallery list once the page has settled, so opening the tab is
     // usually instant. Must sit above the early returns — hooks can't be
     // called conditionally.
     useEffect(() => {
-        const id = college?._id;
-        if (!id) return;
+        const collegeId = college?._id;
+        if (!collegeId) return;
 
         if (typeof window.requestIdleCallback === 'function') {
             const handle = window.requestIdleCallback(() =>
-                prefetchCollegeGallery(id)
+                prefetchCollegeGallery(collegeId)
             );
             return () => window.cancelIdleCallback(handle);
         }
 
-        const timer = setTimeout(() => prefetchCollegeGallery(id), 1500);
+        const timer = setTimeout(() => prefetchCollegeGallery(collegeId), 1500);
         return () => clearTimeout(timer);
     }, [college?._id]);
 
@@ -51,18 +74,34 @@ const CollegeDetails = () => {
             <CollegeHeader
                 college={college}
                 user={user}
+                apply={apply}
                 onViewGallery={() => setTab('gallery')}
             />
 
-            {/* Outside CollegeHeader on purpose — its root has overflow-hidden,
-                which would break position:sticky here. */}
-            <div ref={navRef}>
-                <CollegeTabNav
-                    tabs={tabs}
-                    activeTab={activeTab}
-                    onChange={setTab}
-                />
-            </div>
+            {/* Marks the bar's natural top. useIsStuck watches it to know
+                when the bar has pinned; useCollegeTabs measures it to decide
+                whether switching tabs should scroll back up. */}
+            <div
+                ref={setStickyAnchor}
+                aria-hidden="true"
+                className="h-px -mb-px"
+            />
+
+            {/* No wrapper div here on purpose. A sticky element cannot leave
+                its parent's box, so wrapping the bar in a div that contains
+                only the bar leaves it nowhere to travel and it scrolls away
+                like a normal element. Its parent has to be the tall page
+                container. It is also kept outside CollegeHeader, whose root
+                has overflow-hidden — that disables sticky outright. */}
+            <CollegeStickyBar
+                college={college}
+                tabs={tabs}
+                activeTab={activeTab}
+                onChange={setTab}
+                apply={apply}
+                isCondensed={isStuck}
+                top={topbarHeight}
+            />
 
             <div
                 id={`panel-${activeTab}`}

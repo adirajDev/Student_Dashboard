@@ -82,6 +82,7 @@
     --border: var(--color-ink-100);
     --ring: var(--color-amber-400);
     --muted: var(--color-ink-500);
+    --topbar-height: 65px;
   }
 
   body {
