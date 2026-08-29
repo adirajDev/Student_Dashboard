@@ -24,8 +24,8 @@ const CollegeHeader = ({ college, onViewGallery, user }) => {
         ? `${apiClient.defaults.baseURL}/college-gallery/${college._id}/gallery/images/${college.images[0]._id}`
         : null;
 
-    const imageCount = college.images?.length || 0;
-    const videoCount = college.videos?.length || 0;
+    const imageCount = college.imageCount ?? college.images?.length ?? 0;
+    const videoCount = college.videoCount ?? college.videos?.length ?? 0;
     const mediaCount = imageCount + videoCount;
 
     const hasRating = college.totalRatings > 0;
@@ -48,12 +48,12 @@ const CollegeHeader = ({ college, onViewGallery, user }) => {
                 }`}
             >
                 {hasCoverImage && (
-                    <div
-                        className="absolute inset-0 bg-cover bg-center"
-                        style={{ backgroundImage: `url(${coverImageUrl})` }}
+                    <img
+                        src={coverImageUrl}
+                        alt={`${college.name} campus`}
+                        className="absolute inset-0 w-full h-full object-cover"
                     />
                 )}
-
                 {mediaCount > 0 && (
                     <button
                         type="button"

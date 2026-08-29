@@ -58,10 +58,22 @@ export const getCollegeById = async id => {
             model: 'Course',
         })
         .lean();
+
     if (!college) {
         throw new AppError('College not found', 404);
     }
-    return college;
+
+    const images = college.images || [];
+    const videos = college.videos || [];
+
+    // Cover image only. The full list is served by
+    // GET /college-gallery/:collegeId/gallery when the tab opens.
+    return {
+        ...college,
+        images: images.slice(0, 1),
+        imageCount: images.length,
+        videoCount: videos.length,
+    };
 };
 
 export const createCollege = async data => {

@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useParams, useLocation, useOutletContext } from 'react-router-dom';
 import Loading from '@/components/common/Loading';
 import Error from '@/components/common/Error';
@@ -6,6 +7,7 @@ import CollegeTabNav from '@/features/college/components/DetailPage/CollegeTabNa
 import { TAB_PANELS } from '@/features/college/components/DetailPage/tabs';
 import useCollegeDetails from '@/features/college/hooks/useCollegeDetails';
 import useCollegeTabs from '@/features/college/hooks/useCollegeTabs';
+import { prefetchCollegeGallery } from '@/features/collegeGallery/hooks/useCollegeGallery';
 
 const CollegeDetails = () => {
     const { id } = useParams();
@@ -14,6 +16,24 @@ const CollegeDetails = () => {
 
     const { college, isLoading, error } = useCollegeDetails(id, location.hash);
     const { tabs, activeTab, setTab, navRef } = useCollegeTabs(college);
+
+    // Warm the gallery list once the page has settled, so opening the tab is
+    // usually instant. Must sit above the early returns — hooks can't be
+    // called conditionally.
+    useEffect(() => {
+        const id = college?._id;
+        if (!id) return;
+
+        if (typeof window.requestIdleCallback === 'function') {
+            const handle = window.requestIdleCallback(() =>
+                prefetchCollegeGallery(id)
+            );
+            return () => window.cancelIdleCallback(handle);
+        }
+
+        const timer = setTimeout(() => prefetchCollegeGallery(id), 1500);
+        return () => clearTimeout(timer);
+    }, [college?._id]);
 
     if (isLoading) return <Loading />;
     if (error) return <Error error={error} />;

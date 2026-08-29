@@ -23,7 +23,7 @@ const useGalleryManagement = user => {
     const fetchGallery = async () => {
         try {
             setLoading(true);
-            const res = await apiClient.get(`/colleges/${collegeId}`);
+            const res = await apiClient.get(`/college-gallery/${collegeId}/gallery`);
             setImages(res.data.images || []);
             setVideos(res.data.videos || []);
             setError(null);
