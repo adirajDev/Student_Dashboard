@@ -45,8 +45,13 @@ export const COLLEGE_TABS = [
     {
         id: 'gallery',
         label: 'Gallery',
+        // `GET /colleges/:id` returns only the cover image now, so counting
+        // `images.length` here would cap the answer at 1. The counts come
+        // from the server alongside the trimmed array.
         isAvailable: college =>
-            (college?.images?.length || 0) + (college?.videos?.length || 0) > 0,
+            (college?.imageCount ?? college?.images?.length ?? 0) +
+            (college?.videoCount ?? college?.videos?.length ?? 0) >
+            0,
     },
     {
         id: 'reviews',

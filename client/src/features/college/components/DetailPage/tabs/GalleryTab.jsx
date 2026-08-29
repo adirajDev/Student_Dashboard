@@ -1,26 +1,61 @@
-import { useState } from 'react';
-import { Play, Video } from 'lucide-react';
-import apiClient from '@/services/apiClient';
-import GalleryModal from '@/features/collegeGallery/components/GalleryModal';
+import { useEffect, useState } from 'react';
+import Loading from '@/components/common/Loading';
+import GalleryFilmstrip from '@/features/collegeGallery/components/GalleryFilmstrip';
+import GalleryViewer from '@/features/collegeGallery/components/GalleryViewer';
+import useCollegeGallery from '@/features/collegeGallery/hooks/useCollegeGallery';
 
 /**
- * Inline media grid. Clicking a thumbnail opens the existing GalleryModal
- * as a lightbox.
+ * Filmstrip on top, selected item shown large below it. The old GalleryModal
+ * lightbox is gone — nothing else imported it, so that file can be deleted.
  *
- * `initialIndex` requires a small additive change to GalleryModal — see the
- * note in the summary. Without it the modal always opens on the first item;
- * the grid still works, it just ignores which tile was clicked.
+ * Media comes from its own endpoint rather than the college payload, which
+ * now carries only the cover image.
  */
 const GalleryTab = ({ college }) => {
-    const [openIndex, setOpenIndex] = useState(null);
+    const { media, isLoading, error } = useCollegeGallery(college._id);
+    const [activeIndex, setActiveIndex] = useState(0);
 
-    const images = college.images || [];
-    const videos = college.videos || [];
+    const total = media.length;
 
-    const imageUrl = image =>
-        `${apiClient.defaults.baseURL}/college-gallery/${college._id}/gallery/images/${image._id}`;
+    // A shorter list after a delete could leave the index out of range.
+    useEffect(() => {
+        if (activeIndex > total - 1) setActiveIndex(0);
+    }, [total, activeIndex]);
 
-    const total = images.length + videos.length;
+    const goPrev = () => setActiveIndex(i => (i - 1 + total) % total);
+    const goNext = () => setActiveIndex(i => (i + 1) % total);
+
+    useEffect(() => {
+        if (total < 2) return;
+
+        const onKeyDown = event => {
+            // Don't hijack arrows while the user is typing somewhere.
+            const tag = document.activeElement?.tagName;
+            if (tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT')
+                return;
+
+            if (event.key === 'ArrowLeft') {
+                event.preventDefault();
+                goPrev();
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault();
+                goNext();
+            }
+        };
+
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, [total]);
+
+    if (isLoading) return <Loading />;
+
+    if (error) {
+        return (
+            <div className="p-8 text-center border border-[var(--border)] border-dashed rounded-[var(--radius-xl)] text-[var(--muted)]">
+                {error}
+            </div>
+        );
+    }
 
     if (total === 0) {
         return (
@@ -30,58 +65,31 @@ const GalleryTab = ({ college }) => {
         );
     }
 
+    const photoCount = media.filter(item => item.type === 'image').length;
+    const videoCount = total - photoCount;
+
     return (
-        <>
-            <div className="space-y-6">
-                <p className="text-sm text-[var(--muted)] font-medium">
-                    {images.length} photo{images.length === 1 ? '' : 's'}
-                    {videos.length > 0 &&
-                        ` · ${videos.length} video${videos.length === 1 ? '' : 's'}`}
-                </p>
+        <div className="space-y-4">
+            <p className="text-sm text-[var(--muted)] font-medium">
+                {photoCount} photo{photoCount === 1 ? '' : 's'}
+                {videoCount > 0 &&
+                    ` · ${videoCount} video${videoCount === 1 ? '' : 's'}`}
+            </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
-                    {images.map((image, idx) => (
-                        <button
-                            key={image._id}
-                            type="button"
-                            onClick={() => setOpenIndex(idx)}
-                            className="group relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden border border-[var(--border)] bg-[var(--color-ink-50)]"
-                        >
-                            <img
-                                src={imageUrl(image)}
-                                alt={`${college.name} campus ${idx + 1}`}
-                                loading="lazy"
-                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                            />
-                        </button>
-                    ))}
-
-                    {videos.map((video, idx) => (
-                        <button
-                            key={video._id || `video-${idx}`}
-                            type="button"
-                            onClick={() => setOpenIndex(images.length + idx)}
-                            className="group relative aspect-[4/3] rounded-[var(--radius-md)] overflow-hidden border border-[var(--border)] surface-wash flex items-center justify-center"
-                        >
-                            <Video className="w-8 h-8 text-[var(--muted)]" />
-                            <span className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors">
-                                <Play className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity" />
-                            </span>
-                        </button>
-                    ))}
-                </div>
-            </div>
-
-            <GalleryModal
-                key={openIndex}
-                isOpen={openIndex !== null}
-                onClose={() => setOpenIndex(null)}
-                collegeId={college._id}
-                images={images}
-                videos={videos}
-                initialIndex={openIndex ?? 0}
+            <GalleryFilmstrip
+                media={media}
+                activeIndex={activeIndex}
+                onSelect={setActiveIndex}
             />
-        </>
+
+            <GalleryViewer
+                item={media[activeIndex]}
+                index={activeIndex}
+                total={total}
+                onPrev={goPrev}
+                onNext={goNext}
+            />
+        </div>
     );
 };
 

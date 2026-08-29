@@ -5,7 +5,7 @@ import AppError from '../../../common/errors/AppError.js';
 import { validateProposedChanges } from './update.validation.js';
 import { applyProposedChanges } from './update.merge.js';
 import mongoose from 'mongoose';
-import {MAX_FAQS_PER_COLLEGE} from "../../../common/faq_feat/faq.constants.js";
+import { MAX_FAQS_PER_COLLEGE } from '../../../common/faq_feat/faq.constants.js';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
@@ -31,7 +31,8 @@ export const submitUpdate = async (user, proposedChanges) => {
         const existingIds = new Set(current.faqs.map(f => f._id.toString()));
         const realRemovals = removed.filter(id => existingIds.has(String(id)));
 
-        const projected = current.faqs.length - realRemovals.length + added.length;
+        const projected =
+            current.faqs.length - realRemovals.length + added.length;
 
         if (projected > MAX_FAQS_PER_COLLEGE) {
             throw new AppError(

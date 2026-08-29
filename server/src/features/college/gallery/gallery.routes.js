@@ -3,6 +3,7 @@ import multer from 'multer';
 import { requireAuth } from '../../../common/middleware/auth.middleware.js';
 import { requireRole } from '../../../common/middleware/role.middleware.js';
 import {
+    getGallery,
     addImages,
     deleteImage,
     addVideo,
@@ -17,7 +18,8 @@ const upload = multer({
 
 const router = express.Router();
 
-// Public route for fetching images
+// Public routes — must stay above requireAuth.
+router.get('/:collegeId/gallery', getGallery);
 router.get('/:collegeId/gallery/images/:imageId', serveImage);
 
 router.use(requireAuth);
