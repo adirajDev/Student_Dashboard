@@ -8,6 +8,11 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
  * to clear that Topbar, so `top-20` parks this strip flush underneath it.
  * z-30 sits below the Topbar (z-50) and below GalleryModal (z-[100]).
  *
+ * Width, border, radius and shadow deliberately mirror `.card` so this reads
+ * as the bottom edge of CollegeHeader, which renders with `rounded-b-none
+ * border-b-0` to meet it. Horizontal padding matches the header's
+ * `px-6 sm:px-8` so the labels line up with the college name.
+ *
  * NOTE: this must not be rendered inside CollegeHeader's root element —
  * that card has `overflow-hidden`, which silently disables position:sticky
  * for everything inside it.
@@ -60,14 +65,14 @@ const CollegeTabNav = ({ tabs, activeTab, onChange }) => {
     if (!tabs || tabs.length === 0) return null;
 
     return (
-        <div className="sticky top-20 z-30 -mx-4 px-4 bg-[var(--card)]/95 backdrop-blur-md border-b border-[var(--border)]">
+        <div className="sticky top-20 z-30 bg-[var(--card)]/95 backdrop-blur-md border border-t-0 border-[var(--border)] rounded-b-[var(--radius-lg)] shadow-[0_1px_2px_rgba(16,26,40,0.04),0_8px_24px_-8px_rgba(16,26,40,0.08)]">
             <div className="relative">
                 {overflow.left && (
                     <button
                         type="button"
                         aria-label="Scroll tabs left"
                         onClick={() => nudge(-1)}
-                        className="absolute left-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-sm text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors"
+                        className="absolute left-1 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-sm text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors"
                     >
                         <ChevronLeft className="w-4 h-4" />
                     </button>
@@ -77,7 +82,7 @@ const CollegeTabNav = ({ tabs, activeTab, onChange }) => {
                     ref={scrollerRef}
                     role="tablist"
                     aria-label="College sections"
-                    className="flex items-stretch gap-1 overflow-x-auto scroll-smooth snap-x college-tabs-scroller"
+                    className="flex items-stretch gap-1 px-6 sm:px-8 overflow-x-auto scroll-smooth snap-x college-tabs-scroller"
                     style={{ scrollbarWidth: 'none' }}
                     onKeyDown={event => {
                         if (
@@ -105,7 +110,7 @@ const CollegeTabNav = ({ tabs, activeTab, onChange }) => {
                                 aria-controls={`panel-${tab.id}`}
                                 tabIndex={isActive ? 0 : -1}
                                 onClick={() => onChange(tab.id)}
-                                className={`shrink-0 snap-start whitespace-nowrap px-4 py-4 text-sm sm:text-base font-medium border-b-2 -mb-px transition-colors ${
+                                className={`shrink-0 snap-start whitespace-nowrap px-4 py-4 text-sm sm:text-base font-medium border-b-2 transition-colors ${
                                     isActive
                                         ? 'border-[var(--color-amber-600)] text-[var(--foreground)] font-semibold'
                                         : 'border-transparent text-[var(--muted)] hover:text-[var(--foreground)]'
@@ -122,7 +127,7 @@ const CollegeTabNav = ({ tabs, activeTab, onChange }) => {
                         type="button"
                         aria-label="Scroll tabs right"
                         onClick={() => nudge(1)}
-                        className="absolute right-0 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-sm text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors"
+                        className="absolute right-1 top-1/2 -translate-y-1/2 z-10 p-1.5 rounded-full bg-[var(--card)] border border-[var(--border)] shadow-sm text-[var(--foreground)] hover:bg-[var(--color-ink-50)] transition-colors"
                     >
                         <ChevronRight className="w-4 h-4" />
                     </button>

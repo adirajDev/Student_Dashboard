@@ -37,7 +37,7 @@ const Accordion = ({ items, allowMultiple = false, defaultOpenId = null }) => {
                 return (
                     <div
                         key={item.id}
-                        className="rounded-[var(--radius-md)] border border-[var(--border)] overflow-hidden transition-colors"
+                        className="bg-[var(--card)] rounded-[var(--radius-lg)] border border-[var(--border)] overflow-hidden transition-colors"
                     >
                         <button
                             type="button"
