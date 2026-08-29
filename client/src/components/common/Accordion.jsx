@@ -56,7 +56,9 @@ const Accordion = ({ items, allowMultiple = false, defaultOpenId = null }) => {
                         </button>
 
                         {isOpen && (
-                            <div className="px-4 py-4 -mt-1">{item.content}</div>
+                            <div className="px-4 py-4 -mt-1">
+                                {item.content}
+                            </div>
                         )}
                     </div>
                 );

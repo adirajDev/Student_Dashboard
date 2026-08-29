@@ -6,7 +6,7 @@ import {
     TrendingUp,
     Users,
     Presentation,
-    HelpCircle
+    HelpCircle,
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -278,14 +278,14 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                             renderDiff(
                                                 'Question',
                                                 before?.question ??
-                                                'FAQ no longer exists',
+                                                    'FAQ no longer exists',
                                                 item.question
                                             )}
                                         {item.answer !== undefined &&
                                             renderDiff(
                                                 'Answer',
                                                 before?.answer ??
-                                                'FAQ no longer exists',
+                                                    'FAQ no longer exists',
                                                 item.answer
                                             )}
                                     </div>

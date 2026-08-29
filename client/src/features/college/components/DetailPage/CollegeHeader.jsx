@@ -1,23 +1,34 @@
 import {
     MapPin,
-    Building2,
+    Star,
     Image as ImageIcon,
     Send,
     CheckCircle,
     Loader2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import apiClient from '@/services/apiClient.js';
-import useApplyToCollege from '../../hooks/useApplyToCollege.js';
+import apiClient from '@/services/apiClient';
+import useApplyToCollege from '@/features/college/hooks/useApplyToCollege';
 import { formatLocation } from '@/constants/states.js';
 
-const CollegeHeader = ({ college, onOpenGallery, user }) => {
+/**
+ * Masthead only — banner, logo, name, meta row, actions.
+ *
+ * The tab strip is deliberately NOT rendered here: this root div has
+ * `overflow-hidden` (needed to clip the banner corners), which would kill
+ * position:sticky on any descendant.
+ */
+const CollegeHeader = ({ college, onViewGallery, user }) => {
     const hasCoverImage = college.images && college.images.length > 0;
     const coverImageUrl = hasCoverImage
         ? `${apiClient.defaults.baseURL}/college-gallery/${college._id}/gallery/images/${college.images[0]._id}`
         : null;
-    const mediaCount =
-        (college.images?.length || 0) + (college.videos?.length || 0);
+
+    const imageCount = college.images?.length || 0;
+    const videoCount = college.videos?.length || 0;
+    const mediaCount = imageCount + videoCount;
+
+    const hasRating = college.totalRatings > 0;
 
     const {
         status,
@@ -27,10 +38,14 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
     } = useApplyToCollege(college._id, user);
 
     return (
-        <div className="card mb-8 p-0 overflow-hidden">
-            {/* Banner Section */}
+        <div className="card p-0 overflow-hidden rounded-b-none border-b-0">
+            {/* Banner */}
             <div
-                className={`relative w-full h-40 sm:h-48 md:h-56 ${!hasCoverImage ? 'bg-gradient-to-r from-[var(--color-ink-50)] to-[var(--color-ink-100)]' : 'bg-slate-200'}`}
+                className={`relative w-full h-40 sm:h-48 md:h-56 ${
+                    !hasCoverImage
+                        ? 'bg-gradient-to-r from-[var(--color-ink-50)] to-[var(--color-ink-100)]'
+                        : 'bg-slate-200'
+                }`}
             >
                 {hasCoverImage && (
                     <div
@@ -41,19 +56,21 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
 
                 {mediaCount > 0 && (
                     <button
-                        onClick={onOpenGallery}
+                        type="button"
+                        onClick={onViewGallery}
                         className="absolute bottom-4 right-4 bg-black/70 hover:bg-black/90 text-white text-sm font-medium py-2 px-4 rounded-lg flex items-center gap-2 backdrop-blur-sm transition-colors"
                     >
                         <ImageIcon className="w-4 h-4" />
-                        {mediaCount} {mediaCount === 1 ? 'Media' : 'Photos'}
+                        {videoCount > 0 &&
+                            `${videoCount} Video${videoCount === 1 ? '' : 's'}, `}
+                        {imageCount} Photo{imageCount === 1 ? '' : 's'}
                     </button>
                 )}
             </div>
 
-            {/* Content Section */}
-            <div className="px-6 pb-8 sm:px-8">
+            {/* Content */}
+            <div className="px-6 pb-6 sm:px-8">
                 <div className="flex flex-col sm:flex-row gap-6 items-start relative">
-                    {/* Logo (Overlapping Banner) */}
                     {college.logo && (
                         <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-2xl bg-white p-2 shadow-md border border-slate-100 shrink-0 flex items-center justify-center overflow-hidden -mt-12 sm:-mt-16 relative z-10">
                             <img
@@ -68,77 +85,109 @@ const CollegeHeader = ({ college, onOpenGallery, user }) => {
                         </div>
                     )}
 
-                    {/* Details */}
                     <div
-                        className={`flex-1 ${!college.logo ? 'pt-6' : 'pt-4 sm:pt-4'}`}
+                        className={`flex-1 min-w-0 ${!college.logo ? 'pt-6' : 'pt-4'}`}
                     >
-                        <div className="flex items-center gap-3 mb-2 flex-wrap">
-                            <h1 className="text-2xl sm:text-3xl text-[var(--foreground)] font-display leading-tight">
-                                {college.name}
-                            </h1>
-                            {college.type && (
-                                <span className="hidden sm:inline-block px-3 py-1 bg-[var(--color-amber-50)] text-[var(--color-amber-700)] text-xs font-bold uppercase tracking-wider rounded-full border border-[var(--color-amber-200)]">
-                                    {college.type}
-                                </span>
-                            )}
-                        </div>
+                        <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4">
+                            <div className="min-w-0">
+                                <h1 className="text-2xl sm:text-3xl text-[var(--foreground)] font-display leading-tight mb-2">
+                                    {college.name}
+                                </h1>
 
-                        <div className="flex flex-wrap items-center gap-4 text-[var(--muted)] mb-4 text-sm font-medium">
-                            <div className="flex items-center gap-1.5">
-                                <MapPin className="w-4 h-4 text-[var(--color-ink-400)]" />
-                                <span>{formatLocation(college)}</span>
+                                {/* Meta row */}
+                                <div className="flex flex-wrap items-center gap-x-3 gap-y-2 text-sm text-[var(--muted)] font-medium">
+                                    <span className="flex items-center gap-1.5">
+                                        <MapPin className="w-4 h-4 text-[var(--color-ink-400)]" />
+                                        {formatLocation(college)}
+                                    </span>
+
+                                    {hasRating && (
+                                        <>
+                                            <span className="text-[var(--border)]">
+                                                |
+                                            </span>
+                                            <span className="flex items-center gap-1.5">
+                                                <Star className="w-4 h-4 fill-[var(--color-amber-500)] text-[var(--color-amber-500)]" />
+                                                <span className="text-[var(--foreground)] font-semibold">
+                                                    {Number(
+                                                        college.averageRating
+                                                    ).toFixed(1)}
+                                                </span>
+                                                <span>/5</span>
+                                                <span className="text-[var(--color-amber-600)]">
+                                                    ({college.totalRatings}{' '}
+                                                    Review
+                                                    {college.totalRatings === 1
+                                                        ? ''
+                                                        : 's'}
+                                                    )
+                                                </span>
+                                            </span>
+                                        </>
+                                    )}
+                                </div>
+
+                                {/* Chips */}
+                                <div className="flex flex-wrap items-center gap-2 mt-3">
+                                    {college.type && (
+                                        <span className="px-3 py-1 rounded-[var(--radius-sm)] surface-wash border border-[var(--border)] text-xs font-semibold text-[var(--foreground)]">
+                                            {college.type}
+                                        </span>
+                                    )}
+                                    {college.collegeId && (
+                                        <span className="px-3 py-1 rounded-[var(--radius-sm)] surface-wash border border-[var(--border)] text-xs font-semibold text-[var(--foreground)]">
+                                            ID: {college.collegeId}
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            <div className="flex items-center gap-1.5">
-                                <Building2 className="w-4 h-4 text-[var(--color-ink-400)]" />
-                                <span>
-                                    ID:{' '}
-                                    {college.collegeId ||
-                                        college._id.substring(0, 8)}
-                                </span>
+
+                            {/* Actions */}
+                            <div className="flex items-center gap-3 flex-wrap shrink-0">
+                                {status === 'applied' ? (
+                                    <>
+                                        <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20 text-sm font-semibold cursor-default">
+                                            <CheckCircle className="w-4 h-4" />
+                                            Applied
+                                        </div>
+                                        <Link
+                                            to="/applications"
+                                            className="px-5 py-2.5 rounded-[var(--radius-md)] border border-[var(--border)] surface-wash text-[var(--foreground)] hover:bg-[var(--color-ink-50)] text-sm font-semibold transition-colors"
+                                        >
+                                            View Application
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        onClick={apply}
+                                        disabled={isApplying}
+                                        className="btn-primary"
+                                    >
+                                        {isApplying ? (
+                                            <Loader2 className="w-4 h-4 animate-spin" />
+                                        ) : (
+                                            <Send className="w-4 h-4" />
+                                        )}
+                                        {isApplying
+                                            ? 'Applying...'
+                                            : 'Apply Now'}
+                                    </button>
+                                )}
                             </div>
                         </div>
 
                         {college.description && (
-                            <div className="prose max-w-none text-[var(--muted)] text-sm sm:text-base leading-relaxed mb-4">
-                                <p>{college.description}</p>
-                            </div>
+                            <p className="prose max-w-none text-[var(--muted)] text-sm sm:text-base leading-relaxed mt-4">
+                                {college.description}
+                            </p>
                         )}
 
-                        {/* Apply Button */}
-                        <div className="flex items-center gap-3 flex-wrap">
-                            {status === 'applied' ? (
-                                <div className="flex items-center gap-3">
-                                    <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-[var(--radius-md)] bg-[var(--color-success)]/10 text-[var(--color-success)] border border-[var(--color-success)]/20 text-sm font-semibold cursor-default">
-                                        <CheckCircle className="w-4 h-4" />
-                                        Applied
-                                    </div>
-                                    <Link
-                                        to="/applications"
-                                        className="px-5 py-2.5 rounded-[var(--radius-md)] border border-[var(--border)] surface-wash text-[var(--foreground)] hover:bg-[var(--color-ink-50)] text-sm font-semibold transition-colors"
-                                    >
-                                        View Application
-                                    </Link>
-                                </div>
-                            ) : (
-                                <button
-                                    onClick={apply}
-                                    disabled={isApplying}
-                                    className="btn-primary"
-                                >
-                                    {isApplying ? (
-                                        <Loader2 className="w-4 h-4 animate-spin" />
-                                    ) : (
-                                        <Send className="w-4 h-4" />
-                                    )}
-                                    {isApplying ? 'Applying...' : 'Apply Now'}
-                                </button>
-                            )}
-                            {applyError && (
-                                <p className="text-sm text-red-600 font-medium">
-                                    {applyError}
-                                </p>
-                            )}
-                        </div>
+                        {applyError && (
+                            <p className="text-sm text-red-600 font-medium mt-3">
+                                {applyError}
+                            </p>
+                        )}
                     </div>
                 </div>
             </div>

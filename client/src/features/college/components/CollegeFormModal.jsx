@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import FormField from '@/components/common/FormField';
-import { STATES } from '@/constants/states';
+import { STATES } from '@/constants/states.js';
 
 const CollegeFormModal = ({
     onAdd,

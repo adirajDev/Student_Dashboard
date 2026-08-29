@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { Upload, X } from 'lucide-react';
-import {STATES} from "@/constants/states.js";
+import { STATES } from '@/constants/states.js';
 
 const BasicInfoFields = ({ formData, handleInputChange }) => {
     const fileInputRef = useRef(null);
@@ -78,7 +78,7 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                     </select>
                 </div>
                 <div>
-                     {/*todo: change location with state(drop-down) and city*/}
+                    {/*todo: change location with state(drop-down) and city*/}
                     <label className="block text-sm font-medium mb-1">
                         City
                     </label>

@@ -5,7 +5,7 @@ import BasicInfoFields from './Form/BasicInfoFields';
 import PlacementFields from './Form/PlacementFields';
 import RecruiterFields from './Form/RecruiterFields';
 import FacultyFields from './Form/FacultyFields';
-import FaqFields from "./Form/FaqFields.jsx";
+import FaqFields from './Form/FaqFields.jsx';
 
 const EditCollegeTab = ({ user }) => {
     const {

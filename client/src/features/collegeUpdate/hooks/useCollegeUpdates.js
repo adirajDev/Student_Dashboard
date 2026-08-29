@@ -48,7 +48,7 @@ const useCollegeUpdates = () => {
         setError('');
         try {
             const res = await apiClient.get(
-                    `/college-updates?page=${page}&limit=10`
+                `/college-updates?page=${page}&limit=10`
             );
             if (res.data.totalPages) setTotalPages(res.data.totalPages);
             return res.data.data || res.data;
