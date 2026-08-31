@@ -3,6 +3,7 @@ import {
     createNews,
     deleteNewsById,
     getNews,
+    getLatestFiveNews,
     getNewsById,
     updateNews,
 } from './news.controller.js';
@@ -14,6 +15,7 @@ import { requireRole } from '../../common/middleware/role.middleware.js';
 const router = express.Router();
 
 router.get('/', getNews);
+router.get('/latest-five', getLatestFiveNews);
 router.get('/:id', getNewsById);
 
 router.use(requireAuth);

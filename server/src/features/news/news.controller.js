@@ -6,6 +6,11 @@ export const getNews = asyncHandler(async (req, res) => {
     res.status(200).json({ success: true, data: allNews });
 });
 
+export const getLatestFiveNews = asyncHandler(async (req, res) => {
+    const latestFiveNews = await newsService.getLatestFiveNews();
+    res.status(200).json({success: true, data: latestFiveNews});
+})
+
 export const getNewsById = asyncHandler(async (req, res) => {
     const id = req.params.id;
     const news = await newsService.getNewsById(id);
