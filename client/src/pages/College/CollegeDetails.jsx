@@ -11,6 +11,7 @@ import useApplyToCollege from '@/features/college/hooks/useApplyToCollege';
 import useIsStuck from '@/hooks/useIsStuck';
 import useTopbarHeight from '@/hooks/useTopbarHeight';
 import { prefetchCollegeGallery } from '@/features/collegeGallery/hooks/useCollegeGallery';
+import LatestNewsRail from '@/features/news/components/LatestNewsRail.jsx';
 
 const CollegeDetails = () => {
     const { id } = useParams();
@@ -70,7 +71,7 @@ const CollegeDetails = () => {
     const Panel = TAB_PANELS[activeTab];
 
     return (
-        <div className="max-w-5xl mx-auto px-4 pb-16 animate-fade-in">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 animate-fade-in">
             <CollegeHeader
                 college={college}
                 user={user}
@@ -89,7 +90,7 @@ const CollegeDetails = () => {
 
             {/* No wrapper div here on purpose. A sticky element cannot leave
                 its parent's box, so wrapping the bar in a div that contains
-                only the bar leaves it nowhere to travel and it scrolls away
+                only the bar leaves it nowhere to travel and, it scrolls away
                 like a normal element. Its parent has to be the tall page
                 container. It is also kept outside CollegeHeader, whose root
                 has overflow-hidden — that disables sticky outright. */}
@@ -103,13 +104,23 @@ const CollegeDetails = () => {
                 top={topbarHeight}
             />
 
-            <div
-                id={`panel-${activeTab}`}
-                role="tabpanel"
-                aria-labelledby={`tab-${activeTab}`}
-                className="pt-8"
-            >
-                {Panel ? <Panel college={college} user={user} /> : null}
+            <div className="flex flex-col lg:flex-row gap-8 mt-8">
+                {/*Left Section*/}
+                <div
+                    id={`panel-${activeTab}`}
+                    role="tabpanel"
+                    aria-labelledby={`tab-${activeTab}`}
+                    className="flex-1 min-w-0"
+                >
+                    {Panel ? <Panel college={college} user={user} /> : null}
+                </div>
+
+                {/*Right Sidebar*/}
+                <aside className="w-full lg:w-80 shrink-0">
+                    <div className="lg:sticky" style={{ top: topbarHeight + 16 }}>
+                        <LatestNewsRail />
+                    </div>
+                </aside>
             </div>
         </div>
     );
