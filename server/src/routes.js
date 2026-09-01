@@ -13,6 +13,7 @@ import courseRoutes from './features/course/course.routes.js';
 import postRoutes from './features/blog/post/post.routes.js';
 import bloggerRoutes from './features/blog/blogger/blogger.routes.js';
 import newsRoutes from './features/news/news.routes.js';
+import adsRoutes from './features/ads/ads.routes.js';
 
 const ADMIN_ONLY = {
     list: ['admin'],
@@ -67,5 +68,6 @@ router.use('/ratings', ratingRoutes);
 router.use('/exams', examRoutes);
 router.use('/news', newsRoutes);
 router.use('/stats', statsRoutes);
+router.use('/promotions', adsRoutes);
 
 export default router;

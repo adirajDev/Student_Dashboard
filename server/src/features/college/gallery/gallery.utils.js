@@ -34,8 +34,10 @@ const stripDataUrlPrefix = str => str.replace(/^data:[^,]*,/, '');
  * relying on that is not worth it.
  */
 const clean = str =>
-    stripDataUrlPrefix(str.trim().replace(/^["']|["']$/g, ''))
-        .replace(/\s/g, '');
+    stripDataUrlPrefix(str.trim().replace(/^["']|["']$/g, '')).replace(
+        /\s/g,
+        ''
+    );
 
 export const toImageBuffer = data => {
     if (!data) return null;

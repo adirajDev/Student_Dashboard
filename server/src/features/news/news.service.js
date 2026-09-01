@@ -6,8 +6,8 @@ export const getNews = async () => {
 };
 
 export const getLatestFiveNews = async () => {
-    return News.find({}).sort({createdAt: -1}).limit(5).lean();
-}
+    return News.find({}).sort({ createdAt: -1 }).limit(5).lean();
+};
 
 export const getNewsById = async id => {
     return News.findById(id).lean();

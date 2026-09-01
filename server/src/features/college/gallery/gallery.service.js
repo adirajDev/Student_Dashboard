@@ -10,8 +10,8 @@ import AppError from '../../../common/errors/AppError.js';
  */
 export const getGalleryMeta = async collegeId => {
     const college = await College.findById(collegeId)
-                                 .select('images._id images.contentType videos')
-                                 .lean();
+        .select('images._id images.contentType videos')
+        .lean();
 
     if (!college) throw new AppError('College not found', 404);
 
