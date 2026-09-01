@@ -2,6 +2,7 @@ import asyncHandler from '../../common/utils/asyncHandler.js';
 import AppError from '../../common/errors/AppError.js';
 import * as adService from './ads.service.js';
 import { AD_SLOTS, AD_SLOT_IDS } from './ads.constants.js';
+import toImageBuffer from '../../common/utils/image.utils.js';
 
 /**
  * Public. The slot registry, so the client never has to guess a slot id.
@@ -64,8 +65,7 @@ export const serveAdImage = asyncHandler(async (req, res) => {
     // Mongoose stores this field as a String, so it arrives as base64 text
     // whether or not the write went through a data URL. Strip a prefix if one
     // slipped through, then decode.
-    const raw = ad.image.data.replace(/^data:[^,]*,/, '').replace(/\s/g, '');
-    const bytes = Buffer.from(raw, 'base64');
+    const bytes = toImageBuffer(ad.image.data);
 
     if (bytes.length === 0) {
         throw new AppError('Ad image data is empty', 404);

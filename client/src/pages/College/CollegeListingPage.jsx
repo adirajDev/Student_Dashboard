@@ -1,14 +1,19 @@
-import React, { useMemo } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter, Loader2 } from 'lucide-react';
 import CollegeCard from '@/features/college/components/CollegeCard.jsx';
 import useCollegeSearch from '@/features/college/hooks/useCollegeSearch';
 import Error from '@/components/common/Error';
+import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
 
 const CollegeListingPage = () => {
     const navigate = useNavigate();
     const { filters, setFilters, results, isLoading, error, allColleges } =
         useCollegeSearch('');
+
+    // After how many cards the banner sits. 3 puts it below the fold on
+    // desktop but above it on mobile, which is usually the sweet spot.
+    const PROMOTION_AFTER_INDEX = 4;
 
     const handleCollegeClick = college => {
         navigate(`/college/${college._id}`);
@@ -90,12 +95,21 @@ const CollegeListingPage = () => {
                             </div>
                         ) : results.length > 0 ? (
                             <div className="grid gap-6">
-                                {results.map(college => (
-                                    <CollegeCard
-                                        key={college._id}
-                                        college={college}
-                                        onClick={handleCollegeClick}
-                                    />
+                                {results.map((college, index) => (
+                                    // <CollegeCard
+                                    //     key={college._id}
+                                    //     college={college}
+                                    //     onClick={handleCollegeClick}
+                                    // />
+                                    <Fragment key={college._id}>
+                                        <CollegeCard
+                                            college={college}
+                                            onClick={handleCollegeClick}
+                                        />
+                                        {(index % PROMOTION_AFTER_INDEX === 0) && (
+                                            <PromotionSlot slot="collegeListing:inline" />
+                                        )}
+                                    </Fragment>
                                 ))}
                             </div>
                         ) : (

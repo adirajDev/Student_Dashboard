@@ -9,6 +9,7 @@ import {
     Newspaper,
 } from 'lucide-react';
 import NavItem from '../NavItem';
+import { Megaphone } from 'lucide-react';
 
 const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
     return (
@@ -108,6 +109,14 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
                         isActive={activeTab === 'blogApprovals'}
                         onClick={() =>
                             handleNav('/admin/dashboard?tab=blogApprovals')
+                        }
+                    />
+                    <NavItem
+                        icon={<Megaphone className="w-5 h-5" /> }
+                        label="Promotions"
+                        isActive={activeTab === 'promotions'}
+                        onClick={() =>
+                            handleNav('/admin/dashboard?tab=promotions')
                         }
                     />
                 </>

@@ -12,6 +12,7 @@ import useIsStuck from '@/hooks/useIsStuck';
 import useTopbarHeight from '@/hooks/useTopbarHeight';
 import { prefetchCollegeGallery } from '@/features/collegeGallery/hooks/useCollegeGallery';
 import LatestNewsRail from '@/features/news/components/LatestNewsRail.jsx';
+import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
 
 const CollegeDetails = () => {
     const { id } = useParams();
@@ -119,6 +120,7 @@ const CollegeDetails = () => {
                 <aside className="w-full lg:w-80 shrink-0">
                     <div className="lg:sticky" style={{ top: topbarHeight + 16 }}>
                         <LatestNewsRail />
+                        <PromotionSlot slot="collegeDetail:sidebar" className="mt-8" />
                     </div>
                 </aside>
             </div>

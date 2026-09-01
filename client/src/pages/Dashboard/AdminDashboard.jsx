@@ -7,6 +7,7 @@ import PendingUpdatesSection from '@/features/collegeUpdate/components/Admin/Pen
 import ExamManagementSection from '@/features/exam/components/ExamManagementSection';
 import PendingPostsSection from '@/features/blog/components/Admin/PendingPostsSection';
 import NewsManagementSection from '@/features/news/components/NewsManagementSection.jsx';
+import PromotionManagementSection from '@/features/promotions/components/PromotionManagementSection.jsx';
 
 const AdminDashboard = () => {
     const { user } = useOutletContext();
@@ -108,6 +109,12 @@ const AdminDashboard = () => {
             {activeTab === 'blogApprovals' && isAdmin && (
                 <div className="animate-fade-in">
                     <PendingPostsSection title="Blog Approvals" />
+                </div>
+            )}
+
+            {activeTab === 'promotions' && isAdmin && (
+                <div className="animate-fade-in">
+                    <PromotionManagementSection title="Promotions" />
                 </div>
             )}
         </div>

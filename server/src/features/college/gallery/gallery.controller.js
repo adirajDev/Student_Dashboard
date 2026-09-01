@@ -1,6 +1,6 @@
 import * as collegeGalleryService from './gallery.service.js';
 import asyncHandler from '../../../common/utils/asyncHandler.js';
-import { toImageBuffer } from './gallery.utils.js';
+import { toImageBuffer } from '../../../common/utils/image.utils.js';
 
 const checkOwnership = (user, collegeId) => {
     if (user.role === 'admin') return true;

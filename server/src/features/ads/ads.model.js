@@ -6,9 +6,13 @@ const adsSchema = new mongoose.Schema(
         label: { type: String, required: true, trim: true, maxLength: 120 },
         slot: { type: String, required: true, enum: AD_SLOT_IDS },
         image: {
-            data: Buffer,
-            contentType: String,
-            sizeBytes: Number,
+            data: { type: String },
+            mimeType: {
+                type: String,
+                enum: ['image/jpg', 'image/jpeg', 'image/png',
+                    'image/webp', 'image/avif', 'image/gif'],
+            },
+            sizeBytes: { type: Number },
         },
         targetUrl: {
             type: String,

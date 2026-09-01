@@ -29,6 +29,17 @@ const targetUrl = Joi.string()
         'string.uri': 'targetUrl must be a full http:// or https:// URL',
     });
 
+const dateWindow = (value, helpers) => {
+    if (
+        value.startsAt &&
+        value.endsAt &&
+        new Date(value.endsAt) < new Date(value.startsAt)
+    ) {
+        return helpers.error('any.invalid');
+    }
+    return value;
+};
+
 export const createAdSchema = Joi.object({
     label: Joi.string().trim().max(120).required(),
     slot: Joi.string()
@@ -43,8 +54,10 @@ export const createAdSchema = Joi.object({
     startsAt: Joi.date().allow(null).default(null),
     // Joi.ref only resolves against a sibling that is present, so this passes
     // when startsAt is omitted or null — which is what we want.
-    endsAt: Joi.date().min(Joi.ref('startsAt')).allow(null).default(null),
-});
+    endsAt: Joi.date().allow(null).default(null),
+})
+    .custom(dateWindow)
+    .messages({ 'any.invalid': 'endsAt must be after startsAt' });
 
 /**
  * Partial by design: the admin form sends only what changed, and `.min(1)`
@@ -59,5 +72,8 @@ export const updateAdSchema = Joi.object({
     status: Joi.string().valid(...AD_STATUSES),
     priority: Joi.number().integer().min(0).max(100),
     startsAt: Joi.date().allow(null),
-    endsAt: Joi.date().min(Joi.ref('startsAt')).allow(null),
-}).min(1);
+    endsAt: Joi.date().allow(null),
+})
+    .min(1)
+    .custom(dateWindow)
+    .messages({ 'any.invalid': 'endsAt must be after startsAt' });
