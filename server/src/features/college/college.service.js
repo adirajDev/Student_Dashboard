@@ -22,14 +22,14 @@ export const getColleges = async (
         const matchingCourses = await Course.find({ name: searchRegex }).select(
             '_id'
         );
-        const courseId = matchingCourses.map(c => c._id);
+        const courseIds = matchingCourses.map(c => c._id);
 
         queryObj.$or = [
             { name: searchRegex },
-            { location: searchRegex },
+            { city: searchRegex },
+            { state: searchRegex },
             { 'availableCourses.course': { $in: courseIds } },
-        ];
-    }
+        ];    }
 
     const query = College.find(queryObj);
     const [data, totalCount] = await Promise.all([
