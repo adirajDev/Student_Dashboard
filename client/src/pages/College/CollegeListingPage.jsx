@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Filter, Loader2 } from 'lucide-react';
 import CollegeCard from '@/features/college/components/CollegeCard.jsx';
 import FilterCheckboxGroup from '@/features/college/components/FilterCheckboxGroup.jsx';
+import FilterRadioGroup from '@/features/college/components/FilterRadioGroup.jsx';
 import useCollegeSearch from '@/features/college/hooks/useCollegeSearch';
 import Error from '@/components/common/Error';
 import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
@@ -12,9 +13,12 @@ const CollegeListingPage = () => {
     const {
         filters,
         toggleFilter,
+        setFilter,
         clearFilters,
         activeFilterCount,
         stateOptions,
+        typeOptions,
+        ratingOptions,
         courseOptions,
         results,
         isLoading,
@@ -84,7 +88,7 @@ const CollegeListingPage = () => {
 
                     {/* Right Sidebar for Filters */}
                     <div className="w-full lg:w-80 shrink-0">
-                        <div className="sticky top-[100px]">
+                        <div className="top-[100px] max-h-[calc(100vh-120px)] pr-1 custom-scrollbar">
                             <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
                                 <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
                                 <h3 className="text-lg text-[var(--foreground)] font-display">
@@ -93,15 +97,14 @@ const CollegeListingPage = () => {
                             </div>
 
                             <div className="space-y-8">
-                                <FilterCheckboxGroup
-                                    label="State / Union Territory"
-                                    options={stateOptions}
-                                    selected={filters.state}
-                                    onToggle={value =>
-                                        toggleFilter('state', value)
-                                    }
-                                    searchPlaceholder="Search states…"
-                                />
+                                {activeFilterCount > 0 && (
+                                    <button
+                                        onClick={clearFilters}
+                                        className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
+                                    >
+                                        Clear all filters ({activeFilterCount})
+                                    </button>
+                                )}
 
                                 <FilterCheckboxGroup
                                     label="Course"
@@ -113,14 +116,36 @@ const CollegeListingPage = () => {
                                     searchPlaceholder="Search courses…"
                                 />
 
-                                {activeFilterCount > 0 && (
-                                    <button
-                                        onClick={clearFilters}
-                                        className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
-                                    >
-                                        Clear all filters ({activeFilterCount})
-                                    </button>
-                                )}
+                                <FilterCheckboxGroup
+                                    label="State / Union Territory"
+                                    options={stateOptions}
+                                    selected={filters.state}
+                                    onToggle={value =>
+                                        toggleFilter('state', value)
+                                    }
+                                    searchPlaceholder="Search states…"
+                                />
+
+                                <FilterCheckboxGroup
+                                    label="College Type"
+                                    options={typeOptions}
+                                    selected={filters.type}
+                                    onToggle={value =>
+                                        toggleFilter('type', value)
+                                    }
+                                />
+
+                                <FilterRadioGroup
+                                    label="Rating"
+                                    name="college-rating"
+                                    options={ratingOptions}
+                                    value={filters.minRating}
+                                    onChange={value =>
+                                        setFilter('minRating', value)
+                                    }
+                                    showStars
+                                />
+
                             </div>
                         </div>
                     </div>

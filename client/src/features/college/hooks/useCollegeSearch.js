@@ -1,12 +1,13 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import apiClient from '@/services/apiClient';
 import { STATES } from '@/constants/states.js';
+import { COLLEGE_TYPES, RATING_BUCKETS } from '@/constants/collegeTypes.js';
 import {
     getCourseId,
     courseLabel,
 } from '@/features/college/utils/collegeFormatters';
 
-const EMPTY_FILTERS = { state: [], course: [] };
+const EMPTY_FILTERS = { state: [], course: [], type: [], minRating: 0 };
 
 const useCollegeSearch = (initialQuery = '') => {
     const [query, setQuery] = useState(initialQuery);
@@ -60,6 +61,20 @@ const useCollegeSearch = (initialQuery = '') => {
             filtered = filtered.filter(college => wanted.has(college.state));
         }
 
+        // Ownership type — Government / Private / Deemed
+        if (filters.type?.length) {
+            const wanted = new Set(filters.type);
+            filtered = filtered.filter(college => wanted.has(college.type));
+        }
+
+        // Rating — inclusive lower bound. Unrated colleges sit at 0 and so
+        // drop out of every bucket above "Any".
+        if (filters.minRating > 0) {
+            filtered = filtered.filter(
+                college => (college.averageRating || 0) >= filters.minRating
+            );
+        }
+
         // Course — matched by id, not by name, so "MBA (Finance)" and
         // "MBA (Marketing)" stay distinct instead of both matching "MBA"
         if (filters.course?.length) {
@@ -99,6 +114,39 @@ const useCollegeSearch = (initialQuery = '') => {
         }));
     }, [allColleges]);
 
+    const typeOptions = useMemo(() => {
+        const counts = new Map();
+        allColleges.forEach(college => {
+            if (!college.type) return;
+            counts.set(college.type, (counts.get(college.type) || 0) + 1);
+        });
+
+        return COLLEGE_TYPES.filter(type => counts.has(type)).map(type => ({
+            value: type,
+            label: type,
+            count: counts.get(type),
+        }));
+    }, [allColleges]);
+
+    /**
+     * Buckets are static, but the counts are not — showing how many colleges
+     * clear each threshold stops the user picking a bucket that empties the
+     * list. "Any rating" counts everything, including unrated colleges.
+     */
+    const ratingOptions = useMemo(
+        () =>
+            RATING_BUCKETS.map(bucket => ({
+                ...bucket,
+                count:
+                    bucket.value === 0
+                        ? allColleges.length
+                        : allColleges.filter(
+                            c => (c.averageRating || 0) >= bucket.value
+                        ).length,
+            })),
+        [allColleges]
+    );
+
     const courseOptions = useMemo(() => {
         const byId = new Map();
 
@@ -122,6 +170,7 @@ const useCollegeSearch = (initialQuery = '') => {
         return [...byId.values()].sort((a, b) => a.label.localeCompare(b.label));
     }, [allColleges]);
 
+    /** For the multi-select filters: adds or removes one value. */
     const toggleFilter = useCallback((key, value) => {
         setFilters(prev => {
             const current = Array.isArray(prev[key]) ? prev[key] : [];
@@ -134,10 +183,18 @@ const useCollegeSearch = (initialQuery = '') => {
         });
     }, []);
 
+    /** For the single-value filters, currently just minRating. */
+    const setFilter = useCallback((key, value) => {
+        setFilters(prev => ({ ...prev, [key]: value }));
+    }, []);
+
     const clearFilters = useCallback(() => setFilters(EMPTY_FILTERS), []);
 
     const activeFilterCount =
-        (filters.state?.length || 0) + (filters.course?.length || 0);
+        (filters.state?.length || 0) +
+        (filters.course?.length || 0) +
+        (filters.type?.length || 0) +
+        (filters.minRating > 0 ? 1 : 0);
 
     return {
         query,
@@ -145,9 +202,12 @@ const useCollegeSearch = (initialQuery = '') => {
         filters,
         setFilters,
         toggleFilter,
+        setFilter,
         clearFilters,
         activeFilterCount,
         stateOptions,
+        typeOptions,
+        ratingOptions,
         courseOptions,
         results,
         isLoading,
