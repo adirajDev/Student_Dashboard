@@ -88,24 +88,34 @@ const CollegeListingPage = () => {
 
                     {/* Right Sidebar for Filters */}
                     <div className="w-full lg:w-80 shrink-0">
-                        <div className="top-[100px] max-h-[calc(100vh-120px)] pr-1 custom-scrollbar">
-                            <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
+                        {/*
+                          The sticky column scrolls on its own only once it
+                          outgrows the viewport, and only on large screens —
+                          on mobile it sits inline below the list and scrolls
+                          with the page.
+                        */}
+                        <div className="lg:top-[100px] lg:max-h-[calc(100vh-120px)] pr-1 custom-scrollbar">
+                            <div className="flex items-center gap-2 mb-4 border-b border-[var(--border)] pb-4">
                                 <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
-                                <h3 className="text-lg text-[var(--foreground)] font-display">
+                                <h3 className="text-lg text-[var(--foreground)] font-display flex-1">
                                     Filter Colleges
                                 </h3>
-                            </div>
-
-                            <div className="space-y-8">
                                 {activeFilterCount > 0 && (
                                     <button
                                         onClick={clearFilters}
-                                        className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
+                                        className="text-sm font-medium text-[var(--color-danger)] hover:underline"
                                     >
-                                        Clear all filters ({activeFilterCount})
+                                        Clear ({activeFilterCount})
                                     </button>
                                 )}
+                            </div>
 
+                            <div className="space-y-4">
+                                {/*
+                                  Course and state are the two filters people
+                                  actually arrive wanting, so they open by
+                                  default. Type and rating are refinements.
+                                */}
                                 <FilterCheckboxGroup
                                     label="Course"
                                     options={courseOptions}
@@ -113,6 +123,7 @@ const CollegeListingPage = () => {
                                     onToggle={value =>
                                         toggleFilter('course', value)
                                     }
+                                    defaultOpen
                                     searchPlaceholder="Search courses…"
                                 />
 
@@ -123,6 +134,7 @@ const CollegeListingPage = () => {
                                     onToggle={value =>
                                         toggleFilter('state', value)
                                     }
+                                    defaultOpen
                                     searchPlaceholder="Search states…"
                                 />
 
@@ -133,6 +145,7 @@ const CollegeListingPage = () => {
                                     onToggle={value =>
                                         toggleFilter('type', value)
                                     }
+                                    defaultOpen={false}
                                 />
 
                                 <FilterRadioGroup
@@ -143,9 +156,9 @@ const CollegeListingPage = () => {
                                     onChange={value =>
                                         setFilter('minRating', value)
                                     }
+                                    defaultOpen={false}
                                     showStars
                                 />
-
                             </div>
                         </div>
                     </div>

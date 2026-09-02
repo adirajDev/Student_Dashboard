@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import FilterSection from './FilterSection.jsx';
 
 /**
  * Single-select counterpart to FilterCheckboxGroup, used for the rating
@@ -7,7 +8,8 @@ import { Star } from 'lucide-react';
  * the wrong control here.
  *
  * `options` is `[{ value, label, count }]`. Options whose count is 0 are
- * disabled rather than hidden, so the list doesn't reflow as filters change.
+ * disabled rather than hidden, so the list doesn't reflow as other filters
+ * change. The set is short enough that it never needs truncating.
  */
 const FilterRadioGroup = ({
                               label,
@@ -15,20 +17,22 @@ const FilterRadioGroup = ({
                               options = [],
                               value,
                               onChange,
+                              defaultOpen = true,
+                              defaultValue = 0,
                               showStars = false,
                           }) => {
     if (!options.length) return null;
 
-    return (
-        <div>
-            <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
-                {label}
-            </label>
+    const active = options.find(o => o.value === value);
+    const badge = value !== defaultValue && active ? active.label : null;
 
+    return (
+        <FilterSection label={label} badge={badge} defaultOpen={defaultOpen}>
             <div className="space-y-3">
                 {options.map(option => {
                     const isSelected = value === option.value;
-                    const isEmpty = option.count === 0 && option.value !== 0;
+                    const isEmpty =
+                        option.count === 0 && option.value !== defaultValue;
 
                     return (
                         <label
@@ -75,7 +79,7 @@ const FilterRadioGroup = ({
                     );
                 })}
             </div>
-        </div>
+        </FilterSection>
     );
 };
 

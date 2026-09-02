@@ -1,48 +1,61 @@
 import { useState, useMemo } from 'react';
 import { Search } from 'lucide-react';
+import FilterSection from './FilterSection.jsx';
 
 /**
- * One labelled block of checkboxes in the college filter sidebar.
+ * One collapsible block of checkboxes in the college filter sidebar.
  *
  * `options` is `[{ value, label, count }]`. `value` is what goes into the
  * filter array — for courses that's the course id, not its name — so the
  * component never assumes label and value are the same thing.
  *
- * A search box appears once the list passes `searchThreshold`, which in
- * practice means courses get one and states usually don't.
+ * Long lists are truncated to `initialVisible` with a "Show N more" toggle
+ * rather than given their own scrollbar. A nested scroll area inside a
+ * sticky sidebar inside a scrolling page is three layers deep and hard to
+ * hit accurately with a trackpad.
  */
 const FilterCheckboxGroup = ({
                                  label,
                                  options = [],
                                  selected = [],
                                  onToggle,
+                                 defaultOpen = true,
+                                 initialVisible = 6,
                                  searchThreshold = 10,
                                  searchPlaceholder = 'Search…',
                              }) => {
     const [term, setTerm] = useState('');
+    const [isExpanded, setIsExpanded] = useState(false);
 
-    const visible = useMemo(() => {
+    const selectedSet = useMemo(() => new Set(selected), [selected]);
+
+    const matching = useMemo(() => {
         if (!term.trim()) return options;
         const t = term.trim().toLowerCase();
         return options.filter(o => o.label.toLowerCase().includes(t));
     }, [options, term]);
 
+    /**
+     * While searching, show every match — the search is the truncation.
+     * Otherwise cap the list, but always keep checked options visible so a
+     * selection can't hide behind "Show more" once you collapse the list.
+     */
+    const visible = useMemo(() => {
+        if (term.trim() || isExpanded) return matching;
+        return matching.filter(
+            (option, index) =>
+                index < initialVisible || selectedSet.has(option.value)
+        );
+    }, [matching, term, isExpanded, initialVisible, selectedSet]);
+
     if (!options.length) return null;
 
-    const selectedSet = new Set(selected);
+    const hiddenCount = matching.length - visible.length;
     const showSearch = options.length > searchThreshold;
+    const badge = selectedSet.size > 0 ? `${selectedSet.size} selected` : null;
 
     return (
-        <div>
-            <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
-                {label}
-                {selectedSet.size > 0 && (
-                    <span className="ml-2 font-normal text-[var(--muted)]">
-                        ({selectedSet.size} selected)
-                    </span>
-                )}
-            </label>
-
+        <FilterSection label={label} badge={badge} defaultOpen={defaultOpen}>
             {showSearch && (
                 <div className="relative mb-3">
                     <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-[var(--muted)]" />
@@ -56,7 +69,7 @@ const FilterCheckboxGroup = ({
                 </div>
             )}
 
-            <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+            <div className="space-y-3">
                 {visible.length === 0 && (
                     <p className="text-sm text-[var(--muted)]">No matches.</p>
                 )}
@@ -112,7 +125,17 @@ const FilterCheckboxGroup = ({
                     );
                 })}
             </div>
-        </div>
+
+            {!term.trim() && (hiddenCount > 0 || isExpanded) && (
+                <button
+                    type="button"
+                    onClick={() => setIsExpanded(expanded => !expanded)}
+                    className="mt-3 w-full py-2 text-sm font-medium text-[var(--color-ink-600)] hover:text-[var(--foreground)] transition-colors"
+                >
+                    {isExpanded ? 'Show less' : `Show ${hiddenCount} more`}
+                </button>
+            )}
+        </FilterSection>
     );
 };
 
