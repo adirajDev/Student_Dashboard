@@ -1,71 +1,33 @@
-import React, { Fragment, useMemo } from 'react';
+import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter, Loader2 } from 'lucide-react';
 import CollegeCard from '@/features/college/components/CollegeCard.jsx';
+import FilterCheckboxGroup from '@/features/college/components/FilterCheckboxGroup.jsx';
 import useCollegeSearch from '@/features/college/hooks/useCollegeSearch';
 import Error from '@/components/common/Error';
 import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
 
 const CollegeListingPage = () => {
     const navigate = useNavigate();
-    const { filters, setFilters, results, isLoading, error, allColleges } =
-        useCollegeSearch('');
+    const {
+        filters,
+        toggleFilter,
+        clearFilters,
+        activeFilterCount,
+        stateOptions,
+        courseOptions,
+        results,
+        isLoading,
+        error,
+    } = useCollegeSearch('');
 
-    // After how many cards the banner sits. 3 puts it below the fold on
-    // desktop but above it on mobile, which is usually the sweet spot.
-    const PROMOTION_AFTER_INDEX = 4;
+    // A banner sits after every Nth card. 4 puts the first one below the fold
+    // on desktop but above it on mobile, which is usually the sweet spot.
+    const PROMOTION_EVERY = 4;
 
     const handleCollegeClick = college => {
         navigate(`/college/${college._id}`);
     };
-
-    const handleLocationChange = locValue => {
-        const currentLocs = Array.isArray(filters.location)
-            ? filters.location
-            : [];
-        if (currentLocs.includes(locValue)) {
-            setFilters({
-                ...filters,
-                location: currentLocs.filter(l => l !== locValue),
-            });
-        } else {
-            setFilters({ ...filters, location: [...currentLocs, locValue] });
-        }
-    };
-
-    const handleCourseChange = courseValue => {
-        const currentCourses = Array.isArray(filters.course)
-            ? filters.course
-            : [];
-        if (currentCourses.includes(courseValue)) {
-            setFilters({
-                ...filters,
-                course: currentCourses.filter(c => c !== courseValue),
-            });
-        } else {
-            setFilters({
-                ...filters,
-                course: [...currentCourses, courseValue],
-            });
-        }
-    };
-
-    const uniqueLocations = useMemo(() => {
-        const locs = allColleges.map(c => c.location).filter(Boolean);
-        return [...new Set(locs)].sort();
-    }, [allColleges]);
-
-    const uniqueCourses = useMemo(() => {
-        const courses = [];
-        allColleges.forEach(c => {
-            if (c.availableCourses) {
-                c.availableCourses.forEach(ac => {
-                    if (ac.name) courses.push(ac.name);
-                });
-            }
-        });
-        return [...new Set(courses)].sort();
-    }, [allColleges]);
 
     return (
         <div className="min-h-screen surface-paper animate-fade-in pb-12">
@@ -82,7 +44,7 @@ const CollegeListingPage = () => {
                 <div className="flex flex-col lg:flex-row gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
-                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-slate-600">
+                        <div className="mb-4 flex justify-between items-center text-sm font-medium text-[var(--muted)]">
                             <span>Showing {results.length} colleges</span>
                         </div>
 
@@ -96,17 +58,12 @@ const CollegeListingPage = () => {
                         ) : results.length > 0 ? (
                             <div className="grid gap-6">
                                 {results.map((college, index) => (
-                                    // <CollegeCard
-                                    //     key={college._id}
-                                    //     college={college}
-                                    //     onClick={handleCollegeClick}
-                                    // />
                                     <Fragment key={college._id}>
                                         <CollegeCard
                                             college={college}
                                             onClick={handleCollegeClick}
                                         />
-                                        {(index % PROMOTION_AFTER_INDEX === 0) && (
+                                        {(index + 1) % PROMOTION_EVERY === 0 && (
                                             <PromotionSlot slot="collegeListing:inline" />
                                         )}
                                     </Fragment>
@@ -128,184 +85,42 @@ const CollegeListingPage = () => {
                     {/* Right Sidebar for Filters */}
                     <div className="w-full lg:w-80 shrink-0">
                         <div className="sticky top-[100px]">
-                            <div className="">
-                                <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
-                                    <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
-                                    <h3 className="text-lg text-[var(--foreground)] font-display">
-                                        Filter Colleges
-                                    </h3>
-                                </div>
+                            <div className="flex items-center gap-2 mb-6 border-b border-[var(--border)] pb-4">
+                                <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
+                                <h3 className="text-lg text-[var(--foreground)] font-display">
+                                    Filter Colleges
+                                </h3>
+                            </div>
 
-                                <div className="space-y-8">
-                                    {/* Location (Checkboxes) */}
-                                    {uniqueLocations.length > 0 && (
-                                        <div>
-                                            <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
-                                                Location
-                                            </label>
-                                            <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                                {uniqueLocations.map(
-                                                    locValue => {
-                                                        const isChecked =
-                                                            Array.isArray(
-                                                                filters.location
-                                                            ) &&
-                                                            filters.location.includes(
-                                                                locValue
-                                                            );
-                                                        return (
-                                                            <label
-                                                                key={locValue}
-                                                                className="flex items-center gap-3 cursor-pointer group"
-                                                            >
-                                                                <input
-                                                                    type="checkbox"
-                                                                    className="hidden"
-                                                                    checked={
-                                                                        isChecked
-                                                                    }
-                                                                    onChange={() =>
-                                                                        handleLocationChange(
-                                                                            locValue
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <div
-                                                                    className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors shrink-0 ${
-                                                                        isChecked
-                                                                            ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
-                                                                            : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
-                                                                    }`}
-                                                                >
-                                                                    {isChecked && (
-                                                                        <svg
-                                                                            className="w-3 h-3 text-white"
-                                                                            fill="none"
-                                                                            viewBox="0 0 24 24"
-                                                                            stroke="currentColor"
-                                                                            strokeWidth={
-                                                                                3
-                                                                            }
-                                                                        >
-                                                                            <path
-                                                                                strokeLinecap="round"
-                                                                                strokeLinejoin="round"
-                                                                                d="M5 13l4 4L19 7"
-                                                                            />
-                                                                        </svg>
-                                                                    )}
-                                                                </div>
-                                                                <span
-                                                                    className="text-sm font-medium text-[var(--foreground)] truncate"
-                                                                    title={
-                                                                        locValue
-                                                                    }
-                                                                >
-                                                                    {locValue}
-                                                                </span>
-                                                            </label>
-                                                        );
-                                                    }
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
+                            <div className="space-y-8">
+                                <FilterCheckboxGroup
+                                    label="State / Union Territory"
+                                    options={stateOptions}
+                                    selected={filters.state}
+                                    onToggle={value =>
+                                        toggleFilter('state', value)
+                                    }
+                                    searchPlaceholder="Search states…"
+                                />
 
-                                    {/* Course (Checkboxes) */}
-                                    {uniqueCourses.length > 0 && (
-                                        <div>
-                                            <label className="block text-sm font-semibold text-[var(--foreground)] mb-3">
-                                                Course
-                                            </label>
-                                            <div className="space-y-3 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                                                {uniqueCourses.map(
-                                                    courseValue => {
-                                                        const isChecked =
-                                                            Array.isArray(
-                                                                filters.course
-                                                            ) &&
-                                                            filters.course.includes(
-                                                                courseValue
-                                                            );
-                                                        return (
-                                                            <label
-                                                                key={
-                                                                    courseValue
-                                                                }
-                                                                className="flex items-center gap-3 cursor-pointer group"
-                                                            >
-                                                                <input
-                                                                    type="checkbox"
-                                                                    className="hidden"
-                                                                    checked={
-                                                                        isChecked
-                                                                    }
-                                                                    onChange={() =>
-                                                                        handleCourseChange(
-                                                                            courseValue
-                                                                        )
-                                                                    }
-                                                                />
-                                                                <div
-                                                                    className={`w-5 h-5 rounded flex items-center justify-center transition-colors shrink-0 ${
-                                                                        isChecked
-                                                                            ? 'bg-indigo-600 border-indigo-600'
-                                                                            : 'border border-slate-300 bg-white group-hover:border-indigo-400'
-                                                                    }`}
-                                                                >
-                                                                    {isChecked && (
-                                                                        <svg
-                                                                            className="w-3 h-3 text-white"
-                                                                            fill="none"
-                                                                            viewBox="0 0 24 24"
-                                                                            stroke="currentColor"
-                                                                            strokeWidth={
-                                                                                3
-                                                                            }
-                                                                        >
-                                                                            <path
-                                                                                strokeLinecap="round"
-                                                                                strokeLinejoin="round"
-                                                                                d="M5 13l4 4L19 7"
-                                                                            />
-                                                                        </svg>
-                                                                    )}
-                                                                </div>
-                                                                <span
-                                                                    className="text-sm font-medium text-[var(--foreground)] truncate"
-                                                                    title={
-                                                                        courseValue
-                                                                    }
-                                                                >
-                                                                    {
-                                                                        courseValue
-                                                                    }
-                                                                </span>
-                                                            </label>
-                                                        );
-                                                    }
-                                                )}
-                                            </div>
-                                        </div>
-                                    )}
+                                <FilterCheckboxGroup
+                                    label="Course"
+                                    options={courseOptions}
+                                    selected={filters.course}
+                                    onToggle={value =>
+                                        toggleFilter('course', value)
+                                    }
+                                    searchPlaceholder="Search courses…"
+                                />
 
-                                    {((Array.isArray(filters.location) &&
-                                        filters.location.length > 0) ||
-                                        (Array.isArray(filters.course) &&
-                                            filters.course.length > 0)) && (
-                                        <button
-                                            onClick={() => {
-                                                setFilters({
-                                                    location: [],
-                                                    course: [],
-                                                });
-                                            }}
-                                            className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
-                                        >
-                                            Clear all filters
-                                        </button>
-                                    )}
-                                </div>
+                                {activeFilterCount > 0 && (
+                                    <button
+                                        onClick={clearFilters}
+                                        className="w-full py-3 mt-4 rounded-[var(--radius-md)] text-sm font-medium text-[var(--color-danger)] bg-red-50 hover:bg-[var(--color-danger)]/10 transition-colors"
+                                    >
+                                        Clear all filters ({activeFilterCount})
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </div>
