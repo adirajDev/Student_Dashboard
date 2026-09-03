@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { X, Check, XCircle } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import renderPostContent from '../renderPostContent';
+import FaqAccordion from '@/components/common/FaqAccordion.jsx';
 
 const ReviewPostModal = ({ post, onClose, onApprove, onReject }) => {
     const [feedback, setFeedback] = useState('');
@@ -46,6 +47,15 @@ const ReviewPostModal = ({ post, onClose, onApprove, onReject }) => {
                     <div className="tiptap-content border border-[var(--border)] rounded-2xl p-5 bg-white">
                         {renderPostContent(post.content)}
                     </div>
+
+                    {post.faqs?.length > 0 && (
+                        <div>
+                            <h4 className="mb-3 text-sm font-medium text-[var(--foreground)]">
+                                FAQs ({post.faqs.length})
+                            </h4>
+                            <FaqAccordion faqs={post.faqs} />
+                        </div>
+                    )}
                 </div>
 
                 <div className="p-6 border-t border-[var(--border)] bg-slate-50">

@@ -10,6 +10,7 @@ import ImageNode from './extensions/ImageNode';
 import YoutubeNode from './extensions/YoutubeNode';
 import { compressImage } from './utils/compressImage';
 import FormField from '@/components/common/FormField';
+import FaqFields, { serializeFaqs } from '@/components/common/FaqFields';
 import '../tiptapContent.css';
 
 const EMPTY_DOC = { type: 'doc', content: [{ type: 'paragraph' }] };
@@ -22,12 +23,12 @@ const slugify = value =>
         .replace(/^-+|-+$/g, '');
 
 const BlogEditor = ({
-    initialPost,
-    onSaveDraft,
-    onSubmitForReview,
-    isSubmitting,
-    error,
-}) => {
+                        initialPost,
+                        onSaveDraft,
+                        onSubmitForReview,
+                        isSubmitting,
+                        error,
+                    }) => {
     const [title, setTitle] = useState(initialPost?.title || '');
     const [slug, setSlug] = useState(initialPost?.slug || '');
     const [slugTouched, setSlugTouched] = useState(Boolean(initialPost?.slug));
@@ -37,6 +38,16 @@ const BlogEditor = ({
     );
     const [coverError, setCoverError] = useState('');
     const coverInputRef = useRef(null);
+
+    // Lazy initialiser: WritePostTab remounts this component via `key`, so
+    // seeding from initialPost once is enough — no sync effect needed.
+    const [faqs, setFaqs] = useState(() =>
+        (initialPost?.faqs || []).map(f => ({
+            _id: f._id,
+            question: f.question || '',
+            answer: f.answer || '',
+        }))
+    );
 
     const editor = useEditor({
         extensions: [
@@ -85,6 +96,9 @@ const BlogEditor = ({
         excerpt,
         content: editor?.getJSON(),
         coverImage,
+        // Drops blank rows and the local `_key`, keeps `_id`,
+        // derives `order` from array position
+        faqs: serializeFaqs(faqs),
     });
 
     const isRejected = initialPost?.status === 'rejected';
@@ -215,6 +229,8 @@ const BlogEditor = ({
                         />
                     </div>
                 </div>
+
+                <FaqFields value={faqs} onChange={setFaqs} />
 
                 <div className="flex flex-col sm:flex-row gap-3 pt-2">
                     <button
