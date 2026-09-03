@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { faqsField } from '../../common/faq_feat/faq.schema.js';
 
 const examSchema = new mongoose.Schema({
     name: {
@@ -46,6 +47,7 @@ const examSchema = new mongoose.Schema({
         type: String, // HH:mm format
         required: true,
     },
+    faqs: faqsField,
 });
 
 const Exam = mongoose.model('Exam', examSchema);
