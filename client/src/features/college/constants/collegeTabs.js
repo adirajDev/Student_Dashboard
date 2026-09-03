@@ -50,7 +50,7 @@ export const COLLEGE_TABS = [
         // from the server alongside the trimmed array.
         isAvailable: college =>
             (college?.imageCount ?? college?.images?.length ?? 0) +
-            (college?.videoCount ?? college?.videos?.length ?? 0) >
+                (college?.videoCount ?? college?.videos?.length ?? 0) >
             0,
     },
     {

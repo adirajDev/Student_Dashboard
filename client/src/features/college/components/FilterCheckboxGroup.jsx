@@ -15,15 +15,15 @@ import FilterSection from './FilterSection.jsx';
  * hit accurately with a trackpad.
  */
 const FilterCheckboxGroup = ({
-                                 label,
-                                 options = [],
-                                 selected = [],
-                                 onToggle,
-                                 defaultOpen = true,
-                                 initialVisible = 6,
-                                 searchThreshold = 10,
-                                 searchPlaceholder = 'Search…',
-                             }) => {
+    label,
+    options = [],
+    selected = [],
+    onToggle,
+    defaultOpen = true,
+    initialVisible = 6,
+    searchThreshold = 10,
+    searchPlaceholder = 'Search…',
+}) => {
     const [term, setTerm] = useState('');
     const [isExpanded, setIsExpanded] = useState(false);
 

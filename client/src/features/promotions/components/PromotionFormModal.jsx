@@ -75,8 +75,8 @@ const PromotionFormModal = ({ editing, title, onAdd, onUpdate, onClose }) => {
                         {isSubmitting
                             ? 'Saving...'
                             : editing
-                                ? 'Update Placement'
-                                : 'Create Placement'}
+                              ? 'Update Placement'
+                              : 'Create Placement'}
                     </button>
                 </div>
             </div>

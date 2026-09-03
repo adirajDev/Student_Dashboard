@@ -76,16 +76,12 @@ const CollegeTabNav = ({ tabs, activeTab, onChange }) => {
                 className="flex items-stretch gap-1 px-6 sm:px-8 overflow-x-auto scroll-smooth snap-x college-tabs-scroller"
                 style={{ scrollbarWidth: 'none' }}
                 onKeyDown={event => {
-                    if (
-                        event.key !== 'ArrowRight' &&
-                        event.key !== 'ArrowLeft'
-                    )
+                    if (event.key !== 'ArrowRight' && event.key !== 'ArrowLeft')
                         return;
                     event.preventDefault();
                     const index = tabs.findIndex(t => t.id === activeTab);
                     const delta = event.key === 'ArrowRight' ? 1 : -1;
-                    const next =
-                        (index + delta + tabs.length) % tabs.length;
+                    const next = (index + delta + tabs.length) % tabs.length;
                     onChange(tabs[next].id);
                 }}
             >

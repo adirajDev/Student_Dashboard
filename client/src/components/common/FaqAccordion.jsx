@@ -6,9 +6,9 @@ import Accordion from './Accordion';
  * college, exam, news and post detail pages.
  */
 const FaqAccordion = ({
-                          faqs = [],
-                          emptyMessage = 'No frequently asked questions yet.',
-                      }) => {
+    faqs = [],
+    emptyMessage = 'No frequently asked questions yet.',
+}) => {
     const items = useMemo(
         () =>
             [...faqs]

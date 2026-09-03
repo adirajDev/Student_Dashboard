@@ -213,13 +213,19 @@ const ExamFormFields = ({ formData, handleChange, setFaqs }) => {
 };
 
 const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
-    const { formData, isSubmitting, error, handleChange, handleSubmit, setFaqs } =
-        useExamForm({
-            editingExam,
-            onAdd,
-            onUpdate,
-            onClose,
-        });
+    const {
+        formData,
+        isSubmitting,
+        error,
+        handleChange,
+        handleSubmit,
+        setFaqs,
+    } = useExamForm({
+        editingExam,
+        onAdd,
+        onUpdate,
+        onClose,
+    });
 
     return createPortal(
         <div

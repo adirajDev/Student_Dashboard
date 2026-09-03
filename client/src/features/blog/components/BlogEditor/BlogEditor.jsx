@@ -23,12 +23,12 @@ const slugify = value =>
         .replace(/^-+|-+$/g, '');
 
 const BlogEditor = ({
-                        initialPost,
-                        onSaveDraft,
-                        onSubmitForReview,
-                        isSubmitting,
-                        error,
-                    }) => {
+    initialPost,
+    onSaveDraft,
+    onSubmitForReview,
+    isSubmitting,
+    error,
+}) => {
     const [title, setTitle] = useState(initialPost?.title || '');
     const [slug, setSlug] = useState(initialPost?.slug || '');
     const [slugTouched, setSlugTouched] = useState(Boolean(initialPost?.slug));

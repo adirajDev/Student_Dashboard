@@ -18,21 +18,22 @@ import CollegeTabNav from './CollegeTabNav';
  * bar pins flush beneath it instead of leaving a strip of background.
  */
 const CollegeStickyBar = ({
-                              college,
-                              tabs,
-                              activeTab,
-                              onChange,
-                              apply,
-                              isCondensed,
-                              top = 0,
-                          }) => {
+    college,
+    tabs,
+    activeTab,
+    onChange,
+    apply,
+    isCondensed,
+    top = 0,
+}) => {
     const { status, isApplying, apply: onApply } = apply || {};
     const hasRating = college.totalRatings > 0;
 
     return (
         <div
             style={{ top }}
-            className="sticky z-30 bg-[var(--card)]/95 backdrop-blur-md border border-t-0 border-[var(--border)] rounded-b-[var(--radius-lg)] shadow-[0_1px_2px_rgba(16,26,40,0.04),0_8px_24px_-8px_rgba(16,26,40,0.08)]">
+            className="sticky z-30 bg-[var(--card)]/95 backdrop-blur-md border border-t-0 border-[var(--border)] rounded-b-[var(--radius-lg)] shadow-[0_1px_2px_rgba(16,26,40,0.04),0_8px_24px_-8px_rgba(16,26,40,0.08)]"
+        >
             {/* Collapsed to zero height until the header scrolls out. The
                 grid-rows 0fr -> 1fr trick animates to the row's natural
                 height without hardcoding a pixel value. */}
