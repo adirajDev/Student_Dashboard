@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { MAX_FAQS } from './faq.constants.js';
 
 const faqSchema = new mongoose.Schema(
     {
@@ -28,4 +29,11 @@ const faqSchema = new mongoose.Schema(
     { _id: true, timestamps: true }
 );
 
-export default faqSchema;
+export const faqsField = {
+    type: [faqSchema],
+    default: [],
+    validate: {
+        validator: v => v.length <= MAX_FAQS,
+        message: "Can't have more than 10 faqs",
+    },
+};

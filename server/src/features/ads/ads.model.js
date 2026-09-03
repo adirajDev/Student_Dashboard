@@ -9,8 +9,14 @@ const adsSchema = new mongoose.Schema(
             data: { type: String },
             mimeType: {
                 type: String,
-                enum: ['image/jpg', 'image/jpeg', 'image/png',
-                    'image/webp', 'image/avif', 'image/gif'],
+                enum: [
+                    'image/jpg',
+                    'image/jpeg',
+                    'image/png',
+                    'image/webp',
+                    'image/avif',
+                    'image/gif',
+                ],
             },
             sizeBytes: { type: Number },
         },

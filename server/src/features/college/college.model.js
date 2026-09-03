@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 import { COLLEGE_TYPE, STATES } from './college.constants.js';
-import faqSchema from '../../common/faq_feat/faqSchema.js';
+import { faqsField } from '../../common/faq_feat/faq.schema.js';
 
 const collegeSchema = new mongoose.Schema(
     {
@@ -123,14 +123,7 @@ const collegeSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
-        faqs: {
-            type: [faqSchema],
-            default: [],
-            validate: {
-                validator: v => v.length <= 10,
-                message: "Can't have more than 10 faqs",
-            },
-        },
+        faqs: faqsField,
     },
     { timestamps: true }
 );
