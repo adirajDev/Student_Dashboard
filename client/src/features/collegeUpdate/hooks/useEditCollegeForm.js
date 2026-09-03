@@ -29,6 +29,7 @@ const useEditCollegeForm = user => {
         },
         recruiters: [],
         faculty: [],
+        faqs: [],
     });
 
     useEffect(() => {
@@ -125,26 +126,8 @@ const useEditCollegeForm = user => {
     };
 
     // FAQ handlers. _key gives unsaved rows a stable React key.
-    const addFaq = () =>
-        setFormData(prev => ({
-            ...prev,
-            faqs: [
-                ...prev.faqs,
-                { _key: crypto.randomUUID(), question: '', answer: '' },
-            ],
-        }));
-    const updateFaq = (index, field, value) => {
-        const updated = [...formData.faqs];
-        updated[index] = { ...updated[index], [field]: value };
-        setFormData(prev => ({ ...prev, faqs: updated }));
-    };
-    const removeFaq = index => {
-        const updated = formData.faqs.filter((_, i) => i !== index);
-        setFormData(prev => ({ ...prev, faqs: updated }));
-    };
+    const setFaqs = faqs => setFormData(prev => ({ ...prev, faqs }));
 
-    // The backend takes FAQs as a delta, but the form holds a flat array.
-    // Diff the edited list against what was loaded to work out the delta.
     const buildFaqDelta = () => {
         const original = college?.faqs || [];
 
@@ -230,9 +213,7 @@ const useEditCollegeForm = user => {
         addFaculty,
         updateFaculty,
         removeFaculty,
-        addFaq,
-        updateFaq,
-        removeFaq,
+        setFaqs,
         handleSubmit,
     };
 };

@@ -5,7 +5,7 @@ import BasicInfoFields from './Form/BasicInfoFields';
 import PlacementFields from './Form/PlacementFields';
 import RecruiterFields from './Form/RecruiterFields';
 import FacultyFields from './Form/FacultyFields';
-import FaqFields from './Form/FaqFields.jsx';
+import FaqFields from '../../../components/common/FaqFields.jsx';
 
 const EditCollegeTab = ({ user }) => {
     const {
@@ -23,9 +23,7 @@ const EditCollegeTab = ({ user }) => {
         addFaculty,
         updateFaculty,
         removeFaculty,
-        addFaq,
-        updateFaq,
-        removeFaq,
+        setFaqs,
         handleSubmit,
     } = useEditCollegeForm(user);
 
@@ -85,12 +83,7 @@ const EditCollegeTab = ({ user }) => {
                     removeFaculty={removeFaculty}
                 />
 
-                <FaqFields
-                    faqs={formData.faqs}
-                    addFaq={addFaq}
-                    updateFaq={updateFaq}
-                    removeFaq={removeFaq}
-                />
+                <FaqFields value={formData.faqs} onChange={setFaqs} />
 
                 <div className="pt-4">
                     <button

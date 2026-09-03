@@ -18,9 +18,7 @@ const toEmbedUrl = (url = '') => {
     if (url.includes('watch?v='))
         return url.replace('watch?v=', 'embed/').split('&')[0];
     if (url.includes('youtu.be/'))
-        return url
-            .replace('youtu.be/', 'www.youtube.com/embed/')
-            .split('?')[0];
+        return url.replace('youtu.be/', 'www.youtube.com/embed/').split('?')[0];
     return url;
 };
 

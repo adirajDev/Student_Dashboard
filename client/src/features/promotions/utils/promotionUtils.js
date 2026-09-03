@@ -88,10 +88,10 @@ export const formatWindow = promotion => {
     const fmt = value =>
         value
             ? new Date(value).toLocaleDateString('en-US', {
-                month: 'short',
-                day: 'numeric',
-                year: 'numeric',
-            })
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+              })
             : null;
 
     const start = fmt(promotion.startsAt);

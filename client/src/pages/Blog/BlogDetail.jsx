@@ -13,6 +13,7 @@ import PostSkeleton from '@/features/blog/components/PostRender/PostSkeleton.jsx
 import ReadingProgressBar from '@/features/blog/components/PostRender/ReadingProgressBar.jsx';
 
 import { authorOf } from '@/features/blog/components/PostRender/utils/postFormatters.js';
+import PostFaqs from '@/features/blog/components/PostRender/PostFaqs.jsx';
 
 const BlogDetail = () => {
     const { slug } = useParams();
@@ -53,6 +54,7 @@ const BlogDetail = () => {
                 <div className="mx-auto max-w-3xl px-5">
                     <PostCover coverImage={post.coverImage} />
                     <PostBody content={post.content} />
+                    <PostFaqs faqs={post.faqs} />
 
                     <PostAuthorCard author={author} />
 

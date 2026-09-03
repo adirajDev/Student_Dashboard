@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { serializeFaqs } from '@/components/common/FaqFields.jsx';
 
 const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
     const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         examTime: '',
         examDurationHours: '',
         examDurationMinutes: '',
+        faqs: [],
     });
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
@@ -45,6 +47,11 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
                 examDurationMinutes: editingExam.examDuration
                     ? editingExam.examDuration % 60
                     : '',
+                faqs: (editingExam.faqs || []).map(f => ({
+                    _id: f._id,
+                    question: f.question || '',
+                    answer: f.answer || '',
+                })),
             });
         }
     }, [editingExam]);
@@ -60,6 +67,7 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
                 examDuration:
                     (parseInt(formData.examDurationHours) || 0) * 60 +
                     (parseInt(formData.examDurationMinutes) || 0),
+                faqs: serializeFaqs(formData.faqs),
             };
 
             // Clean up temporary UI state from payload
@@ -90,12 +98,15 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const setFaqs = faqs => setFormData(prev => ({ ...prev, faqs }));
+
     return {
         formData,
         isSubmitting,
         error,
         handleChange,
         handleSubmit,
+        setFaqs,
     };
 };
 

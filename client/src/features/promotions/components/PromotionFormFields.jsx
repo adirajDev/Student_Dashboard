@@ -27,15 +27,15 @@ const groupedSlots = PROMOTION_SLOTS.reduce((groups, slot) => {
 }, {});
 
 const PromotionFormFields = ({
-                                 formData,
-                                 editing,
-                                 hasExistingImage,
-                                 isReadingImage,
-                                 imageError,
-                                 handleChange,
-                                 handleImageChange,
-                                 removeImage,
-                             }) => {
+    formData,
+    editing,
+    hasExistingImage,
+    isReadingImage,
+    imageError,
+    handleChange,
+    handleImageChange,
+    removeImage,
+}) => {
     const fileInputRef = useRef(null);
 
     // A freshly picked file previews from local base64; an already-saved one
@@ -94,8 +94,9 @@ const PromotionFormFields = ({
                                                 key={slot.id}
                                                 value={slot.id}
                                             >
-                                                {slot.label.split('—')[1]?.trim() ||
-                                                    slot.label}
+                                                {slot.label
+                                                    .split('—')[1]
+                                                    ?.trim() || slot.label}
                                             </option>
                                         ))}
                                     </optgroup>
@@ -149,7 +150,9 @@ const PromotionFormFields = ({
             <div>
                 <label className={labelClass}>
                     Banner Image{' '}
-                    {!hasExistingImage && <span className="text-red-500">*</span>}
+                    {!hasExistingImage && (
+                        <span className="text-red-500">*</span>
+                    )}
                 </label>
 
                 {previewSrc ? (
@@ -182,8 +185,8 @@ const PromotionFormFields = ({
                         {isReadingImage
                             ? 'Processing...'
                             : previewSrc
-                                ? 'Replace Image'
-                                : 'Upload Image'}
+                              ? 'Replace Image'
+                              : 'Upload Image'}
                     </button>
                 </div>
 

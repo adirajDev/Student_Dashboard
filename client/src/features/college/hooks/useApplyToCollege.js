@@ -51,7 +51,7 @@ const useApplyToCollege = (collegeId, user) => {
         } catch (err) {
             setError(
                 err.response?.data?.message ||
-                'Failed to apply. Please try again.'
+                    'Failed to apply. Please try again.'
             );
         } finally {
             setIsApplying(false);

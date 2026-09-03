@@ -67,7 +67,8 @@ const CollegeListingPage = () => {
                                             college={college}
                                             onClick={handleCollegeClick}
                                         />
-                                        {(index + 1) % PROMOTION_EVERY === 0 && (
+                                        {(index + 1) % PROMOTION_EVERY ===
+                                            0 && (
                                             <PromotionSlot slot="collegeListing:inline" />
                                         )}
                                     </Fragment>

@@ -118,9 +118,15 @@ const CollegeDetails = () => {
 
                 {/*Right Sidebar*/}
                 <aside className="w-full lg:w-80 shrink-0">
-                    <div className="lg:sticky" style={{ top: topbarHeight + 16 }}>
+                    <div
+                        className="lg:sticky"
+                        style={{ top: topbarHeight + 16 }}
+                    >
                         <LatestNewsRail />
-                        <PromotionSlot slot="collegeDetail:sidebar" className="mt-8" />
+                        <PromotionSlot
+                            slot="collegeDetail:sidebar"
+                            className="mt-8"
+                        />
                     </div>
                 </aside>
             </div>

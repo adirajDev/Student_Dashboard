@@ -9,8 +9,9 @@ import {
     GraduationCap,
 } from 'lucide-react';
 import useExamForm from '../hooks/useExamForm';
+import FaqFields from '@/components/common/FaqFields.jsx';
 
-const ExamFormFields = ({ formData, handleChange }) => {
+const ExamFormFields = ({ formData, handleChange, setFaqs }) => {
     return (
         <div className="space-y-6">
             <div>
@@ -205,18 +206,26 @@ const ExamFormFields = ({ formData, handleChange }) => {
                     />
                 </div>
             </div>
+
+            <FaqFields value={formData.faqs} onChange={setFaqs} />
         </div>
     );
 };
 
 const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
-    const { formData, isSubmitting, error, handleChange, handleSubmit } =
-        useExamForm({
-            editingExam,
-            onAdd,
-            onUpdate,
-            onClose,
-        });
+    const {
+        formData,
+        isSubmitting,
+        error,
+        handleChange,
+        handleSubmit,
+        setFaqs,
+    } = useExamForm({
+        editingExam,
+        onAdd,
+        onUpdate,
+        onClose,
+    });
 
     return createPortal(
         <div
@@ -248,6 +257,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                         <ExamFormFields
                             formData={formData}
                             handleChange={handleChange}
+                            setFaqs={setFaqs}
                         />
                     </form>
                 </div>

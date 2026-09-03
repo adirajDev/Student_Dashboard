@@ -12,7 +12,7 @@ const GalleryViewer = ({ item, index, total, onPrev, onNext }) => {
     return (
         <div className="relative rounded-[var(--radius-lg)] overflow-hidden border border-[var(--border)] bg-[var(--color-ink-50)]">
             <div className="aspect-video w-full flex items-center justify-center">
-                {item.type === 'image'  ? (
+                {item.type === 'image' ? (
                     <img
                         key={item.key}
                         src={item.src}

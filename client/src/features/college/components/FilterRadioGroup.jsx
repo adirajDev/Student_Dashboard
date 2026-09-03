@@ -12,15 +12,15 @@ import FilterSection from './FilterSection.jsx';
  * change. The set is short enough that it never needs truncating.
  */
 const FilterRadioGroup = ({
-                              label,
-                              name,
-                              options = [],
-                              value,
-                              onChange,
-                              defaultOpen = true,
-                              defaultValue = 0,
-                              showStars = false,
-                          }) => {
+    label,
+    name,
+    options = [],
+    value,
+    onChange,
+    defaultOpen = true,
+    defaultValue = 0,
+    showStars = false,
+}) => {
     if (!options.length) return null;
 
     const active = options.find(o => o.value === value);

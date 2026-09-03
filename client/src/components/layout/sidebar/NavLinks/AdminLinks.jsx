@@ -112,7 +112,7 @@ const AdminLinks = ({ isAdmin, isEditor, activeTab, handleNav }) => {
                         }
                     />
                     <NavItem
-                        icon={<Megaphone className="w-5 h-5" /> }
+                        icon={<Megaphone className="w-5 h-5" />}
                         label="Promotions"
                         isActive={activeTab === 'promotions'}
                         onClick={() =>

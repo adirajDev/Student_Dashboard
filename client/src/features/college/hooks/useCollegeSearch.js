@@ -141,8 +141,8 @@ const useCollegeSearch = (initialQuery = '') => {
                     bucket.value === 0
                         ? allColleges.length
                         : allColleges.filter(
-                            c => (c.averageRating || 0) >= bucket.value
-                        ).length,
+                              c => (c.averageRating || 0) >= bucket.value
+                          ).length,
             })),
         [allColleges]
     );
@@ -167,7 +167,9 @@ const useCollegeSearch = (initialQuery = '') => {
             });
         });
 
-        return [...byId.values()].sort((a, b) => a.label.localeCompare(b.label));
+        return [...byId.values()].sort((a, b) =>
+            a.label.localeCompare(b.label)
+        );
     }, [allColleges]);
 
     /** For the multi-select filters: adds or removes one value. */

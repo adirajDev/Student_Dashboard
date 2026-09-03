@@ -48,7 +48,7 @@ const PromotionSlot = ({ slot, className = '' }) => {
         <section className={className} aria-label="Partner content">
             <p className="mb-1.5 text-[10px] uppercase tracking-widest text-[var(--muted)] font-semibold">
                 Partner
-                {console.log("rendered promotion slot")}
+                {console.log('rendered promotion slot')}
             </p>
 
             <a
