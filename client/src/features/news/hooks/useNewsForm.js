@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { prepareCoverImage, getErrorMessage } from '../utils/newsUtils';
+import { serializeFaqs } from '@/components/common/FaqFields';
 
 export const TITLE_MAX_LENGTH = 200;
 
@@ -7,6 +8,11 @@ const buildInitialState = editingNews => ({
     title: editingNews?.title || '',
     content: editingNews?.content || '',
     coverImage: editingNews?.coverImage?.data ? editingNews.coverImage : null,
+    faqs: (editingNews?.faqs || []).map(f => ({
+        _id: f._id,
+        question: f.question || '',
+        answer: f.answer || '',
+    })),
 });
 
 const useNewsForm = ({ editingNews, onAdd, onUpdate, onClose }) => {
@@ -48,6 +54,9 @@ const useNewsForm = ({ editingNews, onAdd, onUpdate, onClose }) => {
         setFormData(prev => ({ ...prev, coverImage: null }));
     };
 
+    // FaqFields owns add/update/remove internally; the form just holds the array
+    const setFaqs = faqs => setFormData(prev => ({ ...prev, faqs }));
+
     const handleSubmit = async e => {
         e.preventDefault();
 
@@ -66,7 +75,9 @@ const useNewsForm = ({ editingNews, onAdd, onUpdate, onClose }) => {
 
         // Omit coverImage entirely when there isn't one — sending null trips
         // the request-body validator.
-        const payload = { title, content };
+        // faqs is always sent, including as [] — that is how the last FAQ
+        // gets removed.
+        const payload = { title, content, faqs: serializeFaqs(formData.faqs) };
         if (formData.coverImage?.data) {
             payload.coverImage = formData.coverImage;
         }
@@ -98,6 +109,7 @@ const useNewsForm = ({ editingNews, onAdd, onUpdate, onClose }) => {
         handleCoverChange,
         removeCoverImage,
         handleSubmit,
+        setFaqs,
     };
 };
 

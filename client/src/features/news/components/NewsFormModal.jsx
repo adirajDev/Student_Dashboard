@@ -14,6 +14,7 @@ const NewsFormModal = ({ editingNews, title, onAdd, onUpdate, onClose }) => {
         handleCoverChange,
         removeCoverImage,
         handleSubmit,
+        setFaqs,
     } = useNewsForm({
         editingNews,
         onAdd,
@@ -55,6 +56,7 @@ const NewsFormModal = ({ editingNews, title, onAdd, onUpdate, onClose }) => {
                             handleChange={handleChange}
                             handleCoverChange={handleCoverChange}
                             removeCoverImage={removeCoverImage}
+                            setFaqs={setFaqs}
                         />
                     </form>
                 </div>

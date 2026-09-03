@@ -11,6 +11,7 @@ import {
     getReadingTime,
     formatPublishedDate,
 } from '@/features/news/utils/newsUtils';
+import NewsFaqs from '@/features/news/components/NewsRender/NewsFaqs.jsx';
 
 const NewsDetail = () => {
     const { id } = useParams();
@@ -49,6 +50,7 @@ const NewsDetail = () => {
                 <div className="mx-auto max-w-3xl px-5">
                     <NewsCover coverImage={news.coverImage} alt={news.title} />
                     <NewsBody content={news.content} />
+                    <NewsFaqs faqs={news.faqs} />
                     <div className="mt-10 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-6">
                         <p className="text-sm text-[var(--muted)]">
                             More announcements, updates and notices.

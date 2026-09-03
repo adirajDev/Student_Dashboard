@@ -7,15 +7,17 @@ import {
     ACCEPTED_FILE_TYPES,
     IMAGE_SIZE_LIMIT_BYTES,
 } from '../utils/newsUtils';
+import FaqFields from '@/components/common/FaqFields';
 
 const NewsFormFields = ({
-    formData,
-    isReadingImage,
-    coverError,
-    handleChange,
-    handleCoverChange,
-    removeCoverImage,
-}) => {
+                            formData,
+                            isReadingImage,
+                            coverError,
+                            handleChange,
+                            handleCoverChange,
+                            removeCoverImage,
+                            setFaqs,
+                        }) => {
     const coverInputRef = useRef(null);
     const previewSrc = getImageSrc(formData.coverImage);
 
@@ -119,6 +121,8 @@ const NewsFormFields = ({
                     />
                 </div>
             </div>
+
+            <FaqFields value={formData.faqs} onChange={setFaqs} />
         </div>
     );
 };
