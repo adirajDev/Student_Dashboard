@@ -3,6 +3,7 @@ import {
     validate,
     validateBody,
 } from '../../../common/validation/validation.util.js';
+import { faqsArray } from '../../../common/faq_feat/faq.validation.js';
 
 export { validateBody };
 
@@ -22,6 +23,7 @@ export const createPostSchema = Joi.object({
     excerpt: Joi.string().trim().max(300).allow(''),
     content: Joi.object().required(),
     coverImage: coverImageSchema.allow(null),
+    faqs: faqsArray.default([])
 });
 
 export const updatePostSchema = Joi.object({
@@ -30,6 +32,7 @@ export const updatePostSchema = Joi.object({
     excerpt: Joi.string().trim().max(300).allow(''),
     content: Joi.object(),
     coverImage: coverImageSchema.allow(null),
+    faqs: faqsArray,
 }).min(1);
 
 export const rejectSchema = Joi.object({
