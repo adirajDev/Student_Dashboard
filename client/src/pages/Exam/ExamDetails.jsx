@@ -6,6 +6,7 @@ import ExamHeader from '../../features/exam/components/ExamDetail/ExamHeader.jsx
 import ExamSidebar from '../../features/exam/components/ExamDetail/ExamSidebar.jsx';
 import ExamEligibility from '../../features/exam/components/ExamDetail/ExamEligibility.jsx';
 import ExamDescription from '../../features/exam/components/ExamDetail/ExamDescription.jsx';
+import ExamFaqs from '@/features/exam/components/ExamDetail/ExamFaqs.jsx';
 
 const ExamDetails = () => {
     const { id } = useParams();
@@ -36,6 +37,7 @@ const ExamDetails = () => {
                         formatTimeRange={formatTimeRange}
                     />
                     <ExamDescription description={exam.examDescription} />
+                    <ExamFaqs faqs={exam.faqs} />
                 </div>
             </div>
         </div>
