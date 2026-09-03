@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { faqsField } from '../../../common/faq_feat/faq.schema.js';
 
 // Reusable image sub-schema — used wherever an image appears in Tiptap JSON attrs
 export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 500KB
@@ -70,6 +71,7 @@ const postSchema = new mongoose.Schema(
             type: Number,
             default: 0,
         },
+        faqs: faqsField,
     },
     { timestamps: true }
 );

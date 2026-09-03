@@ -1,4 +1,5 @@
 import Joi from 'joi';
+import { faqsArray } from '../../common/faq_feat/faq.validation.js';
 
 const coverImageSchema = Joi.object({
     data: Joi.string().required(),
@@ -18,10 +19,12 @@ export const createNewsSchema = Joi.object({
     title: Joi.string().trim().max(200).required(),
     coverImage: coverImageSchema.allow(null).default(null),
     content: Joi.string().trim().required(),
+    faqs: faqsArray.default([])
 });
 
 export const updateNewsSchema = Joi.object({
     title: Joi.string().trim().max(200).required(),
     coverImage: coverImageSchema.allow(null),
     content: Joi.string().trim().required(),
+    faqs: faqsArray,
 }).min(1);

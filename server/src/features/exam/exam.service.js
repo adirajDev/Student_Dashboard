@@ -1,48 +1,24 @@
 import AppError from '../../common/errors/AppError.js';
-import { validateExam } from './exam.validation.js';
+import { validateExam, validateExamUpdate } from './exam.validation.js';
 import Exam from './exam.model.js';
 
 export const getAllExams = async () => {
-    return await Exam.find({});
+    return Exam.find();
 };
 
 export const getExamById = async id => {
-    return await Exam.findById(id);
+    return Exam.findById(id);
 };
 
 export const createExam = async data => {
-    const {
-        name,
-        requirement,
-        regStartingDate,
-        regEndingDate,
-        examMode,
-        examDescription,
-        examLink,
-        examDate,
-        examDuration,
-        examTime,
-    } = data;
+    const value = validateExam(data);
 
-    validateExam(data);
-
-    const existingExam = await Exam.findOne({ name });
+    const existingExam = await Exam.findOne({ name: value.name });
     if (existingExam) {
         throw new AppError('Exam name already exists', 400);
     }
 
-    const exam = new Exam({
-        name,
-        requirement,
-        regStartingDate,
-        regEndingDate,
-        examMode,
-        examDescription,
-        examLink,
-        examDate,
-        examDuration,
-        examTime,
-    });
+    const exam = new Exam(value);
 
     await exam.save();
     return exam;
@@ -50,9 +26,9 @@ export const createExam = async data => {
 
 // TODO: add validation for updateExam
 export const updateExam = async (data, id) => {
-    const updatedData = { ...data };
+    const value = validateExamUpdate(data);
 
-    const exam = await Exam.findByIdAndUpdate(id, updatedData, {
+    const exam = await Exam.findByIdAndUpdate(id, value, {
         returnDocument: 'after',
         runValidators: true,
     });

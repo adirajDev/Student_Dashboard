@@ -29,7 +29,8 @@ export const getColleges = async (
             { city: searchRegex },
             { state: searchRegex },
             { 'availableCourses.course': { $in: courseIds } },
-        ];    }
+        ];
+    }
 
     const query = College.find(queryObj);
     const [data, totalCount] = await Promise.all([

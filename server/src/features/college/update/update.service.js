@@ -5,7 +5,7 @@ import AppError from '../../../common/errors/AppError.js';
 import { validateProposedChanges } from './update.validation.js';
 import { applyProposedChanges } from './update.merge.js';
 import mongoose from 'mongoose';
-import { MAX_FAQS_PER_COLLEGE } from '../../../common/faq_feat/faq.constants.js';
+import { MAX_FAQS } from '../../../common/faq_feat/faq.constants.js';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
@@ -20,11 +20,11 @@ export const submitUpdate = async (user, proposedChanges) => {
     const collegeId =
         typeof user.college === 'object' ? user.college._id : user.college;
 
-    if (value.faqUpdates) {
+    if (value.faqs) {
         const current = await College.findById(collegeId).select('faqs');
         if (!current) throw new AppError('College not found.', 404);
 
-        const { added = [], removed = [] } = value.faqUpdates;
+        const { added = [], removed = [] } = value.faqs;
 
         // Only count removals that match a real FAQ, or a bogus id
         // inflates the allowance.
@@ -34,9 +34,9 @@ export const submitUpdate = async (user, proposedChanges) => {
         const projected =
             current.faqs.length - realRemovals.length + added.length;
 
-        if (projected > MAX_FAQS_PER_COLLEGE) {
+        if (projected > MAX_FAQS) {
             throw new AppError(
-                `This would leave ${projected} FAQs. The maximum is ${MAX_FAQS_PER_COLLEGE}.`,
+                `This would leave ${projected} FAQs. The maximum is ${MAX_FAQS}.`,
                 400
             );
         }

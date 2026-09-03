@@ -66,6 +66,7 @@ export const createPost = async (authorId, payload) => {
         excerpt: payload.excerpt,
         content: payload.content,
         coverImage: payload.coverImage,
+        faqs: payload.faqs,
         author: authorId,
         status: 'draft',
         imageCount,
@@ -102,6 +103,7 @@ export const updatePost = async (postId, authorId, payload) => {
     if (payload.content !== undefined) post.content = payload.content;
     if (payload.coverImage !== undefined) post.coverImage = payload.coverImage;
     post.imageCount = imageCount;
+    if (payload.faqs !== undefined) post.faqs = payload.faqs;
 
     if (post.status === 'rejected') {
         post.status = 'draft';

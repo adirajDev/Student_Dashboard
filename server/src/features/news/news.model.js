@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { faqsField } from '../../common/faq_feat/faq.schema.js';
 
 export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 500KB
 
@@ -30,6 +31,7 @@ const newsSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
+        faqs: faqsField,
     },
     { timestamps: true }
 );
