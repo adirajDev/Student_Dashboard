@@ -15,7 +15,7 @@ const examSchema = Joi.object({
     examTime: Joi.string()
         .regex(/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/)
         .required(),
-    faqs: faqsArray,
+    faqs: faqsArray.default([]),
 });
 
 export const updateExamSchema = Joi.object({
