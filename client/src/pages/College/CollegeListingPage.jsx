@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Filter, Loader2 } from 'lucide-react';
-import CollegeCard from '@/features/college/components/CollegeCard.jsx';
-import FilterCheckboxGroup from '@/features/college/components/FilterCheckboxGroup.jsx';
-import FilterRadioGroup from '@/features/college/components/FilterRadioGroup.jsx';
-import useCollegeSearch from '@/features/college/hooks/useCollegeSearch';
+import CollegeCard from '@/features/college/browse/components/CollegeCard.jsx';
+import FilterCheckboxGroup from '@/features/college/browse/components/FilterCheckboxGroup.jsx';
+import FilterRadioGroup from '@/features/college/browse/components/FilterRadioGroup.jsx';
+import useCollegeSearch from '@/features/college/browse/hooks/useCollegeSearch.js';
 import Error from '@/components/common/Error';
 import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
 

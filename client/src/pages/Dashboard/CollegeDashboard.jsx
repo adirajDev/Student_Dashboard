@@ -1,8 +1,8 @@
 import { useOutletContext, useSearchParams } from 'react-router-dom';
-import EditCollegeTab from '@/features/collegeUpdate/components/EditCollegeTab';
-import UpdateHistoryTab from '@/features/collegeUpdate/components/UpdateHistoryTab';
-import CollegeCoursesTab from '@/features/collegeUpdate/components/CollegeCoursesTab';
-import GalleryManagementTab from '@/features/collegeGallery/components/GalleryManagementTab';
+import EditCollegeTab from '@/features/college/updates/components/EditCollegeTab';
+import UpdateHistoryTab from '@/features/college/updates/components/UpdateHistoryTab';
+import CollegeCoursesTab from '@/features/college/updates/components/CollegeCoursesTab';
+import GalleryManagementTab from '@/features/college/gallery/components/GalleryManagementTab';
 
 const CollegeDashboard = () => {
     const { user } = useOutletContext();
