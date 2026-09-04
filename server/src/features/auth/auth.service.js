@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 import User from '../user/user.model.js';
 import College from '../college/college.model.js';
 import AppError from '../../common/errors/AppError.js';
+import { assertValidPassword } from '../../common/validation/password.validation.js';
 
 export const signup = async data => {
     const { name, email, phone, course, college } = data;
@@ -74,6 +75,7 @@ export const checkUserLoggedIn = async email => {
 };
 
 export const setPassword = async (email, password) => {
+    assertValidPassword(password);
     const user = await User.findOne({ email });
 
     if (!user) {
@@ -116,9 +118,7 @@ export const resetInitialPassword = async (userId, newPassword) => {
         throw new AppError('User not found', 404);
     }
 
-    if (!newPassword || newPassword.length < 6) {
-        throw new AppError('Password must be at least 6 characters', 400);
-    }
+    assertValidPassword(newPassword);
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
@@ -139,9 +139,7 @@ export const resetOtpPassword = async (email, otp, newPassword) => {
         throw new AppError('Invalid OTP', 400);
     }
 
-    if (!newPassword || newPassword.length < 6) {
-        throw new AppError('New password must be at least 6 characters', 400);
-    }
+    assertValidPassword(newPassword);
 
     const salt = await bcrypt.genSalt(10);
     user.password = await bcrypt.hash(newPassword, salt);
