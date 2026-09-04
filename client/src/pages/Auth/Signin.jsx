@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import useSignin from '@/features/auth/hooks/useSignin';
+import PasswordRules from '@/components/common/PasswordRules.jsx';
 
 const Signin = () => {
     const {
@@ -81,6 +82,7 @@ const Signin = () => {
                                 It looks like this is your first time signing
                                 in. Please set a password to continue.
                             </div>
+
                         )}
 
                         <div>
@@ -120,6 +122,7 @@ const Signin = () => {
                                     className="input-field"
                                     placeholder="••••••••"
                                 />
+                                <PasswordRules value={passwordData.password} />
                             </div>
                         )}
 

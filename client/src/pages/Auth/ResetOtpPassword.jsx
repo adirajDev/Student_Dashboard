@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Lock, Eye, EyeOff, ShieldCheck, Loader2 } from 'lucide-react';
 import apiClient from '@/services/apiClient';
+import PasswordRules from '@/components/common/PasswordRules.jsx';
 
 const ResetOtpPassword = () => {
     const navigate = useNavigate();
@@ -120,6 +121,7 @@ const ResetOtpPassword = () => {
                                         })
                                     }
                                 />
+                                <PasswordRules value={newPassword} />
                                 <Lock className="w-5 h-5 text-[var(--ring)] absolute left-4 top-1/2 -translate-y-1/2" />
                                 <button
                                     type="button"

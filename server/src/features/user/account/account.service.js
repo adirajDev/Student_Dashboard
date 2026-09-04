@@ -3,6 +3,7 @@ import College from '../../college/college.model.js';
 import bcrypt from 'bcrypt';
 import AppError from '../../../common/errors/AppError.js';
 import mongoose from 'mongoose';
+import { assertValidPassword } from '../../../common/validation/password.validation.js';
 
 export const updateSetting = async (userId, data) => {
     const { email, currentPassword, newPassword } = data;
@@ -33,6 +34,8 @@ export const updateSetting = async (userId, data) => {
         if (!isMatch) {
             throw new AppError('Incorrect current password', 400);
         }
+
+        assertValidPassword(newPassword);
 
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(newPassword, salt);

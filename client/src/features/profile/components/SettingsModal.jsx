@@ -2,6 +2,7 @@ import { Settings, X, Loader2, Copy, Check } from 'lucide-react';
 import useSettings from '../hooks/useSettings';
 import { createPortal } from 'react-dom';
 import { useState } from 'react';
+import PasswordRules from '@/components/common/PasswordRules.jsx';
 
 const CopyableId = ({ text }) => {
     const [copied, setCopied] = useState(false);
@@ -150,6 +151,7 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                                         className="input-field"
                                         placeholder="••••••••"
                                     />
+                                    <PasswordRules value={formData.newPassword} />
                                 </div>
                             </div>
                         </div>
