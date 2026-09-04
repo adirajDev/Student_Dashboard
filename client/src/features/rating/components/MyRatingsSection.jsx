@@ -1,28 +1,26 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Star, Pencil, Trash2 } from 'lucide-react';
-import useRatings from '../hooks/useRatings';
 import RatingFormModal from './RatingFormModal';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import Loading from '@/components/common/Loading';
 
-const MyRatingsSection = () => {
-    const { ratings, isLoading, getMyRatings, updateRating, deleteRating } =
-        useRatings();
-
+const MyRatingsSection = ({
+                              ratings,
+                              isLoading,
+                              updateRating,
+                              deleteRating,
+                              onRefresh,
+                          }) => {
     const [editingRating, setEditingRating] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingRating, setDeletingRating] = useState(null);
-
-    useEffect(() => {
-        getMyRatings();
-    }, [getMyRatings]);
 
     const handleFormClose = success => {
         setShowFormModal(false);
         setEditingRating(null);
         if (success) {
-            getMyRatings();
+            onRefresh();
         }
     };
 
@@ -33,7 +31,8 @@ const MyRatingsSection = () => {
         }
     };
 
-    if (isLoading) return <Loading />;
+    if (isLoading)
+        return <Loading inline message="Loading your reviews…" />;
 
     return (
         <div className="animate-fade-in">
@@ -46,8 +45,8 @@ const MyRatingsSection = () => {
                         No Reviews Yet
                     </h4>
                     <p className="text-[var(--ring)] max-w-sm">
-                        You haven't shared your experience yet. Visit your
-                        college's page to write a review!
+                        You haven't shared your experience yet. Review any
+                        college you've applied to and help future students!
                     </p>
                 </div>
             ) : (
@@ -59,13 +58,19 @@ const MyRatingsSection = () => {
                         >
                             <div className="flex justify-between items-start mb-4">
                                 <div className="flex-1 pr-4">
-                                    <Link
-                                        to={`/college/${rating.college?._id}`}
-                                        className="text-lg font-semibold text-blue-600 hover:underline mb-1 inline-block"
-                                    >
-                                        {rating.college?.name ||
-                                            'Unknown College'}
-                                    </Link>
+                                    {rating.college?._id ? (
+                                        <Link
+                                            to={`/college/${rating.college._id}`}
+                                            className="text-lg font-semibold text-blue-600 hover:underline mb-1 inline-block"
+                                        >
+                                            {rating.college.name ||
+                                                'Unknown College'}
+                                        </Link>
+                                    ) : (
+                                        <span className="text-lg font-semibold text-[var(--muted)] mb-1 inline-block">
+                                            Unknown College
+                                        </span>
+                                    )}
                                     <div className="flex items-center gap-2 mt-2">
                                         <div className="flex">
                                             {[1, 2, 3, 4, 5].map(star => (

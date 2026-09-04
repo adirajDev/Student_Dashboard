@@ -23,3 +23,8 @@ export const recalculateCollegeRating = async collegeId => {
         totalRatings,
     });
 };
+
+export const hasApplicationTo = (user, collegeId) => 
+    (user.applications || []).some(
+        app => (app.college?._id || app.college)?.toString() === collegeId
+    )

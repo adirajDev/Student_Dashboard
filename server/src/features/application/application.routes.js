@@ -13,25 +13,25 @@ const router = express.Router();
 
 router.use(requireAuth);
 
+// Admin application management for a student
+router.post('/admin/:studentId', requireRole('admin'), addAdminStudentApplication);
+router.patch(
+    '/admin/:studentId/:applicationId/course',
+    requireRole('admin'),
+    updateAdminStudentApplicationCourse
+);
+router.delete(
+    '/admin/:studentId/:applicationId',
+    requireRole('admin'),
+    deleteAdminStudentApplication
+);
+
 router.post('/:collegeId', requireRole('student'), applyToCollege);
 
 router.patch(
     '/:applicationId/course',
     requireRole('student'),
     setApplicationCourse
-);
-
-// Admin application management for a student
-router.post('/:studentId', requireRole('admin'), addAdminStudentApplication);
-router.patch(
-    '/:studentId/:applicationId/course',
-    requireRole('admin'),
-    updateAdminStudentApplicationCourse
-);
-router.delete(
-    '/:studentId/:applicationId',
-    requireRole('admin'),
-    deleteAdminStudentApplication
 );
 
 export default router;

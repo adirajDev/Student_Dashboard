@@ -5,6 +5,7 @@ import RatingFormModal from './RatingFormModal';
 import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import Loading from '@/components/common/Loading';
 import Pagination from '@/components/common/Pagination';
+import { canReviewCollege } from '@/features/rating/utils/ratingEligibility.js';
 
 const RatingList = ({ collegeId, currentUser }) => {
     const {
@@ -31,12 +32,6 @@ const RatingList = ({ collegeId, currentUser }) => {
         }
     }, [collegeId, getRatingsByCollege]);
 
-    useEffect(() => {
-        if (collegeId) {
-            getRatingsByCollege(collegeId);
-        }
-    }, [collegeId, getRatingsByCollege]);
-
     // Check if current user has already rated
     const userRating = useMemo(() => {
         if (!currentUser) return null;
@@ -48,10 +43,7 @@ const RatingList = ({ collegeId, currentUser }) => {
     }, [ratings, currentUser]);
 
     // Check if the current user is eligible to rate (must be a student of this college)
-    const canRate =
-        currentUser?.role === 'student' &&
-        currentUser.college === collegeId &&
-        !userRating;
+    const canRate = canReviewCollege(currentUser, collegeId) && !userRating;
 
     const handleFormClose = success => {
         setShowFormModal(false);

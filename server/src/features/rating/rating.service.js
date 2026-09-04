@@ -1,14 +1,12 @@
 import Rating from './rating.model.js';
-import { recalculateCollegeRating } from './rating.util.js';
+import { hasApplicationTo, recalculateCollegeRating } from './rating.util.js';
 import AppError from '../../common/errors/AppError.js';
 
 export const addRating = async (user, data) => {
     const { collegeId, stars, comment } = data;
 
     // Check if the user is currently in the college they are trying to rate
-    const userCollegeId =
-        user.college?._id?.toString() || user.college?.toString();
-    if (userCollegeId !== collegeId) {
+    if (!hasApplicationTo(user, collegeId)) {
         throw new AppError(
             'You can only rate the college you are currently enrolled in.',
             403

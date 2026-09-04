@@ -48,7 +48,7 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
         setLoadingMap(prev => ({ ...prev, add: true }));
         try {
             const res = await apiClient.post(
-                `/applications/${user._id || user.id}`,
+                `/applications/admin/${user._id || user.id}`,
                 {
                     collegeId,
                     courseId: courseId || null,
@@ -77,7 +77,7 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
         setLoadingMap(prev => ({ ...prev, [applicationId]: true }));
         try {
             const res = await apiClient.patch(
-                `/applications/${user._id || user.id}/${applicationId}/course`,
+                `/applications/admin/${user._id || user.id}/${applicationId}/course`,
                 { courseId }
             );
             setApplications(res.data.applications);
@@ -101,7 +101,7 @@ const useAdminStudentApplications = (user, onUserApplicationsUpdate) => {
         setLoadingMap(prev => ({ ...prev, [applicationId]: true }));
         try {
             const res = await apiClient.delete(
-                `/applications/${user._id || user.id}/${applicationId}`
+                `/applications/admin/${user._id || user.id}/${applicationId}`
             );
             setApplications(res.data.applications);
             if (onUserApplicationsUpdate) {
