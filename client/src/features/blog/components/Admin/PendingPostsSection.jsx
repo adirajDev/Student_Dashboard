@@ -64,7 +64,7 @@ const PendingPostsSection = ({ title }) => {
 
             {loading ? (
                 <div className="py-12">
-                    <Loading />
+                    <Loading message="Loading pending posts..." />
                 </div>
             ) : posts.length === 0 ? (
                 <div className="py-16 text-center text-[var(--ring)] flex flex-col items-center">

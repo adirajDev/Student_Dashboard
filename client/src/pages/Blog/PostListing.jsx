@@ -69,7 +69,7 @@ const PostListing = () => {
                         {error && <Error error={error} onRetry={refetch} />}
 
                         {isLoading ? (
-                            <Loading />
+                            <Loading message="Loading blogs listing..." />
                         ) : results.length > 0 ? (
                             <PostList posts={results} />
                         ) : filters.query ? (

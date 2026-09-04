@@ -4,8 +4,8 @@ import ExamGlobalSearch from '@/features/search/components/ExamGlobalSearch';
 import ExamCard from '@/features/exam/components/ExamCard';
 import useExamSearch from '@/features/search/hooks/useExamSearch';
 import Error from '@/components/common/Error';
-import ExamSearchLoading from './ExamSearchLoading';
 import ExamSearchEmpty from './ExamSearchEmpty';
+import Loading from '@/components/common/Loading.jsx';
 
 const TOP_SEARCHES = ['GATE', 'JEE', 'UPSC', 'CAT', 'NEET'];
 
@@ -70,7 +70,7 @@ const ExamSearchPage = () => {
                         {error && <Error error={error} />}
 
                         {isLoading ? (
-                            <ExamSearchLoading />
+                            <Loading message="Loading exam search page..." />
                         ) : results.length > 0 ? (
                             <div className="grid gap-4">
                                 {results.map(exam => (

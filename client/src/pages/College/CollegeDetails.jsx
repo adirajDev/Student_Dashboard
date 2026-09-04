@@ -60,7 +60,7 @@ const CollegeDetails = () => {
         return () => clearTimeout(timer);
     }, [college?._id]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <Loading message="Loading college details..." />;
     if (error) return <Error error={error} />;
     if (!college)
         return (

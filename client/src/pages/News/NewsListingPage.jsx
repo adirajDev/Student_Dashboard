@@ -75,7 +75,7 @@ const NewsListingPage = () => {
                         {error && <Error error={error} />}
 
                         {isLoading ? (
-                            <Loading />
+                            <Loading message="Loading news..." />
                         ) : results.length > 0 ? (
                             <div className="flex flex-col gap-6">
                                 {results.map(item => (

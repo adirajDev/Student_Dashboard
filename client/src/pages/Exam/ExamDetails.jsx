@@ -21,7 +21,7 @@ const ExamDetails = () => {
         }
     };
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <Loading message="Loading exam details..." />;
     if (error) return <Error error={error} />;
     if (!exam) return <Error error="Exam not found" />;
 

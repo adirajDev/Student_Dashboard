@@ -10,8 +10,8 @@ const SidebarLayout = () => {
     const { user, setUser, handleLogout, isLoading } = useAuth(true);
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-    if (isLoading) return <Loading />;
-    if (!user) return <Loading />; // Extra safety since useAuth(true) should redirect
+    if (isLoading || !user)
+        return <Loading message="Loading your dashboard..." />;
 
     return (
         <div className="flex h-screen overflow-hidden bg-[var(--background)] transition-colors duration-300">

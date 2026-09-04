@@ -32,7 +32,7 @@ const UserTable = ({
             />
 
             {isLoading ? (
-                <Loading />
+                <Loading message="Loading student records.." />
             ) : error ? (
                 <Error error={error} />
             ) : !users || users.length === 0 ? (

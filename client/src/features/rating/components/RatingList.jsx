@@ -60,7 +60,7 @@ const RatingList = ({ collegeId, currentUser }) => {
         }
     };
 
-    if (isLoading) return <Loading />;
+    if (isLoading) return <Loading inline message="Loading reviews…" />;
 
     return (
         <div className="mb-8">

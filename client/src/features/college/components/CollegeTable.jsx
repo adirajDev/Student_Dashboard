@@ -59,7 +59,7 @@ const CollegeTable = ({
             </div>
 
             {isLoading ? (
-                <Loading />
+                <Loading message="Loading colleges..." />
             ) : error ? (
                 <Error error={error} />
             ) : !colleges || colleges.length === 0 ? (

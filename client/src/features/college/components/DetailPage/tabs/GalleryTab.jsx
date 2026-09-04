@@ -47,7 +47,8 @@ const GalleryTab = ({ college }) => {
         return () => window.removeEventListener('keydown', onKeyDown);
     }, [total]);
 
-    if (isLoading) return <Loading />;
+    if (isLoading)
+        return <Loading inline message="Loading images and videos..." />;
 
     if (error) {
         return (

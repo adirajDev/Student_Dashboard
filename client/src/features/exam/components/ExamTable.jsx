@@ -48,7 +48,7 @@ const ExamTable = ({ exams, isLoading, error, onEdit, onDelete }) => {
             </div>
 
             {isLoading ? (
-                <Loading />
+                <Loading message="Loading exams..." />
             ) : error ? (
                 <Error error={error} />
             ) : !filteredExams || filteredExams.length === 0 ? (

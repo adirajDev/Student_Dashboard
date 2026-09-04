@@ -66,7 +66,7 @@ const GalleryManagementTab = ({ user }) => {
         }
     };
 
-    if (loading) return <Loading />;
+    if (loading) return <Loading message="Loading gallery..." />;
 
     if (error) {
         return (
