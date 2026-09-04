@@ -6,12 +6,12 @@ import DeleteConfirmModal from '@/components/common/DeleteConfirmModal';
 import Loading from '@/components/common/Loading';
 
 const MyRatingsSection = ({
-                              ratings,
-                              isLoading,
-                              updateRating,
-                              deleteRating,
-                              onRefresh,
-                          }) => {
+    ratings,
+    isLoading,
+    updateRating,
+    deleteRating,
+    onRefresh,
+}) => {
     const [editingRating, setEditingRating] = useState(null);
     const [showFormModal, setShowFormModal] = useState(false);
     const [deletingRating, setDeletingRating] = useState(null);
@@ -31,8 +31,7 @@ const MyRatingsSection = ({
         }
     };
 
-    if (isLoading)
-        return <Loading inline message="Loading your reviews…" />;
+    if (isLoading) return <Loading inline message="Loading your reviews…" />;
 
     return (
         <div className="animate-fade-in">

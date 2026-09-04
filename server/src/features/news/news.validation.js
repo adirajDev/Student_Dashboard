@@ -19,7 +19,7 @@ export const createNewsSchema = Joi.object({
     title: Joi.string().trim().max(200).required(),
     coverImage: coverImageSchema.allow(null).default(null),
     content: Joi.string().trim().required(),
-    faqs: faqsArray.default([])
+    faqs: faqsArray.default([]),
 });
 
 export const updateNewsSchema = Joi.object({

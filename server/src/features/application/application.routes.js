@@ -14,7 +14,11 @@ const router = express.Router();
 router.use(requireAuth);
 
 // Admin application management for a student
-router.post('/admin/:studentId', requireRole('admin'), addAdminStudentApplication);
+router.post(
+    '/admin/:studentId',
+    requireRole('admin'),
+    addAdminStudentApplication
+);
 router.patch(
     '/admin/:studentId/:applicationId/course',
     requireRole('admin'),

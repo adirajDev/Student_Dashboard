@@ -24,7 +24,7 @@ export const recalculateCollegeRating = async collegeId => {
     });
 };
 
-export const hasApplicationTo = (user, collegeId) => 
+export const hasApplicationTo = (user, collegeId) =>
     (user.applications || []).some(
         app => (app.college?._id || app.college)?.toString() === collegeId
-    )
+    );

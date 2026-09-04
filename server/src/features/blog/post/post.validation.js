@@ -23,7 +23,7 @@ export const createPostSchema = Joi.object({
     excerpt: Joi.string().trim().max(300).allow(''),
     content: Joi.object().required(),
     coverImage: coverImageSchema.allow(null),
-    faqs: faqsArray.default([])
+    faqs: faqsArray.default([]),
 });
 
 export const updatePostSchema = Joi.object({

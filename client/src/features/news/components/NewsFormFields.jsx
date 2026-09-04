@@ -10,14 +10,14 @@ import {
 import FaqFields from '@/components/common/FaqFields';
 
 const NewsFormFields = ({
-                            formData,
-                            isReadingImage,
-                            coverError,
-                            handleChange,
-                            handleCoverChange,
-                            removeCoverImage,
-                            setFaqs,
-                        }) => {
+    formData,
+    isReadingImage,
+    coverError,
+    handleChange,
+    handleCoverChange,
+    removeCoverImage,
+    setFaqs,
+}) => {
     const coverInputRef = useRef(null);
     const previewSrc = getImageSrc(formData.coverImage);
 
