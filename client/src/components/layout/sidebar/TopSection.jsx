@@ -1,17 +1,13 @@
 import { X } from 'lucide-react';
 
-const TopSection = ({ isAdmin, isEditor, handleNav, setIsMobileOpen }) => {
+const TopSection = ({ dashboard, handleNav, setIsMobileOpen }) => {
     return (
         <div className="flex items-center justify-between px-2">
             <button
-                onClick={() =>
-                    handleNav(
-                        isAdmin || isEditor ? '/admin/dashboard' : '/dashboard'
-                    )
-                }
+                onClick={() => handleNav(dashboard.path)}
                 className="cursor-pointer text-xl text-[var(--color-ink-950)] hover:text-[var(--color-ink-700)] font-display transition-colors font-bold"
             >
-                {isAdmin || isEditor ? 'AdminPanel' : 'StudentPortal'}
+                {dashboard.label}
             </button>
             <button
                 onClick={() => setIsMobileOpen(false)}

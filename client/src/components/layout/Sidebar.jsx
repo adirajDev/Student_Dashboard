@@ -4,6 +4,7 @@ import { Menu } from 'lucide-react';
 import TopSection from './sidebar/TopSection';
 import NavLinks from './sidebar/NavLinks';
 import BottomSection from './sidebar/BottomSection';
+import { getDashboard } from '@/components/layout/sidebar/sidebarConfig.js';
 
 const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
     const location = useLocation();
@@ -15,16 +16,8 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
     const isEditor = user?.role === 'editor';
 
     // Determine active tab based on current URL
-    let activeTab = 'overview';
-    if (location.pathname === '/dashboard') {
-        activeTab = searchParams.get('tab') || 'overview';
-    } else if (location.pathname.startsWith('/admin')) {
-        activeTab = searchParams.get('tab') || 'overview';
-    } else if (location.pathname === '/college/dashboard') {
-        activeTab = searchParams.get('tab') || 'edit';
-    } else if (location.pathname === '/blogger/dashboard') {
-        activeTab = searchParams.get('tab') || 'write';
-    }
+    const dashboard = getDashboard(user?.role);
+    const activeTab = searchParams.get('tab') || dashboard.defaultTab;
 
     const handleNav = path => {
         navigate(path);
@@ -67,8 +60,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                 {/* Top Section */}
                 <div className="flex flex-col gap-6 px-4">
                     <TopSection
-                        isAdmin={isAdmin}
-                        isEditor={isEditor}
+                        dashboard={dashboard}
                         handleNav={handleNav}
                         setIsMobileOpen={setIsMobileOpen}
                     />
