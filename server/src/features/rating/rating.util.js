@@ -12,7 +12,7 @@ export const recalculateCollegeRating = async collegeId => {
                 count: { $sum: 1 },
             },
         },
-    ]);
+    ]).session(session);
 
     const averageRating =
         stats.length > 0 ? Math.round(stats[0].average * 10) / 10 : 0;
@@ -21,7 +21,7 @@ export const recalculateCollegeRating = async collegeId => {
     await College.findByIdAndUpdate(collegeId, {
         averageRating,
         totalRatings,
-    });
+    }, {session});
 };
 
 export const hasApplicationTo = (user, collegeId) =>

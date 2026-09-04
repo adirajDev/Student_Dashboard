@@ -1,9 +1,11 @@
+import mongoose from 'mongoose';
 import College from './college.model.js';
 import Rating from '../rating/rating.model.js';
 import AppError from '../../common/errors/AppError.js';
-
 import Course from '../course/course.model.js';
 import { buildSearchRegex } from '../../common/utils/regex.util.js';
+import CollegeUpdate from './update/update.model.js';
+import User from '../user/user.model.js';
 
 export const getColleges = async (
     skip = 0,
@@ -127,11 +129,35 @@ export const updateCollege = async (id, data) => {
 };
 
 export const deleteCollege = async id => {
-    const college = await College.findByIdAndDelete(id);
-    if (!college) {
-        throw new AppError('College not found', 404);
-    }
+    const session = await mongoose.startSession();
+    try {
+        let deleted;
+        await session.withTransaction(async () => {
+            const linkedUsers = await User.countDocuments({
+                college: id,
+            }).session(session);
+            if (linkedUsers > 0) {
+                throw new AppError(
+                    'Remove or reassign the college accounts linked to this college before deleting it.',
+                    409
+                );
+            }
 
-    await Rating.deleteMany({ college: id });
-    return college;
+            deleted = await College.findByIdAndDelete(id, { session });
+            if (!deleted) {
+                throw new AppError('College not found', 404);
+            }
+
+            await Rating.deleteMany({ college: id }, { session });
+            await CollegeUpdate.deleteMany({ college: id }, { session });
+            await User.updateMany(
+                { 'applications.college': id },
+                { $pull: { applications: { college: id } } },
+                { session }
+            );
+        });
+        return deleted;
+    } finally {
+        await session.endSession();
+    }
 };
