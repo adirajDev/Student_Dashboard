@@ -30,7 +30,7 @@ const CollegeListingPage = () => {
     const PROMOTION_EVERY = 4;
 
     const handleCollegeClick = college => {
-        navigate(`/college/${college._id}`);
+        navigate(`/college/${college.slug}`);
     };
 
     return (

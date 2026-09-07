@@ -59,7 +59,7 @@ const MyRatingsSection = ({
                                 <div className="flex-1 pr-4">
                                     {rating.college?._id ? (
                                         <Link
-                                            to={`/college/${rating.college._id}`}
+                                            to={`/college/${rating.college.slug}`}
                                             className="text-lg font-semibold text-blue-600 hover:underline mb-1 inline-block"
                                         >
                                             {rating.college.name ||

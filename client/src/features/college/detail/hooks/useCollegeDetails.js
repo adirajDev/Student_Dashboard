@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import apiClient from '@/services/apiClient.js';
 
-const useCollegeDetails = (id, locationHash) => {
+const useCollegeDetails = (slug, locationHash) => {
     const [college, setCollege] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const useCollegeDetails = (id, locationHash) => {
         const fetchCollege = async () => {
             setIsLoading(true);
             try {
-                const response = await apiClient.get(`/colleges/${id}`);
+                const response = await apiClient.get(`/colleges/slug/${slug}`);
                 setCollege(response.data);
             } catch (err) {
                 console.error('Failed to fetch college:', err);
@@ -24,10 +24,10 @@ const useCollegeDetails = (id, locationHash) => {
             }
         };
 
-        if (id) {
+        if (slug) {
             fetchCollege();
         }
-    }, [id]);
+    }, [slug]);
 
     // Handle scroll to hash
     useEffect(() => {

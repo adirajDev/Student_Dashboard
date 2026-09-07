@@ -15,11 +15,14 @@ import LatestNewsRail from '@/features/news/components/LatestNewsRail.jsx';
 import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
 
 const CollegeDetails = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
     const location = useLocation();
     const { user } = useOutletContext();
 
-    const { college, isLoading, error } = useCollegeDetails(id, location.hash);
+    const { college, isLoading, error } = useCollegeDetails(
+        slug,
+        location.hash
+    );
     const { tabs, activeTab, setTab, navRef } = useCollegeTabs(college);
     // Measured, not hardcoded — the pin offset and the observer's trigger
     // point have to be the same number or the condensed row expands early.
@@ -29,7 +32,7 @@ const CollegeDetails = () => {
     // One instance, shared by the header and the sticky bar. The hook keeps
     // `status` in local state, so two instances would drift apart the moment
     // someone applies from either one.
-    const apply = useApplyToCollege(id, user);
+    const apply = useApplyToCollege(college?._id, user);
 
     // One node, two consumers: useIsStuck needs it as an observer target,
     // useCollegeTabs needs it as a scroll anchor. Memoised so the callback

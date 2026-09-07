@@ -82,7 +82,6 @@ const Signin = () => {
                                 It looks like this is your first time signing
                                 in. Please set a password to continue.
                             </div>
-
                         )}
 
                         <div>

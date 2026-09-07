@@ -151,7 +151,9 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                                         className="input-field"
                                         placeholder="••••••••"
                                     />
-                                    <PasswordRules value={formData.newPassword} />
+                                    <PasswordRules
+                                        value={formData.newPassword}
+                                    />
                                 </div>
                             </div>
                         </div>
