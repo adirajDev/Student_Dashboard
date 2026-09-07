@@ -12,8 +12,8 @@ import {
 
 const router = express.Router();
 router.get('/', getColleges);
-router.get('/id/:id', getCollegeById);
-router.get('/:slug', getCollegeBySlug);
+router.get('/slug/:slug', getCollegeBySlug);
+router.get('/:id', getCollegeById);
 
 router.use(requireAuth);
 router.use(requireRole('admin'));
