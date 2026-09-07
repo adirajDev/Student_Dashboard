@@ -18,10 +18,14 @@ export const recalculateCollegeRating = async collegeId => {
         stats.length > 0 ? Math.round(stats[0].average * 10) / 10 : 0;
     const totalRatings = stats.length > 0 ? stats[0].count : 0;
 
-    await College.findByIdAndUpdate(collegeId, {
-        averageRating,
-        totalRatings,
-    }, {session});
+    await College.findByIdAndUpdate(
+        collegeId,
+        {
+            averageRating,
+            totalRatings,
+        },
+        { session }
+    );
 };
 
 export const hasApplicationTo = (user, collegeId) =>

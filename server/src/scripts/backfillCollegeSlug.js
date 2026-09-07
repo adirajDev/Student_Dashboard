@@ -41,7 +41,9 @@ async function main() {
 
         const base = slugify(doc.name);
         if (!base) {
-            console.error(`Cannot slugify name for ${doc._id}: ${JSON.stringify(doc.name)}`);
+            console.error(
+                `Cannot slugify name for ${doc._id}: ${JSON.stringify(doc.name)}`
+            );
             process.exitCode = 1;
             continue;
         }
@@ -53,8 +55,15 @@ async function main() {
         }
 
         taken.add(slug);
-        report.push({ _id: String(doc._id), name: doc.name, from: doc.slug ?? null, to: slug });
-        ops.push({ updateOne: { filter: { _id: doc._id }, update: { $set: { slug } } } });
+        report.push({
+            _id: String(doc._id),
+            name: doc.name,
+            from: doc.slug ?? null,
+            to: slug,
+        });
+        ops.push({
+            updateOne: { filter: { _id: doc._id }, update: { $set: { slug } } },
+        });
     }
 
     console.table(report);
@@ -77,7 +86,10 @@ async function main() {
     // The unique index cannot build while several docs share a missing slug,
     // so create it only after the backfill.
     try {
-        await colleges.createIndex({ slug: 1 }, { unique: true, name: 'slug_1' });
+        await colleges.createIndex(
+            { slug: 1 },
+            { unique: true, name: 'slug_1' }
+        );
         console.log('Unique index slug_1 is in place.');
     } catch (err) {
         console.error('Index creation failed:', err.message);
