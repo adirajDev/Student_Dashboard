@@ -5,13 +5,15 @@ import {
     createCollege,
     deleteCollege,
     getCollegeById,
+    getCollegeBySlug,
     getColleges,
     updateCollege,
 } from './college.controller.js';
 
 const router = express.Router();
 router.get('/', getColleges);
-router.get('/:id', getCollegeById);
+router.get('/id/:id', getCollegeById);
+router.get('/:slug', getCollegeBySlug);
 
 router.use(requireAuth);
 router.use(requireRole('admin'));

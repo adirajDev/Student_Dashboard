@@ -6,7 +6,11 @@ import Course from '../course/course.model.js';
 import { buildSearchRegex } from '../../common/utils/regex.util.js';
 import CollegeUpdate from './update/update.model.js';
 import User from '../user/user.model.js';
-import { FIELD_LABELS, throwIfDuplicate, UNIQUE_FIELDS } from './college.error.js';
+import {
+    FIELD_LABELS,
+    throwIfDuplicate,
+    UNIQUE_FIELDS,
+} from './college.error.js';
 import { slugify } from '../../common/utils/slug.util.js';
 
 const assertUniqueFields = async (data, excludeId = null) => {
@@ -37,6 +41,37 @@ const assertUniqueFields = async (data, excludeId = null) => {
         `"${clash.name}" already uses the ${FIELD_LABELS[field]} "${data[field]}"`,
         409
     );
+};
+
+const COLLEGE_DETAIL_COURSE_POPULATE = {
+    path: 'availableCourses.course',
+    select: 'name level shortName specialization duration',
+    model: 'Course',
+};
+
+// Shared by getCollegeById and getCollegeBySlug so the public detail page
+// renders identically whichever route served it.
+const findCollegeDetail = async query => {
+    const college = await query
+        .select('-images.data')
+        .populate(COLLEGE_DETAIL_COURSE_POPULATE)
+        .lean();
+
+    if (!college) {
+        throw new AppError('College not found', 404);
+    }
+
+    const images = college.images || [];
+    const videos = college.videos || [];
+
+    // Cover image only. The full list is served by
+    // GET /college-gallery/:collegeId/gallery when the tab opens.
+    return {
+        ...college,
+        images: images.slice(0, 1),
+        imageCount: images.length,
+        videoCount: videos.length,
+    };
 };
 
 export const getColleges = async (
@@ -84,32 +119,19 @@ export const getColleges = async (
     return { data, totalCount };
 };
 
-export const getCollegeById = async id => {
-    const college = await College.findById(id)
-        .select('-images.data')
-        .populate({
-            path: 'availableCourses.course',
-            select: 'name level shortName specialization duration',
-            model: 'Course',
-        })
-        .lean();
+export const getCollegeById = async id => findCollegeDetail(College.findById(id));
 
-    if (!college) {
+export const getCollegeBySlug = async slug => {
+    const normalised = String(slug ?? '')
+        .trim()
+        .toLowerCase();
+
+    if (!normalised) {
         throw new AppError('College not found', 404);
     }
 
-    const images = college.images || [];
-    const videos = college.videos || [];
-
-    // Cover image only. The full list is served by
-    // GET /college-gallery/:collegeId/gallery when the tab opens.
-    return {
-        ...college,
-        images: images.slice(0, 1),
-        imageCount: images.length,
-        videoCount: videos.length,
-    };
-};
+    return findCollegeDetail(College.findOne({ slug: normalised }));
+}
 
 export const createCollege = async payload => {
     if (!payload.name) {
