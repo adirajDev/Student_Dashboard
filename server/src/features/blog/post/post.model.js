@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { faqsField } from '../../../common/faq_feat/faq.schema.js';
+import { SLUG_REGEX } from '../../../common/utils/slug.util.js';
 
 // Reusable image sub-schema — used wherever an image appears in Tiptap JSON attrs
 export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 500KB
@@ -21,7 +22,7 @@ const postSchema = new mongoose.Schema(
             trim: true,
             index: true,
             match: [
-                /^[a-z0-9-]+$/,
+                SLUG_REGEX,
                 'Slug must be lowercase alphanumeric with hyphens only',
             ],
         },
