@@ -4,6 +4,12 @@ import mongoose from 'mongoose';
 import { getRoleConfig } from '../user.roles.js';
 import AppError from '../../../common/errors/AppError.js';
 import { buildSearchRegex } from '../../../common/utils/regex.util.js';
+import { createDuplicateKeyHandler } from '../../../common/errors/uniqueness.js';
+
+const throwIfDuplicate = createDuplicateKeyHandler({
+    entity: 'user',
+    labels: { email: 'email' },
+});
 
 const findOneForRole = (id, role, config) => {
     const query = User.findOne({ _id: id, role }).select('-password');
@@ -54,11 +60,7 @@ export const createUser = async (body, role) => {
         });
         return findOneForRole(created._id, role, config);
     } catch (error) {
-        // loses the race against the unique index
-        if (error?.code === 11000) {
-            throw new AppError('A user with this email already exists.', 409);
-        }
-        throw error;
+        throwIfDuplicate(error);
     } finally {
         await session.endSession();
     }
@@ -95,10 +97,7 @@ export const updateUser = async (id, body, role) => {
         });
         return findOneForRole(user._id, role, config);
     } catch (error) {
-        if (error?.code === 11000) {
-            throw new AppError('A user with this email already exists.', 409);
-        }
-        throw error;
+        throwIfDuplicate(error);
     } finally {
         await session.endSession();
     }

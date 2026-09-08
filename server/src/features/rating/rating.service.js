@@ -1,6 +1,7 @@
 import Rating from './rating.model.js';
 import { hasApplicationTo, recalculateCollegeRating } from './rating.util.js';
 import AppError from '../../common/errors/AppError.js';
+import { throwIfDuplicate } from './rating.error.js';
 
 export const addRating = async (user, data) => {
     const { collegeId, stars, comment } = data;
@@ -25,10 +26,7 @@ export const addRating = async (user, data) => {
         await recalculateCollegeRating(collegeId);
         return rating;
     } catch (error) {
-        if (error.code === 11000) {
-            throw new AppError('You have already rated this college!', 400);
-        }
-        throw error;
+        throwIfDuplicate(error);
     }
 };
 

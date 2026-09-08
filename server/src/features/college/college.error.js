@@ -1,6 +1,8 @@
-import AppError from '../../common/errors/AppError.js';
-
-export const UNIQUE_FIELDS = ['name', 'slug', 'collegeId'];
+import {
+    createDuplicateKeyHandler,
+    createUniquenessAssertion
+} from '../../common/errors/uniqueness.js';
+import College from './college.model.js';
 
 export const FIELD_LABELS = {
     name: 'name',
@@ -8,17 +10,13 @@ export const FIELD_LABELS = {
     collegeId: 'college ID',
 };
 
-export const throwIfDuplicate = err => {
-    if (err.code !== 11000) throw err;
+export const throwIfDuplicate = createDuplicateKeyHandler({
+    entity: 'college',
+    labels: FIELD_LABELS,
+});
 
-    const field = Object.keys(err.keyPattern ?? {})[0];
-    const label = FIELD_LABELS[field];
-
-    if (!label)
-        throw new AppError('A college with these details already exists', 409);
-
-    throw new AppError(
-        `A college with the ${label} "${err.keyValue?.[field]}" already exists`,
-        409
-    );
-};
+export const assertUniqueFields = createUniquenessAssertion({
+    model: College,
+    entity: 'college',
+    labels: FIELD_LABELS,
+});
