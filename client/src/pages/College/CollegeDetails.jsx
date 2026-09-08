@@ -13,13 +13,14 @@ import useTopbarHeight from '@/hooks/useTopbarHeight';
 import { prefetchCollegeGallery } from '@/features/college/gallery/hooks/useCollegeGallery';
 import LatestNewsRail from '@/features/news/components/LatestNewsRail.jsx';
 import PromotionSlot from '@/features/promotions/components/PromotionSlot.jsx';
+import NotFoundState from '@/components/common/NotFoundState.jsx';
 
 const CollegeDetails = () => {
     const { slug } = useParams();
     const location = useLocation();
     const { user } = useOutletContext();
 
-    const { college, isLoading, error } = useCollegeDetails(
+    const { college, isLoading, error, notFound } = useCollegeDetails(
         slug,
         location.hash
     );
@@ -64,6 +65,16 @@ const CollegeDetails = () => {
     }, [college?._id]);
 
     if (isLoading) return <Loading message="Loading college details..." />;
+
+    if (notFound || (!error && !college)) {
+        return (
+            <NotFoundState
+                heading="College"
+                to="/college"
+                actionLabel="colleges"
+            />
+        )
+    }
     if (error) return <Error error={error} />;
     if (!college)
         return (

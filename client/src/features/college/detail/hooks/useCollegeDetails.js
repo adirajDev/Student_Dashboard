@@ -4,6 +4,7 @@ import apiClient from '@/services/apiClient.js';
 const useCollegeDetails = (slug, locationHash) => {
     const [college, setCollege] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState(null);
 
     // Fetch college data
@@ -14,11 +15,15 @@ const useCollegeDetails = (slug, locationHash) => {
                 const response = await apiClient.get(`/colleges/slug/${slug}`);
                 setCollege(response.data);
             } catch (err) {
-                console.error('Failed to fetch college:', err);
-                setError(
-                    err.response?.data?.message ||
+                if (err.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    console.error('Failed to fetch college:', err);
+                    setError(
+                        err.response?.data?.message ||
                         'Failed to load college details.'
-                );
+                    );
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -69,6 +74,7 @@ const useCollegeDetails = (slug, locationHash) => {
         college,
         isLoading,
         error,
+        notFound,
     };
 };
 
