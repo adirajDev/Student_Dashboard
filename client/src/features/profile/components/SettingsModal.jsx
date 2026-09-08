@@ -74,16 +74,6 @@ const SettingsModal = ({ user, onClose, onUpdate }) => {
                             </span>
                             {user.phone}
                         </div>
-                        {user.course && (
-                            <div className="md:col-span-2">
-                                <span className="block text-[var(--muted)] mb-2">
-                                    Course
-                                </span>
-                                {user.course?.name || (
-                                    <CopyableId text={user.course} />
-                                )}
-                            </div>
-                        )}
                         {user.college && (
                             <div className="md:col-span-2">
                                 <span className="block text-[var(--muted)] mb-2">
