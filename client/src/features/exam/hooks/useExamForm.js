@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { serializeFaqs } from '@/components/common/FaqFields.jsx';
+import { normaliseSlugInput, slugify } from '@/utils/slug.js';
 
 const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
     const [formData, setFormData] = useState({
@@ -16,6 +17,7 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         examDurationMinutes: '',
         faqs: [],
     });
+    const [slugTouched, setSlugTouched] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [error, setError] = useState('');
 
@@ -31,6 +33,7 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         if (editingExam) {
             setFormData({
                 name: editingExam.name || '',
+                slug: editingExam.slug || '',
                 requirement: editingExam.requirement || '',
                 regStartingDate: formatDateForInput(
                     editingExam.regStartingDate
@@ -53,6 +56,10 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
                     answer: f.answer || '',
                 })),
             });
+
+            setSlugTouched(true);
+        } else {
+            setSlugTouched(false);
         }
     }, [editingExam]);
 
@@ -64,6 +71,7 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         try {
             const submissionData = {
                 ...formData,
+                slug: slugify(formData.slug || formData.name),
                 examDuration:
                     (parseInt(formData.examDurationHours) || 0) * 60 +
                     (parseInt(formData.examDurationMinutes) || 0),
@@ -98,6 +106,23 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
+    const handleNameChange = e => {
+        const name = e.target.value;
+        setFormData(prev => ({
+            ...prev,
+            name,
+            slug: slugTouched ? prev.slug : slugify(name),
+        }));
+    };
+
+    const handleSlugChange = e => {
+        setSlugTouched(true);
+        setFormData(prev => ({
+            ...prev,
+            slug: normaliseSlugInput(e.target.value),
+        }));
+    };
+
     const setFaqs = faqs => setFormData(prev => ({ ...prev, faqs }));
 
     return {
@@ -105,6 +130,8 @@ const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
         isSubmitting,
         error,
         handleChange,
+        handleNameChange,
+        handleSlugChange,
         handleSubmit,
         setFaqs,
     };

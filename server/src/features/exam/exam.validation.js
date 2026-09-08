@@ -6,15 +6,15 @@ import { SLUG_REGEX } from '../../common/utils/slug.util.js';
 const examSchema = Joi.object({
     name: Joi.string().required(),
     slug: Joi.string()
-             .trim()
-             .lowercase()
-             .pattern(SLUG_REGEX)
-             .allow('')
-             .optional()
-             .messages({
-                 'string.pattern.base':
-                     'Slug must be lowercase alphanumeric with hyphens only',
-             }),
+        .trim()
+        .lowercase()
+        .pattern(SLUG_REGEX)
+        .allow('')
+        .optional()
+        .messages({
+            'string.pattern.base':
+                'Slug must be lowercase alphanumeric with hyphens only',
+        }),
     requirement: Joi.string().required(),
     regStartingDate: Joi.date().required(),
     regEndingDate: Joi.date().required(),
@@ -31,14 +31,10 @@ const examSchema = Joi.object({
 
 export const updateExamSchema = Joi.object({
     name: Joi.string(),
-    slug: Joi.string()
-             .trim()
-             .lowercase()
-             .pattern(SLUG_REGEX)
-             .messages({
-                 'string.pattern.base':
-                     'Slug must be lowercase alphanumeric with hyphens only',
-             }),
+    slug: Joi.string().trim().lowercase().pattern(SLUG_REGEX).messages({
+        'string.pattern.base':
+            'Slug must be lowercase alphanumeric with hyphens only',
+    }),
     requirement: Joi.string(),
     regStartingDate: Joi.date(),
     regEndingDate: Joi.date(),

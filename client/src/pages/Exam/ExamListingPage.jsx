@@ -28,7 +28,7 @@ const ExamListingPage = () => {
         useExamSearch('');
 
     const handleExamClick = exam => {
-        navigate(`/exam/${exam._id}`);
+        navigate(`/exam/${exam.slug}`);
     };
 
     const handleModeChange = modeValue => {

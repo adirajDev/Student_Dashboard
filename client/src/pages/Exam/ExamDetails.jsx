@@ -9,8 +9,8 @@ import ExamDescription from '../../features/exam/components/ExamDetail/ExamDescr
 import ExamFaqs from '@/features/exam/components/ExamDetail/ExamFaqs.jsx';
 
 const ExamDetails = () => {
-    const { id } = useParams();
-    const { exam, isLoading, error, formatTimeRange } = useExamDetails(id);
+    const { slug } = useParams();
+    const { exam, isLoading, error, formatTimeRange } = useExamDetails(slug);
     const navigate = useNavigate();
     const { user } = useOutletContext();
 

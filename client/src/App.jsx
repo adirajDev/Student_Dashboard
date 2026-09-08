@@ -55,7 +55,7 @@ function App() {
                             element={<ExamSearchPage />}
                         />
                         <Route path="/exams" element={<ExamListingPage />} />
-                        <Route path="/exam/:id" element={<ExamDetails />} />
+                        <Route path="/exam/:slug" element={<ExamDetails />} />
                         <Route path="/news" element={<NewsListingPage />} />
                         <Route path="/news/:id" element={<NewsDetail />} />
                         <Route

@@ -1,6 +1,6 @@
 import {
     createDuplicateKeyHandler,
-    createUniquenessAssertion
+    createUniquenessAssertion,
 } from '../../common/errors/uniqueness.js';
 import College from './college.model.js';
 

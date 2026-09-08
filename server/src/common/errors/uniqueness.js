@@ -12,29 +12,29 @@ const article = noun => (/^[aeiou]/i.test(noun) ? 'An' : 'A');
  */
 export const createDuplicateKeyHandler =
     ({ entity, labels = {}, messages = {} }) =>
-        err => {
-            if (err.code !== 11000) throw err;
+    err => {
+        if (err.code !== 11000) throw err;
 
-            const keys = Object.keys(err.keyPattern ?? {});
+        const keys = Object.keys(err.keyPattern ?? {});
 
-            const custom = messages[keys.join('+')];
-            if (custom) throw new AppError(custom, 409);
+        const custom = messages[keys.join('+')];
+        if (custom) throw new AppError(custom, 409);
 
-            const field = keys[0];
-            const label = labels[field];
+        const field = keys[0];
+        const label = labels[field];
 
-            if (!label) {
-                throw new AppError(
-                    `${article(entity)} ${entity} with these details already exists`,
-                    409
-                );
-            }
-
+        if (!label) {
             throw new AppError(
-                `${article(entity)} ${entity} with the ${label} "${err.keyValue?.[field]}" already exists`,
+                `${article(entity)} ${entity} with these details already exists`,
                 409
             );
-        };
+        }
+
+        throw new AppError(
+            `${article(entity)} ${entity} with the ${label} "${err.keyValue?.[field]}" already exists`,
+            409
+        );
+    };
 
 /**
  * Pre-flight uniqueness check. Reads better than waiting for the write to
@@ -46,19 +46,18 @@ export const createDuplicateKeyHandler =
  * step with the schema rather than two.
  */
 export const createUniquenessAssertion = ({
-                                              model,
-                                              entity,
-                                              labels,
-                                              displayField = 'name',
-                                          }) => {
+    model,
+    entity,
+    labels,
+    displayField = 'name',
+}) => {
     const fields = Object.keys(labels);
     const projection = [...new Set([displayField, ...fields])].join(' ');
 
     return async (data, excludeId = null) => {
         const conditions = fields
             .filter(
-                f =>
-                    data[f] !== undefined && data[f] !== null && data[f] !== ''
+                f => data[f] !== undefined && data[f] !== null && data[f] !== ''
             )
             .map(f => ({ [f]: data[f] }));
 
