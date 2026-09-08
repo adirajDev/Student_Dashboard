@@ -1,6 +1,7 @@
 export function slugify(input) {
     if (!input) return '';
     return String(input)
+        .replace(/[\(\[\{][^\)\]\}]*[\)\]\}]/g, ' ') // drop bracketed content
         .normalize('NFKD')
         .replace(/[\u0300-\u036f]/g, '') // strip accents
         .replace(/['’`]/g, '') // drop apostrophes instead of turning them into hyphens

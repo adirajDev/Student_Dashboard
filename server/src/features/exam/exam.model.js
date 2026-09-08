@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { faqsField } from '../../common/faq_feat/faq.schema.js';
+import { SLUG_REGEX } from '../../common/utils/slug.util.js';
 
 const examSchema = new mongoose.Schema({
     name: {
@@ -48,7 +49,19 @@ const examSchema = new mongoose.Schema({
         required: true,
     },
     faqs: faqsField,
+    slug: {
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true,
+        match: [
+            SLUG_REGEX,
+            'Slug must be lowercase alphanumeric with hyphens only',
+        ],
+    },
 });
+
+examSchema.index({ slug: 1 }, { unique: true })
 
 const Exam = mongoose.model('Exam', examSchema);
 export default Exam;
