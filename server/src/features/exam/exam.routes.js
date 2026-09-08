@@ -2,6 +2,7 @@ import express from 'express';
 import {
     createExam,
     getAllExams,
+    getExamBySlug,
     getExamById,
     updateExam,
     deleteExam,
@@ -11,6 +12,7 @@ import { requireRole } from '../../common/middleware/role.middleware.js';
 
 const router = express.Router();
 router.get('/', getAllExams);
+router.get('/slug/:slug', getExamBySlug);
 router.get('/:id', getExamById);
 
 router.use(requireAuth);

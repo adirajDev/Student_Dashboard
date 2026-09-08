@@ -4,13 +4,32 @@ import Exam from './exam.model.js';
 import { assertUniqueFields, throwIfDuplicate } from './exam.error.js';
 import { slugify } from '../../common/utils/slug.util.js';
 
+const findExamDetail = async query => {
+    const exam = await query.lean();
+
+    if (!exam) {
+        throw new AppError('Exam not found', 404);
+    }
+
+    return exam;
+};
 
 export const getAllExams = async () => {
     return Exam.find();
 };
 
-export const getExamById = async id => {
-    return Exam.findById(id);
+export const getExamById = async id => findExamDetail(Exam.findById(id));
+
+export const getExamBySlug = async slug => {
+    const normalised = String(slug ?? '')
+        .trim()
+        .toLowerCase();
+
+    if (!normalised) {
+        throw new AppError('Exam not found', 404);
+    }
+
+    return findExamDetail(Exam.findOne({ slug: normalised }));
 };
 
 export const createExam = async data => {
