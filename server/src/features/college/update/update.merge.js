@@ -2,6 +2,9 @@ const FIELD_HANDLERS = {
     name: (college, value) => {
         college.name = value;
     },
+    slug: (college, value) => {
+        college.slug = value;
+    },
     description: (college, value) => {
         college.description = value;
     },

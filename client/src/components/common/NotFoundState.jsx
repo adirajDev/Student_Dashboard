@@ -9,20 +9,18 @@ import { Link } from 'react-router-dom';
  * matching at all and renders outside any layout.
  */
 const NotFoundState = ({
-                           heading = '',
-                           message = 'This page may have moved or the link may be out of date.',
-                           to,
-                           actionLabel,
-                           children,
-                       }) => (
+    heading = '',
+    message = 'This page may have moved or the link may be out of date.',
+    to,
+    actionLabel,
+    children,
+}) => (
     <div className="max-w-2xl mx-auto px-4 py-20 text-center">
         <h1 className="text-3xl font-display text-[var(--foreground)] mb-3">
             {heading} not found.
         </h1>
 
-        {message && (
-            <p className="text-[var(--muted)] mb-8">{message}</p>
-        )}
+        {message && <p className="text-[var(--muted)] mb-8">{message}</p>}
 
         {children ??
             (to && actionLabel ? (

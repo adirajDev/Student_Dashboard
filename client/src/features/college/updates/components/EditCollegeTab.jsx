@@ -25,6 +25,8 @@ const EditCollegeTab = ({ user }) => {
         removeFaculty,
         setFaqs,
         handleSubmit,
+        handleSlugChange,
+        originalSlug,
     } = useEditCollegeForm(user);
 
     if (loading) return <Loading />;
@@ -62,6 +64,8 @@ const EditCollegeTab = ({ user }) => {
                 <BasicInfoFields
                     formData={formData}
                     handleInputChange={handleInputChange}
+                    handleSlugChange={handleSlugChange}
+                    originalSlug={originalSlug}
                 />
 
                 <PlacementFields

@@ -7,6 +7,7 @@ import {
     Users,
     Presentation,
     HelpCircle,
+    AlertTriangle,
 } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -351,6 +352,24 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 'College Name',
                                 update.college?.name,
                                 changes.name
+                            )}
+                        {changes.slug &&
+                            changes.slug !== update.college?.slug && (
+                                <div className="mb-4 p-4 rounded-xl border-2 border-amber-300 bg-amber-50">
+                                    <div className="flex items-start gap-2 mb-3">
+                                        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
+                                        <p className="text-xs text-amber-800">
+                                            Approving this moves the college's
+                                            public URL. Links to the old address
+                                            will stop working.
+                                        </p>
+                                    </div>
+                                    {renderDiff(
+                                        'URL Slug',
+                                        update.college?.slug,
+                                        changes.slug
+                                    )}
+                                </div>
                             )}
                         {changes.type &&
                             renderDiff(

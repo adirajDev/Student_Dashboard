@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import apiClient from '@/services/apiClient.js';
 import useCollegeUpdates from './useCollegeUpdates.js';
+import { normaliseSlugInput } from '@/utils/slug.js';
 
 const useEditCollegeForm = user => {
     const {
@@ -50,6 +51,7 @@ const useEditCollegeForm = user => {
                 // Pre-fill form
                 setFormData({
                     name: data.name || '',
+                    slug: data.slug || '',
                     type: data.type || 'Private',
                     city: data.city || '',
                     state: data.state || '',
@@ -83,6 +85,13 @@ const useEditCollegeForm = user => {
     const handleInputChange = e => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleSlugChange = e => {
+        setFormData(prev => ({
+            ...prev,
+            slug: normaliseSlugInput(e.target.value),
+        }));
     };
 
     const handlePlacementChange = e => {
@@ -188,6 +197,8 @@ const useEditCollegeForm = user => {
             delete cleanData.faqs;
         }
 
+        if (cleanData.slug === college?.slug) delete cleanData.slug;
+
         try {
             await submitUpdate(cleanData);
             setSuccessMsg(
@@ -215,6 +226,8 @@ const useEditCollegeForm = user => {
         removeFaculty,
         setFaqs,
         handleSubmit,
+        handleSlugChange,
+        originalSlug: college?.slug || '',
     };
 };
 

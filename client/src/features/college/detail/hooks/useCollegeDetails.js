@@ -21,7 +21,7 @@ const useCollegeDetails = (slug, locationHash) => {
                     console.error('Failed to fetch college:', err);
                     setError(
                         err.response?.data?.message ||
-                        'Failed to load college details.'
+                            'Failed to load college details.'
                     );
                 }
             } finally {

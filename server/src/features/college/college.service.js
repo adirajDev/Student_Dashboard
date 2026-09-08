@@ -13,7 +13,7 @@ import {
 } from './college.error.js';
 import { slugify } from '../../common/utils/slug.util.js';
 
-const assertUniqueFields = async (data, excludeId = null) => {
+export const assertUniqueFields = async (data, excludeId = null) => {
     const conditions = UNIQUE_FIELDS.filter(
         f => data[f] !== undefined || data[f] !== null || data[f] !== ''
     ).map(f => ({ [f]: data[f] }));
@@ -119,7 +119,8 @@ export const getColleges = async (
     return { data, totalCount };
 };
 
-export const getCollegeById = async id => findCollegeDetail(College.findById(id));
+export const getCollegeById = async id =>
+    findCollegeDetail(College.findById(id));
 
 export const getCollegeBySlug = async slug => {
     const normalised = String(slug ?? '')
@@ -131,7 +132,7 @@ export const getCollegeBySlug = async slug => {
     }
 
     return findCollegeDetail(College.findOne({ slug: normalised }));
-}
+};
 
 export const createCollege = async payload => {
     if (!payload.name) {

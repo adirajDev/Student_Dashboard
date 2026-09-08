@@ -73,7 +73,7 @@ const CollegeDetails = () => {
                 to="/college"
                 actionLabel="colleges"
             />
-        )
+        );
     }
     if (error) return <Error error={error} />;
     if (!college)
