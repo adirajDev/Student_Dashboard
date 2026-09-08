@@ -59,7 +59,7 @@ function App() {
                         <Route path="/news" element={<NewsListingPage />} />
                         <Route path="/news/:id" element={<NewsDetail />} />
                         <Route
-                            path="/college/:id"
+                            path="/college/:slug"
                             element={<CollegeDetails />}
                         />
                         <Route path="/blog/:slug" element={<BlogDetail />} />

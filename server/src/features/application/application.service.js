@@ -225,7 +225,7 @@ const getPopulatedStudentApplications = async studentId => {
         .populate([
             {
                 path: 'applications.college',
-                select: 'name logo location availableCourses',
+                select: 'name logo slug availableCourses',
                 populate: {
                     path: 'availableCourses.course',
                     select: 'name',

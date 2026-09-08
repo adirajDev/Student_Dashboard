@@ -1,14 +1,19 @@
 import Joi from 'joi';
-import { COLLEGE_TYPE } from '../college.constants.js';
+import { COLLEGE_TYPE, STATES } from '../college.constants.js';
 import { faqsDelta } from '../../../common/faq_feat/faq.validation.js';
+import { SLUG_REGEX } from '../../../common/utils/slug.util.js';
 
 const objectId = Joi.string().hex().length(24);
 
 export const proposedChangesSchema = Joi.object({
     name: Joi.string().trim(),
+    slug: Joi.string().trim().lowercase().pattern(SLUG_REGEX).messages({
+        'string.pattern.base':
+            'Slug must be lowercase letters and numbers separated by single hyphens.',
+    }),
     type: Joi.string().valid(...COLLEGE_TYPE),
-    // todo: change location with city and state
-    location: Joi.string().trim(),
+    city: Joi.string().trim(),
+    state: Joi.string().valid(...STATES),
     collegeId: Joi.string().trim().allow(''),
     description: Joi.string().trim().allow(''),
     overview: Joi.string().trim().allow(''),

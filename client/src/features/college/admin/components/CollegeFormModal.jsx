@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { Loader2 } from 'lucide-react';
 import FormField from '@/components/common/FormField.jsx';
 import { STATES } from '@/constants/states.js';
+import { normaliseSlugInput, slugify } from '@/utils/slug.js';
 
 const CollegeFormModal = ({
     onAdd,
@@ -13,12 +14,14 @@ const CollegeFormModal = ({
 }) => {
     const [formData, setFormData] = useState({
         name: '',
+        slug: '',
         collegeId: '',
         type: 'Private',
         city: '',
         state: '',
         description: '',
     });
+    const [slugTouched, setSlugTouched] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
@@ -33,17 +36,39 @@ const CollegeFormModal = ({
 
             setFormData({
                 name: editingCollege.name || '',
+                slug: editingCollege.slug || '',
                 collegeId: editingCollege.collegeId || '',
                 type: editingCollege.type || 'Private',
                 city: editingCollege.city || legacyCity,
                 state: editingCollege.state || legacyState,
                 description: editingCollege.description || '',
             });
+            // An existing slug is never auto-moved by a name edit.
+            setSlugTouched(true);
+        } else {
+            setSlugTouched(false);
         }
     }, [editingCollege]);
 
     const handleChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
+    };
+
+    const handleNameChange = e => {
+        const name = e.target.value;
+        setFormData(prev => ({
+            ...prev,
+            name,
+            slug: slugTouched ? prev.slug : slugify(name),
+        }));
+    };
+
+    const handleSlugChange = e => {
+        setSlugTouched(true);
+        setFormData(prev => ({
+            ...prev,
+            slug: normaliseSlugInput(e.target.value),
+        }));
     };
 
     const handleSubmit = async e => {
@@ -54,6 +79,7 @@ const CollegeFormModal = ({
         const payload = {
             ...formData,
             city: formData.city.trim(),
+            slug: slugify(formData.slug || formData.name),
         };
 
         let res;
@@ -121,7 +147,7 @@ const CollegeFormModal = ({
                                 label="College Name"
                                 id="name"
                                 value={formData.name}
-                                onChange={handleChange}
+                                onChange={handleNameChange}
                                 placeholder="e.g. Stanford University"
                             />
                             <FormField
@@ -132,6 +158,33 @@ const CollegeFormModal = ({
                                 placeholder="e.g. STANFORD"
                                 required={false}
                             />
+                        </div>
+
+                        <div>
+                            <FormField
+                                label="URL Slug"
+                                id="slug"
+                                value={formData.slug}
+                                onChange={handleSlugChange}
+                                placeholder="e.g. stanford-university"
+                            />
+                            <p className="mt-2 text-xs text-[var(--muted)]">
+                                Public page:{' '}
+                                <span className="font-mono">
+                                    /college/{formData.slug || '…'}
+                                </span>
+                            </p>
+                            {editingCollege &&
+                                formData.slug !== editingCollege.slug && (
+                                    <p className="mt-1 text-xs text-amber-700">
+                                        Changing the slug moves the public URL.
+                                        Existing links to{' '}
+                                        <span className="font-mono">
+                                            /college/{editingCollege.slug}
+                                        </span>{' '}
+                                        will stop working.
+                                    </p>
+                                )}
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -2,7 +2,12 @@ import { useState, useRef, useEffect } from 'react';
 import { Upload, X } from 'lucide-react';
 import { STATES } from '@/constants/states.js';
 
-const BasicInfoFields = ({ formData, handleInputChange }) => {
+const BasicInfoFields = ({
+    formData,
+    handleInputChange,
+    handleSlugChange,
+    originalSlug,
+}) => {
     const fileInputRef = useRef(null);
     const [previewUrl, setPreviewUrl] = useState(formData.logo || '');
 
@@ -60,6 +65,35 @@ const BasicInfoFields = ({ formData, handleInputChange }) => {
                     className="input-field"
                     required
                 />
+            </div>
+            <div>
+                <label className="block text-sm font-medium mb-1">
+                    URL Slug
+                </label>
+                <input
+                    type="text"
+                    name="slug"
+                    value={formData.slug}
+                    onChange={handleSlugChange}
+                    className="input-field"
+                    required
+                />
+                <p className="mt-1 text-xs text-[var(--muted)]">
+                    Public page:{' '}
+                    <span className="font-mono">
+                        /college/{formData.slug || '…'}
+                    </span>
+                </p>
+                {originalSlug && formData.slug !== originalSlug && (
+                    <p className="mt-1 text-xs text-amber-700">
+                        Once approved, this moves the public URL. Existing links
+                        to{' '}
+                        <span className="font-mono">
+                            /college/{originalSlug}
+                        </span>{' '}
+                        will stop working.
+                    </p>
+                )}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>

@@ -2,6 +2,9 @@ const FIELD_HANDLERS = {
     name: (college, value) => {
         college.name = value;
     },
+    slug: (college, value) => {
+        college.slug = value;
+    },
     description: (college, value) => {
         college.description = value;
     },
@@ -11,8 +14,11 @@ const FIELD_HANDLERS = {
     type: (college, value) => {
         college.type = value;
     },
-    location: (college, value) => {
-        college.location = value;
+    city: (college, value) => {
+        college.city = value;
+    },
+    state: (college, value) => {
+        college.state = value;
     },
     availableCourses: (college, value) => {
         college.availableCourses = value;

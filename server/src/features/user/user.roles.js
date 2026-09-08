@@ -51,10 +51,12 @@ export const ROLE_CONFIG = {
         ],
         beforeDelete: async (user, session) => {
             const ratings = await Rating.find({ student: user._id })
-                                        .select('college')
-                                        .session(session);
+                .select('college')
+                .session(session);
             await Rating.deleteMany({ student: user._id }, { session });
-            const collegeIds = [...new Set(ratings.map(r => r.college.toString()))];
+            const collegeIds = [
+                ...new Set(ratings.map(r => r.college.toString())),
+            ];
             for (const id of collegeIds) {
                 await recalculateCollegeRating(id, session);
             }
@@ -66,7 +68,10 @@ export const ROLE_CONFIG = {
         select: `${BASE_SELECT} college`,
         populate: [{ path: 'college', select: 'name location type' }],
         beforeDelete: async (user, session) => {
-            await CollegeUpdate.deleteMany({ requestedBy: user._id }, { session });
+            await CollegeUpdate.deleteMany(
+                { requestedBy: user._id },
+                { session }
+            );
         },
     },
 };

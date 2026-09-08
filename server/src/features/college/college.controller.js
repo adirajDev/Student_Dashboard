@@ -24,6 +24,11 @@ export const getCollegeById = asyncHandler(async (req, res) => {
     res.json(college);
 });
 
+export const getCollegeBySlug = asyncHandler(async (req, res) => {
+    const college = await collegeService.getCollegeBySlug(req.params.slug);
+    res.json(college);
+});
+
 export const createCollege = asyncHandler(async (req, res) => {
     const college = await collegeService.createCollege(req.body);
     res.status(201).json({ message: 'College created successfully', college });

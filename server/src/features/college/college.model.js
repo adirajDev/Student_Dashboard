@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import { COLLEGE_TYPE, STATES } from './college.constants.js';
 import { faqsField } from '../../common/faq_feat/faq.schema.js';
+import { SLUG_REGEX } from '../../common/utils/slug.util.js';
 
 const collegeSchema = new mongoose.Schema(
     {
@@ -9,6 +10,16 @@ const collegeSchema = new mongoose.Schema(
             required: true,
             trim: true,
             unique: true,
+        },
+        slug: {
+            type: String,
+            required: true,
+            lowercase: true,
+            trim: true,
+            match: [
+                SLUG_REGEX,
+                'Slug must be lowercase alphanumeric with hyphens only',
+            ],
         },
         logo: {
             type: String,
@@ -38,7 +49,7 @@ const collegeSchema = new mongoose.Schema(
             type: String,
             trim: true,
             enum: STATES,
-            default: 'Delhi NCR',
+            default: 'Delhi',
             required: true,
         },
         city: {
@@ -152,6 +163,8 @@ collegeSchema.set('toObject', {
         return ret;
     },
 });
+
+collegeSchema.index({ slug: 1 }, { unique: true });
 
 const College = mongoose.model('College', collegeSchema);
 export default College;

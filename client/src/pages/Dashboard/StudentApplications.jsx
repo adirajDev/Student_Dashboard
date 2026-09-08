@@ -162,7 +162,7 @@ const StudentApplications = () => {
 
                                         <div className="pt-5 border-t border-slate-100 flex justify-between items-center">
                                             <Link
-                                                to={`/college/${college._id || college}`}
+                                                to={`/college/${college.slug}`}
                                                 className="text-sm font-semibold text-indigo-600 hover:text-indigo-700 hover:underline px-2 py-1 -ml-2 rounded-lg transition-colors"
                                             >
                                                 View College

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import apiClient from '@/services/apiClient.js';
 
-const useCollegeDetails = (id, locationHash) => {
+const useCollegeDetails = (slug, locationHash) => {
     const [college, setCollege] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState(null);
 
     // Fetch college data
@@ -11,23 +12,27 @@ const useCollegeDetails = (id, locationHash) => {
         const fetchCollege = async () => {
             setIsLoading(true);
             try {
-                const response = await apiClient.get(`/colleges/${id}`);
+                const response = await apiClient.get(`/colleges/slug/${slug}`);
                 setCollege(response.data);
             } catch (err) {
-                console.error('Failed to fetch college:', err);
-                setError(
-                    err.response?.data?.message ||
-                        'Failed to load college details.'
-                );
+                if (err.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    console.error('Failed to fetch college:', err);
+                    setError(
+                        err.response?.data?.message ||
+                            'Failed to load college details.'
+                    );
+                }
             } finally {
                 setIsLoading(false);
             }
         };
 
-        if (id) {
+        if (slug) {
             fetchCollege();
         }
-    }, [id]);
+    }, [slug]);
 
     // Handle scroll to hash
     useEffect(() => {
@@ -69,6 +74,7 @@ const useCollegeDetails = (id, locationHash) => {
         college,
         isLoading,
         error,
+        notFound,
     };
 };
 

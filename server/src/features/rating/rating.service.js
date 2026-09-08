@@ -67,7 +67,7 @@ export const getMyRatings = async (studentId, skip = 0, limit = 0) => {
             .select(
                 'student college stars comment isEdited createdAt updatedAt'
             )
-            .populate('college', 'name location logo')
+            .populate('college', 'name slug logo')
             .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit)

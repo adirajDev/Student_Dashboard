@@ -1,11 +1,14 @@
+import mongoose from 'mongoose';
 import CollegeUpdate from './update.model.js';
 import College from '../college.model.js';
 import Course from '../../course/course.model.js';
 import AppError from '../../../common/errors/AppError.js';
 import { validateProposedChanges } from './update.validation.js';
 import { applyProposedChanges } from './update.merge.js';
-import mongoose from 'mongoose';
 import { MAX_FAQS } from '../../../common/faq_feat/faq.constants.js';
+import { slugify } from '../../../common/utils/slug.util.js';
+import { assertUniqueFields } from '../college.service.js';
+import { throwIfDuplicate } from '../college.error.js';
 
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
@@ -19,6 +22,17 @@ export const submitUpdate = async (user, proposedChanges) => {
 
     const collegeId =
         typeof user.college === 'object' ? user.college._id : user.college;
+
+    if (value.slug) {
+        value.slug = slugify(value.slug);
+        if (!value.slug) {
+            throw new AppError('Slug cannot be empty.', 400);
+        }
+    }
+
+    // Fail now rather than weeks later at approval. The college's own record
+    // is excluded — the form resends unchanged values, and those aren't clashes.
+    await assertUniqueFields(value, collegeId);
 
     if (value.faqs) {
         const current = await College.findById(collegeId).select('faqs');
@@ -71,7 +85,7 @@ export const getAllUpdates = async (skip = 0, limit = 0) => {
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('college', 'name faqs')
+            .populate('college', 'name city state type collegeId faqs')
             .populate('requestedBy', 'name email')
             .sort({ createdAt: -1 })
             .skip(skip)
@@ -128,6 +142,14 @@ export const approveUpdate = async updateId => {
         throw new AppError(`Stored update data is invalid: ${error}`, 400);
     }
 
+    if (changes.slug) {
+        changes.slug = slugify(changes.slug);
+    }
+
+    // Another college may have taken the name/slug/collegeId in the days or
+    // weeks since this was submitted.
+    await assertUniqueFields(changes, college._id);
+
     applyProposedChanges(college, changes);
 
     const session = await mongoose.startSession();
@@ -139,7 +161,8 @@ export const approveUpdate = async updateId => {
         });
     } catch (err) {
         if (err instanceof AppError) throw err;
-        if (err.name === 'ValidationError' || err.code === 11000) throw err;
+        if (err.name === 'ValidationError') throw err;
+        if (err.code === 11000) throwIfDuplicate(err);
         throw new AppError(`Failed to approve update: ${err.message}`, 500);
     } finally {
         await session.endSession();
