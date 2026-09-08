@@ -7,10 +7,11 @@ import ExamSidebar from '../../features/exam/components/ExamDetail/ExamSidebar.j
 import ExamEligibility from '../../features/exam/components/ExamDetail/ExamEligibility.jsx';
 import ExamDescription from '../../features/exam/components/ExamDetail/ExamDescription.jsx';
 import ExamFaqs from '@/features/exam/components/ExamDetail/ExamFaqs.jsx';
+import NotFoundState from '@/components/common/NotFoundState.jsx';
 
 const ExamDetails = () => {
     const { slug } = useParams();
-    const { exam, isLoading, error, formatTimeRange } = useExamDetails(slug);
+    const { exam, isLoading, error, notFound, formatTimeRange } = useExamDetails(slug);
     const navigate = useNavigate();
     const { user } = useOutletContext();
 
@@ -22,8 +23,12 @@ const ExamDetails = () => {
     };
 
     if (isLoading) return <Loading message="Loading exam details..." />;
+
+    if (notFound || (!error && !exam)) {
+        return <NotFoundState heading="Exam" to="/exams" actionLabel="exams" />;
+    }
+
     if (error) return <Error error={error} />;
-    if (!exam) return <Error error="Exam not found" />;
 
     return (
         <div className="min-h-screen bg-[var(--background)] text-[var(--foreground)] animate-fade-in">

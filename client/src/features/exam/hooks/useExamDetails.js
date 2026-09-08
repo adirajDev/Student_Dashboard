@@ -4,6 +4,7 @@ import apiClient from '@/services/apiClient.js';
 const useExamDetails = slug => {
     const [exam, setExam] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
@@ -15,10 +16,14 @@ const useExamDetails = slug => {
                 );
                 setExam(res.data);
             } catch (err) {
-                console.error('Failed to fetch exam:', err);
-                setError(
-                    err.response?.data?.message || 'Failed to load exam details'
-                );
+                if (err.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    console.error('Failed to fetch exam:', err);
+                    setError(
+                        err.response?.data?.message || 'Failed to load exam details'
+                    );
+                }
             } finally {
                 setIsLoading(false);
             }
@@ -58,7 +63,7 @@ const useExamDetails = slug => {
         return startFormatted;
     };
 
-    return { exam, isLoading, error, formatTimeRange };
+    return { exam, isLoading, error, notFound, formatTimeRange };
 };
 
 export default useExamDetails;
