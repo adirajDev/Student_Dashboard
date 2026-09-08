@@ -49,7 +49,7 @@ const collegeSchema = new mongoose.Schema(
             type: String,
             trim: true,
             enum: STATES,
-            default: 'Delhi NCR',
+            default: 'Delhi',
             required: true,
         },
         city: {

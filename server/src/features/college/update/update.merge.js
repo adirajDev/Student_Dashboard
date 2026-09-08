@@ -11,8 +11,11 @@ const FIELD_HANDLERS = {
     type: (college, value) => {
         college.type = value;
     },
-    location: (college, value) => {
-        college.location = value;
+    city: (college, value) => {
+        college.city = value;
+    },
+    state: (college, value) => {
+        college.state = value;
     },
     availableCourses: (college, value) => {
         college.availableCourses = value;

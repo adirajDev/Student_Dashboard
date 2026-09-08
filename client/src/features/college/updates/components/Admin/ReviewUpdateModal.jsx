@@ -358,11 +358,17 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                                 update.college?.type,
                                 changes.type
                             )}
-                        {changes.location &&
+                        {changes.city &&
                             renderDiff(
-                                'Location',
-                                update.college?.location,
-                                changes.location
+                                'City',
+                                update.college?.city,
+                                changes.city
+                            )}
+                        {changes.state &&
+                            renderDiff(
+                                'State / UT',
+                                update.college?.state,
+                                changes.state
                             )}
                         {changes.collegeId &&
                             renderDiff(
