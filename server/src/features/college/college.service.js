@@ -9,7 +9,6 @@ import User from '../user/user.model.js';
 import {
     FIELD_LABELS,
     throwIfDuplicate,
-    UNIQUE_FIELDS,
 } from './college.error.js';
 import { slugify } from '../../common/utils/slug.util.js';
 
