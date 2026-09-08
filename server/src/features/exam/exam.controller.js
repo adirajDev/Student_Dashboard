@@ -11,6 +11,11 @@ export const getExamById = asyncHandler(async (req, res) => {
     return res.status(200).json(exam);
 });
 
+export const getExamBySlug = asyncHandler(async (req, res) => {
+    const exam = await examService.getExamBySlug(req.params.slug);
+    return res.status(200).json(exam);
+});
+
 export const createExam = asyncHandler(async (req, res) => {
     const exam = await examService.createExam(req.body);
     res.status(201).json({ message: 'Exam created successfully', exam });

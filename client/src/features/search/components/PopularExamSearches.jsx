@@ -44,7 +44,7 @@ const PopularExamSearches = ({ latestLiveExams }) => {
                         {latestLiveExams.map(exam => (
                             <div
                                 key={exam._id}
-                                onClick={() => navigate(`/exam/${exam._id}`)}
+                                onClick={() => navigate(`/exam/${exam.slug}`)}
                                 className="p-6 bg-[var(--card)] rounded-[var(--radius-xl)] border border-[var(--border)] shadow-sm hover:shadow-md transition-all cursor-pointer group flex flex-col sm:flex-row sm:items-center justify-between gap-4"
                             >
                                 <div>

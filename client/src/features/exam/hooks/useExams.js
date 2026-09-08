@@ -33,18 +33,6 @@ const useExams = (shouldFetch = true) => {
         fetchExams();
     }, [fetchExams]);
 
-    const getExamById = useCallback(async id => {
-        try {
-            const res = await apiClient.get(`/exams/${id}`);
-            return { success: true, data: res.data };
-        } catch (err) {
-            return {
-                success: false,
-                error: err.response?.data?.message || 'Failed to fetch exam',
-            };
-        }
-    }, []);
-
     const addExam = useCallback(async examData => {
         try {
             const res = await apiClient.post('/exams', examData);
@@ -104,7 +92,6 @@ const useExams = (shouldFetch = true) => {
         addExam,
         updateExam,
         deleteExam,
-        getExamById,
         refreshExams: fetchExams,
     };
 };

@@ -1,28 +1,38 @@
 import { useState, useEffect } from 'react';
-import useExams from './useExams';
+import apiClient from '@/services/apiClient.js';
 
-const useExamDetails = id => {
-    const { getExamById } = useExams(false);
+const useExamDetails = slug => {
     const [exam, setExam] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState('');
 
     useEffect(() => {
         const fetchExamDetails = async () => {
             setIsLoading(true);
-            const res = await getExamById(id);
-            if (res.success) {
+            try {
+                const res = await apiClient.get(
+                    `/exams/slug/${encodeURIComponent(slug)}`
+                );
                 setExam(res.data);
-            } else {
-                setError(res.error || 'Failed to load exam details');
+            } catch (err) {
+                if (err.response?.status === 404) {
+                    setNotFound(true);
+                } else {
+                    console.error('Failed to fetch exam:', err);
+                    setError(
+                        err.response?.data?.message || 'Failed to load exam details'
+                    );
+                }
+            } finally {
+                setIsLoading(false);
             }
-            setIsLoading(false);
         };
 
-        if (id) {
+        if (slug) {
             fetchExamDetails();
         }
-    }, [id, getExamById]);
+    }, [slug]);
 
     const formatTimeRange = (timeStr, durationMinutes) => {
         if (!timeStr) return 'TBA';
@@ -53,7 +63,7 @@ const useExamDetails = id => {
         return startFormatted;
     };
 
-    return { exam, isLoading, error, formatTimeRange };
+    return { exam, isLoading, error, notFound, formatTimeRange };
 };
 
 export default useExamDetails;

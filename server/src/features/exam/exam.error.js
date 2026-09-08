@@ -1,22 +1,21 @@
+import Exam from './exam.model.js';
 import {
     createDuplicateKeyHandler,
     createUniquenessAssertion,
 } from '../../common/errors/uniqueness.js';
-import College from './college.model.js';
 
 export const FIELD_LABELS = {
     name: 'name',
     slug: 'URL slug',
-    collegeId: 'college ID',
 };
 
 export const throwIfDuplicate = createDuplicateKeyHandler({
-    entity: 'college',
+    entity: 'exam',
     labels: FIELD_LABELS,
 });
 
 export const assertUniqueFields = createUniquenessAssertion({
-    model: College,
-    entity: 'college',
+    model: Exam,
+    entity: 'exam',
     labels: FIELD_LABELS,
 });

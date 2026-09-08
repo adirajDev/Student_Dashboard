@@ -11,7 +11,14 @@ import {
 import useExamForm from '../hooks/useExamForm';
 import FaqFields from '@/components/common/FaqFields.jsx';
 
-const ExamFormFields = ({ formData, handleChange, setFaqs }) => {
+const ExamFormFields = ({
+    formData,
+    handleChange,
+    handleNameChange,
+    handleSlugChange,
+    setFaqs,
+    editingExam,
+}) => {
     return (
         <div className="space-y-6">
             <div>
@@ -24,12 +31,46 @@ const ExamFormFields = ({ formData, handleChange, setFaqs }) => {
                         type="text"
                         name="name"
                         value={formData.name}
-                        onChange={handleChange}
+                        onChange={handleNameChange}
                         required
                         className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
                         placeholder="e.g. Joint Entrance Examination (JEE)"
                     />
                 </div>
+            </div>
+
+            <div>
+                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
+                    URL Slug <span className="text-red-500">*</span>
+                </label>
+                <div className="relative">
+                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)]" />
+                    <input
+                        type="text"
+                        name="slug"
+                        value={formData.slug}
+                        onChange={handleSlugChange}
+                        required
+                        className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
+                        placeholder="e.g. joint-entrance-examination-jee"
+                    />
+                </div>
+                <p className="mt-2 text-xs text-[var(--muted)]">
+                    Public page:{' '}
+                    <span className="font-mono">
+                        /exam/{formData.slug || '…'}
+                    </span>
+                </p>
+                {editingExam && formData.slug !== editingExam.slug && (
+                    <p className="mt-1 text-xs text-amber-700">
+                        Changing the slug moves the public URL. Existing links
+                        to{' '}
+                        <span className="font-mono">
+                            /exam/{editingExam.slug}
+                        </span>{' '}
+                        will stop working.
+                    </p>
+                )}
             </div>
 
             <div>
@@ -220,6 +261,8 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         handleChange,
         handleSubmit,
         setFaqs,
+        handleNameChange,
+        handleSlugChange
     } = useExamForm({
         editingExam,
         onAdd,
@@ -257,7 +300,10 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
                         <ExamFormFields
                             formData={formData}
                             handleChange={handleChange}
+                            handleNameChange={handleNameChange}
+                            handleSlugChange={handleSlugChange}
                             setFaqs={setFaqs}
+                            editingExam={editingExam}
                         />
                     </form>
                 </div>

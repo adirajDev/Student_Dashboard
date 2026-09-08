@@ -14,7 +14,7 @@ import 'dotenv/config';
 import mongoose from 'mongoose';
 import { slugify } from '../common/utils/slug.util.js';
 
-const MONGO_URI =  process.env.MONGODB_URI;
+const MONGO_URI = process.env.MONGODB_URI;
 const DRY_RUN = process.argv.includes('--dry-run');
 const REGENERATE = process.argv.includes('--regenerate');
 

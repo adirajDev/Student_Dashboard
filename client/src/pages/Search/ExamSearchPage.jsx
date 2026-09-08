@@ -18,7 +18,7 @@ const ExamSearchPage = () => {
         useExamSearch(initialQuery);
 
     const handleExamClick = exam => {
-        navigate(`/exam/${exam._id}`);
+        navigate(`/exam/${exam.slug}`);
     };
 
     return (

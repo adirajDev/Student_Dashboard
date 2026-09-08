@@ -61,7 +61,7 @@ const examSchema = new mongoose.Schema({
     },
 });
 
-examSchema.index({ slug: 1 }, { unique: true })
+examSchema.index({ slug: 1 }, { unique: true });
 
 const Exam = mongoose.model('Exam', examSchema);
 export default Exam;
