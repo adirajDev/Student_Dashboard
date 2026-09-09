@@ -1,5 +1,6 @@
 import Joi from 'joi';
 import { faqsArray } from '../../common/faq_feat/faq.validation.js';
+import { SLUG_REGEX } from '../../common/utils/slug.util.js';
 
 const coverImageSchema = Joi.object({
     data: Joi.string().required(),

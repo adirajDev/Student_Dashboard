@@ -3,6 +3,16 @@ import AppError from '../../common/errors/AppError.js';
 import { slugify } from '../../common/utils/slug.util.js';
 import { assertUniqueFields, throwIfDuplicate } from './news.error.js';
 
+const findNewsDetail = async query => {
+    const news = await query.lean();
+
+    if (!news) {
+        throw new AppError('No news is found', 404);
+    }
+
+    return news;
+};
+
 export const getNews = async () => {
     return News.find({}).sort({ createdAt: -1 }).lean();
 };
@@ -11,8 +21,18 @@ export const getLatestFiveNews = async () => {
     return News.find({}).sort({ createdAt: -1 }).limit(5).lean();
 };
 
-export const getNewsById = async id => {
-    return News.findById(id).lean();
+export const getNewsById = async id => findNewsDetail(News.findById(id));
+
+export const getNewsBySlug = async slug => {
+    const normalised = String(slug ?? '')
+        .trim()
+        .toLowerCase();
+
+    if (!normalised) {
+        throw new AppError('No news is found', 404);
+    }
+
+    return findNewsDetail(News.findOne({ slug: normalised }));
 };
 
 export const createNews = async payload => {
