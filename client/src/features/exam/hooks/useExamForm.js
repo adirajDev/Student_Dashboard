@@ -5,6 +5,7 @@ import { normaliseSlugInput, slugify } from '@/utils/slug.js';
 const useExamForm = ({ editingExam, onAdd, onUpdate, onClose }) => {
     const [formData, setFormData] = useState({
         name: '',
+        slug: '',
         requirement: '',
         regStartingDate: '',
         regEndingDate: '',
