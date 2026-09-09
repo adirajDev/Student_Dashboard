@@ -1,7 +1,6 @@
 import { createPortal } from 'react-dom';
 import {
     X,
-    Calendar,
     Type,
     Link as LinkIcon,
     FileText,
@@ -10,192 +9,133 @@ import {
 } from 'lucide-react';
 import useExamForm from '../hooks/useExamForm';
 import FaqFields from '@/components/common/FaqFields.jsx';
+import ExamField from '@/features/exam/components/ExamForn/ExamField.jsx';
 
 const ExamFormFields = ({
-    formData,
-    handleChange,
-    handleNameChange,
-    handleSlugChange,
-    setFaqs,
-    editingExam,
-}) => {
+                            formData,
+                            handleChange,
+                            handleNameChange,
+                            handleSlugChange,
+                            setFaqs,
+                            editingExam,
+                        }) => {
     return (
         <div className="space-y-6">
-            <div>
-                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                    Exam Name <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                    <Type className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)]" />
-                    <input
-                        type="text"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleNameChange}
-                        required
-                        className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        placeholder="e.g. Joint Entrance Examination (JEE)"
-                    />
-                </div>
-            </div>
+            <ExamField
+                label="Exam Name"
+                name="name"
+                icon={Type}
+                required
+                value={formData.name}
+                onChange={handleNameChange}
+                placeholder="e.g. Joint Entrance Examination (JEE)"
+            />
 
-            <div>
-                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                    URL Slug <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                    <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)]" />
-                    <input
-                        type="text"
-                        name="slug"
-                        value={formData.slug}
-                        onChange={handleSlugChange}
-                        required
-                        className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        placeholder="e.g. joint-entrance-examination-jee"
-                    />
-                </div>
-                <p className="mt-2 text-xs text-[var(--muted)]">
-                    Public page:{' '}
-                    <span className="font-mono">
-                        /exam/{formData.slug || '…'}
-                    </span>
-                </p>
-                {editingExam && formData.slug !== editingExam.slug && (
-                    <p className="mt-1 text-xs text-amber-700">
-                        Changing the slug moves the public URL. Existing links
-                        to{' '}
-                        <span className="font-mono">
-                            /exam/{editingExam.slug}
-                        </span>{' '}
-                        will stop working.
-                    </p>
-                )}
-            </div>
+            <ExamField
+                label="URL Slug"
+                name="slug"
+                icon={LinkIcon}
+                required
+                value={formData.slug}
+                onChange={handleSlugChange}
+                placeholder="e.g. joint-entrance-examination-jee"
+                hint={
+                    <>
+                        <p className="mt-2 text-xs text-[var(--muted)]">
+                            Public page:{' '}
+                            <span className="font-mono">
+                                /exam/{formData.slug || '…'}
+                            </span>
+                        </p>
+                        {editingExam && formData.slug !== editingExam.slug && (
+                            <p className="mt-1 text-xs text-amber-700">
+                                Changing the slug moves the public URL. Existing
+                                links to{' '}
+                                <span className="font-mono">
+                                    /exam/{editingExam.slug}
+                                </span>{' '}
+                                will stop working.
+                            </p>
+                        )}
+                    </>
+                }
+            />
 
-            <div>
-                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                    Eligibility Requirement{' '}
-                    <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                    <GraduationCap className="absolute left-4 top-3 w-5 h-5 text-[var(--ring)]" />
-                    <textarea
-                        name="requirement"
-                        value={formData.requirement}
-                        onChange={handleChange}
-                        required
-                        rows="2"
-                        className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none resize-none"
-                        placeholder="e.g. 10+2 with Physics, Chemistry, and Mathematics..."
-                    />
-                </div>
+            <ExamField
+                label="Eligibility Requirement"
+                name="requirement"
+                icon={GraduationCap}
+                as="textarea"
+                rows="2"
+                required
+                value={formData.requirement}
+                onChange={handleChange}
+                placeholder="e.g. 10+2 with Physics, Chemistry, and Mathematics..."
+            />
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ExamField
+                    label="Registration Start Date"
+                    name="regStartingDate"
+                    type="date"
+                    required
+                    value={formData.regStartingDate}
+                    onChange={handleChange}
+                />
+                <ExamField
+                    label="Registration End Date"
+                    name="regEndingDate"
+                    type="date"
+                    required
+                    value={formData.regEndingDate}
+                    onChange={handleChange}
+                />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Registration Start Date{' '}
-                        <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                        <input
-                            type="date"
-                            name="regStartingDate"
-                            value={formData.regStartingDate}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Registration End Date{' '}
-                        <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                        <input
-                            type="date"
-                            name="regEndingDate"
-                            value={formData.regEndingDate}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        />
-                    </div>
-                </div>
-            </div>
+                <ExamField
+                    label="Exam Mode"
+                    name="examMode"
+                    icon={CheckSquare}
+                    as="select"
+                    required
+                    value={formData.examMode}
+                    onChange={handleChange}
+                >
+                    <option value="Online">Online</option>
+                    <option value="Offline">Offline</option>
+                </ExamField>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Exam Mode <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                        <CheckSquare className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)] pointer-events-none" />
-                        <select
-                            name="examMode"
-                            value={formData.examMode}
-                            onChange={handleChange}
-                            required
-                            className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none appearance-none"
-                        >
-                            <option value="Online">Online</option>
-                            <option value="Offline">Offline</option>
-                        </select>
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Official Exam Link
-                    </label>
-                    <div className="relative">
-                        <LinkIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--ring)]" />
-                        <input
-                            type="url"
-                            name="examLink"
-                            value={formData.examLink}
-                            onChange={handleChange}
-                            className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                            placeholder="https://example.com"
-                        />
-                    </div>
-                </div>
+                <ExamField
+                    label="Official Exam Link"
+                    name="examLink"
+                    icon={LinkIcon}
+                    type="url"
+                    value={formData.examLink}
+                    onChange={handleChange}
+                    placeholder="https://example.com"
+                />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Exam Date <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                        <input
-                            type="date"
-                            name="examDate"
-                            value={formData.examDate}
-                            min={formData.regEndingDate}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        />
-                    </div>
-                </div>
-                <div>
-                    <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                        Start Time <span className="text-red-500">*</span>
-                    </label>
-                    <div className="relative">
-                        <input
-                            type="time"
-                            name="examTime"
-                            value={formData.examTime}
-                            onChange={handleChange}
-                            required
-                            className="w-full px-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none"
-                        />
-                    </div>
-                </div>
+                <ExamField
+                    label="Exam Date"
+                    name="examDate"
+                    type="date"
+                    required
+                    value={formData.examDate}
+                    min={formData.regEndingDate}
+                    onChange={handleChange}
+                />
+                <ExamField
+                    label="Start Time"
+                    name="examTime"
+                    type="time"
+                    required
+                    value={formData.examTime}
+                    onChange={handleChange}
+                />
+
                 <div>
                     <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
                         Duration <span className="text-red-500">*</span>
@@ -230,23 +170,17 @@ const ExamFormFields = ({
                 </div>
             </div>
 
-            <div>
-                <label className="block text-sm font-medium mb-2 text-[var(--foreground)]">
-                    Exam Description <span className="text-red-500">*</span>
-                </label>
-                <div className="relative">
-                    <FileText className="absolute left-4 top-3 w-5 h-5 text-[var(--ring)]" />
-                    <textarea
-                        name="examDescription"
-                        value={formData.examDescription}
-                        onChange={handleChange}
-                        required
-                        rows="4"
-                        className="w-full pl-12 pr-4 py-3 bg-[var(--background)] border border-[var(--border)] rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all outline-none resize-none"
-                        placeholder="Provide a detailed description of the exam..."
-                    />
-                </div>
-            </div>
+            <ExamField
+                label="Exam Description"
+                name="examDescription"
+                icon={FileText}
+                as="textarea"
+                rows="4"
+                required
+                value={formData.examDescription}
+                onChange={handleChange}
+                placeholder="Provide a detailed description of the exam..."
+            />
 
             <FaqFields value={formData.faqs} onChange={setFaqs} />
         </div>
