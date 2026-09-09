@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import { faqsField } from '../../common/faq_feat/faq.schema.js';
+import { SLUG_REGEX } from '../../common/utils/slug.util.js';
 
 export const IMAGE_SIZE_LIMIT_BYTES = 500 * 1024; // 500KB
 
@@ -32,6 +33,16 @@ const newsSchema = new mongoose.Schema(
             required: true,
         },
         faqs: faqsField,
+        slug: {
+            type: String,
+            required: true,
+            lowercase: true,
+            trim: true,
+            match: [
+                SLUG_REGEX,
+                'Slug must be lowercase alphanumeric with hyphens only',
+            ],
+        },
     },
     { timestamps: true }
 );

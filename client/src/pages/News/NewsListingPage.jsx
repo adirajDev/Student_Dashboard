@@ -35,7 +35,7 @@ const NewsListingPage = () => {
         useNewsFilters(news);
 
     const handleNewsClick = item => {
-        navigate(`/news/${item._id}`);
+        navigate(`/news/${item.slug}`);
     };
 
     return (

@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import useNewsById from '@/features/news/hooks/useNewsById.js';
+import useNewsById from '@/features/news/hooks/useNewsBySlug.js';
 import NewsBody from '@/features/news/components/NewsRender/NewsBody';
 import NewsCover from '@/features/news/components/NewsRender/NewsCover';
 import NewsErrorState from '@/features/news/components/NewsRender/NewsErrorState';
@@ -14,13 +14,13 @@ import {
 import NewsFaqs from '@/features/news/components/NewsRender/NewsFaqs.jsx';
 
 const NewsDetail = () => {
-    const { id } = useParams();
+    const { slug } = useParams();
     const articleRef = useRef(null);
-    const { news, status, error, retry } = useNewsById(id);
+    const { news, status, error, retry } = useNewsById(slug);
 
     useEffect(() => {
         window.scrollTo({ top: 0, behavior: 'auto' });
-    }, [id]);
+    }, [slug]);
 
     useEffect(() => {
         if (news?.title) document.title = `${news.title} — News`;

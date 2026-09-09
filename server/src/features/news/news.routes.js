@@ -5,6 +5,7 @@ import {
     getNews,
     getLatestFiveNews,
     getNewsById,
+    getNewsBySlug,
     updateNews,
 } from './news.controller.js';
 import { validateBody } from '../../common/validation/validation.util.js';
@@ -16,6 +17,7 @@ const router = express.Router();
 
 router.get('/', getNews);
 router.get('/latest-five', getLatestFiveNews);
+router.get('/slug/:slug', getNewsBySlug);
 router.get('/:id', getNewsById);
 
 router.use(requireAuth);

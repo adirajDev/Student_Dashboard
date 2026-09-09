@@ -21,7 +21,7 @@ const NewsRow = ({ item }) => {
     return (
         <li>
             <Link
-                to={`/news/${item._id}`}
+                to={`/news/${item.slug}`}
                 className="group flex gap-3 items-start rounded-[var(--radius-md)] p-2 -m-2 transition-colors hover:bg-[var(--color-ink-50)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ink-800)]"
             >
                 <div className="w-16 h-16 shrink-0 rounded-[var(--radius-sm)] overflow-hidden bg-[var(--color-ink-50)] border border-[var(--border)]">
