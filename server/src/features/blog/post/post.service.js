@@ -189,7 +189,14 @@ export const getPostForOwnerOrAdmin = async (postId, requestingUser) => {
 export const getPendingReviewPosts = async ({ skip = 0, limit = 0 }) => {
     const queryObj = { status: 'pending_review' };
     const [data, totalCount] = await Promise.all([
-        Post.find(queryObj).sort({ createdAt: 1 }).skip(skip).limit(limit),
+        Post.find(queryObj)
+            .sort({ createdAt: 1 })
+            .populate({
+                path: 'author',
+                select: 'name email'
+            })
+            .skip(skip)
+            .limit(limit),
         Post.countDocuments(queryObj),
     ]);
     return { data, totalCount };
