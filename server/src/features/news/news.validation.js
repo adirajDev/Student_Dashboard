@@ -15,8 +15,14 @@ const coverImageSchema = Joi.object({
     sizeBytes: Joi.number().required(),
 });
 
+const slugField = Joi.string().trim().lowercase().pattern(SLUG_REGEX).messages({
+    'string.pattern.base':
+        'Slug must be lowercase alphanumeric with hyphens only',
+});
+
 export const createNewsSchema = Joi.object({
     title: Joi.string().trim().max(200).required(),
+    slug: slugField.allow('').optional(),
     coverImage: coverImageSchema.allow(null).default(null),
     content: Joi.string().trim().required(),
     faqs: faqsArray.default([]),
@@ -24,6 +30,7 @@ export const createNewsSchema = Joi.object({
 
 export const updateNewsSchema = Joi.object({
     title: Joi.string().trim().max(200).required(),
+    slug: slugField,
     coverImage: coverImageSchema.allow(null),
     content: Joi.string().trim().required(),
     faqs: faqsArray,
