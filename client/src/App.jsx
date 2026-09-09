@@ -57,7 +57,7 @@ function App() {
                         <Route path="/exams" element={<ExamListingPage />} />
                         <Route path="/exam/:slug" element={<ExamDetails />} />
                         <Route path="/news" element={<NewsListingPage />} />
-                        <Route path="/news/:id" element={<NewsDetail />} />
+                        <Route path="/news/:slug" element={<NewsDetail />} />
                         <Route
                             path="/college/:slug"
                             element={<CollegeDetails />}
