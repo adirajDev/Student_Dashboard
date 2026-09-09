@@ -6,15 +6,15 @@
  * changed how this form looks.
  */
 const ExamField = ({
-                       label,
-                       name,
-                       icon: Icon,
-                       as = 'input',
-                       required = false,
-                       hint,
-                       children,
-                       ...controlProps
-                   }) => {
+    label,
+    name,
+    icon: Icon,
+    as = 'input',
+    required = false,
+    hint,
+    children,
+    ...controlProps
+}) => {
     const Control = as;
     const isTextarea = as === 'textarea';
     const isSelect = as === 'select';

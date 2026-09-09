@@ -6,7 +6,7 @@ import Course from '../course/course.model.js';
 import { buildSearchRegex } from '../../common/utils/regex.util.js';
 import CollegeUpdate from './update/update.model.js';
 import User from '../user/user.model.js';
-import { FIELD_LABELS, throwIfDuplicate } from './college.error.js';
+import { UNIQUE_FIELDS, FIELD_LABELS, throwIfDuplicate } from './college.error.js';
 import { slugify } from '../../common/utils/slug.util.js';
 
 export const assertUniqueFields = async (data, excludeId = null) => {

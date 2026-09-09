@@ -21,7 +21,8 @@ const useExamDetails = slug => {
                 } else {
                     console.error('Failed to fetch exam:', err);
                     setError(
-                        err.response?.data?.message || 'Failed to load exam details'
+                        err.response?.data?.message ||
+                            'Failed to load exam details'
                     );
                 }
             } finally {

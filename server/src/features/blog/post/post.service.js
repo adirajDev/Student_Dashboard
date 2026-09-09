@@ -193,7 +193,7 @@ export const getPendingReviewPosts = async ({ skip = 0, limit = 0 }) => {
             .sort({ createdAt: 1 })
             .populate({
                 path: 'author',
-                select: 'name email'
+                select: 'name email',
             })
             .skip(skip)
             .limit(limit),

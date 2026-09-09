@@ -3,6 +3,64 @@ import apiClient from '@/services/apiClient.js';
 import useCollegeUpdates from './useCollegeUpdates.js';
 import { normaliseSlugInput } from '@/utils/slug.js';
 
+// Scalar fields the form owns. `slug` is handled separately because it is
+// normalised on the way in.
+const SCALAR_FIELDS = [
+    'name',
+    'type',
+    'city',
+    'state',
+    'collegeId',
+    'logo',
+    'overview',
+    'description',
+];
+
+const txt = v => (v === undefined || v === null ? '' : String(v).trim());
+
+const normalisePlacement = p => ({
+    averagePackage: txt(p?.averagePackage),
+    highestPackage: txt(p?.highestPackage),
+    placementPercentage:
+        p?.placementPercentage === undefined || p?.placementPercentage === null
+            ? ''
+            : txt(p.placementPercentage),
+});
+
+const normaliseRecruiters = list =>
+    (list || []).map(r => txt(r)).filter(Boolean);
+
+const normaliseFaculty = list =>
+    (list || [])
+        .filter(f => txt(f?.name) !== '')
+        .map(f => ({
+            name: txt(f.name),
+            department: txt(f.department),
+            role: txt(f.role),
+        }));
+
+const sameJson = (a, b) => JSON.stringify(a) === JSON.stringify(b);
+
+const EMPTY_FORM = {
+    name: '',
+    slug: '',
+    type: 'Private',
+    city: '',
+    state: '',
+    collegeId: '',
+    logo: '',
+    overview: '',
+    description: '',
+    placementDetails: {
+        averagePackage: '',
+        highestPackage: '',
+        placementPercentage: '',
+    },
+    recruiters: [],
+    faculty: [],
+    faqs: [],
+};
+
 const useEditCollegeForm = user => {
     const {
         submitUpdate,
@@ -14,24 +72,7 @@ const useEditCollegeForm = user => {
     const [error, setError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
 
-    const [formData, setFormData] = useState({
-        name: '',
-        type: 'Private',
-        city: '',
-        state: '',
-        collegeId: '',
-        logo: '',
-        overview: '',
-        description: '',
-        placementDetails: {
-            averagePackage: '',
-            highestPackage: '',
-            placementPercentage: '',
-        },
-        recruiters: [],
-        faculty: [],
-        faqs: [],
-    });
+    const [formData, setFormData] = useState(EMPTY_FORM);
 
     useEffect(() => {
         const fetchCollege = async () => {
@@ -59,10 +100,13 @@ const useEditCollegeForm = user => {
                     logo: data.logo || '',
                     overview: data.overview || '',
                     description: data.description || '',
-                    placementDetails: data.placementDetails || {
-                        averagePackage: '',
-                        highestPackage: '',
-                        placementPercentage: '',
+                    placementDetails: {
+                        averagePackage:
+                            data.placementDetails?.averagePackage ?? '',
+                        highestPackage:
+                            data.placementDetails?.highestPackage ?? '',
+                        placementPercentage:
+                            data.placementDetails?.placementPercentage ?? '',
                     },
                     recruiters: data.recruiters || [],
                     faculty: data.faculty || [],
@@ -141,36 +185,40 @@ const useEditCollegeForm = user => {
         const original = college?.faqs || [];
 
         const live = formData.faqs.filter(
-            f => f.question.trim() !== '' && f.answer.trim() !== ''
+            f => txt(f.question) !== '' && txt(f.answer) !== ''
         );
 
         const added = live
             .filter(f => !f._id)
-            .map((f, i) => ({
-                question: f.question.trim(),
-                answer: f.answer.trim(),
+            .map(f => ({
+                question: txt(f.question),
+                answer: txt(f.answer),
                 order: live.indexOf(f),
             }));
 
         const updated = live
             .filter(f => {
                 if (!f._id) return false;
-                const before = original.find(o => o._id === f._id);
+                const before = original.find(
+                    o => String(o._id) === String(f._id)
+                );
                 if (!before) return false;
                 return (
-                    before.question !== f.question.trim() ||
-                    before.answer !== f.answer.trim()
+                    txt(before.question) !== txt(f.question) ||
+                    txt(before.answer) !== txt(f.answer)
                 );
             })
             .map(f => ({
                 _id: f._id,
-                question: f.question.trim(),
-                answer: f.answer.trim(),
+                question: txt(f.question),
+                answer: txt(f.answer),
             }));
 
-        const liveIds = new Set(live.filter(f => f._id).map(f => f._id));
+        const liveIds = new Set(
+            live.filter(f => f._id).map(f => String(f._id))
+        );
         const removed = original
-            .filter(o => !liveIds.has(o._id))
+            .filter(o => !liveIds.has(String(o._id)))
             .map(o => o._id);
 
         if (!added.length && !updated.length && !removed.length) return null;
@@ -178,29 +226,73 @@ const useEditCollegeForm = user => {
         return { added, updated, removed };
     };
 
+    /**
+     * Build the payload from the difference between the form and the loaded
+     * college, not from the whole form.
+     *
+     * Posting every field regardless of whether it changed makes the request
+     * unreviewable: the admin modal and the history tab can only hide the
+     * untouched fields for as long as there is something to compare them
+     * against, so an approved request ends up listing the entire record.
+     * Sending a real delta means proposedChanges only ever holds actual edits.
+     */
+    const buildChangedFields = () => {
+        const changed = {};
+        if (!college) return changed;
+
+        for (const key of SCALAR_FIELDS) {
+            if (txt(formData[key]) !== txt(college[key])) {
+                changed[key] = txt(formData[key]);
+            }
+        }
+
+        const slug = txt(formData.slug);
+        if (slug && slug !== txt(college.slug)) {
+            changed.slug = slug;
+        }
+
+        const placement = normalisePlacement(formData.placementDetails);
+        if (
+            !sameJson(placement, normalisePlacement(college.placementDetails))
+        ) {
+            changed.placementDetails = placement;
+        }
+
+        const recruiters = normaliseRecruiters(formData.recruiters);
+        if (!sameJson(recruiters, normaliseRecruiters(college.recruiters))) {
+            changed.recruiters = recruiters;
+        }
+
+        const faculty = normaliseFaculty(formData.faculty);
+        if (!sameJson(faculty, normaliseFaculty(college.faculty))) {
+            changed.faculty = faculty;
+        }
+
+        const faqDelta = buildFaqDelta();
+        if (faqDelta) changed.faqs = faqDelta;
+
+        return changed;
+    };
+
+    const changedFields = buildChangedFields();
+    const hasChanges = Object.keys(changedFields).length > 0;
+
     const handleSubmit = async e => {
         e.preventDefault();
         setSuccessMsg('');
+        setError('');
 
-        // Filter out empty recruiters/faculty
-        const cleanData = {
-            ...formData,
-            recruiters: formData.recruiters.filter(r => r.trim() !== ''),
-            faculty: formData.faculty.filter(f => f.name.trim() !== ''),
-        };
+        const payload = buildChangedFields();
 
-        const faqDelta = buildFaqDelta();
-        if (faqDelta) {
-            cleanData.faqs = faqDelta;
-        } else {
-            // Omit entirely when unchanged — sending {} fails Joi's .min(1)
-            delete cleanData.faqs;
+        // Joi's .min(1) would reject an empty object with a 400, so catch it here
+        // and say something useful instead.
+        if (Object.keys(payload).length === 0) {
+            setError('Nothing has changed, so there is nothing to submit.');
+            return;
         }
 
-        if (cleanData.slug === college?.slug) delete cleanData.slug;
-
         try {
-            await submitUpdate(cleanData);
+            await submitUpdate(payload);
             setSuccessMsg(
                 'Update requested successfully! It is now pending admin approval.'
             );
@@ -216,6 +308,8 @@ const useEditCollegeForm = user => {
         submitting,
         submitError,
         successMsg,
+        hasChanges,
+        changedFieldCount: Object.keys(changedFields).length,
         handleInputChange,
         handlePlacementChange,
         addRecruiter,

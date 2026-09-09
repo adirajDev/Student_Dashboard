@@ -10,6 +10,104 @@ import { slugify } from '../../../common/utils/slug.util.js';
 import { assertUniqueFields } from '../college.service.js';
 import { throwIfDuplicate } from '../college.error.js';
 
+// Everything the review UI needs to render the "before" side of a diff.
+// `images` is deliberately excluded: these queries use .lean(), which skips
+// the toJSON transform in college.model.js that strips the raw buffers.
+const COLLEGE_REVIEW_FIELDS = [
+    'name',
+    'slug',
+    'city',
+    'state',
+    'type',
+    'collegeId',
+    'logo',
+    'overview',
+    'description',
+    'placementDetails',
+    'recruiters',
+    'faculty',
+    'availableCourses',
+    'faqs',
+].join(' ');
+
+// Scalar fields worth snapshotting. Array/object fields are handled separately
+// below because they need normalising before they are stored.
+const SNAPSHOT_SCALARS = [
+    'name',
+    'slug',
+    'type',
+    'city',
+    'state',
+    'collegeId',
+    'logo',
+    'overview',
+    'description',
+    'placementDetails',
+    'recruiters',
+    'faculty',
+];
+
+// Capture the college's current values for exactly the fields this request
+// touches. Stored on the request so the college-side history can still show a
+// real before/after long after the change was approved and the live record
+// moved on.
+const buildSnapshot = (college, changes) => {
+    const snapshot = {};
+
+    for (const key of SNAPSHOT_SCALARS) {
+        if (changes[key] !== undefined) {
+            snapshot[key] = college[key] ?? null;
+        }
+    }
+
+    if (changes.courseUpdates || changes.availableCourses) {
+        snapshot.availableCourses = (college.availableCourses || []).map(
+            ac => ({ course: String(ac.course), fee: ac.fee })
+        );
+    }
+
+    if (changes.faqs) {
+        snapshot.faqs = (college.faqs || []).map(f => ({
+            _id: String(f._id),
+            question: f.question,
+            answer: f.answer,
+            order: f.order,
+        }));
+    }
+
+    return snapshot;
+};
+
+// Resolve every course id referenced by a courseUpdates delta, by the snapshot
+// taken at submit time, and by the college's current list — so the review UI
+// can name both sides of a fee change.
+const attachCourseDetails = async docs => {
+    for (const update of docs) {
+        const cu = update.proposedChanges?.courseUpdates;
+        if (!cu) continue;
+
+        const ids = [
+            ...(cu.added || []).map(a => a.course),
+            ...(cu.updated || []).map(u => u.course),
+            ...(cu.removed || []),
+            ...(update.previousValues?.availableCourses || []).map(
+                ac => ac.course
+            ),
+            ...(update.college?.availableCourses || []).map(ac => ac.course),
+        ]
+            .filter(Boolean)
+            .map(String);
+
+        if (ids.length === 0) continue;
+
+        cu.populatedCourses = await Course.find({
+            _id: { $in: [...new Set(ids)] },
+        })
+            .select('name shortName level specialization')
+            .lean();
+    }
+};
+
 export const submitUpdate = async (user, proposedChanges) => {
     if (!user.college) {
         throw new AppError('You are not assigned to any college.', 400);
@@ -34,19 +132,24 @@ export const submitUpdate = async (user, proposedChanges) => {
     // is excluded — the form resends unchanged values, and those aren't clashes.
     await assertUniqueFields(value, collegeId);
 
-    if (value.faqs) {
-        const current = await College.findById(collegeId).select('faqs');
-        if (!current) throw new AppError('College not found.', 404);
+    // One read serves both the FAQ cap check and the snapshot.
+    const current = await College.findById(collegeId)
+        .select(COLLEGE_REVIEW_FIELDS)
+        .lean();
+    if (!current) throw new AppError('College not found.', 404);
 
+    if (value.faqs) {
         const { added = [], removed = [] } = value.faqs;
 
         // Only count removals that match a real FAQ, or a bogus id
         // inflates the allowance.
-        const existingIds = new Set(current.faqs.map(f => f._id.toString()));
+        const existingIds = new Set(
+            (current.faqs || []).map(f => String(f._id))
+        );
         const realRemovals = removed.filter(id => existingIds.has(String(id)));
 
         const projected =
-            current.faqs.length - realRemovals.length + added.length;
+            (current.faqs || []).length - realRemovals.length + added.length;
 
         if (projected > MAX_FAQS) {
             throw new AppError(
@@ -60,6 +163,7 @@ export const submitUpdate = async (user, proposedChanges) => {
         college: collegeId,
         requestedBy: user._id,
         proposedChanges: value,
+        previousValues: buildSnapshot(current, value),
         status: 'pending',
     });
 
@@ -73,19 +177,32 @@ export const submitUpdate = async (user, proposedChanges) => {
 
 export const getMyUpdates = async (userId, skip = 0, limit = 0) => {
     const query = CollegeUpdate.find({ requestedBy: userId });
+
     const [data, totalCount] = await Promise.all([
-        query.clone().sort({ createdAt: -1 }).skip(skip).limit(limit),
+        query
+            .clone()
+            .populate('college', COLLEGE_REVIEW_FIELDS)
+            .sort({ createdAt: -1 })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
         CollegeUpdate.countDocuments({ requestedBy: userId }),
     ]);
+
+    // .lean() matters here: assigning populatedCourses onto a Mixed path of a
+    // hydrated document would not serialise without markModified().
+    await attachCourseDetails(data);
+
     return { data, totalCount };
 };
 
 export const getAllUpdates = async (skip = 0, limit = 0) => {
     const query = CollegeUpdate.find({ status: 'pending' });
+
     const [data, totalCount] = await Promise.all([
         query
             .clone()
-            .populate('college', 'name city state type collegeId faqs')
+            .populate('college', COLLEGE_REVIEW_FIELDS)
             .populate('requestedBy', 'name email')
             .sort({ createdAt: -1 })
             .skip(skip)
@@ -94,24 +211,7 @@ export const getAllUpdates = async (skip = 0, limit = 0) => {
         CollegeUpdate.countDocuments({ status: 'pending' }),
     ]);
 
-    // Manually populate courses for courseUpdates delta
-    for (const update of data) {
-        if (update.proposedChanges?.courseUpdates) {
-            const courseIds = [];
-            const cu = update.proposedChanges.courseUpdates;
-            if (cu.added) courseIds.push(...cu.added.map(a => a.course));
-            if (cu.updated) courseIds.push(...cu.updated.map(u => u.course));
-            if (cu.removed) courseIds.push(...cu.removed);
-
-            if (courseIds.length > 0) {
-                const uniqueIds = [...new Set(courseIds)];
-                const courses = await Course.find({
-                    _id: { $in: uniqueIds },
-                }).select('name shortName level specialization');
-                cu.populatedCourses = courses;
-            }
-        }
-    }
+    await attachCourseDetails(data);
 
     return { data, totalCount };
 };

@@ -12,7 +12,7 @@ const ExamFormModal = ({ editingExam, title, onAdd, onUpdate, onClose }) => {
         handleSubmit,
         setFaqs,
         handleNameChange,
-        handleSlugChange
+        handleSlugChange,
     } = useExamForm({
         editingExam,
         onAdd,

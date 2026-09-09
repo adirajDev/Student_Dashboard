@@ -11,7 +11,8 @@ import NotFoundState from '@/components/common/NotFoundState.jsx';
 
 const ExamDetails = () => {
     const { slug } = useParams();
-    const { exam, isLoading, error, notFound, formatTimeRange } = useExamDetails(slug);
+    const { exam, isLoading, error, notFound, formatTimeRange } =
+        useExamDetails(slug);
     const navigate = useNavigate();
     const { user } = useOutletContext();
 
