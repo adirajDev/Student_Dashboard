@@ -1,16 +1,7 @@
-import {
-    X,
-    Check,
-    XCircle,
-    Building2,
-    TrendingUp,
-    Users,
-    Presentation,
-    HelpCircle,
-    AlertTriangle,
-} from 'lucide-react';
+import { X, Check, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { createPortal } from 'react-dom';
+import { buildChangeSections } from '../changes/index.js';
 
 const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
     const [feedback, setFeedback] = useState('');
@@ -18,318 +9,16 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
 
     if (!update) return null;
 
-    const changes = update.proposedChanges;
-
-    const renderDiff = (label, currentVal, proposedVal) => {
-        if (proposedVal === undefined || proposedVal === currentVal)
-            return null;
-        return (
-            <div className="mb-4">
-                <span className="block text-xs font-semibold text-[var(--ring)] uppercase mb-1">
-                    {label}
-                </span>
-                <div className="flex flex-col md:flex-row gap-2 md:gap-4">
-                    <div className="flex-1 bg-red-50 border border-red-200 p-3 rounded-xl line-through text-red-800 opacity-60">
-                        {currentVal || (
-                            <span className="italic text-xs">Empty</span>
-                        )}
-                    </div>
-                    <div className="flex-1 bg-green-50 border border-green-200 p-3 rounded-xl text-green-800">
-                        {proposedVal}
-                    </div>
-                </div>
-            </div>
-        );
-    };
-
-    const renderPlacementDetails = details => {
-        if (!details) return null;
-        return (
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mt-2">
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <p className="text-xs text-[var(--ring)] uppercase mb-1">
-                        Average Package
-                    </p>
-                    <p className="font-medium">
-                        {details.averagePackage
-                            ? `₹${details.averagePackage} LPA`
-                            : 'N/A'}
-                    </p>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <p className="text-xs text-[var(--ring)] uppercase mb-1">
-                        Highest Package
-                    </p>
-                    <p className="font-medium">
-                        {details.highestPackage
-                            ? `₹${details.highestPackage} LPA`
-                            : 'N/A'}
-                    </p>
-                </div>
-                <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                    <p className="text-xs text-[var(--ring)] uppercase mb-1">
-                        Placement %
-                    </p>
-                    <p className="font-medium">
-                        {details.placementPercentage
-                            ? `${details.placementPercentage}%`
-                            : 'N/A'}
-                    </p>
-                </div>
-            </div>
-        );
-    };
-
-    const renderRecruiters = recruiters => {
-        if (!recruiters || recruiters.length === 0)
-            return (
-                <p className="text-sm italic text-[var(--ring)]">
-                    No recruiters listed
-                </p>
-            );
-        return (
-            <div className="flex flex-wrap gap-2 mt-2">
-                {recruiters.map((rec, i) => (
-                    <span
-                        key={i}
-                        className="px-3 py-1.5 bg-purple-50 text-purple-700 border border-purple-200 rounded-lg text-sm font-medium"
-                    >
-                        {rec}
-                    </span>
-                ))}
-            </div>
-        );
-    };
-
-    const renderFaculty = faculty => {
-        if (!faculty || faculty.length === 0)
-            return (
-                <p className="text-sm italic text-[var(--ring)]">
-                    No faculty listed
-                </p>
-            );
-        return (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
-                {faculty.map((fac, i) => (
-                    <div
-                        key={i}
-                        className="bg-slate-50 p-3 rounded-xl border border-slate-200 flex items-start gap-3"
-                    >
-                        <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold shrink-0">
-                            {fac.name?.charAt(0) || '?'}
-                        </div>
-                        <div>
-                            <p className="font-medium text-sm">{fac.name}</p>
-                            <p className="text-xs text-[var(--ring)]">
-                                {fac.role} • {fac.department}
-                            </p>
-                        </div>
-                    </div>
-                ))}
-            </div>
-        );
-    };
-
-    const renderCourseUpdates = courseUpdates => {
-        if (!courseUpdates) return null;
-
-        const getCourseDetails = id => {
-            const course = courseUpdates.populatedCourses?.find(
-                c => c._id === id
-            );
-            if (!course) return { name: id, shortName: id, level: '' };
-            return course;
-        };
-
-        return (
-            <div className="space-y-4 mt-2">
-                {courseUpdates.added?.length > 0 && (
-                    <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                        <h4 className="text-sm font-semibold text-emerald-800 mb-2">
-                            Added Courses
-                        </h4>
-                        <div className="grid gap-2">
-                            {courseUpdates.added.map((item, i) => {
-                                const course = getCourseDetails(item.course);
-                                return (
-                                    <div
-                                        key={i}
-                                        className="flex justify-between items-center text-sm"
-                                    >
-                                        <span>
-                                            {course.shortName || course.name}
-                                            {course.specialization
-                                                ? ` - ${course.specialization}`
-                                                : ''}
-                                            <span className="text-xs opacity-70 ml-1">
-                                                ({course.level})
-                                            </span>
-                                        </span>
-                                        <span className="font-medium">
-                                            Fee: ₹{item.fee}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-                {courseUpdates.updated?.length > 0 && (
-                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                        <h4 className="text-sm font-semibold text-blue-800 mb-2">
-                            Updated Fees
-                        </h4>
-                        <div className="grid gap-2">
-                            {courseUpdates.updated.map((item, i) => {
-                                const course = getCourseDetails(item.course);
-                                return (
-                                    <div
-                                        key={i}
-                                        className="flex justify-between items-center text-sm"
-                                    >
-                                        <span>
-                                            {course.shortName || course.name}
-                                            {course.specialization
-                                                ? ` - ${course.specialization}`
-                                                : ''}
-                                            <span className="text-xs opacity-70 ml-1">
-                                                ({course.level})
-                                            </span>
-                                        </span>
-                                        <span className="font-medium">
-                                            New Fee: ₹{item.fee}
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-                {courseUpdates.removed?.length > 0 && (
-                    <div className="bg-red-50 p-4 rounded-xl border border-red-200">
-                        <h4 className="text-sm font-semibold text-red-800 mb-2">
-                            Removed Courses
-                        </h4>
-                        <div className="grid gap-2">
-                            {courseUpdates.removed.map((id, i) => {
-                                const course = getCourseDetails(id);
-                                return (
-                                    <div
-                                        key={i}
-                                        className="text-sm line-through opacity-70 text-red-700"
-                                    >
-                                        {course.shortName || course.name}
-                                        {course.specialization
-                                            ? ` - ${course.specialization}`
-                                            : ''}
-                                        <span className="ml-1">
-                                            ({course.level})
-                                        </span>
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-            </div>
-        );
-    };
-
-    const renderFaqs = faqs => {
-        if (!faqs) return null;
-
-        // updated/removed carry only an _id, so resolve the current text
-        // from the populated college. Requires `.populate('college', 'name faqs')`.
-        const currentFaqs = update.college?.faqs || [];
-        const findCurrent = id => currentFaqs.find(f => f._id === id);
-
-        return (
-            <div className="space-y-4 mt-2">
-                {faqs.added?.length > 0 && (
-                    <div className="bg-emerald-50 p-4 rounded-xl border border-emerald-200">
-                        <h4 className="text-sm font-semibold text-emerald-800 mb-2">
-                            Added FAQs
-                        </h4>
-                        <div className="grid gap-3">
-                            {faqs.added.map((item, i) => (
-                                <div key={i} className="text-sm">
-                                    <p className="font-medium">
-                                        {item.question}
-                                    </p>
-                                    <p className="text-xs opacity-80 mt-1 whitespace-pre-wrap">
-                                        {item.answer}
-                                    </p>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                )}
-
-                {faqs.updated?.length > 0 && (
-                    <div className="bg-blue-50 p-4 rounded-xl border border-blue-200">
-                        <h4 className="text-sm font-semibold text-blue-800 mb-2">
-                            Edited FAQs
-                        </h4>
-                        <div className="grid gap-4">
-                            {faqs.updated.map((item, i) => {
-                                const before = findCurrent(item._id);
-                                return (
-                                    <div key={i} className="text-sm space-y-2">
-                                        {item.question !== undefined &&
-                                            renderDiff(
-                                                'Question',
-                                                before?.question ??
-                                                    'FAQ no longer exists',
-                                                item.question
-                                            )}
-                                        {item.answer !== undefined &&
-                                            renderDiff(
-                                                'Answer',
-                                                before?.answer ??
-                                                    'FAQ no longer exists',
-                                                item.answer
-                                            )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-
-                {faqs.removed?.length > 0 && (
-                    <div className="bg-red-50 p-4 rounded-xl border border-red-200">
-                        <h4 className="text-sm font-semibold text-red-800 mb-2">
-                            Removed FAQs
-                        </h4>
-                        <div className="grid gap-2">
-                            {faqs.removed.map((id, i) => {
-                                const before = findCurrent(id);
-                                return (
-                                    <div
-                                        key={i}
-                                        className="text-sm line-through opacity-70 text-red-700"
-                                    >
-                                        {before?.question || (
-                                            <span className="italic">
-                                                Already deleted ({id})
-                                            </span>
-                                        )}
-                                    </div>
-                                );
-                            })}
-                        </div>
-                    </div>
-                )}
-            </div>
-        );
-    };
+    const sections = buildChangeSections(update);
 
     return createPortal(
         <div className="modal-overlay z-[9999] flex justify-center items-center p-4 sm:p-6">
             <div className="surface-paper rounded-[var(--radius-xl)] w-full max-w-3xl max-h-[90vh] md:max-h-[85vh] flex flex-col shadow-2xl border border-[var(--border)] overflow-hidden mt-0">
                 {/* Header */}
                 <div className="flex items-center justify-between p-6 border-b border-[var(--border)]">
-                    <h3 className="text-xl">Review: {update.college?.name}</h3>
+                    <h3 className="text-xl">
+                        Review: {update.college?.name || 'Unknown College'}
+                    </h3>
                     <button
                         onClick={onClose}
                         className="p-2 hover:bg-slate-100 rounded-full transition-colors"
@@ -338,7 +27,7 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                     </button>
                 </div>
 
-                {/* Body (Diff view) */}
+                {/* Body (diff view) */}
                 <div className="p-6 overflow-y-auto flex-1 space-y-6">
                     <div className="p-4 bg-blue-50 text-blue-800 rounded-2xl text-sm border border-blue-200">
                         Requested by <strong>{update.requestedBy?.name}</strong>{' '}
@@ -346,126 +35,19 @@ const ReviewUpdateModal = ({ update, onClose, onApprove, onReject }) => {
                         {new Date(update.createdAt).toLocaleDateString()}
                     </div>
 
-                    <div className="space-y-6">
-                        {changes.name &&
-                            renderDiff(
-                                'College Name',
-                                update.college?.name,
-                                changes.name
-                            )}
-                        {changes.slug &&
-                            changes.slug !== update.college?.slug && (
-                                <div className="mb-4 p-4 rounded-xl border-2 border-amber-300 bg-amber-50">
-                                    <div className="flex items-start gap-2 mb-3">
-                                        <AlertTriangle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
-                                        <p className="text-xs text-amber-800">
-                                            Approving this moves the college's
-                                            public URL. Links to the old address
-                                            will stop working.
-                                        </p>
-                                    </div>
-                                    {renderDiff(
-                                        'URL Slug',
-                                        update.college?.slug,
-                                        changes.slug
-                                    )}
-                                </div>
-                            )}
-                        {changes.type &&
-                            renderDiff(
-                                'College Type',
-                                update.college?.type,
-                                changes.type
-                            )}
-                        {changes.city &&
-                            renderDiff(
-                                'City',
-                                update.college?.city,
-                                changes.city
-                            )}
-                        {changes.state &&
-                            renderDiff(
-                                'State / UT',
-                                update.college?.state,
-                                changes.state
-                            )}
-                        {changes.collegeId &&
-                            renderDiff(
-                                'College ID',
-                                update.college?.collegeId,
-                                changes.collegeId
-                            )}
-                        {changes.logo &&
-                            renderDiff(
-                                'Logo URL',
-                                update.college?.logo,
-                                changes.logo
-                            )}
-                        {changes.overview &&
-                            renderDiff(
-                                'Overview',
-                                'Current Overview Hidden (See DB)',
-                                changes.overview
-                            )}
-                        {changes.description &&
-                            renderDiff(
-                                'Description',
-                                'Current Description Hidden (See DB)',
-                                changes.description
-                            )}
-
-                        {changes.placementDetails && (
-                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
-                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
-                                    <TrendingUp className="w-5 h-5 text-blue-500" />{' '}
-                                    Placements (Proposed)
-                                </div>
-                                {renderPlacementDetails(
-                                    changes.placementDetails
-                                )}
-                            </div>
-                        )}
-
-                        {changes.recruiters && (
-                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
-                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
-                                    <Building2 className="w-5 h-5 text-purple-500" />{' '}
-                                    Top Recruiters (Proposed)
-                                </div>
-                                {renderRecruiters(changes.recruiters)}
-                            </div>
-                        )}
-
-                        {changes.faculty && (
-                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
-                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
-                                    <Users className="w-5 h-5 text-orange-500" />{' '}
-                                    Faculty Roster (Proposed)
-                                </div>
-                                {renderFaculty(changes.faculty)}
-                            </div>
-                        )}
-
-                        {changes.courseUpdates && (
-                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
-                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
-                                    <Presentation className="w-5 h-5 text-emerald-500" />{' '}
-                                    Course Updates (Proposed)
-                                </div>
-                                {renderCourseUpdates(changes.courseUpdates)}
-                            </div>
-                        )}
-
-                        {changes.faqs && (
-                            <div className="border border-[var(--border)] rounded-2xl p-5 bg-white shadow-sm">
-                                <div className="flex items-center gap-2 mb-2 text-[var(--foreground)] font-semibold border-b border-[var(--border)] pb-3">
-                                    <HelpCircle className="w-5 h-5 text-indigo-500" />{' '}
-                                    FAQs (Proposed)
-                                </div>
-                                {renderFaqs(changes.faqs)}
-                            </div>
-                        )}
-                    </div>
+                    {sections.length === 0 ? (
+                        <div className="py-10 text-center text-[var(--ring)] border border-dashed border-[var(--border)] rounded-2xl">
+                            <p className="font-medium">
+                                No effective changes in this request.
+                            </p>
+                            <p className="text-xs mt-1">
+                                Every submitted value matches the current
+                                record. Approving is a no-op.
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="space-y-6">{sections}</div>
+                    )}
                 </div>
 
                 {/* Footer */}

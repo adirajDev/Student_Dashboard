@@ -9,13 +9,13 @@ import ExamField from './ExamField.jsx';
 import FaqFields from '@/components/common/FaqFields.jsx';
 
 const ExamFormFields = ({
-                            formData,
-                            handleChange,
-                            handleNameChange,
-                            handleSlugChange,
-                            setFaqs,
-                            editingExam,
-                        }) => {
+    formData,
+    handleChange,
+    handleNameChange,
+    handleSlugChange,
+    setFaqs,
+    editingExam,
+}) => {
     return (
         <div className="space-y-6">
             <ExamField

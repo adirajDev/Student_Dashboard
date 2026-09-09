@@ -3,7 +3,7 @@ import {
     createUniquenessAssertion,
 } from '../../common/errors/uniqueness.js';
 import College from './college.model.js';
-
+export const UNIQUE_FIELDS = ['name', 'slug', 'collegeId'];
 export const FIELD_LABELS = {
     name: 'name',
     slug: 'URL slug',

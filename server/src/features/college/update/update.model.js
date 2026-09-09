@@ -16,6 +16,14 @@ const collegeUpdateSchema = new mongoose.Schema(
             type: mongoose.Schema.Types.Mixed, // Allows flexible schema-less JSON object for changes
             required: true,
         },
+        // Snapshot of the college's values for exactly the fields this request
+        // touches, taken at submit time. Without it a request can only be
+        // diffed while it is pending: once approved, the live college holds the
+        // proposed values and every diff collapses to "nothing changed".
+        previousValues: {
+            type: mongoose.Schema.Types.Mixed,
+            default: {},
+        },
         status: {
             type: String,
             enum: ['pending', 'approved', 'rejected'],
@@ -28,6 +36,9 @@ const collegeUpdateSchema = new mongoose.Schema(
     },
     { timestamps: true }
 );
+
+collegeUpdateSchema.index({ requestedBy: 1, createdAt: -1 });
+collegeUpdateSchema.index({ status: 1, createdAt: -1 });
 
 const CollegeUpdate = mongoose.model('CollegeUpdate', collegeUpdateSchema);
 export default CollegeUpdate;
