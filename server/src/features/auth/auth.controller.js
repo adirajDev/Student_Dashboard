@@ -1,6 +1,8 @@
 import * as authService from './auth.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
-import generateTokenAndSetCookie from '../../common/utils/token.util.js';
+import generateTokenAndSetCookie , {
+    authCookieOptions
+} from '../../common/utils/token.util.js';
 
 export const signup = asyncHandler(async (req, res) => {
     const user = await authService.signup(req.body);
@@ -81,6 +83,6 @@ export const resetOtpPassword = asyncHandler(async (req, res) => {
 });
 
 export const logout = (req, res) => {
-    res.cookie('jwt', '', { maxAge: 0 });
+    res.clearCookie('jwt', authCookieOptions);
     res.json({ message: 'Logged out successfully' });
 };

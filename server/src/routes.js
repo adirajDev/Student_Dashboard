@@ -14,6 +14,7 @@ import postRoutes from './features/blog/post/post.routes.js';
 import bloggerRoutes from './features/blog/blogger/blogger.routes.js';
 import newsRoutes from './features/news/news.routes.js';
 import adsRoutes from './features/ads/ads.routes.js';
+import AppError from './common/errors/AppError.js';
 
 const ADMIN_ONLY = {
     list: ['admin'],
@@ -69,5 +70,11 @@ router.use('/exams', examRoutes);
 router.use('/news', newsRoutes);
 router.use('/stats', statsRoutes);
 router.use('/promotions', adsRoutes);
+
+// Unknown /api/* paths — hand to errorMiddleware so the body shape matches
+// the rest of the API instead of Express's default HTML page.
+router.use((req, res, next) => {
+    next(new AppError(`Route ${req.originalUrl} not found`, 404));
+});
 
 export default router;
