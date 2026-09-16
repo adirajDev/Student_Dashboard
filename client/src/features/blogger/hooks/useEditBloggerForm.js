@@ -6,7 +6,6 @@ const ALLOWED_IMAGE_TYPES = [
     'image/jpeg',
     'image/png',
     'image/webp',
-    'image/svg+xml',
 ];
 
 const EMPTY_FORM = {

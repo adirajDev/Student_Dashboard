@@ -26,7 +26,8 @@ export const updateBloggerByUserId = async (userId, updates) => {
 
     const blogger = await Blogger.findOneAndUpdate(
         { user: userId },
-        { $set: payload }
+        { $set: payload },
+        { returnDocument: 'after', runValidators: true }
     ).lean();
 
     if (!blogger) {
