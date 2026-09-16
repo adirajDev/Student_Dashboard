@@ -14,7 +14,6 @@ import { getPromotionImageUrl } from '../utils/promotionUtils';
  */
 const PromotionSlot = ({ slot, className = '' }) => {
     const { promotions, isLoading } = useSlotPromotions(slot);
-    console.log(promotions);
     const [imageFailed, setImageFailed] = useState(false);
     const config = getSlotConfig(slot);
 
@@ -41,14 +40,12 @@ const PromotionSlot = ({ slot, className = '' }) => {
     if (isLoading || !promotion || imageFailed) return null;
 
     const imageUrl = getPromotionImageUrl(promotion);
-    console.log(imageUrl);
     if (!imageUrl) return null;
 
     return (
         <section className={className} aria-label="Partner content">
             <p className="mb-1.5 text-[10px] uppercase tracking-widest text-[var(--muted)] font-semibold">
                 Partner
-                {console.log('rendered promotion slot')}
             </p>
 
             <a
