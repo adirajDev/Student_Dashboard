@@ -69,15 +69,27 @@ function App() {
                                 path="/exam-search"
                                 element={<ExamSearchPage />}
                             />
-                            <Route path="/exams" element={<ExamListingPage />} />
-                            <Route path="/exam/:slug" element={<ExamDetails />} />
+                            <Route
+                                path="/exams"
+                                element={<ExamListingPage />}
+                            />
+                            <Route
+                                path="/exam/:slug"
+                                element={<ExamDetails />}
+                            />
                             <Route path="/news" element={<NewsListingPage />} />
-                            <Route path="/news/:slug" element={<NewsDetail />} />
+                            <Route
+                                path="/news/:slug"
+                                element={<NewsDetail />}
+                            />
                             <Route
                                 path="/college/:slug"
                                 element={<CollegeDetails />}
                             />
-                            <Route path="/blog/:slug" element={<BlogDetail />} />
+                            <Route
+                                path="/blog/:slug"
+                                element={<BlogDetail />}
+                            />
                             <Route path="/blog" element={<PostListing />} />
                             <Route
                                 path="/blogger/:userId"
@@ -86,7 +98,9 @@ function App() {
 
                             <Route
                                 element={
-                                    <ProtectedRoute allowedRoles={['student']} />
+                                    <ProtectedRoute
+                                        allowedRoles={['student']}
+                                    />
                                 }
                             >
                                 <Route
@@ -104,7 +118,9 @@ function App() {
                         <Route element={<SidebarLayout />}>
                             <Route
                                 element={
-                                    <ProtectedRoute allowedRoles={['college']} />
+                                    <ProtectedRoute
+                                        allowedRoles={['college']}
+                                    />
                                 }
                             >
                                 <Route
@@ -126,7 +142,9 @@ function App() {
                             </Route>
                             <Route
                                 element={
-                                    <ProtectedRoute allowedRoles={['blogger']} />
+                                    <ProtectedRoute
+                                        allowedRoles={['blogger']}
+                                    />
                                 }
                             >
                                 <Route

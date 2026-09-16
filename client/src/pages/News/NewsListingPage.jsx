@@ -138,7 +138,8 @@ const NewsListingPage = () => {
                                                     })
                                                 }
                                                 className={`flex-1 py-2 text-sm font-medium rounded-[var(--radius-sm)] transition-all ${
-                                                    filters.sort === option.value
+                                                    filters.sort ===
+                                                    option.value
                                                         ? 'bg-[var(--card)] text-[var(--color-ink-700)] shadow-sm'
                                                         : 'text-[var(--muted)] hover:text-[var(--foreground)]'
                                                 }`}
@@ -166,7 +167,10 @@ const NewsListingPage = () => {
                                     >
                                         <option value="all">Any Month</option>
                                         {MONTHS.map((m, i) => (
-                                            <option key={i} value={i.toString()}>
+                                            <option
+                                                key={i}
+                                                value={i.toString()}
+                                            >
                                                 {m}
                                             </option>
                                         ))}

@@ -12,12 +12,12 @@ import useMediaQuery from '@/hooks/useMediaQuery.js';
  * animate-fade-in, whose leftover transform breaks position: fixed.
  */
 const FilterPanel = ({
-                         title,
-                         activeCount = 0,
-                         onClear,
-                         resultLabel = 'Show results',
-                         children,
-                     }) => {
+    title,
+    activeCount = 0,
+    onClear,
+    resultLabel = 'Show results',
+    children,
+}) => {
     const isDesktop = useMediaQuery('(min-width: 1024px)');
     const [isOpen, setIsOpen] = useState(false);
 

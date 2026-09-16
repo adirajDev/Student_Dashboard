@@ -12,14 +12,12 @@ const ExamCard = ({ exam, onClick }) => {
             {/* Top Header Section */}
             <div className="flex items-start sm:items-center gap-3 sm:gap-4 mb-4">
                 {/* Generic Logo Placeholder */}
-                <div
-                    className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-[var(--color-ink-50)] border border-[var(--border)] rounded-[var(--radius-md)] flex items-center justify-center text-[var(--color-ink-600)]">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-[var(--color-ink-50)] border border-[var(--border)] rounded-[var(--radius-md)] flex items-center justify-center text-[var(--color-ink-600)]">
                     <FileText className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
 
                 {/* Title & Badge: badge drops under the title on phones */}
-                <div
-                    className="flex-1 min-w-0 flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+                <div className="flex-1 min-w-0 flex flex-col items-start gap-1.5 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                     <h3
                         className="w-full sm:w-auto sm:flex-1 min-w-0 text-lg sm:text-xl text-[var(--foreground)] font-display line-clamp-2 sm:line-clamp-1 break-words"
                         title={exam.name}

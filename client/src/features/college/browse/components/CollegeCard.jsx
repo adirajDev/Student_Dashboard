@@ -132,9 +132,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                                         .toLowerCase()
                                         .includes(query.toLowerCase())
                             ).length > 0 && (
-                                <span
-                                    className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-[var(--radius-sm)] bg-[var(--background)] text-[var(--muted)] border border-[var(--border)]"
-                                >
+                                <span className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-[var(--radius-sm)] bg-[var(--background)] text-[var(--muted)] border border-[var(--border)]">
                                     +
                                     {
                                         college.availableCourses.filter(

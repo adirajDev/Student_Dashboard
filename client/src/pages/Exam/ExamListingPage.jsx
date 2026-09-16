@@ -137,54 +137,62 @@ const ExamListingPage = () => {
                                         Exam Mode
                                     </label>
                                     <div className="space-y-3">
-                                        {['Online', 'Offline'].map(modeValue => {
-                                            const isChecked =
-                                                Array.isArray(filters.mode) &&
-                                                filters.mode.includes(modeValue);
-                                            return (
-                                                <label
-                                                    key={modeValue}
-                                                    className="flex items-center gap-3 cursor-pointer group"
-                                                >
-                                                    <input
-                                                        type="checkbox"
-                                                        className="hidden"
-                                                        checked={isChecked}
-                                                        onChange={() =>
-                                                            handleModeChange(
-                                                                modeValue
-                                                            )
-                                                        }
-                                                    />
-                                                    <div
-                                                        className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors ${
-                                                            isChecked
-                                                                ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
-                                                                : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
-                                                        }`}
+                                        {['Online', 'Offline'].map(
+                                            modeValue => {
+                                                const isChecked =
+                                                    Array.isArray(
+                                                        filters.mode
+                                                    ) &&
+                                                    filters.mode.includes(
+                                                        modeValue
+                                                    );
+                                                return (
+                                                    <label
+                                                        key={modeValue}
+                                                        className="flex items-center gap-3 cursor-pointer group"
                                                     >
-                                                        {isChecked && (
-                                                            <svg
-                                                                className="w-3 h-3 text-white"
-                                                                fill="none"
-                                                                viewBox="0 0 24 24"
-                                                                stroke="currentColor"
-                                                                strokeWidth={3}
-                                                            >
-                                                                <path
-                                                                    strokeLinecap="round"
-                                                                    strokeLinejoin="round"
-                                                                    d="M5 13l4 4L19 7"
-                                                                />
-                                                            </svg>
-                                                        )}
-                                                    </div>
-                                                    <span className="text-sm font-medium text-[var(--foreground)]">
-                                                        {modeValue}
-                                                    </span>
-                                                </label>
-                                            );
-                                        })}
+                                                        <input
+                                                            type="checkbox"
+                                                            className="hidden"
+                                                            checked={isChecked}
+                                                            onChange={() =>
+                                                                handleModeChange(
+                                                                    modeValue
+                                                                )
+                                                            }
+                                                        />
+                                                        <div
+                                                            className={`w-5 h-5 rounded-[var(--radius-sm)] flex items-center justify-center transition-colors ${
+                                                                isChecked
+                                                                    ? 'bg-[var(--color-ink-800)] border-[var(--color-ink-800)]'
+                                                                    : 'border border-[var(--color-ink-300)] bg-[var(--card)] group-hover:border-[var(--color-ink-500)]'
+                                                            }`}
+                                                        >
+                                                            {isChecked && (
+                                                                <svg
+                                                                    className="w-3 h-3 text-white"
+                                                                    fill="none"
+                                                                    viewBox="0 0 24 24"
+                                                                    stroke="currentColor"
+                                                                    strokeWidth={
+                                                                        3
+                                                                    }
+                                                                >
+                                                                    <path
+                                                                        strokeLinecap="round"
+                                                                        strokeLinejoin="round"
+                                                                        d="M5 13l4 4L19 7"
+                                                                    />
+                                                                </svg>
+                                                            )}
+                                                        </div>
+                                                        <span className="text-sm font-medium text-[var(--foreground)]">
+                                                            {modeValue}
+                                                        </span>
+                                                    </label>
+                                                );
+                                            }
+                                        )}
                                     </div>
                                 </div>
 
@@ -205,7 +213,10 @@ const ExamListingPage = () => {
                                     >
                                         <option value="all">Any Month</option>
                                         {MONTHS.map((m, i) => (
-                                            <option key={i} value={i.toString()}>
+                                            <option
+                                                key={i}
+                                                value={i.toString()}
+                                            >
                                                 {m}
                                             </option>
                                         ))}

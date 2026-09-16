@@ -1,7 +1,7 @@
 import * as authService from './auth.service.js';
 import asyncHandler from '../../common/utils/asyncHandler.js';
-import generateTokenAndSetCookie , {
-    authCookieOptions
+import generateTokenAndSetCookie, {
+    authCookieOptions,
 } from '../../common/utils/token.util.js';
 
 export const signup = asyncHandler(async (req, res) => {
