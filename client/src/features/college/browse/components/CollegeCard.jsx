@@ -19,27 +19,32 @@ const CollegeCard = ({ college, query = '', onClick }) => {
     return (
         <div
             onClick={() => onClick(college)}
-            className="card-interactive p-5 cursor-pointer group flex flex-col"
+            className="card-interactive p-4 sm:p-5 cursor-pointer group flex flex-col"
         >
             {/* Top Header Section */}
-            <div className="flex items-start gap-4 mb-4">
+            <div className="flex items-start gap-3 sm:gap-4 mb-4">
                 {/* Generic Logo Placeholder */}
-                <div className="w-14 h-14 shrink-0 bg-[var(--color-ink-50)] border border-[var(--border)] rounded-[var(--radius-md)] flex items-center justify-center text-[var(--color-ink-600)]">
-                    <Building2 className="w-7 h-7" />
+                <div className="w-12 h-12 sm:w-14 sm:h-14 shrink-0 bg-[var(--color-ink-50)] border border-[var(--border)] rounded-[var(--radius-md)] flex items-center justify-center text-[var(--color-ink-600)]">
+                    <Building2 className="w-6 h-6 sm:w-7 sm:h-7" />
                 </div>
 
                 {/* Title, Location & Rating */}
                 <div className="flex-1 min-w-0">
-                    <h3 className="text-xl text-[var(--foreground)] font-display truncate">
+                    <h3
+                        className="text-lg sm:text-xl text-[var(--foreground)] font-display line-clamp-2 sm:line-clamp-1 break-words"
+                        title={college.name}
+                    >
                         {college.name}
                     </h3>
-                    <div className="flex items-center gap-4 mt-1">
-                        <div className="flex items-center text-sm text-[var(--muted)]">
-                            <MapPin className="w-4 h-4 mr-1" />
-                            {formatLocation(college)}
+                    <div className="flex flex-wrap items-center gap-x-4 gap-y-1 mt-1">
+                        <div className="flex items-center min-w-0 text-sm text-[var(--muted)]">
+                            <MapPin className="w-4 h-4 mr-1 shrink-0" />
+                            <span className="truncate">
+                                {formatLocation(college)}
+                            </span>
                         </div>
                         {college.averageRating > 0 && (
-                            <div className="flex items-center text-sm font-medium text-[var(--foreground)]">
+                            <div className="flex items-center shrink-0 text-sm font-medium text-[var(--foreground)]">
                                 <Star className="w-4 h-4 text-amber-400 mr-1 fill-amber-400" />
                                 {college.averageRating.toFixed(1)}
                             </div>
@@ -50,14 +55,14 @@ const CollegeCard = ({ college, query = '', onClick }) => {
 
             <hr className="border-[var(--border)] mb-4" />
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4">
+            {/* Stats Grid: 2 columns on phones so package values aren't cut off */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-3">
                 {/* Courses */}
-                <div>
-                    <p className="text-sm text-[var(--muted)] mb-1">
+                <div className="min-w-0">
+                    <p className="text-xs sm:text-sm text-[var(--muted)] mb-1">
                         Courses Offered
                     </p>
-                    <div className="flex items-center text-[var(--foreground)] font-medium">
+                    <div className="flex items-center text-sm sm:text-base text-[var(--foreground)] font-medium">
                         <span>
                             {college.availableCourses?.length || 0} Courses
                         </span>
@@ -66,12 +71,12 @@ const CollegeCard = ({ college, query = '', onClick }) => {
 
                 {/* Median Package */}
                 {college.placementDetails?.averagePackage && (
-                    <div>
-                        <p className="text-sm text-[var(--muted)] mb-1">
+                    <div className="min-w-0">
+                        <p className="text-xs sm:text-sm text-[var(--muted)] mb-1">
                             Median Package
                         </p>
-                        <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            <span>
+                        <div className="flex items-center text-sm sm:text-base text-[var(--foreground)] font-medium">
+                            <span className="truncate">
                                 {formatPackage(
                                     college.placementDetails.averagePackage
                                 )}
@@ -82,12 +87,12 @@ const CollegeCard = ({ college, query = '', onClick }) => {
 
                 {/* Highest Package */}
                 {college.placementDetails?.highestPackage && (
-                    <div>
-                        <p className="text-sm text-[var(--muted)] mb-1">
+                    <div className="min-w-0">
+                        <p className="text-xs sm:text-sm text-[var(--muted)] mb-1">
                             Highest Package
                         </p>
-                        <div className="flex items-center text-[var(--foreground)] font-medium truncate">
-                            <span>
+                        <div className="flex items-center text-sm sm:text-base text-[var(--foreground)] font-medium">
+                            <span className="truncate">
                                 {formatPackage(
                                     college.placementDetails.highestPackage
                                 )}
@@ -115,7 +120,7 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                                 return (
                                     <span
                                         key={course._id}
-                                        className="text-sm px-3 py-1.5 rounded-[var(--radius-sm)] bg-[var(--color-ink-50)] text-[var(--color-ink-700)] border border-[var(--color-ink-200)]"
+                                        className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-[var(--radius-sm)] bg-[var(--color-ink-50)] text-[var(--color-ink-700)] border border-[var(--color-ink-200)]"
                                     >
                                         {course.name}
                                     </span>
@@ -127,7 +132,9 @@ const CollegeCard = ({ college, query = '', onClick }) => {
                                         .toLowerCase()
                                         .includes(query.toLowerCase())
                             ).length > 0 && (
-                                <span className="text-sm px-3 py-1.5 rounded-[var(--radius-sm)] bg-[var(--background)] text-[var(--muted)] border border-[var(--border)]">
+                                <span
+                                    className="text-xs sm:text-sm px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-[var(--radius-sm)] bg-[var(--background)] text-[var(--muted)] border border-[var(--border)]"
+                                >
                                     +
                                     {
                                         college.availableCourses.filter(
