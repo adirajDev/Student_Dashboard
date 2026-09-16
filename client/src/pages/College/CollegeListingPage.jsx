@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Filter, Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+import FilterPanel from '@/components/common/FilterPanel.jsx';
 import CollegeCard from '@/features/college/browse/components/CollegeCard.jsx';
 import FilterCheckboxGroup from '@/features/college/browse/components/FilterCheckboxGroup.jsx';
 import FilterRadioGroup from '@/features/college/browse/components/FilterRadioGroup.jsx';
@@ -45,7 +46,7 @@ const CollegeListingPage = () => {
                     </p>
                 </div>
 
-                <div className="flex flex-col lg:flex-row gap-8">
+                <div className="flex flex-col lg:flex-row gap-5 lg:gap-8">
                     {/* Main List Column */}
                     <div className="flex-1">
                         <div className="mb-4 flex justify-between items-center text-sm font-medium text-[var(--muted)]">
@@ -88,29 +89,14 @@ const CollegeListingPage = () => {
                     </div>
 
                     {/* Right Sidebar for Filters */}
-                    <div className="w-full lg:w-80 shrink-0">
-                        {/*
-                          The sticky column scrolls on its own only once it
-                          outgrows the viewport, and only on large screens —
-                          on mobile it sits inline below the list and scrolls
-                          with the page.
-                        */}
-                        <div className="lg:top-[100px] lg:max-h-[calc(100vh-120px)] pr-1 custom-scrollbar">
-                            <div className="flex items-center gap-2 mb-4 border-b border-[var(--border)] pb-4">
-                                <Filter className="w-5 h-5 text-[var(--color-ink-600)]" />
-                                <h3 className="text-lg text-[var(--foreground)] font-display flex-1">
-                                    Filter Colleges
-                                </h3>
-                                {activeFilterCount > 0 && (
-                                    <button
-                                        onClick={clearFilters}
-                                        className="text-sm font-medium text-[var(--color-danger)] hover:underline"
-                                    >
-                                        Clear ({activeFilterCount})
-                                    </button>
-                                )}
-                            </div>
-
+                    {/* Filters: popup button above the list on mobile, sticky sidebar on desktop */}
+                    <div className="w-full lg:w-80 shrink-0 order-first lg:order-none">
+                        <FilterPanel
+                            title="Filter Colleges"
+                            activeCount={activeFilterCount}
+                            onClear={clearFilters}
+                            resultLabel={`Show ${results.length} colleges`}
+                        >
                             <div className="space-y-4">
                                 {/*
                                   Course and state are the two filters people
@@ -161,7 +147,7 @@ const CollegeListingPage = () => {
                                     showStars
                                 />
                             </div>
-                        </div>
+                        </FilterPanel>
                     </div>
                 </div>
             </main>
