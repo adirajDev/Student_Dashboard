@@ -45,7 +45,7 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
 
             <aside
                 className={`
-                    w-64 flex flex-col justify-between py-6 shrink-0 z-50
+                    w-64 flex flex-col overflow-hidden py-6 shrink-0 z-50
                     transition-transform duration-300 ease-in-out
                     rounded-[var(--radius-xl)] border border-[var(--border)] shadow-xl surface-paper
                     
@@ -57,14 +57,17 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                     md:relative md:translate-x-0
                 `}
             >
-                {/* Top Section */}
-                <div className="flex flex-col gap-6 px-4">
+                {/* Top Section: pinned */}
+                <div className="shrink-0 px-4">
                     <TopSection
                         dashboard={dashboard}
                         handleNav={handleNav}
                         setIsMobileOpen={setIsMobileOpen}
                     />
+                </div>
 
+                {/* Nav links: the only part that scrolls */}
+                <div className="flex-1 min-h-0 overflow-y-auto overscroll-contain px-4 mt-4 pb-2 [scrollbar-width:thin]">
                     <NavLinks
                         user={user}
                         activeTab={activeTab}
@@ -72,12 +75,14 @@ const Sidebar = ({ user, onSettingsOpen, onLogout }) => {
                     />
                 </div>
 
-                {/* Bottom Section */}
-                <BottomSection
-                    onSettingsOpen={onSettingsOpen}
-                    onLogout={onLogout}
-                    setIsMobileOpen={setIsMobileOpen}
-                />
+                {/* Bottom Section: pinned */}
+                <div className="shrink-0 pt-4 border-t border-[var(--border)]">
+                    <BottomSection
+                        onSettingsOpen={onSettingsOpen}
+                        onLogout={onLogout}
+                        setIsMobileOpen={setIsMobileOpen}
+                    />
+                </div>
             </aside>
         </>
     );
